@@ -1,0 +1,7 @@
+{
+	"name" : "wheelsystem/wheelsystem",
+	"require" : {
+		"react/filesystem" : "0.1.0",
+		"react/mysql" : "0.3.3"
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"name" : "wheelsystem/wheelsystem",
+	"require" : {
+		"react/filesystem" : "0.1.0",
+		"mbarquin/reactphp-slim" : "0.4.3",
+		"react/mysql" : "0.3.3"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"UserClasses\\BusinessLayer\\" : "vendor/UserClasses/BusinessLayer/src",
+			"UserClasses\\BusinessObjects\\" : "vendor/UserClasses/BusinessObjects/src",
+			"UserClasses\\DataLayer\\" : "vendor/UserClasses/DataLayer/src"
+		}
+	}
+}

@@ -1,0 +1,36 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+use Exception;
+use Error;
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ErrorLog
+{
+    private $dir_path=__DIR__."/../../../../../../err/errors.txt";
+    
+    //check if File exists
+    //return Boolean
+    public function doesLogFileExist(string $filepath):bool {
+        return file_exists($filepath);    
+    }
+    
+    //create Error Log file
+    //return void
+    public function createLogFile(string $filepath):void {
+        if(!file_exists($filepath)){
+            $file_pointer=fopen($filepath,'w');  //create file
+            fclose($file_pointer);  //close file
+        }
+    }
+    
+    //log the software errors and exceptions inside the Log file
+    //return void
+    public function logErrors(Exception $e=NULL,Error $err=NULL,string $class_name,string $method_name):void { 
+        
+    }
+}
+

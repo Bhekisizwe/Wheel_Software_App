@@ -1,0 +1,6 @@
+{
+	"name" : "wheelsystem/wheelsystem",
+	"require" : {
+		"nigelgreenway/reactive-slim" : "0.3.2"
+	}
+}

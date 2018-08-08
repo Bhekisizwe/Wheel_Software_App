@@ -1,0 +1,24 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+use Exception;
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ErrorLog
+{
+    public function doesLogFileExist():bool{
+        
+    }
+    
+    public function createLogFile():void{
+        
+    }
+    
+    public function logErrors(Exception $e):void{
+        
+    }
+}
+

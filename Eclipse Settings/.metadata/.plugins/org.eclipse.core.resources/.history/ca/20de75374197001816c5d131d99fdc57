@@ -1,0 +1,15 @@
+{
+	"name" : "wheelsystem/wheelsystem",
+	"require" : {
+		"react/filesystem" : "0.1.0",
+		"nigelgreenway/reactive-slim" : "0.3.2",
+		"hotrush/reactphp-mysql" : "0.3.3"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"UserClasses\\BusinessLayer" : "UserClasses/BusinessLayer/src",
+			"UserClasses\\BusinessObjects" : "UserClasses/BusinessObjects/src",
+			"UserClasses\\DataLayer" : "UserClasses/DataLayer/src"
+		}
+	}
+}

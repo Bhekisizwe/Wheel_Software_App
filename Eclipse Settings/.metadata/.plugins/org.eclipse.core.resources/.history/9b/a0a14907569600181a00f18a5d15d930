@@ -1,0 +1,7 @@
+{
+	"name" : "wheelsystem/wheelsystem",
+	"require" : {
+		"nigelgreenway/reactive-slim" : "0.3.2",
+		"react/filesystem" : "0.1.0"
+	}
+}

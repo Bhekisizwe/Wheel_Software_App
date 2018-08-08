@@ -1,0 +1,11 @@
+<?php
+ echo phpinfo();
+ 
+
+
+//$arr=$request->getParsedBody();
+//$arr_json=json_encode($arr);
+//$works=." Tasty Setha ".$arr->distance;
+ 
+ 
+?>

@@ -1,0 +1,57 @@
+<?php
+    //use UserClasses\BusinessLayer\DailyDistanceSetting;
+    
+    use React\EventLoop\Factory;
+    //use React\MySQL\Commands\QueryCommand;
+    use \Psr\Http\Message\ServerRequestInterface as Request;
+    use \Psr\Http\Message\ResponseInterface as Response;
+    //use React\MySQL\Query;
+    //use Amp\Mysql;
+    
+    require __DIR__.'/vendor/autoload.php';   
+    
+    $loop = Factory::create();
+    $app = new \Slim\App(); 
+    $app->post('/distance/add', function (Request $request, Response $response, array $args) use ($loop,&$app) {
+        $arr=json_decode($request->getBody()->getContents(),TRUE); 
+        //$arr_json=json_encode($arr);
+        /*********BEGIN DATABASE CODE**************/      
+        
+        //process requests for the first time and send the data to the database
+        $mysql = new \KHR\React\Mysql\Client($loop, new \KHR\React\Mysql\Pool(function(){
+            return mysqli_connect('localhost','wheel','induction','wheelsystem');
+        }, 100));
+            
+            $distance=$arr['distance'];
+            
+            $mysql->query("INSERT INTO DistanceTravelled (DistanceID,Distance,ModTimeStamp) VALUES ('',$distance,NOW())")
+            ->then(function ($result) use ($arr,$response){
+                $arr['affected_rows']=$result->affected_rows;
+                $arr_json=json_encode($arr);
+                //mysqli_close($mysql);
+                $res=$response->withHeader("Content-Type", "application/json");
+                $res->getBody();
+                $res->write($arr_json);  
+                return $res;
+            },
+            function ($error) use ($arr,$response) {
+                //do nothing
+                $arr_json=json_encode($arr);
+                $res=$response->withHeader("Content-Type", "application/json");
+                $res->getBody();
+                $res->write($arr_json);    
+                return $res;
+            }
+        );
+                    /************END DATABASE CODE**************/     
+              
+        //$arr_json;
+        
+        
+    });
+    $app->run();
+    $directoryPath="C:/xampp/htdocs/Eclipse Settings/WheelSystem";
+    $reactslim=new ReactiveSlim\Server($app,$directoryPath,$loop);
+    $reactslim->setHost('127.0.0.1')->setPort(8080)->run();
+     
+?>

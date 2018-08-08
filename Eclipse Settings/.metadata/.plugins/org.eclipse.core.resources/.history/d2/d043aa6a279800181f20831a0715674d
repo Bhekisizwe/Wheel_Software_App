@@ -1,0 +1,46 @@
+<?php
+ echo phpinfo();
+ 
+
+
+//$arr=$request->getParsedBody();
+//$arr_json=json_encode($arr);
+//$works=." Tasty Setha ".$arr->distance;
+ /*******Database Code***********************/
+//Get Loop from Nuclear Reactor Server
+ /*$loop = Factory::create();
+ 
+ //create a mysql connection for executing queries
+ $connection = new React\MySQL\Connection($loop, array(
+ 'dbname' => 'wheelsystem',
+ 'user'   => 'wheel',
+ 'passwd' => 'induction',
+ ));
+ 
+ //connecting to mysql server, not required.
+ 
+ $connection->connect();
+ 
+ $connection->query('SELECT * FROM DistanceTravelled')->then(
+ function (React\MySQL\Commands\QueryCommand $command) use ($connection,$loop) {
+ $arr['rows_affected']=$command->affectedRows;
+ $connection->close();
+ $loop->stop();
+ $arr_json=json_encode($arr);
+ return $response->withHeader("Content-Type", "application/json")
+ ->getBody()
+ ->write($arr_json);
+ },
+ function (Exception $error) use ($connection,$loop){
+ //error
+ //var_dump($error->getMessage());
+ $connection->close();
+ $loop->stop();
+ $arr_json=json_encode($arr);
+ return $response->withHeader("Content-Type", "application/json")
+ ->getBody()
+ ->write($arr_json);
+ }
+ );*/
+ 
+?>

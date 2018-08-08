@@ -1,0 +1,2 @@
+1.) Oops, error in Class ErrorLogTest within method testLogErrorsMethod has occured at 2018-08-08 22:50:27 .Error message is Yesses i miss Royal Park Hotel
+ ####End of Line#### 

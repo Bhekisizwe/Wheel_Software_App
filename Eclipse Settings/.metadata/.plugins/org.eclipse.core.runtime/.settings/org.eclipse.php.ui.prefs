@@ -1,0 +1,12 @@
+Bind\ namespace\ and\ location=1
+Constructor=0
+Destructor=0
+Inherited\ abstract\ methods=1
+PHPDoc\ Blocks=1
+TODOs=0
+eclipse.preferences.version=1
+org.eclipse.php.core.workspaceDefaultLocale=en_ZA
+org.eclipse.php.ui.wizards.JSsupport=true
+require_once=0
+useAnnotationsPrefPage=true
+useQuickDiffPrefPage=true

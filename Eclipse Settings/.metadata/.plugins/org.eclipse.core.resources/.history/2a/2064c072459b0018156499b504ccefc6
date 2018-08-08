@@ -1,0 +1,55 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+use Exception;
+use Error;
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ErrorLog
+{
+    private $dir_path;
+    
+    public function __construct(){
+        //Construct object by initialising the class attributes
+        $this->dir_path=__DIR__."\\..\\..\\..\\..\\..\\..\\err\\errors.txt";
+    }
+    
+    //check if File exists
+    //return Boolean
+    public function doesLogFileExist(string $filepath):bool {
+        return file_exists($filepath);    
+    }
+    
+    //create Error Log file
+    //return void
+    public function createLogFile(string $filepath) {
+        if(!file_exists($filepath)){
+            $file_pointer=fopen($filepath,'w');  //create file
+            fclose($file_pointer);  //close file
+        }
+    }
+    
+    //log the software errors and exceptions inside the Log file
+    //return void
+    public function logErrors(Exception $e=NULL,Error $err=NULL,string $class_name,string $method_name) { 
+        if(!$this->doesLogFileExist($this->dir_path)){
+            //file does not exist so we need to create the file
+            $this->createLogFile($this->dir_path);
+        }        
+        //determine Date and Time of error based on South African TimeZone
+        $dateObj=new DateTime("now",new \DateTimeZone("Africa/Harare"));
+        //Open the error log file for appending errors
+        $file_point=fopen($this->dir_path,'a');
+        
+        if(isset($e)){
+            
+        }
+        if(isset($err)){
+            
+        }
+    }
+}
+

@@ -1,0 +1,162 @@
+<?php
+
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\ErrorLog;
+
+
+require_once "vendor/UserClasses/BusinessLayer/src/UserClasses/BusinessLayer/ErrorLog.php";
+
+require __DIR__.'/../vendor/autoload.php';
+
+/**
+ * ErrorLog test case.
+ */
+class ErrorLogTest extends TestCase
+{
+
+    /**
+     *
+     * @var ErrorLog
+     */
+    private $errorLog;
+    private $file_path;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated ErrorLogTest::setUp()
+        
+        $this->errorLog = new ErrorLog();
+        $this->file_path=dirname(__FILE__)."\\..\\err\\errors.txt";
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated ErrorLogTest::tearDown()
+        $this->errorLog = null;
+        
+        parent::tearDown();
+    }
+
+    /**
+     * Constructs the test case.
+     */
+       
+    public function testCreateLogFileMethodWhenFileExists(){
+        if(!file_exists($this->file_path)){
+            $file_pointer=fopen($this->file_path,'w');  //create file
+            fclose($file_pointer);  //close file
+        }
+        $status_before_creation=file_exists($this->file_path);        
+        $this->errorLog->createLogFile($this->file_path);
+        $status_after_creation=file_exists($this->file_path);
+        $this->assertEquals($status_before_creation, $status_after_creation);
+    }
+    
+    public function testCreateLogFileMethodWhenFileDoesNotExist(){
+        if(file_exists($this->file_path)){
+            unlink($this->file_path); //delete file
+        }
+        $status_before_creation=file_exists($this->file_path);
+        $this->errorLog->createLogFile($this->file_path);
+        $status_after_creation=file_exists($this->file_path);
+        $this->assertNotEquals($status_before_creation, $status_after_creation);
+    }
+    
+    public function testDoesLogFileExistMethodWhenFileExists(){
+        if(!file_exists($this->file_path)){
+            $file_pointer=fopen($this->file_path,'w');  //create file
+            fclose($file_pointer);  //close file
+        }
+        //get status when file exist
+        $status=$this->errorLog->doesLogFileExist($this->file_path);
+        $this->assertEquals(TRUE, $status);        
+    }
+    
+    public function testDoesLogFileExistMethodWhenFileDoesNotExist(){
+        if(file_exists($this->file_path)){
+            unlink($this->file_path); //delete file
+        }
+       
+        //get status after file has been deleted
+        $status=$this->errorLog->doesLogFileExist($this->file_path);
+        $this->assertEquals(FALSE, $status);
+        
+    }
+    
+    public function testLogErrorsMethodWithExceptionsWhenFileDoesNotExist(){
+        if(file_exists($this->file_path)){
+            unlink($this->file_path); //delete file
+        }
+        
+        $str_exception="I am broke as fuck";
+        
+        try{
+            throw new Exception($str_exception);   
+        }
+        catch (Exception $e){
+            $method_name="testLogErrorsMethod";
+            $class_name="ErrorLogTest";
+            $this->errorLog->logErrors($e,null,$class_name,$method_name);
+        }
+        //read errors.txt file
+        $err_str=file_get_contents($this->file_path);
+        unlink($this->file_path);
+        $reg_match=preg_match("/(.*) error in Class ErrorLogTest within method testLogErrorsMethod(.*) I am broke as fuck/", $err_str);
+        $this->assertEquals(1, $reg_match);
+    }
+    
+    public function testLogErrorsMethodWithExceptionsWhenFileExists(){
+        if(!file_exists($this->file_path)){
+            $file_pointer=fopen($this->file_path,'w');  //create file
+            fclose($file_pointer);  //close file
+        }
+        
+        $str_exception="I want some good pussy";
+        
+        try{
+            throw new Exception($str_exception);
+        }
+        catch (Exception $e){
+            $method_name="testLogErrorsMethod";
+            $class_name="ErrorLogTest";
+            $this->errorLog->logErrors($e,null,$class_name,$method_name);
+        }
+        //read errors.txt file
+        $err_str=file_get_contents($this->file_path);
+        //unlink($this->file_path);
+        $reg_pattern="/(.*) error in Class ErrorLogTest within method testLogErrorsMethod(.*) I want some good pussy/";
+        $reg_match=preg_match($reg_pattern, $err_str);
+        $this->assertEquals(1, $reg_match);
+    }
+    
+    /*public function testLogErrorsMethodWithErrorsWhenFileDoesNotExist(){
+        if(file_exists($this->file_path)){
+            unlink($this->file_path); //delete file
+        }
+        
+        $str_error="Yesses i miss Royal Park Hotel";
+        
+        try{
+            throw new Error($str_error);
+        }
+        catch (Error $e){
+            $method_name="testLogErrorsMethod";
+            $class_name="ErrorLogTest";
+            $this->errorLog->logErrors(null,$e,$class_name,$method_name);
+        }
+        //read errors.txt file
+        $err_str=file_get_contents($this->file_path);
+        //unlink($this->file_path);
+        $reg_match=preg_match("/(.*)error in Class ErrorLogTest within method testLogErrorsMethod(.*) Yesses i miss Royal Park Hotel/", $err_str);
+        $this->assertEquals(1, $reg_match);
+    }*/
+}
+

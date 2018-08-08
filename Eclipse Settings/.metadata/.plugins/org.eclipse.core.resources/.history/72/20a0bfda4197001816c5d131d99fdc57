@@ -1,0 +1,21 @@
+<?php
+namespace UserClasses\BusinessLayer\src;
+
+
+
+
+
+
+
+
+/** 
+ * @author Bheki Mthethwa
+ * 
+ */
+  class DailyDistanceSetting  {
+  
+  
+
+  
+}
+

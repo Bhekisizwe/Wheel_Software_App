@@ -1,0 +1,54 @@
+<?php
+ echo phpinfo();
+ 
+
+
+//$arr=$request->getParsedBody();
+//$arr_json=json_encode($arr);
+//$works=." Tasty Setha ".$arr->distance;
+ /****
+  * $reactslim=null;
+    $app->post('/distance/add', function (Request $request, Response $response, array $args) use (&$reactslim) {
+        $arr=json_decode($request->getBody()->getContents(),TRUE);
+        
+        //$arr_json=json_encode($arr);
+        
+        //Get Loop from Nuclear Reactor Server
+        //$loop = Factory::create();
+        
+        $loop=$reactslim->getLoop();
+        
+        //create a mysql connection for executing queries
+        $connection = new React\MySQL\Connection($loop, array(
+        'dbname' => 'wheelsystem',
+        'user'   => 'wheel',
+        'passwd' => 'induction',
+        ));
+        
+        //connecting to mysql server, not required.
+        $connection->connect();
+        
+            $connection->query('SELECT * FROM DistanceTravelled')->then(
+            function (React\MySQL\Commands\QueryCommand $command) use ($connection,$arr) {
+                $arr['rows_affected']=$command->affectedRows;
+                $connection->close();
+                //$loop->stop();
+                $arr_json=json_encode($arr);
+                return $response->withHeader("Content-Type", "application/json")
+                ->getBody()
+                ->write($arr_json);
+            },
+            function (Exception $error) use ($connection,$arr){
+                //error
+                //var_dump($error->getMessage());
+                $connection->close();
+                //$loop->stop();
+                $arr_json=json_encode($arr);
+                return $response->withHeader("Content-Type", "application/json")
+                ->getBody()
+                ->write($arr_json);
+            }
+         );     
+  */
+ 
+?>

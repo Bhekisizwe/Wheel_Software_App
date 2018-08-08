@@ -1,0 +1,23 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class DailyDistanceSetting
+{
+    public function shoDistanceSetting(){
+        
+    }
+    
+    public function addDistanceSetting(){
+        
+    }
+    
+    public function updateDistanceSetting(){
+        
+    }
+}
+

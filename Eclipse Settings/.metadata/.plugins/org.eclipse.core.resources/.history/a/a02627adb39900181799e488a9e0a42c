@@ -1,0 +1,71 @@
+<?php
+ echo phpinfo();
+ 
+
+
+//$arr=$request->getParsedBody();
+//$arr_json=json_encode($arr);
+//$works=." Tasty Setha ".$arr->distance;
+ /*************************HOTRUSH/react-mysql code*********************
+  *  //create a mysql connection for executing queries
+        $connection = new React\MySQL\Connection($loop, array(
+            'dbname' => 'wheelsystem',
+            'user'   => 'wheel',
+            'passwd' => 'induction',
+        ));
+        
+        //connecting to mysql server, not required.
+        $connection->connect();       
+        $distance=$arr['distance'];
+        $query=new Query("INSERT INTO DistanceTravelled (DistanceID,Distance,ModTimeStamp) VALUES ('',?,NOW())");
+        $sql_query=$query->bindParams($distance)->getSql();
+        $connection->query($sql_query)->then(
+            function (QueryCommand $command) use ($connection,$arr,$response) {                
+                $arr['rows_affected']=$command->affectedRows;
+                $connection->close();
+                //$loop->stop();
+                $arr_json=json_encode($arr);
+                return $response->withHeader("Content-Type", "application/json")
+                ->getBody()
+                ->write($arr_json);
+            },
+            function (Exception $error) use ($connection,$arr,$response){
+                //error
+                //var_dump($error->getMessage());
+                $connection->close();
+                //$loop->stop();
+                $arr_json=json_encode($arr);
+                return $response->withHeader("Content-Type", "application/json")
+                ->getBody()
+                ->write($arr_json);
+            }
+        );     
+  */
+ 
+ /**********************KHR/reatcphp-mysql code*********************
+  * /*$makeConnection = function () {
+            return mysqli_connect('localhost', 'user', 'pass', 'dbname');
+        };
+        
+        $mysql = new \KHR\React\Mysql\Client($loop, new \KHR\React\Mysql\Pool(function(){
+            return mysqli_connect('localhost','wheel','induction','wheelsystem');
+        }, 100));
+        $distance=$arr['distance'];
+        $mysql->query("INSERT INTO DistanceTravelled (DistanceID,Distance) VALUES ('',$distance)")
+        ->then(function ($result) use ($arr,$response){ 
+                $arr['affected_rows']=$result->affected_rows; 
+                $arr_json=json_encode($arr);
+                return $response->withHeader("Content-Type", "application/json")
+                ->getBody()
+                ->write($arr_json);
+            },
+            function ($error) use ($arr,$response){ 
+                $arr_json=json_encode($arr);
+                return $response->withHeader("Content-Type", "application/json")
+                ->getBody()
+                ->write($arr_json);                
+            }
+        );
+  */
+ 
+?>
