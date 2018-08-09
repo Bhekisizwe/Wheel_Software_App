@@ -1,0 +1,22 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class License
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+    
+    public function listLicenseData()
+}
+

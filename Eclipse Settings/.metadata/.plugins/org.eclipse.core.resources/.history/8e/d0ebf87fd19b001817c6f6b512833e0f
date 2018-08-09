@@ -1,0 +1,102 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class SystemLicenseBO extends BusinessObject
+{
+       
+    private $licenseID; //Primary Key from database    
+    private $companyName;   //Name of client's company
+    private $postalAddressArray;    //associative array containing the full address of the client
+    private $licenseLimit;      //Maximum number of active users the specific license allows in the system
+    private $objectNumOfFields=7; 
+ 
+    public function set(array $data){
+        foreach($data as $key => $value){
+            switch($key){
+                case "licenseID":
+                    $this->licenseID=$value;
+                    break;
+                case "companyName":
+                    $this->companyName=$value;
+                    break;
+                case "postalAddressArray":
+                    $this->postalAddressArray=$value;
+                    break;
+                case "licenseLimit":
+                    $this->licenseLimit=$value;
+                    break;
+            }
+        }
+    }
+    /**
+     * @return mixed
+     */
+    public function getLicenseID()
+    {
+        return $this->licenseID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompanyName()
+    {        
+        return $this->companyName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostalAddressArray()
+    {
+        return $this->postalAddressArray;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLicenseLimit()
+    {
+        return $this->licenseLimit;
+    }   
+
+    /**
+     * @param mixed $licenseID
+     */
+    public function setLicenseID($licenseID)
+    {
+        $this->licenseID = $licenseID;
+    }
+
+    /**
+     * @param mixed $companyName
+     */
+    public function setCompanyName($companyName)
+    {
+        $this->companyName = $companyName;
+    }
+
+    /**
+     * @param mixed $postalAddressArray
+     */
+    public function setPostalAddressArray($postalAddressArray)
+    {
+        $this->postalAddressArray = $postalAddressArray;
+    }
+
+    /**
+     * @param mixed $licenseLimit
+     */
+    public function setLicenseLimit($licenseLimit)
+    {
+        $this->licenseLimit = $licenseLimit;
+    }
+    
+    
+}
+

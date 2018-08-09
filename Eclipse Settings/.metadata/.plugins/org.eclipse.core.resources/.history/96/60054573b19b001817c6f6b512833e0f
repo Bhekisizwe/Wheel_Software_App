@@ -1,0 +1,18 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class SystemLicenseBO extends BusinessObject
+{
+    private $objectNumOfFields;    
+    private $licenseID; //Primary Key from database    
+    private $companyName;   //Name of client's company
+    private $postalAddressArray;    //associative array containing the full address of the client
+    private $licenseLimit;      //Maximum number of active users the specific license allows in the system
+    
+}
+

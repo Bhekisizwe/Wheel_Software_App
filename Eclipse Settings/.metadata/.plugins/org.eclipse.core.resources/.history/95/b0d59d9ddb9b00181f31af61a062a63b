@@ -1,0 +1,17 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ErrorLog
+{
+
+    /**
+     */
+    public function __construct()
+    {}
+}
+

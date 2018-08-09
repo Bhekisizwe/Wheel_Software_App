@@ -1,0 +1,109 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/UserClasses/BusinessLayer/License.php';
+
+require __DIR__.'/../vendor/autoload.php';
+
+/**
+ * License test case.
+ */
+class LicenseTest extends TestCase
+{
+
+    /**
+     *
+     * @var License
+     */
+    private $license;
+    private $data;
+    private $arr_add;
+    private $arr_update;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated LicenseTest::setUp()
+        
+        $this->license = new License();
+        $this->data=new SystemLicenseBO();
+        //prepare test data
+        $arr_addr=array();
+        $arr_addr["AddressType"]=1;
+        $arr_addr["AddressLine1"]="C13 Windmills, Muller South Street";
+        $arr_addr["Surburb"]="Buccleuch";
+        $arr_addr["City"]="Johannesburg";
+        $arr_addr["Country"]="South Africa";
+        $arr_addr["PostalCode"]="2066";
+        $arr_add=array();
+        $arr_add["companyName"]="CSIR";
+        $arr_add["postalAddressArray"]=$arr_addr;
+        $arr_add["licenseLimit"]=100;
+        $this->arr_add=$arr_add;
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated LicenseTest::tearDown()
+        $this->license = null;
+        $this->data=null;
+        
+        parent::tearDown();
+    }    
+
+    /**
+     * Tests License->listLicenseData()
+     */
+    public function testListLicenseData()
+    {
+        // TODO Auto-generated LicenseTest->testListLicenseData()
+        //$this->markTestIncomplete("listLicenseData test not implemented");
+        
+        $this->license->listLicenseData();
+    }
+
+    /**
+     * Tests License->checkLicenseExists()
+     */
+    public function testCheckLicenseExists()
+    {
+        // TODO Auto-generated LicenseTest->testCheckLicenseExists()
+        //$this->markTestIncomplete("checkLicenseExists test not implemented");
+        
+        $this->license->checkLicenseExists();
+    }
+
+    /**
+     * Tests License->addLicense()
+     */
+    public function testAddLicense()
+    {
+        // TODO Auto-generated LicenseTest->testAddLicense()
+        //$this->markTestIncomplete("addLicense test not implemented");
+        $arr=array();
+        //load test license data into array
+        $arr
+        $this->license->addLicense();
+    }
+
+    /**
+     * Tests License->updateLicense()
+     */
+    public function testUpdateLicense()
+    {
+        // TODO Auto-generated LicenseTest->testUpdateLicense()
+        //$this->markTestIncomplete("updateLicense test not implemented");
+        
+        $this->license->updateLicense();
+    }
+}
+

@@ -1,0 +1,22 @@
+<?php
+
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+
+require __DIR__.'/vendor/autoload.php';
+
+$lic=new License();
+$arr_addr=array();
+$arr_addr["AddressType"]=1;
+$arr_addr["AddressLine1"]="C13 Windmills, Muller South Street";
+$arr_addr["Surburb"]="Buccleuch";
+$arr_addr["City"]="Johannesburg";
+$arr_addr["Country"]="South Africa";
+$arr_addr["PostalCode"]="2066";
+$arr_add=array();
+$arr_add["companyName"]="CSIR";
+$arr_add["postalAddressArray"]=$arr_addr;
+$arr_add["licenseLimit"]=100;
+$data=new SystemLicenseBO();
+$data->set($arr_add);
+$lic->addLicense($data);

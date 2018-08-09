@@ -1,0 +1,57 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\DataLayer\SystemLicenseDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *
+ */
+class License
+{
+    
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+    //return: Array of SystemLicenseBO objects
+    public function listLicenseData(SystemLicenseBO $data=null):array {
+        
+    }
+    //return: Boolean
+    public function checkLicenseExists(SystemLicenseBO $data=null):bool {
+        
+    }
+    //return: Boolean
+    public function addLicense(SystemLicenseBO $data=null):bool {
+        if(isset($data)) {
+            $licenseDL=new SystemLicenseDL();
+            $arr=$data->getArray(); //convert Object Into array
+            print_r($arr);
+            $status_message=$licenseDL->create($arr);  //submit data for creation
+            return $status_message;
+        }
+        else return false;
+    }
+    //return: Boolean
+    public function updateLicense(SystemLicenseBO $data=null):bool {
+        
+    }
+    //return: Array of Email message to be sent
+    private function generateEmailMessage():array {
+        
+    }
+    //return: Boolean
+    private function sendEmail():bool {
+        
+    }
+    
+}
+
+
+

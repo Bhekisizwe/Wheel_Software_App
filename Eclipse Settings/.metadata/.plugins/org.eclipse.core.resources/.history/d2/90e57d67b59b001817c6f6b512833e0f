@@ -1,0 +1,24 @@
+<?php
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+abstract class DatabaseManager
+{
+    private $host="127.0.0.1";
+    private $user="wheel";
+    private $passwd="induction";
+    private $dbname="wheelsystem";
+    
+    public function dbConnect(){
+        $connector=new \mysqli($this->host,$this->user,$this->passwd,$this->dbname); 
+        if(isset($connector->connect_error)){
+            return NULL;
+        }
+        else return $connector;
+    }
+}
+

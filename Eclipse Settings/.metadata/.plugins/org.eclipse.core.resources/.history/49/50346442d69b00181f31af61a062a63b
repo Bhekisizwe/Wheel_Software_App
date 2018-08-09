@@ -1,0 +1,47 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\SystemLicenseBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class License
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+    //return: Array of SystemLicenseBO objects
+    public function listLicenseData(SystemLicenseBO $data=null):array {
+        
+    }
+    //return: Boolean
+    public function checkLicenseExists(SystemLicenseBO $data=null):bool {
+        
+    }
+    //return: Boolean
+    public function addLicense(SystemLicenseBO $data=null):bool {
+                    
+    }
+    //return: Boolean
+    public function updateLicense(SystemLicenseBO $data=null):bool {
+        
+    }
+    //return: Array of Email message to be sent
+    private function generateEmailMessage():array {
+        
+    }
+    //return: Boolean
+    private function sendEmail():bool {
+        
+    }   
+    
+}
+

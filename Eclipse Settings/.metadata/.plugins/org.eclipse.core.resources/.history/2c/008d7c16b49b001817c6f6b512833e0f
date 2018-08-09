@@ -1,0 +1,15 @@
+<?php
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+abstract class DatabaseManager
+{
+    public function dbConnect(){
+        $connector=new \mysqli();    
+    }
+}
+

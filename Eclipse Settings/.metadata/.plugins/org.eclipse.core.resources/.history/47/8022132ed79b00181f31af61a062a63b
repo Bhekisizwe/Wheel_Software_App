@@ -1,0 +1,23 @@
+<?php
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+interface DatabaseFunctionsInt
+{
+    public function create(object $data):bool;
+    
+    public function update(object $data):bool;
+    
+    public function delete(object $data):bool;
+    
+    public function searchData(object $data):array;
+    
+    public function dataExists(object $data):bool;
+    
+    public function getPrimaryKey();
+}
+

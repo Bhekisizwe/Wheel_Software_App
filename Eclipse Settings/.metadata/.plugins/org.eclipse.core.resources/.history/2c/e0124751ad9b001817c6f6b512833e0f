@@ -1,0 +1,14 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+abstract class BusinessObject
+{
+    protected $transactionStatus=False;
+    protected $errorAssocArray;
+}
+

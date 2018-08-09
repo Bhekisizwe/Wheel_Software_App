@@ -1,0 +1,99 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class SystemLicenseBO extends BusinessObject
+{
+       
+    private $licenseID; //Primary Key from database    
+    private $companyName;   //Name of client's company
+    private $postalAddressArray;    //associative array containing the full address of the client
+    private $licenseLimit;      //Maximum number of active users the specific license allows in the system
+    private $objectNumOfFields=7; 
+    /**
+     * @return number
+     */
+    public function getObjectNumOfFields()
+    {
+        return $this->objectNumOfFields;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLicenseID()
+    {
+        return $this->licenseID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompanyName()
+    {        
+        return $this->companyName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostalAddressArray()
+    {
+        return $this->postalAddressArray;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLicenseLimit()
+    {
+        return $this->licenseLimit;
+    }
+
+    /**
+     * @param number $objectNumOfFields
+     */
+    public function setObjectNumOfFields($objectNumOfFields)
+    {
+        $this->objectNumOfFields = $objectNumOfFields;
+    }
+
+    /**
+     * @param mixed $licenseID
+     */
+    public function setLicenseID($licenseID)
+    {
+        $this->licenseID = $licenseID;
+    }
+
+    /**
+     * @param mixed $companyName
+     */
+    public function setCompanyName($companyName)
+    {
+        $this->companyName = $companyName;
+    }
+
+    /**
+     * @param mixed $postalAddressArray
+     */
+    public function setPostalAddressArray($postalAddressArray)
+    {
+        $this->postalAddressArray = $postalAddressArray;
+    }
+
+    /**
+     * @param mixed $licenseLimit
+     */
+    public function setLicenseLimit($licenseLimit)
+    {
+        $this->licenseLimit = $licenseLimit;
+    }
+    
+    
+}
+

@@ -1,2 +1,2 @@
-1.) Oops, error in Class ErrorLogTest within method testLogErrorsMethod has occured at 2018-08-08 22:50:27 .Error message is Yesses i miss Royal Park Hotel
+1.) Oops, error in Class Email within method sendEmail has occured at 2018-08-10 01:12:44 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 

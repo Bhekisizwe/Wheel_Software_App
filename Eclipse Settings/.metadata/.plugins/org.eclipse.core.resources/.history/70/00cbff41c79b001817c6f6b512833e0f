@@ -1,0 +1,19 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class License
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+}
+

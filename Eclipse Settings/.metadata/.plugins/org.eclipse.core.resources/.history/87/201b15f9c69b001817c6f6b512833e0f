@@ -1,0 +1,17 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ActivityLog
+{
+
+    /**
+     */
+    public function __construct()
+    {}
+}
+

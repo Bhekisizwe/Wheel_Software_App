@@ -1,0 +1,113 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+use UserClasses\BusinessObjects\SystemLicenseBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class SystemLicenseDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey()
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(SystemLicenseBO $data):bool
+    {        
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***INSERT License Data into Database*******/
+            $query="INSERT INTO SystemLicense";
+            $query.=" (LicenseID,CompanyName,AddressType,AddressLine1,Surburb,City,Country,PostalCode,LicenseType)";
+            $query.=" VALUES ('',?,?,?,?,?,?,?,?)";
+            //prepare SQL script for execution
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $company=$data->getCompanyName();
+            $addr_arr=$data->getPostalAddressArray();
+            $license_type=$data->getLicenseLimit();
+            $stmt->bind_param("sisssssi",$company,$addr_arr['AddressType'],$addr_arr['AddressLine1'],$addr_arr['Surburb'],$addr_arr['City'],$addr_arr['Country'],$addr_arr['PostalCode'],$license_type);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector); //Close Database Connection
+            return $status_message;
+        } 
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(SystemLicenseBO $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /***UPDATE License Data in Database*******/
+            $query="UPDATE SystemLicense SET ";
+            $query.="CompanyName=?,AddressType=?,AddressLine1=?,Surburb=?,City=?,Country=?,PostalCode=?,";
+            $query.="LicenseType=? WHERE LicenseID=?";
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $company=$data->getCompanyName();
+            $addr_arr=$data->getPostalAddressArray();
+            $license_type=$data->getLicenseLimit();
+            $licenseID=$data->getLicenseID();
+            $stmt->bind_param("sisssssii",$company,$addr_arr['AddressType'],$addr_arr['AddressLine1'],$addr_arr['Surburb'],$addr_arr['City'],$addr_arr['Country'],$addr_arr['PostalCode'],$license_type,$licenseID);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector); //Close Database Connection
+            return $status_message;
+        }
+        else return false;        
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists($data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*****Check if License Data already exists in Database*******/
+            $query="SELECT * FROM SystemLicense";
+            $result=$connector->query($query);
+        }
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete($data)
+    {
+        
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData($data)
+    {
+        
+    }
+}
+

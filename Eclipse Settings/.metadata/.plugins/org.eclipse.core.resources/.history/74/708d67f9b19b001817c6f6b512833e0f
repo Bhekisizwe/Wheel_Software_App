@@ -1,0 +1,17 @@
+<?php
+namespace UserClasses\DataLayer;
+
+
+
+
+
+
+
+
+/** 
+ * @author Bheki Mthethwa
+ * 
+ */
+ interface DatabaseFunctionsInt {
+}
+

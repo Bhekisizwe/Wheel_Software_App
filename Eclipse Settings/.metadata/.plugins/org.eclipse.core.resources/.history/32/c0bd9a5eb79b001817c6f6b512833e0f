@@ -1,0 +1,86 @@
+<?php
+namespace UserClasses\DataLayer;
+
+use UserClasses\BusinessObjects\SystemLicenseBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class SystemLicenseDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey()
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create($data):bool
+    {
+        if($data instanceof SystemLicenseBO){
+            
+        }
+        else{
+            try{
+                throw new Error("object passed to method is not of the SystemLicenseBO type");    
+            }
+            catch(\Error $err){
+                $class_name="SystemLicenseDL";
+                $method_name="create";
+                $err_handler=new ErrorLog();
+                //log error
+                $err_handler->logErrors(NULL,$err,$class_name,$method_name); 
+            }
+        }
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update($data)
+    {
+        
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists($data)
+    {
+        
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete($data)
+    {
+        
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData($data)
+    {
+        
+    }
+}
+

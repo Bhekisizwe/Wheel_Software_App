@@ -1,0 +1,61 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\ActivityLog;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/UserClasses/BusinessLayer/ActivityLog.php';
+
+/**
+ * ActivityLog test case.
+ */
+class ActivityLogTest extends TestCase
+{
+
+    /**
+     *
+     * @var ActivityLog
+     */
+    private $activityLog;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated ActivityLogTest::setUp()
+        
+        $this->activityLog = new ActivityLog(/* parameters */);
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated ActivityLogTest::tearDown()
+        $this->activityLog = null;
+        
+        parent::tearDown();
+    }
+
+    /**
+     * Constructs the test case.
+     */
+    public function __construct()
+    {
+        // TODO Auto-generated constructor
+    }
+
+    /**
+     * Tests ActivityLog->__construct()
+     */
+    public function test__construct()
+    {
+        // TODO Auto-generated ActivityLogTest->test__construct()
+        $this->markTestIncomplete("__construct test not implemented");
+        
+        $this->activityLog->__construct(/* parameters */);
+    }
+}
+

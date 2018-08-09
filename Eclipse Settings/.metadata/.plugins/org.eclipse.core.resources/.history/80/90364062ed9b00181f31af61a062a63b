@@ -1,0 +1,136 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\DataLayer\SystemLicenseDL;
+use PHPUnit\Util\ErrorHandler;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *
+ */
+class License
+{
+    
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+    //return: Array of SystemLicenseBO objects
+    public function listLicenseData(SystemLicenseBO $data=null):array {
+        if(isset($data)) {
+            $licenseDL=new SystemLicenseDL();
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            try{
+                $results_arr=$licenseDL->searchData($arr);
+            }
+            catch (\Exception $e){
+                $class_name="License";
+                $method_name="listLicenseData";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($licenseDL);
+                unset($err_handler);                
+            }           
+            return $results_arr;
+        }
+        else return NULL;
+    }
+    //return: Boolean
+    public function checkLicenseExists(SystemLicenseBO $data=null):bool {
+        if(isset($data)) {
+            $licenseDL=new SystemLicenseDL();
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            //print_r($arr);
+            try{
+                $status_message=$licenseDL->dataExists($arr);  //submit data for checking duplicate
+            }
+            catch (\Exception $e){
+                $class_name="License";
+                $method_name="checkLicenseExists";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($licenseDL);
+                unset($err_handler);
+            }            
+            return $status_message;
+        }
+        else return false;
+    }
+    //return: Boolean
+    public function addLicense(SystemLicenseBO $data=null):bool {
+        if(isset($data)) {
+            $licenseDL=new SystemLicenseDL();
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            try{
+                $status_message=$licenseDL->create($arr);  //submit data for creation 
+            }
+            catch (\Exception $e){
+                $class_name="License";
+                $method_name="addLicense";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($licenseDL);
+                unset($err_handler);
+            }            
+            //print_r($arr);                      
+            return $status_message;
+        }
+        else return false;
+    }
+    //return: Boolean
+    public function updateLicense(SystemLicenseBO $data=null):bool {
+        if(isset($data)) {
+            $licenseDL=new SystemLicenseDL();
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            try{
+                $status_message=$licenseDL->update($arr);  //submit data for updating
+            }
+            catch (\Exception $e){
+                $class_name="License";
+                $method_name="updateLicense";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($licenseDL);
+                unset($err_handler);
+            }
+            //print_r($arr);
+           
+            
+            return $status_message;
+        }
+        else return false;
+    }
+    //return: Array of Email message to be sent
+    private function generateEmailMessage():array {
+        
+    }
+    //return: Boolean
+    private function sendEmail():bool {
+        
+    }
+    
+}
+
+
+

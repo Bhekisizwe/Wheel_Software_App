@@ -1,0 +1,33 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+use PHPMailer\PHPMailer\PHPMailer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class Email
+{     
+    //return: Boolean
+    protected function sendEmail(array $arr=NULL):bool {
+        //this function will actually do the email sending
+        if(isset($arr)){
+            $sender=new PHPMailer(true);
+            $sender->From("systemadmin@gqunsueng.co.za");
+            $sender->isHTML(TRUE);
+            $sender->Subject($arr["subject"]);
+            $sender->addAddress($arr["to"]);
+            $sender->SMTPAuth=True;
+            $sender->Username="bmthethwa@gqunsueng.co.za";
+            $sender->Password="Induction1";
+            $sender->SMTPSecure="ssl";
+            $sender->Port=465;
+            $sender->isSMTP();
+            $sender->Body($arr["body"]);            
+        }
+        else return false;        
+    }
+}
+

@@ -1,0 +1,20 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+interface DatabaseFunctionsInt
+{
+    public function create($data):bool;
+    
+    public function update($data):bool;
+    
+    public function delete($data):bool;
+    
+    public function searchData($data):array;
+}
+

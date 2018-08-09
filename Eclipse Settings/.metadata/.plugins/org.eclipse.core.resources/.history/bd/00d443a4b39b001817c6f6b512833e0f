@@ -1,0 +1,12 @@
+<?php
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+abstract class DatabaseManager
+{
+}
+

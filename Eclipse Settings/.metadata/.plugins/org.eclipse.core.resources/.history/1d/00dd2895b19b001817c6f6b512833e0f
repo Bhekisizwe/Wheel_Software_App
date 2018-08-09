@@ -1,0 +1,46 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *
+ */
+abstract class BusinessObject
+{
+    //status of request processing
+    protected $transactionStatus=False;
+    //associative array of errors
+    protected $errorAssocArray;
+    //action code sent from the client {Edit or Add}
+    protected $actionCode;
+    //number of fields contained in this Business Object
+    private $objectNumOfFields=0;
+    
+    public function getArray():array {
+        //create array to contain business objects data
+        $arr=array();
+        $i=0;   //count of number of Object parameters read into array.
+        foreach($this as $key => $value){
+            if($i<$this->objectNumOfFields){
+                $arr[$key]=$value;
+                $i++;
+            }
+        }
+        return $arr;
+    }
+    
+    public function setObjectParameters(array $arr) {
+        $i=0;   //counter of number of objects read from array into object
+        foreach ($this as $key => &$value){
+            if($i<$this->objectNumOfFields){
+                $value=$arr[$key];
+                $i++;
+            }
+        }
+    }
+}
+
+
+
