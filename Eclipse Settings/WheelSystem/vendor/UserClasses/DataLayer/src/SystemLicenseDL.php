@@ -17,8 +17,31 @@ class SystemLicenseDL extends DatabaseManager implements DatabaseFunctionsInt
      *
      * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
      */
-    public function getPrimaryKey():int
-    {}
+    public function getPrimaryKey(array $data):int
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*********RETRIEVE License Data from Database*************/
+            $query="SELECT * FROM SystemLicense WHERE LicenseID>0 LIMIT 1";
+            $result=$connector->query($query);
+            if($result){
+                if($result->num_rows>0){
+                    $arr=array();   //create array to store the result set data from the database
+                    while($rows=$result->fetch_assoc()){
+                        $arr[]=$rows;   //append Associative array of $rows to the end of the array $arr
+                    }
+                    $this->dbClose($connector);
+                    return (int) $arr[0]["LicenseID"];
+                }
+                else return (int) $result->num_rows;
+            }
+            else{
+                $this->dbClose($connector);
+                return 0;
+            }
+        }
+        else return 0;
+    }
 
     /**
      * (non-PHPdoc)
@@ -107,7 +130,14 @@ class SystemLicenseDL extends DatabaseManager implements DatabaseFunctionsInt
      */
     public function delete(array $data):bool
     {
-        
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            $query="DELETE FROM SystemLicense WHERE LicenseID>0";
+            $status_message=$connector->query($query);
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
     }
 
     /**

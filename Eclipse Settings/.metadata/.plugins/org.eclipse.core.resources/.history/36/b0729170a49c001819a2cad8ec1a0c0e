@@ -1,0 +1,137 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\ {
+    BusinessLayer\TermsAndConditions,
+    BusinessObjects\TermsConditionsBO,
+    DataLayer\SystemLicenseDL,
+    DataLayer\TermsConditionDL
+};
+
+require_once 'vendor/UserClasses/BusinessLayer/src/TermsAndConditions.php';
+
+/**
+ * TermsAndConditions test case.
+ */
+class TermsAndConditionsTest extends TestCase
+{
+
+    /**
+     *
+     * @var TermsAndConditions
+     */
+    private $termsAndConditions;
+    private $data;
+    private $arr_update;
+    private $arr_add;
+    private $deleteObjLicense;
+    private $deleteObjTerms;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated TermsAndConditionsTest::setUp()
+        
+        $this->termsAndConditions = new TermsAndConditions();
+        $this->data=new TermsConditionsBO();
+        $this->deleteObjLicense=new SystemLicenseDL();
+        $this->deleteObjTerms=new TermsConditionDL();
+        //prepare test data        
+        $arr_add=array();        
+        $arr_add["terms"]="This contract is legally binding for the next 3 years!";       
+        $this->arr_add=$arr_add;
+        //prepare update test data       
+        $arr_update=array();        
+        $arr_update["terms"]="This contract is no-longer valid";       
+        $this->arr_update=$arr_update;
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated TermsAndConditionsTest::tearDown()
+        $this->termsAndConditions = null;
+        $this->deleteObjLicense=null;
+        $this->deleteObjTerms=null;
+        $this->data=null;
+        parent::tearDown();
+    }
+
+    /**
+     * Tests TermsAndConditions->listTermsData()
+     */
+    public function testListTermsDataWhenDataDoesNotExist()
+    {
+        // TODO Auto-generated TermsAndConditionsTest->testListTermsData()
+        //$this->markTestIncomplete("listTermsData test not implemented");
+        $this->deleteObjTerms->delete($this->arr_add);  //make sure Terms data is deleted in database
+        $this->data->set($this->arr_add);
+        $arr=$this->termsAndConditions->listTermsData($this->data);
+        $this->assertEquals(0,count($arr));
+    }
+
+    /**
+     * Tests TermsAndConditions->checkTermsExist()
+     */
+    public function testCheckTermsExistWhenItDoesNotExist()
+    {
+        // TODO Auto-generated TermsAndConditionsTest->testCheckTermsExist()
+        //$this->markTestIncomplete("checkTermsExist test not implemented");
+        $this->deleteObjTerms->delete($this->arr_add);  //make sure Terms data is deleted in database
+        $this->data->set($this->arr_add);
+        $status=$this->termsAndConditions->checkTermsExist($this->data);
+        $this->assertEquals(FALSE,$status);
+    }
+    
+    public function testAddTermsWithLicenseDataMissing()
+    {
+        // TODO Auto-generated TermsAndConditionsTest->testAddTerms()
+        $this->markTestIncomplete("addTerms test not implemented");
+        
+        $this->termsAndConditions->addTerms();
+    }
+
+    /**
+     * Tests TermsAndConditions->addTerms()
+     */
+    public function testAddTermsWithEverythingOK()
+    {
+        // TODO Auto-generated TermsAndConditionsTest->testAddTerms()
+        $this->markTestIncomplete("addTerms test not implemented");
+        
+        $this->termsAndConditions->addTerms();
+    }
+    
+    public function testCheckTermsExistWhenItDoesExist()
+    {
+        // TODO Auto-generated TermsAndConditionsTest->testCheckTermsExist()
+        $this->markTestIncomplete("checkTermsExist test not implemented");
+        
+        $this->termsAndConditions->checkTermsExist();
+    }
+    
+    public function testListTermsDataWhenDataDoesExist()
+    {
+        // TODO Auto-generated TermsAndConditionsTest->testListTermsData()
+        $this->markTestIncomplete("listTermsData test not implemented");
+        
+        $this->termsAndConditions->listTermsData();
+    }
+
+    /**
+     * Tests TermsAndConditions->updateTerms()
+     */
+    public function testUpdateTermsWithOKData()
+    {
+        // TODO Auto-generated TermsAndConditionsTest->testUpdateTerms()
+        $this->markTestIncomplete("updateTerms test not implemented");
+        
+        $this->termsAndConditions->updateTerms();
+    }
+}
+

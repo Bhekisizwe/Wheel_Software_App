@@ -3,6 +3,9 @@
 use UserClasses\BusinessLayer\License;
 use UserClasses\BusinessObjects\SystemLicenseBO;
 use UserClasses\BusinessLayer\Email;
+use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\BusinessLayer\TermsAndConditions;
+use UserClasses\BusinessObjects\TermsConditionsBO;
 
 require __DIR__.'/vendor/autoload.php';
 
@@ -18,19 +21,12 @@ $arr_add=array();
 $arr_add["companyName"]="Logiman";
 $arr_add["postalAddressArray"]=$arr_addr;
 $arr_add["licenseLimit"]=100;
-$data=new SystemLicenseBO();
+$termsObj=new TermsAndConditions();
+$termsBO=new TermsConditionsBO();
+$termsBO->setTerms("Fuck You");
+$termsBO->setTermsID(14);
+$termsObj->updateTerms($termsBO);
 
-//$arr=$data->getArray();
-//$lic->addLicense($data);
-$babes=$lic->listLicenseData($data);
-$id=$babes[0]["LicenseID"];
-$arr_add["licenseID"]=$id;
-$data->set($arr_add);
-$arr=$data->getArray();
-$lic->updateLicense($data);
-$sender=new Email();
-$arr["to"]="tshomie2020@yahoo.com";
-$arr["subject"]="Fuck you!!!";
-$arr["body"]="The BodyXXX is so sexy";
-$sender->sendEmail($arr);
+
+
 

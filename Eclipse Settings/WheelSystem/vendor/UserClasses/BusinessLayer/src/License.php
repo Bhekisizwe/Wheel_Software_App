@@ -2,8 +2,11 @@
 declare(strict_types=1);
 namespace UserClasses\BusinessLayer;
 
-use UserClasses\BusinessObjects\SystemLicenseBO;
-use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\ {
+    BusinessObjects\SystemLicenseBO,
+    DataLayer\SystemLicenseDL
+};
+
 use PHPUnit\Util\ErrorHandler;
 
 /**
@@ -21,6 +24,11 @@ class License
     {
         $this->sender=new Email();
     }
+    
+    public function __destruct(){
+        $this->sender=null;
+    }
+    
     //return: Array of SystemLicenseBO objects
     public function listLicenseData(SystemLicenseBO $data=null):array {
         if(isset($data)) {
@@ -107,6 +115,9 @@ class License
                     $arr_email=$this->generateEmailMessage();
                     $this->sender->sendEmail($arr_email);
                 }
+                else {
+                    throw new \Exception("Update of system license information was unsuccessful");
+                }
             }
             catch (\Exception $e){
                 $class_name="License";
@@ -138,6 +149,7 @@ class License
         $body.=" ".$arr_results[0]["Surburb"]." in ".$arr_results[0]["City"]." has been updated<p>";
         $body.=" By Order (Gqunsu Engineering Pty Ltd)";
         $arr_email["body"]=$body;
+        unset($data);
         return $arr_email;
     }    
 }

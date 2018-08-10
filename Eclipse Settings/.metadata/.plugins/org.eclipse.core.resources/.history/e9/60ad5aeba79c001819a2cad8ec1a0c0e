@@ -1,0 +1,89 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\DataLayer\TermsConditionDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class TermsAndConditions
+{
+    private $sender;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->sender=new Email();    
+    }
+    
+    public function __destruct(){
+        $this->sender=null;
+    }
+    
+    public function listTermsData(TermsConditionsBO $data=null):array {
+        if(isset($data)) {
+            $termsDL=new TermsConditionDL();
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            try{
+                $results_arr=$termsDL->searchData($arr);
+            }
+            catch (\Exception $e){
+                $class_name="TermsAndConditions";
+                $method_name="listTermsData";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($termsDL);
+                unset($err_handler);
+            }
+            return $results_arr;
+        }
+        else return NULL;
+    }
+    
+    public function checkTermsExist(TermsConditionsBO $data=null):bool {
+        if(isset($data)) {
+            $termsDL=new TermsConditionDL();
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            //print_r($arr);
+            try{
+                $status_message=$termsDL->dataExists($arr);  //submit data for checking duplicate
+            }
+            catch (\Exception $e){
+                $class_name="TermsAndConditions";
+                $method_name="checkTermsExist";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($termsDL);
+                unset($err_handler);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function addTerms(TermsConditionsBO $data=null):bool {
+        
+    }
+    
+    public function updateTerms(TermsConditionsBO $data=null):bool {
+        
+    }
+    
+    private function generateEmailMessage():array {
+        
+    }    
+ 
+}
+

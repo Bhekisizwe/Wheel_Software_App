@@ -1,0 +1,29 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+
+
+
+
+
+
+
+/** 
+ * @author Bheki Mthethwa
+ * 
+ */
+  class TermsAndConditions  {
+  
+  
+
+  
+  
+  /**
+   * 
+    */
+  public  function __construct() {
+      
+      
+  }
+}
+

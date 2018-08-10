@@ -1,0 +1,21 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class TermsConditionsBO extends BusinessObject
+{
+    private $termsID=0;
+    private $licenseID=0;
+    private $companyName="";
+    private $postalAddressArray;
+    private $terms="";
+    private $dateModified="";
+    
+    
+    
+}
+

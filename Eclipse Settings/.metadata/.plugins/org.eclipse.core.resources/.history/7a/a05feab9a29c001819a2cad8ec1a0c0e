@@ -1,0 +1,43 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\TermsConditionsBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class TermsAndConditions
+{
+    private $sender;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->sender=new Email();    
+    }
+    
+    public function listTermsData(TermsConditionsBO $data):array {
+        
+    }
+    
+    public function checkTermsExist(TermsConditionsBO $data):bool {
+        
+    }
+    
+    public function addTerms(TermsConditionsBO $data):bool {
+        
+    }
+    
+    public function updateTerms(TermsConditionsBO $data):bool {
+        
+    }
+    
+    private function generateEmailMessage():array {
+        
+    }    
+ 
+}
+

@@ -1,8 +1,11 @@
 <?php
 use PHPUnit\Framework\TestCase;
-use UserClasses\BusinessLayer\License;
-use UserClasses\BusinessObjects\SystemLicenseBO;
-
+use UserClasses\ {
+    BusinessLayer\License,
+    BusinessObjects\SystemLicenseBO,
+    DataLayer\SystemLicenseDL
+};
+    
 require_once 'vendor/UserClasses/BusinessLayer/src/License.php';
 
 require __DIR__.'/../vendor/autoload.php';
@@ -22,6 +25,7 @@ class LicenseTest extends TestCase
     private $arr_add;
     private $arr_update;
     private $arr_results;
+    private $deleteObj;
 
     /**
      * Prepares the environment before running a test.
@@ -34,6 +38,7 @@ class LicenseTest extends TestCase
         
         $this->license = new License();
         $this->data=new SystemLicenseBO();
+        $this->deleteObj=new SystemLicenseDL();
         //prepare test data
         $arr_addr=array();
         $arr_addr["AddressType"]=1;
@@ -70,6 +75,7 @@ class LicenseTest extends TestCase
         // TODO Auto-generated LicenseTest::tearDown()
         $this->license = null;
         $this->data=null;
+        $this->deleteObj=null;
         
         parent::tearDown();
     }    
@@ -81,7 +87,7 @@ class LicenseTest extends TestCase
     {
         // TODO Auto-generated LicenseTest->testListLicenseData()
         //$this->markTestIncomplete("listLicenseData test not implemented");
-        
+        $this->deleteObj->delete($this->arr_add);   //Make sure database is empty
         $this->data->set($this->arr_add);
         $arr=$this->license->listLicenseData($this->data);        
         $this->assertEquals(0,count($arr));
@@ -95,6 +101,7 @@ class LicenseTest extends TestCase
         // TODO Auto-generated LicenseTest->testCheckLicenseExists()
         //$this->markTestIncomplete("checkLicenseExists test not implemented");
         //load test license data into SystemLicenseBO object
+        $this->deleteObj->delete($this->arr_add);   //Make sure database is empty
         $this->data->set($this->arr_add);
         $status=$this->license->checkLicenseExists($this->data);
         $this->assertEquals(FALSE,$status);
@@ -119,8 +126,7 @@ class LicenseTest extends TestCase
         // TODO Auto-generated LicenseTest->testListLicenseData()
         //$this->markTestIncomplete("listLicenseData test not implemented");
         $this->data->set($this->arr_add);
-        $arr=$this->license->listLicenseData($this->data);
-        $this->arr_results=$arr;
+        $arr=$this->license->listLicenseData($this->data);        
         $this->assertEquals(1,count($arr));
     }
     
@@ -142,7 +148,8 @@ class LicenseTest extends TestCase
         // TODO Auto-generated LicenseTest->testUpdateLicense()
         //$this->markTestIncomplete("updateLicense test not implemented");
         //load test license data into SystemLicenseBO object
-        $this->arr_update["licenseID"]=$this->arr_results[0]["LicenseID"];
+        $arr=$this->license->listLicenseData($this->data); 
+        $this->arr_update["licenseID"]=(int)$arr[0]["LicenseID"];
         $this->data->set($this->arr_update);
         $status=$this->license->updateLicense($this->data);
         $this->assertEquals(TRUE,$status);

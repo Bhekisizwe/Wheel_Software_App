@@ -18,6 +18,6 @@ interface DatabaseFunctionsInt
     
     public function dataExists(array $data):bool;
     
-    public function getPrimaryKey():int;
+    public function getPrimaryKey(array $data):int;
 }
 
