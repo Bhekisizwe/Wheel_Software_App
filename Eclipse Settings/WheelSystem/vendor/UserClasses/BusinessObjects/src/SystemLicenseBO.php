@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace UserClasses\BusinessObjects;
 
 /**
@@ -13,6 +14,10 @@ class SystemLicenseBO extends BusinessObject
     private $companyName;   //Name of client's company
     private $postalAddressArray;    //associative array containing the full address of the client
     private $licenseLimit;      //Maximum number of active users the specific license allows in the system
+    
+    public function __construct(){
+        $this->setObjectNumOfFields(8);    
+    }
     
     public function set(array $data){
         

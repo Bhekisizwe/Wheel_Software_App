@@ -21,6 +21,14 @@ abstract class BusinessObject
     private $objectNumOfFields=8;
         
     /**
+     * @param number $objectNumOfFields
+     */
+    protected function setObjectNumOfFields($objectNumOfFields)
+    {
+        $this->objectNumOfFields = $objectNumOfFields;
+    }
+
+    /**
      * @return number
      */
     public function getObjectNumOfFields()

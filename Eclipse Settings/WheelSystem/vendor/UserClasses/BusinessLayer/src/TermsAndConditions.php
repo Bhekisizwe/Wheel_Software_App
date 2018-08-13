@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace UserClasses\BusinessLayer;
 
 use UserClasses\ {
@@ -102,8 +103,9 @@ class TermsAndConditions
                     //The Parent System License Data is missing
                     $status_message=false;
                     $err=array();
-                    $err_descr="The system license data is missing within the database. Complete that first!";
+                    $err_descr="The system license data is missing within the database. Please complete that first!";
                     $err["errorDescription"]=$err_descr;
+                    $err["errorCode"]="0x01";
                     $this->termsBO->setErrorAssocArray($err);
                     throw new \Exception($err_descr);
                 }

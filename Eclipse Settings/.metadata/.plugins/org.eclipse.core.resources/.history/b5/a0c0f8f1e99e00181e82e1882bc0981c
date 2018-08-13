@@ -1,0 +1,16 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class UserRoleBO extends BusinessObject
+{
+    private $userRole2DArray;
+    private $activityRights2DArray;
+    private $columnVisibility2DArray;
+    
+}
+

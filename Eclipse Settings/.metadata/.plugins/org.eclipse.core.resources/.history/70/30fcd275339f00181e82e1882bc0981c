@@ -1,0 +1,21 @@
+<?php
+    //phpinfo();
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\BusinessLayer\Email;
+use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\BusinessLayer\TermsAndConditions;
+use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\BusinessObjects\UserRoleBO;
+
+require __DIR__.'/vendor/autoload.php';
+
+$arr_2D=array();
+$data=new UserRoleBO();
+$arr_2D["userRole2DArray"][0]["userRoleName"]="Admin";
+$data->set($arr_2D);
+
+
+
+
+

@@ -1,0 +1,25 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\UserRoleBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AccessRights
+{
+    public function listUserRights(UserRoleBO $data):array {
+        if(isset($data)){
+                
+        }
+        else return NULL;
+    }
+    
+    public function updateUserAccessRights(UserRoleBO $data):bool {
+        
+    }
+}
+

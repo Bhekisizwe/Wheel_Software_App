@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace UserClasses\BusinessObjects;
 
 /**
@@ -14,6 +15,10 @@ class TermsConditionsBO extends BusinessObject
     private $postalAddressArray;
     private $terms="";
     private $dateModified="";
+    
+    public function __construct(){
+        $this->setObjectNumOfFields(10);
+    }
     
     /**
      * @return number

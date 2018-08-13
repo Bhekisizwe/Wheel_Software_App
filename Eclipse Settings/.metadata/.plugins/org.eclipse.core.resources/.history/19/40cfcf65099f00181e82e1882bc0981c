@@ -1,0 +1,12 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AccessRights
+{
+}
+

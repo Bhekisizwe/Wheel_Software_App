@@ -1,0 +1,21 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+
+
+
+
+
+
+
+/** 
+ * @author Bheki Mthethwa
+ * 
+ */
+  class UserRoleBO extends BusinessObject {
+  
+  
+
+  
+}
+

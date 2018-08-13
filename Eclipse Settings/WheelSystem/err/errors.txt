@@ -1,6 +1,6 @@
-1.) Oops, error in Class Email within method sendEmail has occured at 2018-08-10 18:46:00 .Exception message is Successfully Sent Email!!!
+1.) Oops, error in Class Email within method sendEmail has occured at 2018-08-14 00:15:24 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-2.) Oops, error in Class Email within method sendEmail has occured at 2018-08-10 18:46:02 .Exception message is Successfully Sent Email!!!
+2.) Oops, error in Class Email within method sendEmail has occured at 2018-08-14 00:15:25 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-3.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-08-10 18:46:02 .Exception message is The system license data is missing within the database. Complete that first!
+3.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-08-14 00:15:25 .Exception message is The system license data is missing within the database. Please complete that first!
  ####End of Line#### 

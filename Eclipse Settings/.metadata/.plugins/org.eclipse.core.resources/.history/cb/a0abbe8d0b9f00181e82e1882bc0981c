@@ -1,0 +1,84 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\UserRoleDL;
+use UserClasses\BusinessObjects\UserRoleBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class UserRole
+{
+    private $accessRightsObj;
+    private $userRole;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->accessRightsObj=new AccessRights();    
+        $this->userRole=new UserRoleDL();
+    }
+    
+    public function __destruct(){
+        $this->accessRightsObj=null;
+        $this->userRole=null;
+    }
+    
+    public function listAllUserRoles():array {       
+        $data=array();
+        $arr=$this->userRole->retrieveAllUserRoles($data);        
+        return $arr;
+    }
+    
+    public function listAllActivities():array {
+        $data=array();
+        $arr=$this->userRole->retrieveAllActivities($data);
+        return $arr;
+    }
+    
+    public function listAllColumns():array {
+        $data=array();
+        $arr=$this->userRole->retrieveAllColumns($data);
+        return $arr;
+    }
+    
+    public function listUserAccessRights(UserRoleBO $data):array {
+        if(isset($data)){
+            $arr=$this->accessRightsObj->listUserRights($data); 
+            return $arr;
+        }
+        else return NULL;
+    }
+    
+    public function checkUserRoleExists(UserRoleBO $data):bool {
+        if(isset($data)){
+            $arr=$data->getArray();
+            $status_message=$this->userRole->dataExists($data);
+        }
+    }
+    
+    public function addUserRole(UserRoleBO $data):bool {
+        
+    }
+    
+    public function updateUserRole(UserRoleBO $data):bool {
+        
+    }
+    
+    public function checkUserAuthorization(UserRoleBO $data):bool {
+        
+    }
+    
+    private function getEmailRecepient():array {
+        
+    }
+    
+    private function generateEmailMessage():array {
+        
+    }
+}
+

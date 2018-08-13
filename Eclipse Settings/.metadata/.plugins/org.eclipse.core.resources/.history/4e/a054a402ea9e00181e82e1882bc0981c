@@ -1,0 +1,67 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class UserRoleBO extends BusinessObject
+{
+    private $userRole2DArray;
+    private $activityRights2DArray;
+    private $columnVisibility2DArray;
+    /**
+     * @return mixed
+     */
+    public function getUserRole2DArray()
+    {
+        return $this->userRole2DArray;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActivityRights2DArray()
+    {
+        return $this->activityRights2DArray;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getColumnVisibility2DArray()
+    {
+        return $this->columnVisibility2DArray;
+    }
+
+    /**
+     * @param mixed $userRole2DArray
+     */
+    public function setUserRole2DArray($userRole2DArray)
+    {
+        $this->userRole2DArray = $userRole2DArray;
+    }
+
+    /**
+     * @param mixed $activityRights2DArray
+     */
+    public function setActivityRights2DArray($activityRights2DArray)
+    {
+        $this->activityRights2DArray = $activityRights2DArray;
+    }
+
+    /**
+     * @param mixed $columnVisibility2DArray
+     */
+    public function setColumnVisibility2DArray($columnVisibility2DArray)
+    {
+        $this->columnVisibility2DArray = $columnVisibility2DArray;
+    }
+
+    
+    
+    
+    
+}
+

@@ -1,0 +1,36 @@
+<?php
+    //phpinfo();
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\BusinessLayer\Email;
+use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\BusinessLayer\TermsAndConditions;
+use UserClasses\BusinessObjects\TermsConditionsBO;
+
+require __DIR__.'/vendor/autoload.php';
+
+$lic=new License();
+$arr_addr=array();
+$arr_addr["AddressType"]=1;
+$arr_addr["AddressLine1"]="193 Fenniscowles Rd";
+$arr_addr["Surburb"]="Buccleuch";
+$arr_addr["City"]="Johannesburg";
+$arr_addr["Country"]="South Africa";
+$arr_addr["PostalCode"]="2066";
+$arr_add=array();
+$arr_add["companyName"]="Logiman";
+$arr_add["postalAddressArray"]=$arr_addr;
+$arr_add["licenseLimit"]=100;
+$licenseBO=new SystemLicenseBO();
+$licenseBO->set($arr_add);
+$license=new License();
+$license->addLicense($licenseBO);
+$termsObj=new TermsAndConditions();
+$termsBO=new TermsConditionsBO();
+$termsBO->setTerms("Fuck You");
+$termsObj->addTerms($termsBO);
+$obj=$termsObj->getTermsBO();
+
+
+
+

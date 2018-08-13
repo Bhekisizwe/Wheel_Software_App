@@ -6,26 +6,21 @@ use UserClasses\BusinessLayer\Email;
 use UserClasses\DataLayer\SystemLicenseDL;
 use UserClasses\BusinessLayer\TermsAndConditions;
 use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\UserRole;
 
 require __DIR__.'/vendor/autoload.php';
 
-$lic=new License();
-$arr_addr=array();
-$arr_addr["AddressType"]=1;
-$arr_addr["AddressLine1"]="193 Fenniscowles Rd";
-$arr_addr["Surburb"]="Buccleuch";
-$arr_addr["City"]="Johannesburg";
-$arr_addr["Country"]="South Africa";
-$arr_addr["PostalCode"]="2066";
-$arr_add=array();
-$arr_add["companyName"]="Logiman";
-$arr_add["postalAddressArray"]=$arr_addr;
-$arr_add["licenseLimit"]=100;
-$termsObj=new TermsAndConditions();
-$termsBO=new TermsConditionsBO();
-$termsBO->setTerms("Fuck You");
-$termsBO->setTermsID(14);
-$termsObj->updateTerms($termsBO);
+
+$data=new UserRoleBO();
+$userRole=new UserRole();
+$accessRight="R";
+$activityName="MiniProf Wheel Alarm Settings";
+$arr=array();
+$arr["userRole2DArray"][0]["roleID"]=6;
+$data->set($arr);
+$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
+
 
 
 

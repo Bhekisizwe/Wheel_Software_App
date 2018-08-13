@@ -1,0 +1,109 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\ {
+    DataLayer\UserRoleDL,
+    BusinessObjects\UserRoleBO
+};
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class UserRole
+{
+    private $accessRightsObj;
+    private $userRole;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->accessRightsObj=new AccessRights();    
+        $this->userRole=new UserRoleDL();
+    }
+    
+    public function __destruct(){
+        $this->accessRightsObj=null;
+        $this->userRole=null;
+    }
+    
+    public function listAllUserRoles():array {       
+        $data=array();
+        $arr=$this->userRole->retrieveAllUserRoles($data);        
+        return $arr;
+    }
+    
+    public function listAllActivities():array {
+        $data=array();
+        $arr=$this->userRole->retrieveAllActivities($data);
+        return $arr;
+    }
+    
+    public function listAllColumns():array {
+        $data=array();
+        $arr=$this->userRole->retrieveAllColumns($data);
+        return $arr;
+    }
+    
+    public function listUserAccessRights(UserRoleBO $data):array {
+        if(isset($data)){
+            $arr=$this->accessRightsObj->listUserRights($data); 
+            return $arr;
+        }
+        else return NULL;
+    }
+    
+    public function checkUserRoleExists(UserRoleBO $data):bool {
+        if(isset($data)){
+            $arr=$data->getArray();            
+            $status_message=$this->userRole->dataExists($arr);
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function addUserRole(UserRoleBO $data):bool {
+        if(isset($data)){
+            $arr=$data->getArray();
+            $status_message=$this->userRole->create($arr);
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function updateUserRole(UserRoleBO $data):bool {
+        if(isset($data)){            
+            $status_message=$this->accessRightsObj->updateUserAccessRights($data);
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function checkUserAuthorization(UserRoleBO $data,string $accessRight,string $activityName):bool {
+        if(isset($data) && $accessRight!="" && $activityName!=""){
+            $arr=$this->listUserAccessRights($data);    //get user access rights for the specific Role            
+            foreach($arr["activityRights2DArray"] as $value){
+                if($value["activityName"]==$activityName){
+                    //we will only enter here once
+                    $arr_data=explode(" ",$value["activityRights"]);  
+                    if(array_search($accessRight, $arr_data)===false){
+                        //we do not have access rights here
+                        $status_message=false;
+                        break;  //exit loop
+                    }
+                    else{
+                        $status_message=true;   //we have access rights
+                        break;  //exit loop
+                    }
+                }
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+   
+}
+
