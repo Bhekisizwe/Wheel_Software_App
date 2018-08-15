@@ -1,0 +1,195 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\UserAccountBO;
+use UserClasses\DataLayer\UserAccountDL;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class UserAccounts
+{
+    private $sender;
+    private $err;
+    private $userAccountDL;
+    private $userAccountBO;    
+
+    /**
+     * @return Ambigous <NULL, \UserClasses\BusinessObjects\UserAccountBO>
+     */
+    public function getUserAccountBO()
+    {
+        return clone $this->userAccountBO;
+    }
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->sender=new Email();   
+        $this->err=new ErrorLog();
+        $this->userAccountDL=new UserAccountDL();
+        $this->userAccountBO=new UserAccountBO();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->sender=null;
+        $this->err=null;
+        $this->userAccountDL=null;
+        $this->userAccountBO=null;
+    }
+    
+    public function listUserAccount(UserAccountBO $data):array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_result=$this->userAccountDL->searchData($arr);        
+            } catch (\Exception $e) {
+                $class_name="UserAccounts";
+                $method_name="listUserAccount";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            } 
+            return $arr_result;
+        }
+        else return NULL;
+    }
+    
+    public function checkUserAccountExists(UserAccountBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->userAccountDL->dataExists($arr);
+            } catch (\Exception $e) {
+                $class_name="UserAccounts";
+                $method_name="checkUserAccountExists";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function addUserAccount(UserAccountBO $data):bool {
+        if(isset($data)){
+            try {
+                $password_text=$this->generateRandomPassword(); //generate random password.                
+                $data->setPasswordHash(md5($password_text));
+                $arr=$data->getArray();
+                if(!$this->checkIfActiveAccLimitReached()){
+                    $status_message=$this->userAccountDL->create($arr);
+                    if($status_message){
+                        //Email new user
+                        $arr["passwordHash"]=$password_text;
+                        $arr_email=$this->generateEmailMessage($arr,"add");
+                        $this->sender->sendEmail($arr_email);
+                    }
+                    else throw new \Exception("Failed to Add user account!");
+                }          
+                else {                    
+                    $err_arr=array();
+                    $err_arr["errorDescription"]="License Limit Reached. Cannot add more active users than the license limit allows.";
+                    $err_arr["errorCode"]="0x10";
+                    $this->userAccountBO->setErrorAssocArray($err_arr);
+                    throw new \Exception("License Limit Reached");
+                }
+            } catch (\Exception $e) {
+                $status_message=false;
+                $class_name="UserAccounts";
+                $method_name="addUserAccount";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            } 
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function updateUserAccount(UserAccountBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->userAccountDL->update($arr); 
+                if($status_message){
+                    //Email user notifying them of updated profile                    
+                    $arr_email=$this->generateEmailMessage($arr,"update");
+                    $this->sender->sendEmail($arr_email);
+                }
+                else throw new \Exception("Failed to update user account!");
+            } catch (\Exception $e) {                
+                $class_name="UserAccounts";
+                $method_name="updateUserAccount";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }  
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    protected function checkIfActiveAccLimitReached():bool {
+        $license=new License();        
+        $arr=$license->listLicenseData(new SystemLicenseBO());  //retrieve license data        
+        try {
+            $num_of_active_accounts=$this->userAccountDL->searchForActiveAccounts($arr);
+            ($num_of_active_accounts>=$arr[0]["LicenseType"])?$status_message=true:$status_message=false;
+        } catch (\Exception $e) {   
+            $status_message=false;
+            $class_name="UserAccounts";
+            $method_name="checkIfActiveAccLimitReached";
+            $this->err->logErrors($e,null,$class_name, $method_name);
+        }        
+        finally {
+            unset($license);
+        }
+        return $status_message;        
+    }
+    
+    protected function generateRandomPassword():string {
+        $arr_alphabet=range("A","Z");   //create a Capital letter Alphabetical array
+        $arr_digits=range(1,9);         //create array of digits 1 through 9
+        $random_password="";
+        for($i=0;$i<10;$i++){
+            ($i<=4)?$random_password.=$arr_alphabet[rand(0,25)]:$random_password.=$arr_digits[rand(0,8)];            
+        }
+        return $random_password;
+    }  
+    
+    protected function generateEmailMessage(array $arr=null,string $action):array {
+        //generate email array
+        if(isset($arr)){
+            $arr_email=array();
+            switch($action){
+                case "add":                    
+                    $arr_email["to"]=$arr["emailAddress"];
+                    $arr_email["subject"]="Your System Login Credentials";                    
+                    $body="Dear ".$arr["name"]." ".$arr["surname"]."<p>";
+                    $body.="Your user account has been successfully created by the Administrator.<br>";
+                    $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a><br>";  
+                    $body.="Your login credentials for this website are as follows:<p>";
+                    $body.="Username (Staff Number):".$arr["staffNumber"]."<br>";
+                    $body.="Password:".$arr["passwordHash"]."<p>";
+                    $body.="Please login into the website and update your login password!<p>";
+                    $body.=" By Order (Gqunsu Engineering Pty Ltd)";
+                    $arr_email["body"]=$body;                   
+                    break;
+                case "update":
+                    $arr_email["to"]=$arr["emailAddress"];
+                    $arr_email["subject"]="Your Profile Details Have Been Updated";
+                    $body="Dear ".$arr["name"]." ".$arr["surname"]."<p>";
+                    $body.="Your user account details have been successfully updated by the Administrator.<br>";
+                    $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";
+                    $body.="Please login into the website and view the changes to your profile.<p>";                   
+                    $body.=" By Order (Gqunsu Engineering Pty Ltd)";
+                    $arr_email["body"]=$body;                    
+            }
+            return $arr_email; 
+        }
+        else return NULL;       
+    }   
+}
+

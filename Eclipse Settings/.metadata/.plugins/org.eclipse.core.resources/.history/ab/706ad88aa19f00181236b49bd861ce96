@@ -1,0 +1,45 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\ {
+    BusinessObjects\UserRoleBO,
+    DataLayer\UserRoleDL
+};
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AccessRights
+{
+    private $userRole;
+    
+    public function __construct(){
+        $this->userRole=new UserRoleDL();        
+    }
+    
+    public function __destruct(){
+        $this->userRole=null;    
+    }
+    
+    public function listUserRights(UserRoleBO $data):array {
+        if(isset($data)){
+            $arr=$data->getArray();
+            $arr_2D=$this->userRole->searchData($arr);
+            return $arr_2D;
+        }
+        else return NULL;
+    }
+    
+    public function updateUserAccessRights(UserRoleBO $data):bool {
+        if(isset($data)){
+            $arr=$data->getArray();
+            $status_message=$this->userRole->update($arr);
+            return $status_message;
+        }
+        else return false;
+    }
+}
+

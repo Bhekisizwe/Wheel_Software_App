@@ -1,0 +1,29 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class UserAccountBO extends BusinessObject
+{
+    private $accountID=0;
+    private $roleID=0;
+    private $name="";
+    private $surname="";
+    private $staffNumber="";
+    private $emailAddress="";
+    private $accountState=0;    //false
+    private $passwordHash="";   //Message Digested or Hashed Password
+    private $userRoleName="";
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(13);        
+    }
+}
+

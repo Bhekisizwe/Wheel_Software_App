@@ -1,0 +1,158 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\UserAccounts;
+use UserClasses\DataLayer\UserAccountDL;
+use UserClasses\BusinessObjects\UserAccountBO;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/UserAccounts.php';
+
+/**
+ * UserAccounts test case.
+ */
+class UserAccountsTest extends TestCase
+{
+
+    /**
+     *
+     * @var UserAccounts
+     */
+    private $userAccounts;
+    private $userAccountDL;
+    private $data;
+    private $arr_add;
+    private $arr_update;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated UserAccountsTest::setUp()
+        
+        $this->userAccounts = new UserAccounts();
+        $this->userAccountDL=new UserAccountDL();
+        $this->data=new UserAccountBO();
+        $arr_add=array();
+        $arr_add["roleID"]="15";
+        $arr_add["name"]="Bhekisizwe";
+        $arr_add["surname"]="Mthethwa";
+        $arr_add["staffNumber"]="305941";
+        $arr_add["emailAddress"]="tshomie2020@yahoo.com";        
+        $arr_add["accountState"]=1;
+        $this->arr_add=$arr_add;
+        $arr_update=array();
+        $arr_update["accountID"]=1;
+        $arr_update["roleID"]="2";
+        $arr_update["name"]="Mzimkhulu";
+        $arr_update["surname"]="Mthethwa";
+        $arr_update["staffNumber"]="305941";
+        $arr_update["emailAddress"]="bmthethwa@gqunsueng.co.za";
+        $arr_update["passwordHash"]="induction";
+        $arr_update["accountState"]=0;
+        $this->arr_update=$arr_update;
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated UserAccountsTest::tearDown()
+        $this->userAccounts = null;
+        $this->userAccountDL=null;
+        $this->data=null;
+        parent::tearDown();
+    }
+
+    /**
+     * Tests UserAccounts->listUserAccount()
+     */
+    public function testListUserAccountWhenItDoesNotExist()
+    {
+        // TODO Auto-generated UserAccountsTest->testListUserAccount()
+        //$this->markTestIncomplete("listUserAccount test not implemented");        
+        $arr=array();
+        $arr["staffNumber"]="204512428";
+        $this->userAccountDL->delete($arr);     //make sure we delete all user accounts
+        $this->data->set($arr);
+        $arr=$this->userAccounts->listUserAccount($this->data);
+        $this->assertEquals(0,count($arr));
+    }
+
+    /**
+     * Tests UserAccounts->checkUserAccountExists()
+     */
+    public function testCheckUserAccountExistsWhenItDoesNotExist()
+    {
+        // TODO Auto-generated UserAccountsTest->testCheckUserAccountExists()
+        //$this->markTestIncomplete("checkUserAccountExists test not implemented");
+        $arr=array();
+        $arr["staffNumber"]="204512428";
+        $this->userAccountDL->delete($arr);     //make sure we delete all user accounts
+        $this->data->set($arr);
+        $status_message=$this->userAccounts->checkUserAccountExists($this->data);
+        $this->assertEquals(false,$status_message);        
+    }
+
+    /**
+     * Tests UserAccounts->addUserAccount()
+     */
+    public function testAddUserAccountOnlyOneAccount()
+    {
+        // TODO Auto-generated UserAccountsTest->testAddUserAccount()
+        //$this->markTestIncomplete("addUserAccount test not implemented");
+        $this->data->set($this->arr_add);
+        $status_message=$this->userAccounts->addUserAccount($this->data);
+        $this->assertEquals(true,$status_message);
+    }
+    
+    public function testListUserAccountWhenItDoesExist()
+    {
+        // TODO Auto-generated UserAccountsTest->testListUserAccount()
+        //$this->markTestIncomplete("listUserAccount test not implemented");
+        $arr=array();
+        $arr["staffNumber"]="305941";        
+        $this->data->set($arr);
+        $arr=$this->userAccounts->listUserAccount($this->data);        
+        $this->assertGreaterThan(1,count($arr));
+    }
+    
+    public function testCheckUserAccountExistsWhenItDoesExist()
+    {
+        $arr=array();
+        $arr["staffNumber"]="305941";
+        $this->data->set($arr);
+        $status_message=$this->userAccounts->checkUserAccountExists($this->data);
+        $this->assertEquals(true,$status_message);  
+    }
+    
+    public function testAddUserAccountUntilItExceedsLicenseLimit()
+    {
+        // TODO Auto-generated UserAccountsTest->testAddUserAccount()
+        $this->markTestIncomplete("addUserAccount test not implemented");
+        $i=0;
+        $counter=0; //count number of times successfully added a user account
+        $this->userAccountDL->delete($this->arr_add);     //make sure we delete all user accounts
+        while($i<7){
+            $this->data->set($this->arr_add);
+            $status_message=$this->userAccounts->addUserAccount($this->data);
+            if($status_message)
+            $i++;
+        }
+        $this->userAccounts->addUserAccount();
+    }
+
+    /**
+     * Tests UserAccounts->updateUserAccount()
+     */
+    public function testUpdateUserAccount()
+    {
+        // TODO Auto-generated UserAccountsTest->testUpdateUserAccount()
+        $this->markTestIncomplete("updateUserAccount test not implemented");
+        
+        $this->userAccounts->updateUserAccount();
+    }
+}
+

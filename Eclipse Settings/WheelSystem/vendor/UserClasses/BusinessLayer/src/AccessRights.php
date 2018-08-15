@@ -15,19 +15,28 @@ use UserClasses\ {
 class AccessRights
 {
     private $userRole;
+    private $errObj;
     
     public function __construct(){
-        $this->userRole=new UserRoleDL();        
+        $this->userRole=new UserRoleDL();  
+        $this->errObj=new ErrorLog();        
     }
     
     public function __destruct(){
         $this->userRole=null;    
+        $this->errObj=null;
     }
     
     public function listUserRights(UserRoleBO $data):array {
         if(isset($data)){
             $arr=$data->getArray();
-            $arr_2D=$this->userRole->searchData($arr);
+            try {
+                $arr_2D=$this->userRole->searchData($arr);
+            } catch (\Exception $e) {            
+                $class_name="AccessRights";
+                $method_name="listUserRights";
+                $this->errObj->logErrors($e,null,$class_name, $method_name);
+            }            
             return $arr_2D;
         }
         else return NULL;
@@ -36,7 +45,13 @@ class AccessRights
     public function updateUserAccessRights(UserRoleBO $data):bool {
         if(isset($data)){
             $arr=$data->getArray();
-            $status_message=$this->userRole->update($arr);
+            try {
+                $status_message=$this->userRole->update($arr);
+            } catch (\Exception $e) {
+                $class_name="AccessRights";
+                $method_name="updateUserAccessRights";
+                $this->errObj->logErrors($e,null,$class_name, $method_name);
+            }            
             return $status_message;
         }
         else return false;

@@ -32,19 +32,37 @@ class UserRole
     
     public function listAllUserRoles():array {       
         $data=array();
-        $arr=$this->userRole->retrieveAllUserRoles($data);        
+        try {
+            $arr=$this->userRole->retrieveAllUserRoles($data);
+        } catch (\Exception $e) {
+            $class_name="UserRole";
+            $method_name="listAllUserRoles";
+            $this->errObj->logErrors($e,null,$class_name, $method_name);
+        }                
         return $arr;
     }
     
     public function listAllActivities():array {
         $data=array();
-        $arr=$this->userRole->retrieveAllActivities($data);
+        try {
+            $arr=$this->userRole->retrieveAllActivities($data);
+        } catch (\Exception $e) {
+            $class_name="UserRole";
+            $method_name="listAllActivities";
+            $this->errObj->logErrors($e,null,$class_name, $method_name);
+        }        
         return $arr;
     }
     
     public function listAllColumns():array {
         $data=array();
-        $arr=$this->userRole->retrieveAllColumns($data);
+        try {
+            $arr=$this->userRole->retrieveAllColumns($data);
+        } catch (\Exception $e) {
+            $class_name="UserRole";
+            $method_name="listAllColumns";
+            $this->errObj->logErrors($e,null,$class_name, $method_name);
+        }        
         return $arr;
     }
     
@@ -58,8 +76,15 @@ class UserRole
     
     public function checkUserRoleExists(UserRoleBO $data):bool {
         if(isset($data)){
-            $arr=$data->getArray();            
-            $status_message=$this->userRole->dataExists($arr);
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->userRole->dataExists($arr);
+            } catch (\Exception $e) {
+                $class_name="UserRole";
+                $method_name="checkUserRoleExists";
+                $this->errObj->logErrors($e,null,$class_name, $method_name);
+            }
+        
             return $status_message;
         }
         else return false;
@@ -67,8 +92,14 @@ class UserRole
     
     public function addUserRole(UserRoleBO $data):bool {
         if(isset($data)){
-            $arr=$data->getArray();
-            $status_message=$this->userRole->create($arr);
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->userRole->create($arr);
+            } catch (\Exception $e) {
+                $class_name="UserRole";
+                $method_name="addUserRole";
+                $this->errObj->logErrors($e,null,$class_name, $method_name);
+            }            
             return $status_message;
         }
         else return false;

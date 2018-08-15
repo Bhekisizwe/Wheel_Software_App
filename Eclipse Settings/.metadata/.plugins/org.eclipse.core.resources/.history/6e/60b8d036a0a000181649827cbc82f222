@@ -1,0 +1,21 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class UserAccountBO extends BusinessObject
+{
+    private $accountID    
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(13);        
+    }
+}
+

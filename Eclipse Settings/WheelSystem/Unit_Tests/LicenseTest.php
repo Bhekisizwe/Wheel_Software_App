@@ -40,6 +40,7 @@ class LicenseTest extends TestCase
         $this->data=new SystemLicenseBO();
         $this->deleteObj=new SystemLicenseDL();
         //prepare test data
+        
         $arr_addr=array();
         $arr_addr["AddressType"]=1;
         $arr_addr["AddressLine1"]="C13 Windmills, Muller South Street";
@@ -50,7 +51,7 @@ class LicenseTest extends TestCase
         $arr_add=array();
         $arr_add["companyName"]="CSIR";
         $arr_add["postalAddressArray"]=$arr_addr;
-        $arr_add["licenseLimit"]=100;
+        $arr_add["licenseLimit"]=5;
         $this->arr_add=$arr_add;
         //prepare update test data
         $arr_addr["AddressType"]=1;
@@ -63,7 +64,7 @@ class LicenseTest extends TestCase
         $arr_update["licenseID"]=1;     //defailt Primary Key value
         $arr_update["companyName"]="Gqunsu Engineering Pty Ltd";
         $arr_update["postalAddressArray"]=$arr_addr;
-        $arr_update["licenseLimit"]=100;
+        $arr_update["licenseLimit"]=5;
         $this->arr_update=$arr_update;
     }
 
@@ -153,7 +154,8 @@ class LicenseTest extends TestCase
         $this->data->set($this->arr_update);
         $status=$this->license->updateLicense($this->data);
         $this->assertEquals(TRUE,$status);
-    }    
+    }   
+   
   
 }
 

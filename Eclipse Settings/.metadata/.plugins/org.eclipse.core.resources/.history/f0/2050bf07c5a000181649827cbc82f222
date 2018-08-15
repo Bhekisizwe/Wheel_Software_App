@@ -1,0 +1,36 @@
+<?php
+    //phpinfo();
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\BusinessLayer\Email;
+use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\BusinessLayer\TermsAndConditions;
+use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessLayer\UserAccounts;
+use UserClasses\BusinessObjects\UserAccountBO;
+use UserClasses\DataLayer\UserAccountDL;
+
+require __DIR__.'/vendor/autoload.php';
+
+$data=new UserAccountBO();
+$userAccounts=new UserAccounts();
+$userAccountDL=new UserAccountDL();
+$i=0;
+$counter=0; //count number of times successfully added a user account
+$userAccountDL->delete($arr_add);     //make sure we delete all user accounts
+while($i<7){
+    $data->set($arr_add);
+    $status_message=$userAccounts->addUserAccount($data);
+    if($status_message){
+        $counter++;
+    }
+    $i++;
+}        
+//$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
+
+
+
+
+

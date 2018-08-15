@@ -1,0 +1,108 @@
+<?php
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class UserAccountDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey(array $data):int
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***INSERT User Accounts Data into Database*******/
+            $query="INSERT INTO UserAccounts";
+            $query.=" (AccountID,RoleID,Name,Surname,StaffNumber,Email,Password,ActivityState) ";
+            $query.="VALUES ('',?,?,?,?,?,?,?)";
+            //prepare SQL script for execution
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $roleID=$data["roleID"];
+            $name=$data["name"];
+            $surname=$data["surname"];
+            $staffNumber=$data["staffNumber"];
+            $emailAddress=$data["emailAddress"];
+            $passwordHash=$data["passwordHash"];
+            $accountState=$data["accountState"];
+            $stmt->bind_param("isssssi",$roleID,$name,$surname,$staffNumber,$emailAddress,$passwordHash,$accountState);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /***UPDATE User Account Data in Database*******/
+            $query="UPDATE UserAccounts SET ";
+            $query.="RoleID=?,Name=?,Surname=?,Email=?,Password=?,ActivityState=? WHERE AccountID=?";           
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $company=$data["companyName"];
+            $addr_arr=$data["postalAddressArray"];
+            $license_type=$data["licenseLimit"];
+            $licenseID=$data["licenseID"];
+            $stmt->bind_param("sisssssii",$company,$addr_arr['AddressType'],$addr_arr['AddressLine1'],$addr_arr['Surburb'],$addr_arr['City'],$addr_arr['Country'],$addr_arr['PostalCode'],$license_type,$licenseID);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector); //Close Database Connection
+            return $status_message;
+        }
+        else return false;  
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists(array $data):bool
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete(array $data):bool
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData(array $data):array
+    {}
+    
+    public function searchForActiveAccounts(array $data):int
+    {}
+    
+    public function searchUsingRoleID(array $data):array
+    {}
+}
+

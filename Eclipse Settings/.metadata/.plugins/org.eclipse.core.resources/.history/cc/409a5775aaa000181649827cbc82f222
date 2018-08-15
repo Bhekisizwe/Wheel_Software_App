@@ -1,0 +1,117 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\UserAccounts;
+use UserClasses\DataLayer\UserAccountDL;
+use UserClasses\BusinessObjects\UserAccountBO;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/UserAccounts.php';
+
+/**
+ * UserAccounts test case.
+ */
+class UserAccountsTest extends TestCase
+{
+
+    /**
+     *
+     * @var UserAccounts
+     */
+    private $userAccounts;
+    private $userAccountDL;
+    private $data;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated UserAccountsTest::setUp()
+        
+        $this->userAccounts = new UserAccounts();
+        $this->userAccountDL=new UserAccountDL();
+        $this->data=new UserAccountBO();
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated UserAccountsTest::tearDown()
+        $this->userAccounts = null;
+        $this->userAccountDL=null;
+        $this->data=null;
+        parent::tearDown();
+    }
+
+    /**
+     * Tests UserAccounts->listUserAccount()
+     */
+    public function testListUserAccountWhenItDoesNotExist()
+    {
+        // TODO Auto-generated UserAccountsTest->testListUserAccount()
+        //$this->markTestIncomplete("listUserAccount test not implemented");        
+        $arr=array();
+        $arr["staffNumber"]="204512428";
+        $this->userAccountDL->delete($arr);     //make sure we delete all user accounts
+        $this->data->set($arr);
+        $arr=$this->userAccounts->listUserAccount($this->data);
+        $this->assertEquals(0,count($arr));
+    }
+
+    /**
+     * Tests UserAccounts->checkUserAccountExists()
+     */
+    public function testCheckUserAccountExistsWhenItDoesNotExist()
+    {
+        // TODO Auto-generated UserAccountsTest->testCheckUserAccountExists()
+        //$this->markTestIncomplete("checkUserAccountExists test not implemented");
+        $arr=array();
+        $arr["staffNumber"]="204512428";
+        $this->userAccountDL->delete($arr);     //make sure we delete all user accounts
+        $this->data->set($arr);
+        $status_message=$this->userAccounts->checkUserAccountExists($this->data);
+        $this->assertEquals(false,$status_message);        
+    }
+
+    /**
+     * Tests UserAccounts->addUserAccount()
+     */
+    public function testAddUserAccountOnlyOneAccount()
+    {
+        // TODO Auto-generated UserAccountsTest->testAddUserAccount()
+        $this->markTestIncomplete("addUserAccount test not implemented");
+        
+        $this->userAccounts->addUserAccount();
+    }
+    
+    public function testListUserAccountWhenItDoesExist()
+    {
+        // TODO Auto-generated UserAccountsTest->testListUserAccount()
+        $this->markTestIncomplete("listUserAccount test not implemented");
+        
+        $this->userAccounts->listUserAccount();
+    }
+    
+    public function testAddUserAccountUntilItExceedsLicenseLimit()
+    {
+        // TODO Auto-generated UserAccountsTest->testAddUserAccount()
+        $this->markTestIncomplete("addUserAccount test not implemented");
+        
+        $this->userAccounts->addUserAccount();
+    }
+
+    /**
+     * Tests UserAccounts->updateUserAccount()
+     */
+    public function testUpdateUserAccount()
+    {
+        // TODO Auto-generated UserAccountsTest->testUpdateUserAccount()
+        $this->markTestIncomplete("updateUserAccount test not implemented");
+        
+        $this->userAccounts->updateUserAccount();
+    }
+}
+

@@ -1,0 +1,27 @@
+<?php
+    //phpinfo();
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\BusinessLayer\Email;
+use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\BusinessLayer\TermsAndConditions;
+use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\UserRole;
+
+require __DIR__.'/vendor/autoload.php';
+
+
+$data=new UserRoleBO();
+$userRole=new UserRole();
+$accessRight="R";
+$activityName="MiniProf Wheel Alarm Settings";
+$arr=array();
+$arr["userRole2DArray"][0]["roleID"]=6;
+$data->set($arr);
+$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
+
+
+
+
+

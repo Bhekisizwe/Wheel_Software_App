@@ -1,6 +1,6 @@
 Bind\ namespace\ and\ location=0
-Constructor=0
-Destructor=0
+Constructor=1
+Destructor=1
 Inherited\ abstract\ methods=1
 PHPDoc\ Blocks=1
 TODOs=0
