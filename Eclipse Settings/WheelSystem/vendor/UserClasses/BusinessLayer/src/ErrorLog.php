@@ -67,7 +67,7 @@ class ErrorLog
     
     private function determineNextLineNumber():int {
         file_exists($this->dir_path)?$lineNo=(count(file($this->dir_path))/2)+1:$lineNo=1;
-        return $lineNo;
+        return (int) $lineNo;
     }
 }
 

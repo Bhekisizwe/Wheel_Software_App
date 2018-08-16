@@ -88,7 +88,7 @@ class AdminAccountsTest extends TestCase
             $i++;
         }        
         $arr=$this->adminAccounts->listAllAdminAccounts();
-        $this->assertEquals(5,$counter);
+        $this->assertEquals(5,count($arr));
     }
 }
 

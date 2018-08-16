@@ -1,6 +1,7 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use UserClasses\BusinessLayer\LoginCredentials;
+use UserClasses\BusinessObjects\UserAccountBO;
 
 require_once 'vendor/UserClasses/BusinessLayer/src/LoginCredentials.php';
 
@@ -15,6 +16,8 @@ class LoginCredentialsTest extends TestCase
      * @var LoginCredentials
      */
     private $loginCredentials;
+    private $data;
+    private $arr_update;
 
     /**
      * Prepares the environment before running a test.
@@ -26,6 +29,17 @@ class LoginCredentialsTest extends TestCase
         // TODO Auto-generated LoginCredentialsTest::setUp()
         
         $this->loginCredentials = new LoginCredentials();
+        $this->data=new UserAccountBO();
+        $arr_update=array();
+        $arr_update["accountID"]=1;
+        $arr_update["roleID"]="1";
+        $arr_update["name"]="Banele";
+        $arr_update["surname"]="Mthethwa";
+        $arr_update["staffNumber"]="305941";
+        $arr_update["emailAddress"]="bmthethwa@gqunsueng.co.za";
+        $arr_update["passwordHash"]="induction";
+        $arr_update["accountState"]=0;
+        $this->arr_update=$arr_update;
     }
 
     /**
@@ -35,7 +49,7 @@ class LoginCredentialsTest extends TestCase
     {
         // TODO Auto-generated LoginCredentialsTest::tearDown()
         $this->loginCredentials = null;
-        
+        $this->data=null;
         parent::tearDown();
     }  
 
@@ -45,9 +59,13 @@ class LoginCredentialsTest extends TestCase
     public function testFindUserAccountMatch()
     {
         // TODO Auto-generated LoginCredentialsTest->testFindUserAccountMatch()
-        $this->markTestIncomplete("findUserAccountMatch test not implemented");
-        
-        $this->loginCredentials->findUserAccountMatch(/* parameters */);
+        //$this->markTestIncomplete("findUserAccountMatch test not implemented");
+        $arr=array();
+        $arr["staffNumber"]="305941";
+        $arr["passwordHash"]="induction";
+        $this->data->set($arr);
+        $status=$this->loginCredentials->findUserAccountMatch($this->data);
+        $this->assertEquals(true,$status);
     }
 
     /**
@@ -56,9 +74,10 @@ class LoginCredentialsTest extends TestCase
     public function testUpdateUserPassword()
     {
         // TODO Auto-generated LoginCredentialsTest->testUpdateUserPassword()
-        $this->markTestIncomplete("updateUserPassword test not implemented");
-        
-        $this->loginCredentials->updateUserPassword(/* parameters */);
+        //$this->markTestIncomplete("updateUserPassword test not implemented");
+        $this->data->set($this->arr_update);      
+        $status=$this->loginCredentials->updateUserPassword($this->data);
+        $this->assertEquals(true,$status);
     }
 
     /**
@@ -67,9 +86,10 @@ class LoginCredentialsTest extends TestCase
     public function testResetUserPassword()
     {
         // TODO Auto-generated LoginCredentialsTest->testResetUserPassword()
-        $this->markTestIncomplete("resetUserPassword test not implemented");
-        
-        $this->loginCredentials->resetUserPassword(/* parameters */);
+        //$this->markTestIncomplete("resetUserPassword test not implemented");
+        $this->data->set($this->arr_update);
+        $status= $this->loginCredentials->resetUserPassword($this->data);
+        $this->assertEquals(true,$status);       
     }
 }
 

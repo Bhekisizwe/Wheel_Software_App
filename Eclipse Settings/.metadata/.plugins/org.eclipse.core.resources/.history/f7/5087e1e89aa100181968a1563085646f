@@ -1,0 +1,61 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\UserAccountBO;
+use UserClasses\DataLayer\UserAccountDL;
+use UserClasses\DataLayer\LoginCredentialsDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class LoginCredentials extends UserAccounts
+{
+    private $sender;
+    private $err;
+    private $loginCredentialsDL;
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->sender=new Email();
+        $this->err=new ErrorLog();
+        $this->loginCredentialsDL=new LoginCredentialsDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->sender=null;
+        $this->err=null;
+        $this->loginCredentialsDL=null;
+        parent::__destruct();
+    }
+    
+    public function findUserAccountMatch(UserAccountBO $data):bool {
+        if(isset($data))  {
+            try {
+                $status_message=$this->userAccountDL->    
+            } catch (Exception $e) {
+                $class_name="LoginCredentials";
+                $method_name="findUserAccountMatch";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }    
+        }
+        else return false;
+    }
+    
+    public function updateUserPassword(UserAccountBO $data):bool {
+        
+    }
+    
+    public function resetUserPassword(UserAccountBO $data):bool {
+        
+    }
+}
+
