@@ -115,14 +115,46 @@ class UserAccounts
     public function updateUserAccount(UserAccountBO $data):bool {
         if(isset($data)){
             try {
-                $arr=$data->getArray();
-                $status_message=$this->userAccountDL->update($arr); 
-                if($status_message){
-                    //Email user notifying them of updated profile                    
-                    $arr_email=$this->generateEmailMessage($arr,"update");
-                    $this->sender->sendEmail($arr_email);
+                if($data->getActionCode()=="0xA100"){
+                    //updates User Profile Only. Passwords are copied as is.
+                    $arr=$data->getArray();
+                    $status_message=$this->userAccountDL->update($arr);
+                    if($status_message){
+                        //Email user notifying them of updated profile
+                        $arr["passwordText"]="";
+                        $arr_email=$this->generateEmailMessage($arr,"update");
+                        $this->sender->sendEmail($arr_email);
+                    }
+                    else throw new \Exception("Failed to update user account!");
+                } 
+                if($data->getActionCode()=="0xA101"){
+                    //updates passwords only. Passwords are digested using MD5 Hash Algorithm
+                    $password_text=$data->getPasswordHash();  //get unecrypted password.
+                    $data->setPasswordHash(md5($password_text)); //reset password as encrypted.
+                    $arr=$data->getArray();
+                    $status_message=$this->userAccountDL->update($arr);
+                    if($status_message){
+                        //Email user notifying them of updated password
+                        $arr["passwordText"]=$password_text;
+                        $arr_email=$this->generateEmailMessage($arr,"update");
+                        $this->sender->sendEmail($arr_email);
+                    }
+                    else throw new \Exception("Failed to update password!");
                 }
-                else throw new \Exception("Failed to update user account!");
+                if($data->getActionCode()=="0xA102"){
+                    //resets password only. Passwords are reset and digested using MD5 Hash Algorithm
+                    $password_text=$this->generateRandomPassword();  //generate unecrypted password.
+                    $data->setPasswordHash(md5($password_text)); //reset password as encrypted.
+                    $arr=$data->getArray();
+                    $status_message=$this->userAccountDL->update($arr);
+                    if($status_message){
+                        //Email user notifying them of password reset
+                        $arr["passwordText"]=$password_text;
+                        $arr_email=$this->generateEmailMessage($arr,"update");
+                        $this->sender->sendEmail($arr_email);
+                    }
+                    else throw new \Exception("Failed to update password!");
+                }
             } catch (\Exception $e) {                
                 $class_name="UserAccounts";
                 $method_name="updateUserAccount";
@@ -173,19 +205,36 @@ class UserAccounts
                     $body.="Your user account has been successfully created by the Administrator.<br>";
                     $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";  
                     $body.="Your login credentials for this website are as follows:<p>";
-                    $body.="Username (Staff Number):".$arr["staffNumber"]."<br>";
-                    $body.="Password:".$arr["passwordHash"]."<p>";
+                    $body.="Username (Staff Number): <b>".$arr["staffNumber"]."</b><br>";
+                    $body.="Password: <b>".$arr["passwordHash"]."</b><p>";
                     $body.="Please login into the website and update your login password!<p>";
                     $body.=" By Order (Gqunsu Engineering Pty Ltd)";
                     $arr_email["body"]=$body;                   
                     break;
                 case "update":
                     $arr_email["to"]=$arr["emailAddress"];
-                    $arr_email["subject"]="Your Profile Details Have Been Updated";
                     $body="Dear ".$arr["name"]." ".$arr["surname"]."<p>";
-                    $body.="Your user account details have been successfully updated by the Administrator.<br>";
-                    $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";
-                    $body.="Please login into the website and view the changes to your profile.<p>";                   
+                    switch($arr["actionCode"]){
+                        case "0xA100":
+                            $arr_email["subject"]="Your Profile Details Have Been Updated";
+                            $body.="Your user account details have been successfully updated by the Administrator.<br>";
+                            $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";
+                            $body.="Please login into the website and view the changes to your profile.<p>";
+                            break;
+                        case "0xA101":
+                            $arr_email["subject"]="Your Password Has Been Updated";
+                            $body.="Your password has been successfully updated in the system.<br>";
+                            $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";
+                            $body.="Login into the website to test your new password which is stated below:<p>";
+                            $body.="New Password: <b>".$arr["passwordText"]."</b><p>";
+                            break;
+                        case "0xA102":
+                            $arr_email["subject"]="Your Password Has Been Reset";
+                            $body.="Your password has been successfully reset in the system.<br>";
+                            $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";
+                            $body.="Login into the website to update your password which is stated below:<p>";
+                            $body.="New Password: <b>".$arr["passwordText"]."</b><p>";
+                    }                    
                     $body.=" By Order (Gqunsu Engineering Pty Ltd)";
                     $arr_email["body"]=$body;                    
             }

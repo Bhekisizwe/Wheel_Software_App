@@ -1,0 +1,21 @@
+<?php
+namespace UserClasses\DataLayer;
+
+
+
+
+
+
+
+
+/** 
+ * @author Bheki Mthethwa
+ * 
+ */
+  class LoginCredentialsDL extends UserAccountDL {
+  
+  
+
+  
+}
+

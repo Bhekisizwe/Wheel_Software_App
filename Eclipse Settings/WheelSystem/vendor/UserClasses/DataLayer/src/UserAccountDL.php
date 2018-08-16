@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace UserClasses\DataLayer;
 
 /**
@@ -136,7 +137,7 @@ class UserAccountDL extends DatabaseManager implements DatabaseFunctionsInt
         if(isset($connector)){
             /*********RETRIEVE User Account profile Data from Database*************/
             $query="SELECT UserAccounts.AccountID,UserAccounts.Name,UserAccounts.Surname,";
-            $query.="UserAccounts.StaffNumber,UserAccounts.Email,UserAccounts.ActivityState,";
+            $query.="UserAccounts.StaffNumber,UserAccounts.Email,UserAccounts.Password,UserAccounts.ActivityState,";
             $query.="UserRole.RoleID,UserRole.UserRoleName FROM UserAccounts,UserRole";
             $query.=" WHERE UserAccounts.StaffNumber=? AND UserRole.RoleID=UserAccounts.RoleID LIMIT 1";            
             $stmt=$connector->prepare($query);
@@ -144,7 +145,7 @@ class UserAccountDL extends DatabaseManager implements DatabaseFunctionsInt
             $stmt->bind_param("s",$staffNumber);
             $status=$stmt->execute();
             $stmt->store_result();
-            $stmt->bind_result($accountID,$name,$surname,$staffNumber,$email,$accountState,$roleID,$userRoleName);
+            $stmt->bind_result($accountID,$name,$surname,$staffNumber,$email,$passwordHash,$accountState,$roleID,$userRoleName);
             if($status){
                 $arr=array();   //array to store result set
                 while($stmt->fetch()){
@@ -153,7 +154,8 @@ class UserAccountDL extends DatabaseManager implements DatabaseFunctionsInt
                     $arr["name"]=$name;
                     $arr["surname"]=$surname;
                     $arr["staffNumber"]=$staffNumber;
-                    $arr["emailAddress"]=$email;                    
+                    $arr["emailAddress"]=$email;    
+                    $arr["passwordHash"]=$passwordHash;
                     $arr["accountState"]=$accountState;
                     $arr["userRoleName"]=$userRoleName;
                 }
@@ -207,6 +209,7 @@ class UserAccountDL extends DatabaseManager implements DatabaseFunctionsInt
                     $arr["surname"]=$surname;
                     $arr["staffNumber"]=$staffNumber;
                     $arr["emailAddress"]=$email;
+                    $arr["passwordHash"]=$passwordHash;
                     $arr["accountState"]=$accountState;
                     $arr_2D[]=$arr; //append rows to end of 2D Array
                 }

@@ -1,26 +1,26 @@
-1.) Oops, error in Class Email within method sendEmail has occured at 2018-08-15 23:12:38 .Exception message is Successfully Sent Email!!!
+1.) Oops, error in Class Email within method sendEmail has occured at 2018-08-16 11:47:50 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-2.) Oops, error in Class Email within method sendEmail has occured at 2018-08-15 23:12:39 .Exception message is Successfully Sent Email!!!
+2.) Oops, error in Class Email within method sendEmail has occured at 2018-08-16 11:47:56 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-3.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-08-15 23:12:39 .Exception message is The system license data is missing within the database. Please complete that first!
+3.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-08-16 11:47:56 .Exception message is The system license data is missing within the database. Please complete that first!
  ####End of Line#### 
-4.) Oops, error in Class UserAccounts within method checkIfActiveAccLimitReached has occured at 2018-08-15 23:12:39 .Exception message is Undefined offset: 0
+4.) Oops, error in Class UserAccounts within method checkIfActiveAccLimitReached has occured at 2018-08-16 11:47:56 .Exception message is Undefined offset: 0
  ####End of Line#### 
-5.) Oops, error in Class Email within method sendEmail has occured at 2018-08-15 23:12:41 .Exception message is Successfully Sent Email!!!
+5.) Oops, error in Class Email within method sendEmail has occured at 2018-08-16 11:48:00 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-6.) Oops, error in Class Email within method sendEmail has occured at 2018-08-15 23:12:42 .Exception message is Successfully Sent Email!!!
+6.) Oops, error in Class Email within method sendEmail has occured at 2018-08-16 11:48:02 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-7.) Oops, error in Class Email within method sendEmail has occured at 2018-08-15 23:12:43 .Exception message is Successfully Sent Email!!!
+7.) Oops, error in Class Email within method sendEmail has occured at 2018-08-16 11:48:04 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-8.) Oops, error in Class Email within method sendEmail has occured at 2018-08-15 23:12:45 .Exception message is Successfully Sent Email!!!
+8.) Oops, error in Class Email within method sendEmail has occured at 2018-08-16 11:48:06 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-9.) Oops, error in Class Email within method sendEmail has occured at 2018-08-15 23:12:46 .Exception message is Successfully Sent Email!!!
+9.) Oops, error in Class Email within method sendEmail has occured at 2018-08-16 11:48:08 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-10.) Oops, error in Class Email within method sendEmail has occured at 2018-08-15 23:12:47 .Exception message is Successfully Sent Email!!!
+10.) Oops, error in Class Email within method sendEmail has occured at 2018-08-16 11:48:11 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-11.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-08-15 23:12:47 .Exception message is License Limit Reached
+11.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-08-16 11:48:11 .Exception message is License Limit Reached
  ####End of Line#### 
-12.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-08-15 23:12:47 .Exception message is License Limit Reached
+12.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-08-16 11:48:11 .Exception message is License Limit Reached
  ####End of Line#### 
-13.) Oops, error in Class Email within method sendEmail has occured at 2018-08-15 23:12:48 .Exception message is Successfully Sent Email!!!
+13.) Oops, error in Class Email within method sendEmail has occured at 2018-08-16 11:48:14 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 

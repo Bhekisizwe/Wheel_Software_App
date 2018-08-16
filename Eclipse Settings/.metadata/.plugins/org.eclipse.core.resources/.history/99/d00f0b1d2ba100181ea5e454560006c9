@@ -1,0 +1,24 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AdminAccounts extends UserAccounts
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     */
+    function __destruct()
+    {}
+}
+

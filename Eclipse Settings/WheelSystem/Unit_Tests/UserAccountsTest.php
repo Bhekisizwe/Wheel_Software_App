@@ -63,12 +63,13 @@ class UserAccountsTest extends TestCase
         $this->arr_add=$arr_add;
         $arr_update=array();
         $arr_update["accountID"]=1;
-        $arr_update["roleID"]="2";
+        $arr_update["actionCode"]="0xA100";
+        $arr_update["roleID"]="1";
         $arr_update["name"]="Mzimkhulu";
         $arr_update["surname"]="Mthethwa";
         $arr_update["staffNumber"]="305941";
         $arr_update["emailAddress"]="bmthethwa@gqunsueng.co.za";
-        $arr_update["passwordHash"]="induction";
+        $arr_update["passwordHash"]=md5("mafuku");
         $arr_update["accountState"]=0;
         $this->arr_update=$arr_update;
     }

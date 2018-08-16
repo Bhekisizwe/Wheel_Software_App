@@ -1,0 +1,30 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AdminAccounts extends UserAccounts
+{
+    private $sender;
+
+    /**
+     */
+    public function __construct()
+    {        
+        parent::__construct();
+        $this->sender=new Email();
+        
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->sender=null;
+        parent::__destruct();
+    }
+}
+

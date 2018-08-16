@@ -23,18 +23,11 @@ $arr_add["emailAddress"]="tshomie2020@yahoo.com";
 $arr_add["accountState"]=1;
 $data=new UserAccountBO();
 $userAccounts=new UserAccounts();
-$userAccountDL=new UserAccountDL();
-$i=0;
-$counter=0; //count number of times successfully added a user account
-$userAccountDL->delete($arr_add);     //make sure we delete all user accounts
-while($i<7){
-    $data->set($arr_add);
-    $status_message=$userAccounts->addUserAccount($data);
-    if($status_message){
-        $counter++;
-    }
-    $i++;
-}        
+$data->set($arr_add);
+$status_message=$userAccounts->addUserAccount($data);
+$err_arr=$userAccounts->getUserAccountBO()->getErrorAssocArray();
+print_r($err_arr);
+  
 //$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
 
 

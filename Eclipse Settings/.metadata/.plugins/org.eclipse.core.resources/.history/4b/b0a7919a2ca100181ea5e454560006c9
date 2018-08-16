@@ -1,0 +1,80 @@
+<?php
+require_once 'vendor/UserClasses/BusinessLayer/src/AdminAccounts.php';
+
+/**
+ * AdminAccounts test case.
+ */
+class AdminAccountsTest extends TestCase
+{
+
+    /**
+     *
+     * @var AdminAccounts
+     */
+    private $adminAccounts;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated AdminAccountsTest::setUp()
+        
+        $this->adminAccounts = new AdminAccounts(/* parameters */);
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated AdminAccountsTest::tearDown()
+        $this->adminAccounts = null;
+        
+        parent::tearDown();
+    }
+
+    /**
+     * Constructs the test case.
+     */
+    public function __construct()
+    {
+        // TODO Auto-generated constructor
+    }
+
+    /**
+     * Tests AdminAccounts->__construct()
+     */
+    public function test__construct()
+    {
+        // TODO Auto-generated AdminAccountsTest->test__construct()
+        $this->markTestIncomplete("__construct test not implemented");
+        
+        $this->adminAccounts->__construct(/* parameters */);
+    }
+
+    /**
+     * Tests AdminAccounts->__destruct()
+     */
+    public function test__destruct()
+    {
+        // TODO Auto-generated AdminAccountsTest->test__destruct()
+        $this->markTestIncomplete("__destruct test not implemented");
+        
+        $this->adminAccounts->__destruct(/* parameters */);
+    }
+
+    /**
+     * Tests AdminAccounts->listAllAdminAccounts()
+     */
+    public function testListAllAdminAccounts()
+    {
+        // TODO Auto-generated AdminAccountsTest->testListAllAdminAccounts()
+        $this->markTestIncomplete("listAllAdminAccounts test not implemented");
+        
+        $this->adminAccounts->listAllAdminAccounts(/* parameters */);
+    }
+}
+

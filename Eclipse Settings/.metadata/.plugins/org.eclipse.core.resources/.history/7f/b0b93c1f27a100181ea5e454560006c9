@@ -1,0 +1,22 @@
+<?php
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AdminAccountDL extends UserAccountDL
+{
+    public function retrieveAllAdmin():array{
+        
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***Retrieve All Administrators in Database*******/
+            
+        }            
+        else return NULL;    
+    }
+}
+

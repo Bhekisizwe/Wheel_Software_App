@@ -1,0 +1,62 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\AdminAccounts;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/AdminAccounts.php';
+
+/**
+ * AdminAccounts test case.
+ */
+class AdminAccountsTest extends TestCase
+{
+
+    /**
+     *
+     * @var AdminAccounts
+     */
+    private $adminAccounts;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated AdminAccountsTest::setUp()
+        
+        $this->adminAccounts = new AdminAccounts();
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated AdminAccountsTest::tearDown()
+        $this->adminAccounts = null;
+        
+        parent::tearDown();
+    }
+
+
+     /**
+     * Tests AdminAccounts->listAllAdminAccounts()
+     */
+    public function testListAllAdminAccounts()
+    {
+        // TODO Auto-generated AdminAccountsTest->testListAllAdminAccounts()
+        $this->markTestIncomplete("listAllAdminAccounts test not implemented");
+        
+        $this->adminAccounts->listAllAdminAccounts(/* parameters */);
+    }
+    
+    public function testListAllAdminAccounts()
+    {
+        // TODO Auto-generated AdminAccountsTest->testListAllAdminAccounts()
+        $this->markTestIncomplete("listAllAdminAccounts test not implemented");
+        
+        $this->adminAccounts->listAllAdminAccounts(/* parameters */);
+    }
+}
+

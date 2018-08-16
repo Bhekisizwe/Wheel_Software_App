@@ -1,0 +1,54 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\UserAccountBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AdminAccounts extends UserAccounts
+{
+    private $sender;
+    private $err;
+    /**
+     */
+    public function __construct()
+    {        
+        parent::__construct();
+        $this->sender=new Email();
+        $this->err=new ErrorLog();
+        
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->sender=null;
+        $this->err=null;
+        parent::__destruct();
+    }
+    
+    //override UserAccounts addUserAccount method
+    public function addUserAccount(UserAccountBO $data):bool {
+        
+    }
+    
+    //override UserAccounts updateUserAccount method
+    public function updateUserAccount(UserAccountBO $data):bool {
+        
+    }
+    
+    public function listAllAdminAccounts():array {
+        
+    }
+    
+    //override UserAccounts generateEmailMessage method
+    protected function generateEmailMessage(array $arr,string $action):array {
+            
+    }
+}
+

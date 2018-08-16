@@ -1,0 +1,12 @@
+<?php
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AdminAccountDL extends UserAccountDL
+{
+}
+

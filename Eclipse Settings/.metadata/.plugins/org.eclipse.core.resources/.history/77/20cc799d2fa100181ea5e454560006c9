@@ -1,0 +1,67 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\AdminAccounts;
+use UserClasses\DataLayer\UserAccountDL;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/AdminAccounts.php';
+
+/**
+ * AdminAccounts test case.
+ */
+class AdminAccountsTest extends TestCase
+{
+
+    /**
+     *
+     * @var AdminAccounts
+     */
+    private $adminAccounts;
+    private $userAccountDL;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated AdminAccountsTest::setUp()
+        
+        $this->adminAccounts = new AdminAccounts();
+        $this->userAccountDL=new UserAccountDL();
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated AdminAccountsTest::tearDown()
+        $this->adminAccounts = null;
+        $this->userAccountDL=null;
+        parent::tearDown();
+    }
+
+
+     /**
+     * Tests AdminAccounts->listAllAdminAccounts()
+     */
+    public function testListAllAdminAccountsWhenTheyDoNotExist()
+    {
+        // TODO Auto-generated AdminAccountsTest->testListAllAdminAccounts()
+        //$this->markTestIncomplete("listAllAdminAccounts test not implemented");
+        $arr_add=array();
+        $this->userAccountDL->delete($arr_add);     //make sure we delete all user accounts
+        $arr=$this->adminAccounts->listAllAdminAccounts();
+        $this->assertEquals(0,count($arr));
+    }
+    
+    public function testListAllAdminAccountsWhenTheyExist()
+    {
+        // TODO Auto-generated AdminAccountsTest->testListAllAdminAccounts()
+        $this->markTestIncomplete("listAllAdminAccounts test not implemented");
+        
+        $this->adminAccounts->listAllAdminAccounts(/* parameters */);
+    }
+}
+
