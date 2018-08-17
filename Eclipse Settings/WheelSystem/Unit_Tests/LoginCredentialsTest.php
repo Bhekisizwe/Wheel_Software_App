@@ -87,7 +87,9 @@ class LoginCredentialsTest extends TestCase
     {
         // TODO Auto-generated LoginCredentialsTest->testResetUserPassword()
         //$this->markTestIncomplete("resetUserPassword test not implemented");
-        $this->data->set($this->arr_update);
+        $arr=array();
+        $arr["staffNumber"]="305941";
+        $this->data->set($arr);
         $status= $this->loginCredentials->resetUserPassword($this->data);
         $this->assertEquals(true,$status);       
     }

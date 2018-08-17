@@ -66,8 +66,10 @@ class LoginCredentials extends UserAccounts
     }
     
     public function resetUserPassword(UserAccountBO $data):bool {
-        if(isset($data))  {            
-            $data->setActionCode("0xA102");  //reset password
+        if(isset($data)){            
+            $arr=$this->userAccounts->listUserAccount($data);   //retrieve user profile data
+            $data->set($arr);       //set UserAccount data object with this data
+            $data->setActionCode("0xA102");  //reset password action code
             $status_message=$this->userAccounts->updateUserAccount($data);           
             return $status_message;
         }
