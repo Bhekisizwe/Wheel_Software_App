@@ -36,6 +36,9 @@ class Email
                     'allow_self_signed' => true
                 )
             );
+            if(array_key_exists("file", $arr)){
+                $sender->addAttachment($arr["file"]);
+            }
             //$sender->Mailer="smtp";
             $sender->Body=$arr["body"];            
             $status_message=false;

@@ -1,0 +1,101 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\ActivityLogDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ActivityLog
+{
+    private $sender;
+    private $err;
+    private $dirname;
+    private $activityLogDL;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->sender=new Email();
+        $this->err=new ErrorLog();
+        $this->activityLogDL=new ActivityLogDL();
+        $this->dirname=__DIR__."\\..\\..\\..\\..\\ActivityLog";
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->sender=null;
+        $this->err=null;
+        $this->activityLogDL=null;
+    }
+    
+    public function searchForActivityReports(ActivityLogBO $data):array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_2D=$this->activityLogDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="ActivityLog";
+                $method_name="searchForActivityReports";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            } 
+            return $arr_2D;
+        }
+        else return NULL;
+    }
+    
+    public function listAllActivityNames():array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_2D=$this->activityLogDL->searchData($rr);
+            } catch (\Exception $e) {
+                $class_name="ActivityLog";
+                $method_name="listAllActivityNames";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_2D;
+        }
+        else return NULL;
+    }
+    
+    public function addActivityData(ActivityLogBO $data):array {
+        
+    }
+    
+    private function deleteFile():bool {
+        
+    }
+    
+    private function checkFileExists():bool {
+        
+    }
+    
+    private function checkDirectoryExists():bool {
+        
+    }
+    
+    private function createDirectory():bool {
+        
+    }
+    
+    public function generatePDFActivityReport(ActivityLogBO $data){
+        
+    }
+    
+    private function getEmailRecepient(ActivityLogBO $data):string {
+        
+    }
+    
+    private function generateEmailMessage(string $emailAddress):array {
+        
+    }
+}
+

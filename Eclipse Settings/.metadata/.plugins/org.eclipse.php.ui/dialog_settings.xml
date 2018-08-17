@@ -7,8 +7,8 @@
 		<item value="true" key="PHPSourceActionDialog.Comments"/>
 	</section>
 	<section name="completion_proposal_size">
-		<item value="728" key="size.y"/>
-		<item value="355" key="size.x"/>
+		<item value="250" key="size.y"/>
+		<item value="346" key="size.x"/>
 	</section>
 	<section name="quick_outline_size">
 	</section>

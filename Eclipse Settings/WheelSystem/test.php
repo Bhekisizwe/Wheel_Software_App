@@ -11,22 +11,21 @@ use UserClasses\BusinessLayer\UserRole;
 use UserClasses\BusinessLayer\UserAccounts;
 use UserClasses\BusinessObjects\UserAccountBO;
 use UserClasses\DataLayer\UserAccountDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessLayer\ActivityLog;
 
 require __DIR__.'/vendor/autoload.php';
 
 $arr_add=array();
-$arr_add["roleID"]="15";
-$arr_add["name"]="Bhekisizwe";
-$arr_add["surname"]="Mthethwa";
 $arr_add["staffNumber"]="305941";
-$arr_add["emailAddress"]="tshomie2020@yahoo.com";
-$arr_add["accountState"]=1;
+$sender=new Email();
 $data=new UserAccountBO();
-$userAccounts=new UserAccounts();
+$activityLog=new ActivityLog();
 $data->set($arr_add);
-$status_message=$userAccounts->addUserAccount($data);
-$err_arr=$userAccounts->getUserAccountBO()->getErrorAssocArray();
-print_r($err_arr);
+$arr_result=$activityLog->getEmailRecepient($data);
+$arr=$activityLog->generateEmailMessage($arr_result);
+$sender->sendEmail($arr);
+print_r($arr);
   
 //$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
 

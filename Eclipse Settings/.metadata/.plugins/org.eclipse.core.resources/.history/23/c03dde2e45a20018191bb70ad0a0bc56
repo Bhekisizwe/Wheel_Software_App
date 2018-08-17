@@ -1,0 +1,126 @@
+<?php
+
+
+require_once 'vendor/UserClasses/BusinessLayer/src/ActivityLog.php';
+
+
+/**
+ * ActivityLog test case.
+ */
+class ActivityLogTest extends TestCase
+{
+	
+	/**
+	 * @var ActivityLog
+	 */
+	private $activityLog;
+	
+
+	/**
+	 * Prepares the environment before running a test.
+	 */
+	protected function setUp()
+	{
+		parent::setUp();
+
+		// TODO Auto-generated ActivityLogTest::setUp()
+		
+		$this->activityLog = new ActivityLog(/* parameters */);
+		
+	}
+
+	/**
+	 * Cleans up the environment after running a test.
+	 */
+	protected function tearDown()
+	{
+		// TODO Auto-generated ActivityLogTest::tearDown()
+		
+		$this->activityLog = null;
+		
+		parent::tearDown();
+	}
+
+	/**
+	 * Constructs the test case.
+	 */
+	public function __construct()
+	{
+		// TODO Auto-generated constructor
+	}
+
+	
+	/**
+	 * Tests ActivityLog->__construct()
+	 */
+	public function test__construct()
+	{
+		// TODO Auto-generated ActivityLogTest->test__construct()
+		$this->markTestIncomplete("__construct test not implemented");
+		
+		$this->activityLog->__construct(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests ActivityLog->__destruct()
+	 */
+	public function test__destruct()
+	{
+		// TODO Auto-generated ActivityLogTest->test__destruct()
+		$this->markTestIncomplete("__destruct test not implemented");
+		
+		$this->activityLog->__destruct(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests ActivityLog->searchForActivityReports()
+	 */
+	public function testSearchForActivityReports()
+	{
+		// TODO Auto-generated ActivityLogTest->testSearchForActivityReports()
+		$this->markTestIncomplete("searchForActivityReports test not implemented");
+		
+		$this->activityLog->searchForActivityReports(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests ActivityLog->listAllActivityNames()
+	 */
+	public function testListAllActivityNames()
+	{
+		// TODO Auto-generated ActivityLogTest->testListAllActivityNames()
+		$this->markTestIncomplete("listAllActivityNames test not implemented");
+		
+		$this->activityLog->listAllActivityNames(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests ActivityLog->addActivityData()
+	 */
+	public function testAddActivityData()
+	{
+		// TODO Auto-generated ActivityLogTest->testAddActivityData()
+		$this->markTestIncomplete("addActivityData test not implemented");
+		
+		$this->activityLog->addActivityData(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests ActivityLog->generatePDFActivityReport()
+	 */
+	public function testGeneratePDFActivityReport()
+	{
+		// TODO Auto-generated ActivityLogTest->testGeneratePDFActivityReport()
+		$this->markTestIncomplete("generatePDFActivityReport test not implemented");
+		
+		$this->activityLog->generatePDFActivityReport(/* parameters */);
+		
+	}
+	
+}
+
