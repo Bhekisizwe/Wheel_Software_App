@@ -1,0 +1,31 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ActivityLogBO extends BusinessObject
+{
+    private $logID=0;
+    private $taskArray2D;
+    private $transactionName="";
+    private $activityAction=0;
+    private $modifiedBy=0;
+    private $dateModified="";
+    private $timeModified="";
+    private $startDate="";
+    private $endDate="";
+    private $name="";
+    private $surname="";
+    private $staffNumber="";
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(16);    
+    }
+}
+

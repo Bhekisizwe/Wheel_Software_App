@@ -1,0 +1,19 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ActivityLogBO extends BusinessObject
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+}
+
