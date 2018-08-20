@@ -1,0 +1,193 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\ {
+    BusinessObjects\TermsConditionsBO,
+    DataLayer\TermsConditionDL,
+    DataLayer\SystemLicenseDL
+};
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class TermsAndConditions
+{
+    private $sender;
+    private $termsBO;
+
+    /**
+     * @return Ambigous <NULL, \UserClasses\BusinessObjects\TermsConditionsBO>
+     */
+    public function getTermsBO()
+    {
+        return clone $this->termsBO;
+    }
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->sender=new Email();   
+        $this->termsBO=new TermsConditionsBO();
+    }
+    
+    public function __destruct(){
+        $this->sender=null;
+        $this->termsBO=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
+    }
+    
+    public function listTermsData(TermsConditionsBO $data=null):array {
+        if(isset($data)) {
+            $termsDL=new TermsConditionDL();
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            try{
+                $results_arr=$termsDL->searchData($arr);
+            }
+            catch (\Exception $e){
+                $class_name="TermsAndConditions";
+                $method_name="listTermsData";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($termsDL);
+                unset($err_handler);
+            }
+            return $results_arr;
+        }
+        else return NULL;
+    }
+    
+    public function checkTermsExist(TermsConditionsBO $data=null):bool {
+        if(isset($data)) {
+            $termsDL=new TermsConditionDL();
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            //print_r($arr);
+            try{
+                $status_message=$termsDL->dataExists($arr);  //submit data for checking duplicate
+            }
+            catch (\Exception $e){
+                $class_name="TermsAndConditions";
+                $method_name="checkTermsExist";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($termsDL);
+                unset($err_handler);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function addTerms(TermsConditionsBO $data=null):bool {
+        if(isset($data)) {
+            $termsDL=new TermsConditionDL();
+            $licenseDL=new SystemLicenseDL();            
+            $data->setLicenseID($licenseDL->getPrimaryKey($data->getArray()));
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            try{
+                if($arr["licenseID"]>0) {
+                    $status_message=$termsDL->create($arr);  //submit data for creation
+                    if($status_message){
+                        $arr_data=array();
+                        $arr_data["taskArray2D"][0]["taskName"]="Super Admin Functions";
+                        $arr_data["transactionName"]="Adding System Terms and Conditions to Database";
+                        $arr_data["activityAction"]=1;      //create
+                        $arr_data["staffNumber"]=$data->getStaffNumber();
+                        $this->activityBO->set($arr_data);
+                        $this->activityLog->addActivityData($this->activityBO);
+                    }
+                }
+                else {
+                    //The Parent System License Data is missing
+                    $status_message=false;
+                    $err=array();
+                    $err_descr="The system license data is missing within the database. Please complete that first!";
+                    $err["errorDescription"]=$err_descr;
+                    $err["errorCode"]="0x01";
+                    $this->termsBO->setErrorAssocArray($err);
+                    throw new \Exception($err_descr);
+                }
+            }
+            catch (\Exception $e){
+                $class_name="TermsAndConditions";
+                $method_name="addTerms";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($termsDL);
+                unset($licenseDL);
+                unset($err_handler);
+            }
+            //print_r($arr);
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function updateTerms(TermsConditionsBO $data=null):bool {
+        if(isset($data)) {
+            $termsDL=new TermsConditionDL();
+            $err_handler=new ErrorLog();
+            $arr=$data->getArray(); //convert Object Into array
+            try{
+                $status_message=$termsDL->update($arr);  //submit data for updating
+                if($status_message){
+                    $arr_email=$this->generateEmailMessage();
+                    $this->sender->sendEmail($arr_email);
+                }
+                else {
+                    throw new \Exception("Update of Terms and Conditions was unsuccessful");
+                }
+            }
+            catch (\Exception $e){
+                $class_name="TermsAndConditions";
+                $method_name="updateTerms";
+                //Log Exception here in errors.txt file
+                $err_handler->logErrors($e,NULL,$class_name, $method_name);
+            }
+            finally{
+                //destroy object
+                unset($termsDL);
+                unset($err_handler);
+            }
+            //print_r($arr);
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    private function generateEmailMessage():array {
+        //generate email array
+        $arr_email=array();
+        $arr_email["to"]="bmthethwa@gqunsueng.co.za";
+        $arr_email["subject"]="Terms and Conditions Details Alert";
+        //extract company name
+        $data=new TermsConditionsBO();
+        $arr_results=$this->listTermsData($data);
+        $body="Dear Super Administrator<p>";
+        $body.="The contractual terms and conditions information, for ".$arr_results[0]["CompanyName"]." based in";
+        $body.=" ".$arr_results[0]["Surburb"]." in ".$arr_results[0]["City"]." has been updated<p>";
+        $body.=" By Order (Gqunsu Engineering Pty Ltd)";
+        $arr_email["body"]=$body;
+        //destroy objects
+        unset($data);
+        return $arr_email;
+    }    
+ 
+}
+

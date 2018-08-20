@@ -32,6 +32,7 @@ class UserRoleTest extends TestCase
         $this->userRole = new UserRole();
         $this->data=new UserRoleBO();
         $arr_add=array();
+        $arr_add["staffNumber"]="305941";
         $arr_add["userRole2DArray"]=[0=>["userRoleName"=>"Baby"]];
         $arr_add["activityRights2DArray"]=[0=>["activityID"=>1,"activityRights"=>"C R"],
             1=>["activityID"=>2,"activityRights"=>"C R U D"],
@@ -40,6 +41,7 @@ class UserRoleTest extends TestCase
             1=>["columnID"=>2,"columnVisibility"=>1]];
         $this->arr_add=$arr_add;
         $arr_update=array();
+        $arr_update["staffNumber"]="305941";
         //$arr_update["userRole2DArray"]=[0=>["roleID"=>2]];        
         $arr_update["activityRights2DArray"]=[0=>["accessID"=>56,"activityRights"=>"R"],
             1=>["accessID"=>57,"activityRights"=>"R"],

@@ -39,6 +39,7 @@ class LoginCredentialsTest extends TestCase
         $arr_update["emailAddress"]="bmthethwa@gqunsueng.co.za";
         $arr_update["passwordHash"]="induction";
         $arr_update["accountState"]=0;
+        $arr_update["adminStaffNumber"]="305941";
         $this->arr_update=$arr_update;
     }
 

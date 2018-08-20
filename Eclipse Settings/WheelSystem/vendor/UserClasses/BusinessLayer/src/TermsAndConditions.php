@@ -7,6 +7,7 @@ use UserClasses\ {
     DataLayer\TermsConditionDL,
     DataLayer\SystemLicenseDL
 };
+use UserClasses\BusinessObjects\ActivityLogBO;
 
 /**
  *
@@ -17,6 +18,8 @@ class TermsAndConditions
 {
     private $sender;
     private $termsBO;
+    private $activityLog;
+    private $activityBO;
 
     /**
      * @return Ambigous <NULL, \UserClasses\BusinessObjects\TermsConditionsBO>
@@ -32,11 +35,15 @@ class TermsAndConditions
     {
         $this->sender=new Email();   
         $this->termsBO=new TermsConditionsBO();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
     }
     
     public function __destruct(){
         $this->sender=null;
         $this->termsBO=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
     }
     
     public function listTermsData(TermsConditionsBO $data=null):array {
@@ -98,6 +105,15 @@ class TermsAndConditions
             try{
                 if($arr["licenseID"]>0) {
                     $status_message=$termsDL->create($arr);  //submit data for creation
+                    if($status_message){
+                        $arr_data=array();
+                        $arr_data["taskArray2D"][0]["taskName"]="Super Admin Functions";
+                        $arr_data["transactionName"]="Adding System Terms and Conditions to Database";
+                        $arr_data["activityAction"]=1;      //create
+                        $arr_data["staffNumber"]=$data->getStaffNumber();
+                        $this->activityBO->set($arr_data);
+                        $this->activityLog->addActivityData($this->activityBO);
+                    }
                 }
                 else {
                     //The Parent System License Data is missing
@@ -138,6 +154,13 @@ class TermsAndConditions
                 if($status_message){
                     $arr_email=$this->generateEmailMessage();
                     $this->sender->sendEmail($arr_email);
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="Super Admin Functions";
+                    $arr_data["transactionName"]="Updating System Terms and Conditions in Database";
+                    $arr_data["activityAction"]=2;      //update
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
                 }
                 else {
                     throw new \Exception("Update of Terms and Conditions was unsuccessful");

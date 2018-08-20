@@ -18,12 +18,29 @@ class UserAccountBO extends BusinessObject
     private $accountState=0;    //false
     private $passwordHash="";   //Message Digested or Hashed Password
     private $userRoleName="";
+    private $adminStaffNumber;
     
+    /**
+     * @return mixed
+     */
+    public function getAdminStaffNumber()
+    {
+        return $this->adminStaffNumber;
+    }
+
+    /**
+     * @param mixed $adminStaffNumber
+     */
+    public function setAdminStaffNumber($adminStaffNumber)
+    {
+        $this->adminStaffNumber = $adminStaffNumber;
+    }
+
     /**
      */
     public function __construct()
     {
-        $this->setObjectNumOfFields(13);
+        $this->setObjectNumOfFields(14);
     }
 
     /**
@@ -176,6 +193,9 @@ class UserAccountBO extends BusinessObject
             //make the Key case insensitive by making the string comparison to be lower case
             $key_lower=strtolower($key);
             switch($key_lower){
+                case "adminstaffnumber":
+                    $this->adminStaffNumber=$value;
+                    break;
                 case "accountid":
                     $this->accountID=$value;
                     break;

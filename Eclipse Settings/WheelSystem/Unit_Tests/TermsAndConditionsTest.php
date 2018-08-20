@@ -52,11 +52,13 @@ class TermsAndConditionsTest extends TestCase
         $arr_add["companyName"]="CSIR";
         $arr_add["postalAddressArray"]=$arr_addr;
         $arr_add["licenseLimit"]=100;        
-        $arr_add["terms"]="This contract is legally binding for the next 3 years!";       
+        $arr_add["terms"]="This contract is legally binding for the next 3 years!"; 
+        $arr_add["staffNumber"]="305941";
         $this->arr_add=$arr_add;
         //prepare update test data       
         $arr_update=array();        
-        $arr_update["terms"]="This contract is no-longer valid";       
+        $arr_update["terms"]="This contract is no-longer valid"; 
+        $arr_update["staffNumber"]="305941";
         $this->arr_update=$arr_update;
     }
 

@@ -14,9 +14,26 @@ class SystemLicenseBO extends BusinessObject
     private $companyName;   //Name of client's company
     private $postalAddressArray;    //associative array containing the full address of the client
     private $licenseLimit;      //Maximum number of active users the specific license allows in the system
+    private $staffNumber;
     
+    /**
+     * @return mixed
+     */
+    public function getStaffNumber()
+    {
+        return $this->staffNumber;
+    }
+
+    /**
+     * @param mixed $staffNumber
+     */
+    public function setStaffNumber($staffNumber)
+    {
+        $this->staffNumber = $staffNumber;
+    }
+
     public function __construct(){
-        $this->setObjectNumOfFields(8);    
+        $this->setObjectNumOfFields(9);    
     }
     
     public function set(array $data){
@@ -25,6 +42,9 @@ class SystemLicenseBO extends BusinessObject
             //make the Key case insensitive by making the string comparison to be lower case
             $key_lower=strtolower($key);
             switch($key_lower){
+                case "staffnumber":
+                    $this->staffNumber=$value;
+                    break;
                 case "licenseid":
                     $this->licenseID=$value;
                     break;

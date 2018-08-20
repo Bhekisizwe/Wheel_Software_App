@@ -15,9 +15,26 @@ class TermsConditionsBO extends BusinessObject
     private $postalAddressArray;
     private $terms="";
     private $dateModified="";
+    private $staffNumber;
     
+    /**
+     * @return mixed
+     */
+    public function getStaffNumber()
+    {
+        return $this->staffNumber;
+    }
+
+    /**
+     * @param mixed $staffNumber
+     */
+    public function setStaffNumber($staffNumber)
+    {
+        $this->staffNumber = $staffNumber;
+    }
+
     public function __construct(){
-        $this->setObjectNumOfFields(10);
+        $this->setObjectNumOfFields(11);
     }
     
     /**
@@ -122,6 +139,9 @@ class TermsConditionsBO extends BusinessObject
             //make the Key case insensitive by making the string comparison to be lower case
             $key_lower=strtolower($key);
             switch($key_lower){
+                case "staffnumber":
+                    $this->staffNumber=$value;
+                    break;
                 case "termsid":
                     $this->termsID=$value;
                     break;

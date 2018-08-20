@@ -19,7 +19,8 @@ class ActivityLog
     private $sender;
     private $err;
     private $dirname;
-    private $activityLogDL;
+    private $activityLogDL;   
+    private $userAccountBO;
 
     /**
      */
@@ -27,7 +28,8 @@ class ActivityLog
     {
         $this->sender=new Email();
         $this->err=new ErrorLog();
-        $this->activityLogDL=new ActivityLogDL();
+        $this->activityLogDL=new ActivityLogDL();        
+        $this->userAccountBO=new UserAccountBO();
         $this->dirname=__DIR__."\\..\\..\\..\\..\\ActivityLog";
     }
 
@@ -37,7 +39,8 @@ class ActivityLog
     {
         $this->sender=null;
         $this->err=null;
-        $this->activityLogDL=null;
+        $this->activityLogDL=null;        
+        $this->userAccountBO=null;
     }
     
     public function searchForActivityReports(ActivityLogBO $data):array {
@@ -70,6 +73,12 @@ class ActivityLog
     public function addActivityData(ActivityLogBO $data):bool {
         if(isset($data)){
             try {
+                $user_arr=array();
+                $user_arr["staffNumber"]=$data->getStaffNumber();
+                $this->userAccountBO->set($user_arr);
+                $userAccounts=new UserAccounts();
+                $arr_results=$userAccounts->listUserAccount($this->userAccountBO);
+                $data->setModifiedBy($arr_results["accountID"]);
                 $arr=$data->getArray();
                 $status_message=$this->activityLogDL->create($arr);
                 if(!$status_message) throw new \Exception("Failed to add an Activity event to the database");
@@ -78,6 +87,9 @@ class ActivityLog
                 $class_name="ActivityLog";
                 $method_name="addActivityData";
                 $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            finally {
+                unset($userAccounts);
             }
             return $status_message;
         }

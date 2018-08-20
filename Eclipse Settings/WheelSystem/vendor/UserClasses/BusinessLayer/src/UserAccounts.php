@@ -7,6 +7,7 @@ use UserClasses\ {
     DataLayer\UserAccountDL,
     BusinessObjects\SystemLicenseBO
 };
+use UserClasses\BusinessObjects\ActivityLogBO;
 
 /**
  *
@@ -18,14 +19,16 @@ class UserAccounts
     private $sender;
     private $err;
     private $userAccountDL;
-    private $userAccountBO;    
+    private $userAccountBO; 
+    private $activityLog;
+    private $activityBO;
 
     /**
      * @return Ambigous <NULL, \UserClasses\BusinessObjects\UserAccountBO>
      */
     public function getUserAccountBO()
     {
-        return clone $this->userAccountBO;
+        return clone $this->userAccountBO;      
     }
 
     /**
@@ -36,6 +39,8 @@ class UserAccounts
         $this->err=new ErrorLog();
         $this->userAccountDL=new UserAccountDL();
         $this->userAccountBO=new UserAccountBO();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
     }
 
     /**
@@ -46,6 +51,8 @@ class UserAccounts
         $this->err=null;
         $this->userAccountDL=null;
         $this->userAccountBO=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
     }
     
     public function listUserAccount(UserAccountBO $data):array {
@@ -91,6 +98,13 @@ class UserAccounts
                         $arr["passwordHash"]=$password_text;
                         $arr_email=$this->generateEmailMessage($arr,"add");
                         $this->sender->sendEmail($arr_email);
+                        $arr_data=array();
+                        $arr_data["taskArray2D"][0]["taskName"]="User Accounts";
+                        $arr_data["transactionName"]="Adding User Account to Database";
+                        $arr_data["activityAction"]=1;      //create
+                        $arr_data["staffNumber"]=$data->getAdminStaffNumber();
+                        $this->activityBO->set($arr_data);
+                        $this->activityLog->addActivityData($this->activityBO);
                     }
                     else throw new \Exception("Failed to Add user account!");
                 }          
@@ -124,6 +138,13 @@ class UserAccounts
                         $arr["passwordText"]="";
                         $arr_email=$this->generateEmailMessage($arr,"update");
                         $this->sender->sendEmail($arr_email);
+                        $arr_data=array();
+                        $arr_data["taskArray2D"][0]["taskName"]="User Accounts";
+                        $arr_data["transactionName"]="Updating User Account in Database";
+                        $arr_data["activityAction"]=2;      //update
+                        $arr_data["staffNumber"]=$data->getAdminStaffNumber();
+                        $this->activityBO->set($arr_data);
+                        $this->activityLog->addActivityData($this->activityBO);
                     }
                     else throw new \Exception("Failed to update user account!");
                 } 

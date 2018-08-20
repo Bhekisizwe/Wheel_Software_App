@@ -5,6 +5,7 @@ namespace UserClasses\BusinessLayer;
 use UserClasses\BusinessObjects\UserAccountBO;
 use UserClasses\DataLayer\UserAccountDL;
 use UserClasses\DataLayer\LoginCredentialsDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
 
 /**
  *
@@ -17,6 +18,8 @@ class LoginCredentials extends UserAccounts
     private $err;
     private $loginCredentialsDL;
     private $userAccounts;
+    private $activityLog;
+    private $activityBO;
 
     /**
      */
@@ -27,6 +30,8 @@ class LoginCredentials extends UserAccounts
         $this->err=new ErrorLog();
         $this->loginCredentialsDL=new LoginCredentialsDL();
         $this->userAccounts=new UserAccounts();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
     }
 
     /**
@@ -37,6 +42,8 @@ class LoginCredentials extends UserAccounts
         $this->err=null;
         $this->loginCredentialsDL=null;
         $this->userAccounts=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
         parent::__destruct();
     }
     
@@ -60,6 +67,15 @@ class LoginCredentials extends UserAccounts
         if(isset($data)){           
             $data->setActionCode("0xA101");  //update password              
             $status_message=$this->userAccounts->updateUserAccount($data);
+            if($status_message){
+                $arr_data=array();
+                $arr_data["taskArray2D"][0]["taskName"]="User Accounts";
+                $arr_data["transactionName"]="Updating User Password for Staff Number:".$data->getStaffNumber();
+                $arr_data["activityAction"]=2;      //update
+                $arr_data["staffNumber"]=$data->getAdminStaffNumber();
+                $this->activityBO->set($arr_data);
+                $this->activityLog->addActivityData($this->activityBO);
+            }
             return $status_message;
         }
         else return false;
@@ -70,7 +86,7 @@ class LoginCredentials extends UserAccounts
             $arr=$this->userAccounts->listUserAccount($data);   //retrieve user profile data
             $data->set($arr);       //set UserAccount data object with this data
             $data->setActionCode("0xA102");  //reset password action code
-            $status_message=$this->userAccounts->updateUserAccount($data);           
+            $status_message=$this->userAccounts->updateUserAccount($data);          
             return $status_message;
         }
         else return false;

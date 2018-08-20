@@ -51,7 +51,7 @@ class UserAccountsTest extends TestCase
         $arr_add_lic=array();
         $arr_add_lic["companyName"]="CSIR";
         $arr_add_lic["postalAddressArray"]=$arr_addr;
-        $arr_add_lic["licenseLimit"]=5;
+        $arr_add_lic["licenseLimit"]=5;        
         $this->licensedata=$arr_add_lic;
         $arr_add=array();
         $arr_add["roleID"]="15";
@@ -60,6 +60,7 @@ class UserAccountsTest extends TestCase
         $arr_add["staffNumber"]="305941";
         $arr_add["emailAddress"]="tshomie2020@yahoo.com";        
         $arr_add["accountState"]=1;
+        $arr_add["adminStaffNumber"]="305941";
         $this->arr_add=$arr_add;
         $arr_update=array();
         $arr_update["accountID"]=1;
@@ -71,6 +72,7 @@ class UserAccountsTest extends TestCase
         $arr_update["emailAddress"]="bmthethwa@gqunsueng.co.za";
         $arr_update["passwordHash"]="induction";
         $arr_update["accountState"]=0;
+        $arr_update["adminStaffNumber"]="305941";
         $this->arr_update=$arr_update;
     }
 

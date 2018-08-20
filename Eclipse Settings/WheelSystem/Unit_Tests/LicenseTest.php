@@ -52,6 +52,7 @@ class LicenseTest extends TestCase
         $arr_add["companyName"]="CSIR";
         $arr_add["postalAddressArray"]=$arr_addr;
         $arr_add["licenseLimit"]=5;
+        $arr_add["staffNumber"]="305941";
         $this->arr_add=$arr_add;
         //prepare update test data
         $arr_addr["AddressType"]=1;
@@ -65,6 +66,7 @@ class LicenseTest extends TestCase
         $arr_update["companyName"]="Gqunsu Engineering Pty Ltd";
         $arr_update["postalAddressArray"]=$arr_addr;
         $arr_update["licenseLimit"]=5;
+        $arr_update["staffNumber"]="305941";
         $this->arr_update=$arr_update;
     }
 

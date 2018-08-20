@@ -12,9 +12,26 @@ class UserRoleBO extends BusinessObject
     private $userRole2DArray;
     private $activityRights2DArray;
     private $columnVisibility2DArray;
+    private $staffNumber;
     
+    /**
+     * @return mixed
+     */
+    public function getStaffNumber()
+    {
+        return $this->staffNumber;
+    }
+
+    /**
+     * @param mixed $staffNumber
+     */
+    public function setStaffNumber($staffNumber)
+    {
+        $this->staffNumber = $staffNumber;
+    }
+
     public function __construct(){
-        $this->setObjectNumOfFields(7);
+        $this->setObjectNumOfFields(8);
     }
     
     /**
@@ -70,7 +87,10 @@ class UserRoleBO extends BusinessObject
         foreach($data as $key => $value){
             //make the Key case insensitive by making the string comparison to be lower case
             $key_lower=strtolower($key);
-            switch($key_lower){               
+            switch($key_lower){  
+                case "staffnumber":
+                    $this->staffNumber=$value;
+                    break;
                 case "userrole2darray":
                     $this->userRole2DArray=$value;
                     break;
