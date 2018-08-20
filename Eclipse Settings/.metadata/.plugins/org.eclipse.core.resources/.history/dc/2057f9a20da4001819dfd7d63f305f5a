@@ -105,7 +105,6 @@ class ActivityLog
     public function generatePDFActivityReport(ActivityLogBO $data):bool {
         if(isset($data)){
             $arr=array();
-            $userAccountBO=new UserAccountBO();
             $arr[0]="";
             $arr[1]="Created";
             $arr[2]="Updated";
@@ -140,7 +139,8 @@ class ActivityLog
                 $mpdf->Output($actual_file_name,\Mpdf\Output\Destination::FILE);
                 //Email PDF file to user.
                 if($this->checkFileExists($filename)){
-                    //if file exists on disk, email the user                    
+                    //if file exists on disk, email the user
+                    $userAccountBO=new UserAccountBO();
                     $userAccountBO->setStaffNumber($data->getStaffNumber());
                     $arr_data=$this->getEmailRecepient($userAccountBO);
                     $arr_email=$this->generateEmailMessage($arr_data);
