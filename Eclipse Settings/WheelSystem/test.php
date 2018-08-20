@@ -16,16 +16,18 @@ use UserClasses\BusinessLayer\ActivityLog;
 
 require __DIR__.'/vendor/autoload.php';
 
-$arr_add=array();
-$arr_add["staffNumber"]="305941";
-$sender=new Email();
-$data=new UserAccountBO();
+$arr=array();
+$activityBO=new ActivityLogBO();
 $activityLog=new ActivityLog();
-$data->set($arr_add);
-$arr_result=$activityLog->getEmailRecepient($data);
-$arr=$activityLog->generateEmailMessage($arr_result);
-$sender->sendEmail($arr);
-print_r($arr);
+$arr["taskID"]=4;
+$arr_2D=array();
+$arr_2D["taskArray2D"][0]=$arr;
+$arr_2D["staffNumber"]="305941";
+$arr_2D["startDate"]="2018-08-14";
+$arr_2D["endDate"]="2018-08-31";
+$activityBO->set($arr_2D);
+$activityLog->generatePDFActivityReport($activityBO);
+print_r($arr_results);
   
 //$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
 

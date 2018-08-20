@@ -94,7 +94,16 @@ class ActivityLogDL extends DatabaseManager implements DatabaseFunctionsInt
      * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
      */
     public function delete(array $data):bool
-    {}
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            $query="DELETE FROM ActivityLog WHERE LogID>0";
+            $status_message=$connector->query($query);
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
 
     /**
      * (non-PHPdoc)

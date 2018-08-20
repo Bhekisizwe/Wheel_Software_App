@@ -7,6 +7,7 @@ use UserClasses\ {
     DataLayer\ActivityLogDL,
     BusinessObjects\UserAccountBO
 };
+use Mpdf\Mpdf;
 
 /**
  *
@@ -42,6 +43,7 @@ class ActivityLog
     public function searchForActivityReports(ActivityLogBO $data):array {
         if(isset($data)){
             try {
+                //$arr_2D=array();
                 $arr=$data->getArray();
                 $arr_2D=$this->activityLogDL->searchData($arr);
             } catch (\Exception $e) {
@@ -101,7 +103,61 @@ class ActivityLog
     }
     
     public function generatePDFActivityReport(ActivityLogBO $data):bool {
-        
+        if(isset($data)){
+            $arr=array();
+            $arr[0]="";
+            $arr[1]="Created";
+            $arr[2]="Updated";
+            $arr[3]="Deleted";
+            $filename=$data->getStaffNumber().".pdf";
+            //First check if Directory Exists, create it if necessary    
+            if(!$this->checkDirectoryExists()) $this->createDirectory();
+            //Check if file exists in Directory and delete it
+            if($this->checkFileExists($filename)) $this->deleteFile($filename);
+            //retrive data to use to generate report
+            $arr_2D=$this->searchForActivityReports($data);
+            //create HTML code using this data
+            $html_string="<html><head><title></title></head><body>";
+            $html_string.="<h3>This is the Activity Logs Report for the period ".$data->getStartDate()." to ".$data->getEndDate()."</h3>";
+            $html_string.="<table align='center' width='100%'>";
+            $html_string.="<thead><tr><th>Transaction Name</th><th>Activity Action</th><th>Task Name</th>";
+            $html_string.="<th>Modification Timestamp</th><th>Modified by</th><th>Staff Number</th></tr></thead>";
+            for($i=0;$i<count($arr_2D);$i++){
+                $html_string.="<tr><td>".$arr_2D[$i]["transactionName"]."</td><td>".$arr[$arr_2D[$i]["activityAction"]]."</td>";
+                $html_string.="<td>".$arr_2D[$i]["taskArray2D"][0]["taskName"]."</td><td>".$arr_2D[$i]["dateModified"]." ".$arr_2D[$i]["timeModified"]."</td>";
+                $html_string.="<td>".$arr_2D[$i]["name"]." ".$arr_2D[$i]["surname"]."</td><td>".$arr_2D[$i]["staffNumber"]."</td></tr>";
+            }               
+            $html_string.="</table></body></html>";
+            //pass HTML to mPDF class for PDF conversion
+            try {
+                $mpdf=new Mpdf();
+                $stylesheet=file_get_contents($this->dirname."\\..\\styles\\styling.css");
+                $mpdf->WriteHTML($stylesheet,1);
+                $mpdf->WriteHTML(utf8_encode($html_string),2);
+                $actual_file_name=$this->dirname."\\".$filename;
+                //write PDF file to disk
+                $mpdf->Output($actual_file_name,\Mpdf\Output\Destination::FILE);
+                //Email PDF file to user.
+                if($this->checkFileExists($filename)){
+                    //if file exists on disk, email the user
+                    $userAccountBO=new UserAccountBO();
+                    $userAccountBO->setStaffNumber($data->getStaffNumber());
+                    $arr_data=$this->getEmailRecepient($userAccountBO);
+                    $arr_email=$this->generateEmailMessage($arr_data);
+                    $this->sender->sendEmail($arr_email);
+                }
+                else throw new \Exception("Cannot email a file that does not exist");
+            } catch (\Exception $e) {
+                $class_name="ActivityLog";
+                $method_name="generatePDFActivityReport";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            finally{
+                unset($mpdf);
+                unset($userAccountBO);
+            }
+            return true;
+        }else return false;
     }
     
     private function getEmailRecepient(UserAccountBO $data):array {        

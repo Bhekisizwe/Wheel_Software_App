@@ -1,6 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use UserClasses\BusinessLayer\ActivityLog;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\ActivityLogDL;
 
 require_once 'vendor/UserClasses/BusinessLayer/src/ActivityLog.php';
 
@@ -15,6 +17,9 @@ class ActivityLogTest extends TestCase
      * @var ActivityLog
      */
     private $activityLog;
+    private $arr_add;
+    private $activityBO;
+    private $activityLogDL;
 
     /**
      * Prepares the environment before running a test.
@@ -26,6 +31,17 @@ class ActivityLogTest extends TestCase
         // TODO Auto-generated ActivityLogTest::setUp()
         
         $this->activityLog = new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->activityLogDL=new ActivityLogDL();
+        $arr_1D=array();
+        $arr_1D["taskName"]="Re-profiling data";
+        $arr_add=array();
+        $arr_add["taskArray2D"][0]=$arr_1D; 
+        $arr_add["transactionName"]="Updating Re-profiling Data";
+        $arr_add["activityAction"]=2;   //1=Create, 2=Update, 3=Delete
+        $arr_add["modifiedBy"]=1;   //AccountID
+        $arr_add["staffNumber"]="305941";
+        $this->arr_add=$arr_add;        
     }
 
     /**
@@ -35,7 +51,8 @@ class ActivityLogTest extends TestCase
     {
         // TODO Auto-generated ActivityLogTest::tearDown()
         $this->activityLog = null;
-        
+        $this->activityLogDL=null;
+        $this->activityBO=null;
         parent::tearDown();
     }
   
@@ -43,12 +60,20 @@ class ActivityLogTest extends TestCase
     /**
      * Tests ActivityLog->searchForActivityReports()
      */
-    public function testSearchForActivityReports()
+    public function testSearchForActivityReportsWhenReportsDoNotExist()
     {
         // TODO Auto-generated ActivityLogTest->testSearchForActivityReports()
-        $this->markTestIncomplete("searchForActivityReports test not implemented");
-        
-        $this->activityLog->searchForActivityReports();
+        //$this->markTestIncomplete("searchForActivityReports test not implemented");        
+        $arr=array();
+        $this->activityLogDL->delete($arr); //delete contents of ActivityLog Table. Make sure its empty
+        $arr["taskID"]=4;
+        $arr_2D=array();
+        $arr_2D["taskArray2D"][0]=$arr;       
+        $arr_2D["startDate"]="2018-08-14";
+        $arr_2D["endDate"]="2018-08-31";
+        $this->activityBO->set($arr_2D);
+        $arr_results=$this->activityLog->searchForActivityReports($this->activityBO);
+        $this->assertEquals(0,count($arr_results));
     }
 
     /**
@@ -57,9 +82,10 @@ class ActivityLogTest extends TestCase
     public function testListAllActivityNames()
     {
         // TODO Auto-generated ActivityLogTest->testListAllActivityNames()
-        $this->markTestIncomplete("listAllActivityNames test not implemented");
+        //$this->markTestIncomplete("listAllActivityNames test not implemented");
         
-        $this->activityLog->listAllActivityNames();
+        $arr=$this->activityLog->listAllActivityNames();
+        $this->assertEquals(7,count($arr["taskArray2D"]));
     }
 
     /**
@@ -68,9 +94,25 @@ class ActivityLogTest extends TestCase
     public function testAddActivityData()
     {
         // TODO Auto-generated ActivityLogTest->testAddActivityData()
-        $this->markTestIncomplete("addActivityData test not implemented");
-        
-        $this->activityLog->addActivityData();
+        //$this->markTestIncomplete("addActivityData test not implemented");
+        $this->activityBO->set($this->arr_add);
+        $status_message=$this->activityLog->addActivityData($this->activityBO);
+        $this->assertEquals(true,$status_message);
+    }
+    
+    public function testSearchForActivityReportsWhenReportsExist()
+    {
+        // TODO Auto-generated ActivityLogTest->testSearchForActivityReports()
+        //$this->markTestIncomplete("searchForActivityReports test not implemented");
+        $arr=array();
+        $arr["taskID"]=4;
+        $arr_2D=array();
+        $arr_2D["taskArray2D"][0]=$arr;
+        $arr_2D["startDate"]="2018-08-14";
+        $arr_2D["endDate"]="2018-08-31";
+        $this->activityBO->set($arr_2D);
+        $arr_results=$this->activityLog->searchForActivityReports($this->activityBO);
+        $this->assertEquals(1,count($arr_results));
     }
 
     /**
