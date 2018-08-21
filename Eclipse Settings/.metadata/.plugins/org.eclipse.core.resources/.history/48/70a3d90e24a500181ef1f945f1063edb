@@ -1,0 +1,90 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AssetRegisterBO extends BusinessObject
+{
+    private $assetID=0;
+    private $coachDetails2DArray;
+    private $coachNumber="";
+    private $staffNumber="";
+    
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(8);
+    }
+    
+    /**
+     * @return number
+     */
+    public function getAssetID()
+    {
+        return $this->assetID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCoachDetails2DArray()
+    {
+        return $this->coachDetails2DArray;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCoachNumber()
+    {
+        return $this->coachNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStaffNumber()
+    {
+        return $this->staffNumber;
+    }
+
+    /**
+     * @param number $assetID
+     */
+    public function setAssetID($assetID)
+    {
+        $this->assetID = $assetID;
+    }
+
+    /**
+     * @param mixed $coachDetails2DArray
+     */
+    public function setCoachDetails2DArray($coachDetails2DArray)
+    {
+        $this->coachDetails2DArray = $coachDetails2DArray;
+    }
+
+    /**
+     * @param string $coachNumber
+     */
+    public function setCoachNumber($coachNumber)
+    {
+        $this->coachNumber = $coachNumber;
+    }
+
+    /**
+     * @param string $staffNumber
+     */
+    public function setStaffNumber($staffNumber)
+    {
+        $this->staffNumber = $staffNumber;
+    }
+
+
+   
+}
+

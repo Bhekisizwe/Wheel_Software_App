@@ -1,0 +1,208 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+use UserClasses\BusinessObjects\AssetRegisterBO;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\AssetRegisterDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AssetRegister extends FileHandler
+{
+    private $err;  
+    private static $dirPath=__DIR__."\\..\\..\\..\\..\\AssetRegister";
+    private static $fileTypePrimary="text/plain";
+    private static $fileTypeSecondary="CSV";
+    private $activityLog;
+    private $activityBO;
+    private $assetRegisterDL;
+    private $numberOfFields=3;
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct(self::$dirPath, self::$fileTypePrimary, self::$fileTypeSecondary);
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->assetRegisterDL=new AssetRegisterDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;   
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->assetRegisterDL=null;
+    }
+    
+    private function checkHeadersAllExist(string $filename):bool {
+        $headers=array("Coach Number","Coach Type","Coach Category");
+        $filepath=self::$dirPath."\\".$filename;
+        $file_str=file_get_contents($filepath);
+        $counter=0;
+        foreach($headers as $value){
+            //loop through the Array
+            $pattern="/".$value."/";    //regular expression to search for.
+            if(preg_match($pattern, $file_str)==1){
+                $counter++;    
+            }
+        } 
+        ($counter<$this->numberOfFields)?$status_message=false:$status_message=true;
+        return $status_message;
+    }
+    
+    private function checkHeadersOrder(string $filename):bool {
+        $headers=array("Coach Number","Coach Type","Coach Category");        
+        $filepath=self::$dirPath."\\".$filename;
+        $pointer=fopen($filepath,'r');   //open for reading
+        $readline=fgets($pointer);  //read first line of CSV file
+        fclose($pointer);
+        //search for Delimiter that is applicable.
+        $file=fopen($filepath,'r');
+        if(preg_match("/,/", $readline)==1){
+            $arr_header=fgetcsv($file,null,',');
+        }
+        if(preg_match("/;/", $readline)==1){
+            $arr_header=fgetcsv($file,null,';');
+        }
+        $counter=0;
+        for($i=0;$i<count($arr_header);$i++){
+            if(array_keys($arr_header,$headers[$i])[0]==$i) {
+                $counter++;
+            }
+        }
+        ($counter<$this->numberOfFields)?$status_message=false:$status_message=true;
+        fclose($file);   //close file
+        return $status_message;
+    }
+    
+    private function checkRowsForEmptySpaces(string $filename):bool {
+        $filepath=self::$dirPath."\\".$filename;
+        $pointer=fopen($filepath,'r');   //open for reading
+        $readline=fgets($pointer);  //read first line of CSV file
+        fclose($pointer);
+        //search for Delimiter that is applicable.
+        $file=fopen($filepath,'r');
+        if(preg_match("/,/", $readline)==1){
+            $delimiter=",";    
+        }
+        if(preg_match("/;/", $readline)==1){
+            $delimiter=";";
+        }
+        $status_message=false;
+        while(($row_arr=fgetcsv($file,null,$delimiter))!== FALSE){
+            foreach($row_arr as $value){
+                if(empty($value)){
+                    //detected empty field
+                    $status_message=true;   //empty space found. Exit Loop no need to continue
+                    break;
+                }                
+            }
+            if($status_message) break;
+        }
+        fclose($file);
+        return $status_message;
+    }
+    
+    public function readCSVFileAssetsData(AssetRegisterBO $data):array {
+        
+    }
+    
+    public function addAsset(AssetRegisterBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->assetRegisterDL->create($arr);
+                if($status_message){
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="Coach Asset Register";
+                    $arr_data["transactionName"]="Manually adding Asset to Database";
+                    $arr_data["activityAction"]=1;      //create
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
+                }
+            } catch (\Exception $e) {
+                $class_name="AssetRegister";
+                $method_name="addAsset";
+                $this->errObj->logErrors($e,null,$class_name, $method_name);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function updateAsset(AssetRegisterBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->assetRegisterDL->update($arr);
+                if($status_message){
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="Coach Asset Register";
+                    $arr_data["transactionName"]="Updating Asset in Database";
+                    $arr_data["activityAction"]=2;      //update
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
+                }
+            } catch (\Exception $e) {
+                $class_name="AssetRegister";
+                $method_name="updateAsset";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }            
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function searchAssetRegister(AssetRegisterBO $data):array {
+        if(isset($data)){
+            try {
+                //$arr_2D=array();
+                $arr=$data->getArray();
+                $arr_2D=$this->assetRegisterDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="AssetRegister";
+                $method_name="searchAssetRegister";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_2D;
+        }
+        else return NULL;
+    }
+    
+    public function listCoachTypes():array {        
+        try {
+            $arr=$this->assetRegisterDL->retrieveAllCoachTypes();
+        } catch (\Exception $e) {
+            $class_name="AssetRegister";
+            $method_name="listCoachTypes";
+            $this->errObj->logErrors($e,null,$class_name, $method_name);
+        }
+        return $arr;
+    }
+    
+    public function checkAssetExists(AssetRegisterBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->assetRegisterDL->dataExists($arr);
+            } catch (\Exception $e) {
+                $class_name="AssetRegister";
+                $method_name="checkAssetExists";
+                $this->errObj->logErrors($e,null,$class_name, $method_name);
+            }            
+            return $status_message;
+        }
+        else return false;
+    }   
+}
+

@@ -1,0 +1,23 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AssetRegisterBO extends BusinessObject
+{
+    private $assetID=0;
+    private $coachDetails2DArray;
+    private $coachNumber="";
+    private $staffNumber="";
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(8);
+    }
+}
+

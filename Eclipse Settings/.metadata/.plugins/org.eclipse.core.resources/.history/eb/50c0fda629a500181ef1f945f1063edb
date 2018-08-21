@@ -1,0 +1,39 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+abstract class FileHandler
+{
+    private $dirPath="";
+    private $fileTypePrimary="";
+    private $fileTypeSecondary="";    
+
+    /**
+     */
+    public function __construct(string $dirpath,string $filetype1,string $filetype2=null)
+    {
+        $this->dirPath=$dirpath;
+        $this->fileTypePrimary=$filetype1;
+        if(isset($filetype2)){
+            $this->fileTypeSecondary=$filetype2;
+        }
+    }
+    
+    protected function checkDirectoryExists():bool {
+        return file_exists($this->dirPath);
+    }
+    
+    protected function createDirectory():bool {
+        return mkdir($this->dirPath);
+    }
+    
+    public function confirmFileType(array $fileArray):bool {
+            
+    }
+}
+

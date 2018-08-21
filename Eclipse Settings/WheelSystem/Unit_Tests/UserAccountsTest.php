@@ -139,8 +139,8 @@ class UserAccountsTest extends TestCase
         $arr=array();
         $arr["staffNumber"]="305941";        
         $this->data->set($arr);
-        $arr=$this->userAccounts->listUserAccount($this->data);        
-        $this->assertGreaterThan(1,count($arr));
+        $arr_result=$this->userAccounts->listUserAccount($this->data);        
+        $this->assertGreaterThan(5,count($arr_result));
     }
     
     public function testCheckUserAccountExistsWhenItDoesExist()

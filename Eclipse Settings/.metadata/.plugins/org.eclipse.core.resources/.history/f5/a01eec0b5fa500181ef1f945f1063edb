@@ -1,0 +1,108 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\AssetRegister;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/AssetRegister.php';
+
+/**
+ * AssetRegister test case.
+ */
+class AssetRegisterTest extends TestCase
+{
+
+    /**
+     *
+     * @var AssetRegister
+     */
+    private $assetRegister;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated AssetRegisterTest::setUp()
+        
+        $this->assetRegister = new AssetRegister();
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated AssetRegisterTest::tearDown()
+        $this->assetRegister = null;
+        
+        parent::tearDown();
+    }
+   
+    /**
+     * Tests AssetRegister->readCSVFileAssetsData()
+     */
+    public function testReadCSVFileAssetsData()
+    {
+        // TODO Auto-generated AssetRegisterTest->testReadCSVFileAssetsData()
+        $this->markTestIncomplete("readCSVFileAssetsData test not implemented");
+        
+        $this->assetRegister->readCSVFileAssetsData();
+    }
+
+    /**
+     * Tests AssetRegister->addAsset()
+     */
+    public function testAddAsset()
+    {
+        // TODO Auto-generated AssetRegisterTest->testAddAsset()
+        //$this->markTestIncomplete("addAsset test not implemented");
+        
+        $this->assetRegister->addAsset();
+    }
+
+    /**
+     * Tests AssetRegister->updateAsset()
+     */
+    public function testUpdateAsset()
+    {
+        // TODO Auto-generated AssetRegisterTest->testUpdateAsset()
+        $this->markTestIncomplete("updateAsset test not implemented");
+        
+        $this->assetRegister->updateAsset();
+    }
+
+    /**
+     * Tests AssetRegister->searchAssetRegister()
+     */
+    public function testSearchAssetRegister()
+    {
+        // TODO Auto-generated AssetRegisterTest->testSearchAssetRegister()
+        $this->markTestIncomplete("searchAssetRegister test not implemented");
+        
+        $this->assetRegister->searchAssetRegister();
+    }
+
+    /**
+     * Tests AssetRegister->listCoachTypes()
+     */
+    public function testListCoachTypes()
+    {
+        // TODO Auto-generated AssetRegisterTest->testListCoachTypes()
+        $this->markTestIncomplete("listCoachTypes test not implemented");
+        
+        $this->assetRegister->listCoachTypes();
+    }
+
+    /**
+     * Tests AssetRegister->checkAssetExists()
+     */
+    public function testCheckAssetExists()
+    {
+        // TODO Auto-generated AssetRegisterTest->testCheckAssetExists()
+        $this->markTestIncomplete("checkAssetExists test not implemented");
+        
+        $this->assetRegister->checkAssetExists();
+    }
+}
+

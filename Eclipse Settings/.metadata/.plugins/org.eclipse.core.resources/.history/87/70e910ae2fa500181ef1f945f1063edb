@@ -1,0 +1,30 @@
+<?php
+    //phpinfo();
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\BusinessLayer\Email;
+use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\BusinessLayer\TermsAndConditions;
+use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessLayer\UserAccounts;
+use UserClasses\BusinessObjects\UserAccountBO;
+use UserClasses\DataLayer\UserAccountDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessLayer\ActivityLog;
+
+require __DIR__.'/vendor/autoload.php';
+
+$dirname="C:\\Users\\Bheki Mthethwa\\Desktop\\Bhekisizwe Mthethwa\\Gqunsu Engineering\\PRASA\\Wheel SubSystem\\Wheel Measurement Files";
+$filename=$dirname."\\20170407-000201.whl";
+$str=file_get_contents($filename);
+$pattern="/ProgramName=MiniProf(.)*/";
+$num=preg_match($pattern, $str);
+echo $num;
+//$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
+
+
+
+
+

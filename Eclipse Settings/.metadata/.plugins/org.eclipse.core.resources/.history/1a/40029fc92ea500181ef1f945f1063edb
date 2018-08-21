@@ -1,0 +1,28 @@
+<?php
+    //phpinfo();
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\BusinessLayer\Email;
+use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\BusinessLayer\TermsAndConditions;
+use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessLayer\UserAccounts;
+use UserClasses\BusinessObjects\UserAccountBO;
+use UserClasses\DataLayer\UserAccountDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessLayer\ActivityLog;
+
+require __DIR__.'/vendor/autoload.php';
+
+$dirname="C:\\Users\\Bheki Mthethwa\\Desktop\\Bhekisizwe Mthethwa\\Gqunsu Engineering\\PRASA\\Wheel SubSystem\\Software Design\\Database Default Data";
+$filename=$dirname."\\Activity.csv";
+$str=file_get_contents($filename);
+echo $str;
+//$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
+
+
+
+
+

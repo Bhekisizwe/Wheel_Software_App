@@ -1,0 +1,69 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+abstract class FileHandler
+{
+    private $dirPath="";
+    private $fileTypePrimary="";
+    private $fileTypeSecondary="";    
+
+    /**
+     */
+    public function __construct(string $dirpath,string $filetype1,string $filetype2=null)
+    {
+        $this->dirPath=$dirpath;
+        $this->fileTypePrimary=$filetype1;
+        if(isset($filetype2)){
+            $this->fileTypeSecondary=$filetype2;
+        }
+    }
+    
+    protected function checkDirectoryExists():bool {
+        return file_exists($this->dirPath);
+    }
+    
+    protected function createDirectory():bool {
+        return mkdir($this->dirPath);
+    }
+    
+    protected function deleteFile(string $filename):bool {
+        ($filename!="")?$status=unlink($this->dirPath."\\".$filename):$status=false;
+        return $status;
+    }
+    
+    protected function checkFileExists(string $filename):bool {
+        ($filename!="")?$status=file_exists($this->dirPath."\\".$filename):$status=false;
+        return $status;
+    }
+    
+    public function confirmFileType(string $filename):bool {
+        $fullpath=$this->dirPath."\\".$filename;
+        if(mime_content_type($fullpath)==$this->fileTypePrimary){
+           //file passes the first requirement which is to be a text file
+            if($this->fileTypeSecondary!=""){
+                switch($this->fileTypeSecondary){
+                    case "MiniProf":
+                        //If secondary type is MiniProf. Check if the text file is indeed a MiniProf file
+                        $file_string=file_get_contents($fullpath);
+                        $pattern="/ProgramName=MiniProf(.)*/";  //regular expression
+                        (preg_match($pattern, $file_string)==1)?$status_message=true:$status_message=false;
+                        break;
+                    case "CSV":
+                        $fileObj=new \SplFileInfo($fullpath);
+                        ($fileObj->getExtension()=="csv")?$status_message=true:$status_message=false;
+                        unset($fileObj);    //destroy object.                        
+                }
+                return $status_message;
+            }
+            else return true;
+        }
+        else return false;
+    }
+}
+

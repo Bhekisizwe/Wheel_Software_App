@@ -1,0 +1,28 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+abstract class FileHandler
+{
+    private $dirPath="";
+    private $fileTypePrimary="";
+    private $fileTypeSecondary="";    
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->dirPath=
+    }
+
+    /**
+     */
+    function __destruct()
+    {}
+}
+

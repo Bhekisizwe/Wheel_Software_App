@@ -1,0 +1,29 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+
+
+
+
+
+
+
+/** 
+ * @author Bheki Mthethwa
+ * 
+ */
+  class AssetRegisterBO extends BusinessObject {
+  
+  
+
+  
+  
+  /**
+   * 
+    */
+  public  function __construct() {
+      
+      
+  }
+}
+
