@@ -60,18 +60,8 @@ class AssetRegisterTest extends TestCase
         $this->assetRegisterBO=null;
         $this->assetRegisterDL=null;
         parent::tearDown();
-    }
-   
-    /**
-     * Tests AssetRegister->readCSVFileAssetsData()
-     */
-    public function testReadCSVFileAssetsData()
-    {
-        // TODO Auto-generated AssetRegisterTest->testReadCSVFileAssetsData()
-        $this->markTestIncomplete("readCSVFileAssetsData test not implemented");
-        
-        $this->assetRegister->readCSVFileAssetsData();
-    }
+    }   
+ 
     
     /**
      * Tests AssetRegister->searchAssetRegister()
@@ -175,6 +165,57 @@ class AssetRegisterTest extends TestCase
         $this->assetRegisterBO->set($arr);
         $status_message=$this->assetRegister->checkAssetExists($this->assetRegisterBO);
         $this->assertEquals(true,$status_message);
+    }
+    
+    /**
+     * Tests AssetRegister->readCSVFileAssetsData()
+     */
+    public function testReadCSVFileAssetsDataWhenHeadersMissing()
+    {
+        // TODO Auto-generated AssetRegisterTest->testReadCSVFileAssetsData()
+        //$this->markTestIncomplete("readCSVFileAssetsData test not implemented");
+        //file 305941.csv has missing headers
+        $arr=array();
+        $arr["staffNumber"]="305941";
+        $this->assetRegisterBO->set($arr);
+        $arr=$this->assetRegister->readCSVFileAssetsData($this->assetRegisterBO);
+        $this->assertEquals("0x08",$arr["errorAssocArray"]["errorCode"]);
+    }
+    
+    public function testReadCSVFileAssetsDataWhenHeadersOrderWrong()
+    {
+        // TODO Auto-generated AssetRegisterTest->testReadCSVFileAssetsData()
+        //$this->markTestIncomplete("readCSVFileAssetsData test not implemented");
+        //file 305942.csv has wrong header order
+        $arr=array();
+        $arr["staffNumber"]="305942";
+        $this->assetRegisterBO->set($arr);
+        $arr=$this->assetRegister->readCSVFileAssetsData($this->assetRegisterBO);
+        $this->assertEquals("0x06",$arr["errorAssocArray"]["errorCode"]);
+    }
+    
+    public function testReadCSVFileAssetsDataWhenDataMissing()
+    {
+        // TODO Auto-generated AssetRegisterTest->testReadCSVFileAssetsData()
+        //$this->markTestIncomplete("readCSVFileAssetsData test not implemented");
+        //file 305943.csv has missing data
+        $arr=array();
+        $arr["staffNumber"]="305943";
+        $this->assetRegisterBO->set($arr);
+        $arr=$this->assetRegister->readCSVFileAssetsData($this->assetRegisterBO);
+        $this->assertEquals("0x02",$arr["errorAssocArray"]["errorCode"]);
+    }
+    
+    public function testReadCSVFileAssetsDataWhenEverythingIsOK()
+    {
+        // TODO Auto-generated AssetRegisterTest->testReadCSVFileAssetsData()
+        //$this->markTestIncomplete("readCSVFileAssetsData test not implemented");
+        //file 305944.csv has everything OK
+        $arr=array();
+        $arr["staffNumber"]="305944";
+        $this->assetRegisterBO->set($arr);
+        $arr=$this->assetRegister->readCSVFileAssetsData($this->assetRegisterBO);
+        $this->assertEquals(14,count($arr));
     }
 }
 

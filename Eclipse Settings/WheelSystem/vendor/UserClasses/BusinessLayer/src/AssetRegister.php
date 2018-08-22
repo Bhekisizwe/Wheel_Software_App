@@ -42,7 +42,7 @@ class AssetRegister extends FileHandler
         $this->assetRegisterDL=null;
     }
     
-    public function checkHeadersAllExist(string $filename):bool {
+    private function checkHeadersAllExist(string $filename):bool {
         $headers=array("Coach Number","Coach Type","Coach Category");
         $filepath=self::$dirPath."\\".$filename;
         $file_str=file_get_contents($filepath);
@@ -58,7 +58,7 @@ class AssetRegister extends FileHandler
         return $status_message;
     }
     
-    public function checkHeadersOrder(string $filename):bool {
+    private function checkHeadersOrder(string $filename):bool {
         $headers=array("Coach Number","Coach Type","Coach Category");        
         $filepath=self::$dirPath."\\".$filename;
         $pointer=fopen($filepath,'r');   //open for reading
@@ -83,7 +83,7 @@ class AssetRegister extends FileHandler
         return $status_message;
     }
     
-    public function checkRowsForEmptySpaces(string $filename):bool {
+    private function checkRowsForEmptySpaces(string $filename):bool {
         $filepath=self::$dirPath."\\".$filename;
         $pointer=fopen($filepath,'r');   //open for reading
         $readline=fgets($pointer);  //read first line of CSV file
@@ -111,8 +111,80 @@ class AssetRegister extends FileHandler
         return $status_message;
     }
     
+    //assumption is that the file uploaded is of the correct MIME type as it has already
+    //been checked at a higher level during file Upload.
     public function readCSVFileAssetsData(AssetRegisterBO $data):array {
-        
+        if(isset($data)){
+            //check if file with this filename actually already exists
+            $filename=$data->getStaffNumber().".csv";
+            $fullpath=self::$dirPath."\\".$filename;
+            $arr=array();
+            if($this->checkFileExists($filename)){
+                //File exists  
+                try {
+                    //check if all headings exist in the file
+                    if($this->checkHeadersAllExist($filename)){
+                        //they all exist   
+                        //check if the order of headings is correct in the file
+                        if($this->checkHeadersOrder($filename)){
+                            //header Order OK
+                            //check if there is missing data in the fields of the file.
+                            if(!$this->checkRowsForEmptySpaces($filename)){
+                                //all fields are completed.
+                                /*****BEGIN TO PROCESS FILE CONTENTS*******/                                
+                                $pointer=fopen($fullpath,'r');   //open for reading
+                                $readline=fgets($pointer);  //read first line of CSV file
+                                fclose($pointer);
+                                //search for Delimiter that is applicable.
+                                $file=fopen($fullpath,'r');
+                                if(preg_match("/,/", $readline)==1){
+                                    $delimiter=",";
+                                }
+                                if(preg_match("/;/", $readline)==1){
+                                    $delimiter=";";
+                                }
+                                $headers_skip=fgetcsv($file,null,$delimiter);   //skip headers
+                                while(($row_arr=fgetcsv($file,null,$delimiter))!== FALSE){
+                                    $arr[]=$row_arr; //append row of data to the end of the 2D Array    
+                                }  
+                                fclose($file);  //close the file
+                                /********END OF PROCESSING******************/
+                            }
+                            else{
+                                //There are empty fields in the file
+                                $str="Asset register CSV Textfile has missing data.";
+                                $str.="Please consult the HELP documentation to correctly setup the CSV file for import.";
+                                $arr["errorAssocArray"]["errorDescription"]=$str;
+                                $arr["errorAssocArray"]["errorCode"]="0x02";
+                                throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                            }
+                        }
+                        else {
+                            //headings in wrong order
+                            $arr["errorAssocArray"]["errorDescription"]="Asset Register CSV TextFile Headings In Wrong Order";
+                            $arr["errorAssocArray"]["errorCode"]="0x06";
+                            throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                        }
+                    }
+                    else{
+                        //some headers missing
+                        $arr["errorAssocArray"]["errorDescription"]="Asset Register CSV TextFile, some Headings Missing";
+                        $arr["errorAssocArray"]["errorCode"]="0x08";
+                        throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                    }
+                } catch (\Exception $e) {
+                    $class_name="AssetRegister";
+                    $method_name="readCSVFileAssetsData";
+                    $this->err->logErrors($e,null,$class_name, $method_name);
+                } 
+                return $arr;
+            }
+            else{
+                //file does not exist               
+                return $arr;
+            }
+        }
+        else return NULL;
     }
     
     public function addAsset(AssetRegisterBO $data):bool {
@@ -132,7 +204,7 @@ class AssetRegister extends FileHandler
             } catch (\Exception $e) {
                 $class_name="AssetRegister";
                 $method_name="addAsset";
-                $this->errObj->logErrors($e,null,$class_name, $method_name);
+                $this->err->logErrors($e,null,$class_name, $method_name);
             }
             return $status_message;
         }
@@ -185,7 +257,7 @@ class AssetRegister extends FileHandler
         } catch (\Exception $e) {
             $class_name="AssetRegister";
             $method_name="listCoachTypes";
-            $this->errObj->logErrors($e,null,$class_name, $method_name);
+            $this->err->logErrors($e,null,$class_name, $method_name);
         }
         return $arr;
     }
@@ -198,7 +270,7 @@ class AssetRegister extends FileHandler
             } catch (\Exception $e) {
                 $class_name="AssetRegister";
                 $method_name="checkAssetExists";
-                $this->errObj->logErrors($e,null,$class_name, $method_name);
+                $this->err->logErrors($e,null,$class_name, $method_name);
             }            
             return $status_message;
         }

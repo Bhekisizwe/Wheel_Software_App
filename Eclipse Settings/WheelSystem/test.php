@@ -14,14 +14,18 @@ use UserClasses\DataLayer\UserAccountDL;
 use UserClasses\BusinessObjects\ActivityLogBO;
 use UserClasses\BusinessLayer\ActivityLog;
 use UserClasses\BusinessLayer\AssetRegister;
+use UserClasses\BusinessObjects\AssetRegisterBO;
 
 require __DIR__.'/vendor/autoload.php';
 
 $asset=new AssetRegister();
+$assetBO=new AssetRegisterBO();
+$arr=array();
 //$data=new UserAccountBO();
-$filename="305941.csv";
-$status=$asset->checkRowsForEmptySpaces($filename);
-var_dump($status);
+$arr["staffNumber"]="305944";
+$assetBO->set($arr);
+$arr_results=$asset->readCSVFileAssetsData($assetBO);
+print_r($arr_results);
 //$file_path="";
 //$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
 

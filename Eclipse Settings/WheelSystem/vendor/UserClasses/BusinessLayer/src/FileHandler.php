@@ -24,20 +24,20 @@ abstract class FileHandler
         }
     }
     
-    protected function checkDirectoryExists():bool {
+    public function checkDirectoryExists():bool {
         return file_exists($this->dirPath);
     }
     
-    protected function createDirectory():bool {
+    public function createDirectory():bool {
         return mkdir($this->dirPath);
     }
     
-    protected function deleteFile(string $filename):bool {
+    public function deleteFile(string $filename):bool {
         ($filename!="")?$status=unlink($this->dirPath."\\".$filename):$status=false;
         return $status;
     }
     
-    protected function checkFileExists(string $filename):bool {
+    public function checkFileExists(string $filename):bool {
         ($filename!="")?$status=file_exists($this->dirPath."\\".$filename):$status=false;
         return $status;
     }
