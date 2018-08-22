@@ -1,0 +1,38 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\AxleCoachMappingDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AxleCoachMapping extends FileHandler
+{
+    private $err;
+    private $axleCoachDL;
+    private static $dirPath=__DIR__."\\..\\..\\..\\..\\AxleCoachMapping";
+    private static $fileTypePrimary="text/plain";
+    private static $fileTypeSecondary="CSV";
+    private $activityLog;
+    private $activityBO;
+    private $numberOfFields=4;
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->axleCoachDL=new AxleCoachMappingDL();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();        
+    }
+
+    /**
+     */
+    function __destruct()
+    {}
+}
+

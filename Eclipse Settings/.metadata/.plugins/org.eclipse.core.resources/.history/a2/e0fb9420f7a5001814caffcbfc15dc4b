@@ -1,0 +1,27 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AxleCoachMapping
+{
+    private $err;
+    private $axleCoachDL;
+    private static $dirPath=__DIR__."\\..\\..\\..\\..\\AxleCoachMapping";
+    private static $fileTypePrimary="text/plain";
+    private static $fileTypeSecondary="CSV";
+    /**
+     */
+    public function __construct()
+    {}
+
+    /**
+     */
+    function __destruct()
+    {}
+}
+

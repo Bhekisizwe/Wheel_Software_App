@@ -15,17 +15,18 @@ use UserClasses\BusinessObjects\ActivityLogBO;
 use UserClasses\BusinessLayer\ActivityLog;
 use UserClasses\BusinessLayer\AssetRegister;
 use UserClasses\BusinessObjects\AssetRegisterBO;
+use UserClasses\BusinessLayer\AxleCoachMapping;
+use UserClasses\BusinessObjects\AxleCoachMappingBO;
 
 require __DIR__.'/vendor/autoload.php';
 
-$asset=new AssetRegister();
-$assetBO=new AssetRegisterBO();
+$axle=new AxleCoachMapping();
+$axleBO=new AxleCoachMappingBO();
 $arr=array();
 //$data=new UserAccountBO();
-$arr["staffNumber"]="305944";
-$assetBO->set($arr);
-$arr_results=$asset->readCSVFileAssetsData($assetBO);
-print_r($arr_results);
+$filename="305944.csv";
+$status=$axle->checkRowsForEmptySpaces($filename);
+var_dump($status);
 //$file_path="";
 //$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
 

@@ -1,0 +1,27 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AxleCoachMappingBO extends BusinessObject
+{
+    private $mappingID=0;
+    private $axleSerialNumber="";
+    private $axleNumber=0;
+    private $setNumber="";
+    private $coachNumber="";
+    private $staffNumber="";
+    private $startDate="";
+    private $endDate="";
+    private $dateCreated="";
+
+    /**
+     */
+    public function __construct()
+    {}
+}
+
