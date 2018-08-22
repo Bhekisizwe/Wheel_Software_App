@@ -195,7 +195,7 @@ class AssetRegister extends FileHandler
                 if($status_message){
                     $arr_data=array();
                     $arr_data["taskArray2D"][0]["taskName"]="Coach Asset Register";
-                    $arr_data["transactionName"]="Manually adding Asset to Database";
+                    $arr_data["transactionName"]="Adding Asset to Database";
                     $arr_data["activityAction"]=1;      //create
                     $arr_data["staffNumber"]=$data->getStaffNumber();
                     $this->activityBO->set($arr_data);

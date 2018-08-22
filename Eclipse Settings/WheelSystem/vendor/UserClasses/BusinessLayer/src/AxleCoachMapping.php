@@ -112,15 +112,117 @@ class AxleCoachMapping extends FileHandler
     }
     
     public function readCSVFileMapping(AxleCoachMappingBO $data):array {
-        
+        if(isset($data)){
+            //check if file with this filename actually already exists
+            $filename=$data->getStaffNumber().".csv";
+            $fullpath=self::$dirPath."\\".$filename;
+            $arr=array();
+            if($this->checkFileExists($filename)){
+                //File exists
+                try {
+                    //check if all headings exist in the file
+                    if($this->checkHeadersAllExist($filename)){
+                        //they all exist
+                        //check if the order of headings is correct in the file
+                        if($this->checkHeadersOrder($filename)){
+                            //header Order OK
+                            //check if there is missing data in the fields of the file.
+                            if(!$this->checkRowsForEmptySpaces($filename)){
+                                //all fields are completed.
+                                /*****BEGIN TO PROCESS FILE CONTENTS*******/
+                                $pointer=fopen($fullpath,'r');   //open for reading
+                                $readline=fgets($pointer);  //read first line of CSV file
+                                fclose($pointer);
+                                //search for Delimiter that is applicable.
+                                $file=fopen($fullpath,'r');
+                                if(preg_match("/,/", $readline)==1){
+                                    $delimiter=",";
+                                }
+                                if(preg_match("/;/", $readline)==1){
+                                    $delimiter=";";
+                                }
+                                $headers_skip=fgetcsv($file,null,$delimiter);   //skip headers
+                                while(($row_arr=fgetcsv($file,null,$delimiter))!== FALSE){
+                                    $arr[]=$row_arr; //append row of data to the end of the 2D Array
+                                }
+                                fclose($file);  //close the file
+                                /********END OF PROCESSING******************/
+                            }
+                            else{
+                                //There are empty fields in the file
+                                $str="Axle to Coach Mapping CSV Textfile has missing data.";
+                                $str.="Please consult the HELP documentation to correctly setup the CSV file for import.";
+                                $arr["errorAssocArray"]["errorDescription"]=$str;
+                                $arr["errorAssocArray"]["errorCode"]="0x03";
+                                throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                            }
+                        }
+                        else {
+                            //headings in wrong order
+                            $arr["errorAssocArray"]["errorDescription"]="Axle to Coach Mapping CSV TextFile Headings In Wrong Order";
+                            $arr["errorAssocArray"]["errorCode"]="0x11";
+                            throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                        }
+                    }
+                    else{
+                        //some headers missing
+                        $arr["errorAssocArray"]["errorDescription"]="Axle to Coach Mapping CSV TextFile, some Headings Missing.";
+                        $arr["errorAssocArray"]["errorCode"]="0x09";
+                        throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                    }
+                } catch (\Exception $e) {
+                    $class_name="AxleCoachMapping";
+                    $method_name="readCSVFileMapping";
+                    $this->err->logErrors($e,null,$class_name, $method_name);
+                }
+                return $arr;
+            }
+            else{
+                //file does not exist
+                return $arr;
+            }
+        }
+        else return NULL;
     }
     
     public function addMapping(AxleCoachMappingBO $data):bool {
-        
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->axleCoachDL->create($arr);
+                if($status_message){
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="System Settings";
+                    $arr_data["transactionName"]="Adding Axle-Coach Mapping to Database";
+                    $arr_data["activityAction"]=1;      //create
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
+                }
+            } catch (\Exception $e) {
+                $class_name="AxleCoachMapping";
+                $method_name="addMapping";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $status_message;
+        }
+        else return false;
     }
     
     public function searchMapping(AxleCoachMappingBO $data):array {
-        
+        if(isset($data)){
+            try {
+                //$arr_2D=array();
+                $arr=$data->getArray();
+                $arr_2D=$this->axleCoachDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="AxleCoachMapping";
+                $method_name="searchMapping";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_2D;
+        }
+        else return NULL;
     }
 }
 

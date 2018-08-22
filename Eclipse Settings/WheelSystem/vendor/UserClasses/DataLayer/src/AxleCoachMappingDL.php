@@ -71,7 +71,18 @@ class AxleCoachMappingDL extends DatabaseManager implements DatabaseFunctionsInt
      * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
      */
     public function delete(array $data):bool
-    {}
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            $query="DELETE FROM AxleCoachMapping";
+            $status_message=$connector->query($query);
+            $query="ALTER TABLE AxleCoachMapping AUTO_INCREMENT =0";
+            $status_message=$connector->query($query);            
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
 
     /**
      * (non-PHPdoc)
@@ -85,7 +96,7 @@ class AxleCoachMappingDL extends DatabaseManager implements DatabaseFunctionsInt
             $arr_2D=array();
             //successfully connected to database
             $query="SELECT * FROM AxleCoachMapping WHERE AxleSerialNumber=? AND ";
-            $query.="(DateCreated>=DATE_FORMAT(?,'%Y-%m-%d') AND DateCreated<=DATE_FORMAT(?,'%Y-%m-%d')";
+            $query.="(DateCreated>=DATE_FORMAT(?,'%Y-%m-%d') AND DateCreated<=DATE_FORMAT(?,'%Y-%m-%d'))";
             $stmt=$connector->prepare($query);
             $axleSerialNumber=$data["axleSerialNumber"];
             $startDate=$data["startDate"];

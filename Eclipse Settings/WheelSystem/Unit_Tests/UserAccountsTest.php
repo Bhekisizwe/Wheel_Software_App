@@ -163,6 +163,7 @@ class UserAccountsTest extends TestCase
         $this->licenseBO->set($this->licensedata);
         $this->license->addLicense($this->licenseBO);
         while($i<7){
+            $this->arr_add["staffNumber"]="30594".($i+2);
             $this->data->set($this->arr_add);
             $status_message=$this->userAccounts->addUserAccount($this->data);
             if($status_message){
