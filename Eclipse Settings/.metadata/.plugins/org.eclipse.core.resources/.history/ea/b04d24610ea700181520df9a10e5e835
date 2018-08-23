@@ -1,0 +1,65 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\DailyDistanceSettingDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessObjects\DailyDistanceSettingBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class DailyDistanceSetting
+{
+    private $err;
+    private $activityLog;
+    private $activityBO;
+    private $dailyDistanceDL;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->dailyDistanceDL=new DailyDistanceSettingDL();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->dailyDistanceDL=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
+    }
+    
+    public function showDistanceSetting(DailyDistanceSettingBO $data):array {
+        if(isset($data)){
+            try {
+                $arr_2D=array();
+                $arr=$data->getArray();
+                $arr_2D=$this->dailyDistanceDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="AxlesPerCoachType";
+                $method_name="showAxleNumberSetting";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_2D;
+        }
+        else return NULL;
+    }
+    
+    public function addDistanceSetting(DailyDistanceSettingBO $data):bool {
+        
+    }
+    
+    public function updateDistanceSetting(DailyDistanceSettingBO $data):bool {
+        
+    }
+}
+

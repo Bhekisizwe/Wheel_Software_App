@@ -1,0 +1,75 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class DailyDistanceSettingBO extends BusinessObject
+{
+    private $distanceID=0;
+    private $distance=0.0;
+    private $staffNumber="";
+    
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(7);
+    }
+    
+    /**
+     * @return number
+     */
+    public function getDistanceID()
+    {
+        return $this->distanceID;
+    }
+
+    /**
+     * @return number
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStaffNumber()
+    {
+        return $this->staffNumber;
+    }
+
+    /**
+     * @param number $distanceID
+     */
+    public function setDistanceID($distanceID)
+    {
+        $this->distanceID = $distanceID;
+    }
+
+    /**
+     * @param number $distance
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
+    }
+
+    /**
+     * @param string $staffNumber
+     */
+    public function setStaffNumber($staffNumber)
+    {
+        $this->staffNumber = $staffNumber;
+    }
+
+   
+    
+    
+}
+
