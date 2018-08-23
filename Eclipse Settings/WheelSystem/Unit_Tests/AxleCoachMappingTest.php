@@ -124,7 +124,7 @@ class AxleCoachMappingTest extends TestCase
         $arr=array();
         $arr["axleSerialNumber"]="10M2AR2";
         $arr["startDate"]="2018-08-20";
-        $arr["endDate"]="2018-08-22";
+        $arr["endDate"]="2018-11-22";
         $this->axleBO->set($arr);
         $arr_result=$this->axleCoachMapping->searchMapping($this->axleBO);
         $this->assertEquals(1,count($arr_result));

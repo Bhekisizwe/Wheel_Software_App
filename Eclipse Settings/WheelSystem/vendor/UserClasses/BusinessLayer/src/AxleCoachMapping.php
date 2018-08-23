@@ -212,7 +212,7 @@ class AxleCoachMapping extends FileHandler
     public function searchMapping(AxleCoachMappingBO $data):array {
         if(isset($data)){
             try {
-                //$arr_2D=array();
+                $arr_2D=array();
                 $arr=$data->getArray();
                 $arr_2D=$this->axleCoachDL->searchData($arr);
             } catch (\Exception $e) {

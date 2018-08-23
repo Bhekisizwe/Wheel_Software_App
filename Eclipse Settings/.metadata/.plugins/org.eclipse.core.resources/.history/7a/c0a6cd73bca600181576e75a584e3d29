@@ -1,0 +1,72 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserCLasses\BusinessObjects\AxlesPerCoachTypeBO;
+use UserClasses\DataLayer\AxlesPerCoachTypeDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AxlesPerCoachType
+{
+    private $activityLog;
+    private $activityBO;
+    private $axlesCoachDL;
+    private $err;
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->axlesCoachDL=new AxlesPerCoachTypeDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
+        $this->axlesCoachDL=null;
+    }
+    
+    public function showAxleNumberSetting(AxlesPerCoachTypeBO $data):array {
+        
+    }
+    
+    public function addAxleNumberSetting(AxlesPerCoachTypeBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->axleCoachDL->create($arr);
+                if($status_message){
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="System Settings";
+                    $arr_data["transactionName"]="Adding Axle Number Per Coach Type to Database";
+                    $arr_data["activityAction"]=1;      //create
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
+                }
+            } catch (\Exception $e) {
+                $class_name="AxleCoachMapping";
+                $method_name="addMapping";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function updateAxleNumberSetting(AxlesPerCoachTypeBO $data):bool {
+        
+    }
+}
+

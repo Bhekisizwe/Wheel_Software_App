@@ -1,0 +1,27 @@
+<?php
+declare(strict_types=1);
+namespace UserCLasses\BusinessObjects;
+
+use UserClasses\BusinessObjects\BusinessObject;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AxlesPerCoachTypeBO extends BusinessObject
+{
+    private $axlesID=0;
+    private $coachID=0;
+    private $numberOfAxles=0;
+    private $coachType="";
+    private $coachCategory="";
+    private $staffNumber="";
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+}
+

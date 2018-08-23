@@ -1,0 +1,22 @@
+<?php
+declare(strict_types=1);
+namespace UserCLasses\BusinessObjects;
+
+use UserClasses\BusinessObjects\BusinessObject;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AxlesPerCoachTypeBO extends BusinessObject
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+}
+
