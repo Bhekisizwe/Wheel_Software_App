@@ -17,8 +17,7 @@ class Email
         $err_handler=new ErrorLog();
         if(isset($arr)){
             $sender=new PHPMailer(true);
-            $sender->From="systemadmin@gqunsueng.co.za";   
-            $sender->FromName="Wheel System Admin";
+            $sender->From="systemadmin@gqunsueng.co.za";            
             $sender->isHTML(TRUE);
             $sender->Subject=$arr["subject"];           
             $sender->addAddress($arr["to"]);           

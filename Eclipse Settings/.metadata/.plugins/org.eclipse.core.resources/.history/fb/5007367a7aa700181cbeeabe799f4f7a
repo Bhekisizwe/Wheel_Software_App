@@ -18,7 +18,7 @@ class Email
         if(isset($arr)){
             $sender=new PHPMailer(true);
             $sender->From="systemadmin@gqunsueng.co.za";   
-            $sender->FromName="Wheel System Admin";
+            $sender->FromName="";
             $sender->isHTML(TRUE);
             $sender->Subject=$arr["subject"];           
             $sender->addAddress($arr["to"]);           
