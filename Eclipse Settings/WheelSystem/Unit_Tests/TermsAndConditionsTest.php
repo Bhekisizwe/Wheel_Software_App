@@ -131,7 +131,7 @@ class TermsAndConditionsTest extends TestCase
         
         $this->data->set($this->arr_add);
         $arr=$this->termsAndConditions->listTermsData($this->data);        
-        $this->assertEquals(1,count($arr));
+        $this->assertEquals(6,count($arr));
     }
     
     public function testUpdateTermsWithOKData()

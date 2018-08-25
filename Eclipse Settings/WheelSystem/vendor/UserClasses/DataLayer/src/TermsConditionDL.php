@@ -146,12 +146,24 @@ class TermsConditionDL extends DatabaseManager implements DatabaseFunctionsInt
         $connector=$this->dbConnect();  //connect to MariaDB database
         if(isset($connector)){
             /*********RETRIEVE Terms and Conditions data from Database*************/
-            $query="SELECT * FROM TermsConditions,SystemLicense WHERE TermsConditions.LicenseID=SystemLicense.LicenseID LIMIT 1";
+            $query="SELECT TermsConditions.TermsID,TermsConditions.Terms,TermsConditions.DateModified,";
+            $query.="SystemLicense.LicenseID,SystemLicense.CompanyName,SystemLicense.AddressLine1,";
+            $query.="SystemLicense.Surburb,SystemLicense.City,SystemLicense.Country,SystemLicense.PostalCode ";
+            $query.="FROM TermsConditions,SystemLicense WHERE TermsConditions.LicenseID=SystemLicense.LicenseID LIMIT 1";
             $result=$connector->query($query);
             if($result){
                 $arr=array();   //create array to store the result set data from the database
                 while($rows=$result->fetch_assoc()){
-                    $arr[]=$rows;   //append Associative array of $rows to the end of the array $arr
+                    $arr["termsID"]=$rows["TermsID"];   //append Associative array of $rows to the end of the array $arr
+                    $arr["terms"]=$rows["Terms"];
+                    $arr["dateModified"]=$rows["DateModified"];
+                    $arr["licenseID"]=$rows["LicenseID"];
+                    $arr["companyName"]=$rows["CompanyName"];
+                    $arr["postalAddressArray"]["addressLine1"]=$rows["AddressLine1"];
+                    $arr["postalAddressArray"]["surburb"]=$rows["Surburb"];
+                    $arr["postalAddressArray"]["city"]=$rows["City"];
+                    $arr["postalAddressArray"]["country"]=$rows["Country"];
+                    $arr["postalAddressArray"]["postalCode"]=$rows["PostalCode"];                    
                 }
                 $this->dbClose($connector);
                 return $arr;

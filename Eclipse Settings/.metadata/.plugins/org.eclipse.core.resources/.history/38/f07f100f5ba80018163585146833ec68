@@ -1,0 +1,17 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WearRatesBO extends BusinessObject
+{
+
+    /**
+     */
+    public function __construct()
+    {}
+}
+

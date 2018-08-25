@@ -155,7 +155,14 @@ class SystemLicenseDL extends DatabaseManager implements DatabaseFunctionsInt
             if($result){
                 $arr=array();   //create array to store the result set data from the database
                 while($rows=$result->fetch_assoc()){
-                    $arr[]=$rows;   //append Associative array of $rows to the end of the array $arr        
+                    $arr["licenseID"]=$rows["LicenseID"];
+                    $arr["companyName"]=$rows["CompanyName"];
+                    $arr["postalAddressArray"]["addressLine1"]=$rows["AddressLine1"];
+                    $arr["postalAddressArray"]["surburb"]=$rows["Surburb"];
+                    $arr["postalAddressArray"]["city"]=$rows["City"];
+                    $arr["postalAddressArray"]["country"]=$rows["Country"];
+                    $arr["postalAddressArray"]["postalCode"]=$rows["PostalCode"];
+                    $arr["licenseLimit"]=$rows["LicenseType"];
                 }
                 $this->dbClose($connector);
                 return $arr;

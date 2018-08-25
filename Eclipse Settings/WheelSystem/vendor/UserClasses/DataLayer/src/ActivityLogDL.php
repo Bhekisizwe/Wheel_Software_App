@@ -163,7 +163,9 @@ class ActivityLogDL extends DatabaseManager implements DatabaseFunctionsInt
                 $arr_2D=array();
                 $i=0;
                 while($rows=$result->fetch_assoc()){
-                    $arr_2D["taskArray2D"][$i++]=$rows;
+                    $arr["taskID"]=$rows["TaskID"];
+                    $arr["taskName"]=$rows["TaskName"];
+                    $arr_2D["taskArray2D"][$i++]=$arr;
                 }
                 $this->dbClose($connector);
                 return $arr_2D;

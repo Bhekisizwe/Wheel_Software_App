@@ -1,0 +1,178 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *
+ */
+class TermsConditionDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey(array $data):int
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*********RETRIEVE Terms and Conditions Data from Database*************/
+            $query="SELECT * FROM TermsConditions WHERE TermsID>0 LIMIT 1";
+            $result=$connector->query($query);
+            if($result){
+                if($result->num_rows>0){
+                    $arr=array();   //create array to store the result set data from the database
+                    while($rows=$result->fetch_assoc()){
+                        $arr[]=$rows;   //append Associative array of $rows to the end of the array $arr
+                    }
+                    $this->dbClose($connector);
+                    return (int) $arr[0]["TermsID"];
+                }
+                else return (int) $result->num_rows;
+            }
+            else{
+                $this->dbClose($connector);
+                return 0;
+            }
+        }
+        else return 0;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***INSERT Terms and Conditions Data into Database*******/
+            $query="INSERT INTO TermsConditions";
+            $query.=" (TermsID,LicenseID,Terms,DateModified)";
+            $query.=" VALUES ('',?,?,NOW())";
+            //prepare SQL script for execution
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $licenseID=$data["licenseID"];
+            $terms=$data["terms"];            
+            $stmt->bind_param("is",$licenseID,$terms);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector); //Close Database Connection
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /***UPDATE Terms and Conditions Data in Database*******/
+            $query="UPDATE TermsConditions SET ";
+            $query.="Terms=?,DateModified=NOW() WHERE TermsID=?";            
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $terms=$data["terms"];
+            $termsID=$data["termsID"];            
+            $stmt->bind_param("si",$terms,$termsID);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector); //Close Database Connection
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*****Check if Terms and Conditions data already exists in Database*******/
+            $query="SELECT * FROM TermsConditions";
+            $result=$connector->query($query);
+            if($result){
+                ($result->num_rows>0)?$status_message=true:$status_message=false;
+                $this->dbClose($connector);
+                return $status_message;
+            }
+            else{
+                $this->dbClose($connector);
+                return false;
+            }
+        }
+        else return false;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            $query="DELETE FROM TermsConditions WHERE TermsID>0";
+            $status_message=$connector->query($query);
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData(array $data):array
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*********RETRIEVE Terms and Conditions data from Database*************/
+            $query="SELECT TermsConditions.TermsID,TermsConditions.Terms,TermsConditions.DateModified,";
+            $query.="SystemLicense.LicenseID,SystemLicense.CompanyName,SystemLicense.AddressLine1,";
+            $query.="SystemLicense.Surburb,SystemLicense.City,SystemLicense.Country,SystemLicense.PostalCode,";
+            $query.="SystemLicense.LicenseType FROM TermsConditions,SystemLicense WHERE TermsConditions.LicenseID=SystemLicense.LicenseID LIMIT 1";
+            $result=$connector->query($query);
+            if($result){
+                $arr=array();   //create array to store the result set data from the database
+                while($rows=$result->fetch_assoc()){
+                    $arr["termsID"]=$rows["TermsID"];   //append Associative array of $rows to the end of the array $arr
+                    $arr["terms"]=$rows["Terms"];
+                    $arr["dateModified"]=$rows["DateModified"];
+                    $arr["licenseID"]=$rows["LicenseID"];
+                    $arr["companyName"]=$rows["CompanyName"];
+                    $arr["postalAddressArray"]["addressLine1"]=$rows["AddressLine1"];
+                    $arr["postalAddressArray"]["surburb"]=$rows["Surburb"];
+                    $arr["postalAddressArray"]["city"]=$rows["City"];
+                    $arr["postalAddressArray"]["country"]=$rows["Country"];
+                }
+                $this->dbClose($connector);
+                return $arr;
+            }
+            else{
+                $this->dbClose($connector);
+                return NULL;
+            }
+        }
+        else return NULL;
+    }
+}
+

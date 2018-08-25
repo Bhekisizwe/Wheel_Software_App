@@ -191,7 +191,7 @@ class UserAccounts
         $arr=$license->listLicenseData(new SystemLicenseBO());  //retrieve license data        
         try {
             $num_of_active_accounts=$this->userAccountDL->searchForActiveAccounts($arr);
-            ($num_of_active_accounts>=$arr[0]["LicenseType"])?$status_message=true:$status_message=false;
+            ($num_of_active_accounts>=$arr["licenseLimit"])?$status_message=true:$status_message=false;
         } catch (\Exception $e) {   
             $status_message=false;
             $class_name="UserAccounts";

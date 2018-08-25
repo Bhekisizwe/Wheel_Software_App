@@ -130,7 +130,7 @@ class LicenseTest extends TestCase
         //$this->markTestIncomplete("listLicenseData test not implemented");
         $this->data->set($this->arr_add);
         $arr=$this->license->listLicenseData($this->data);        
-        $this->assertEquals(1,count($arr));
+        $this->assertEquals(4,count($arr));
     }
     
     public function testCheckLicenseExistsWhenItDoesExist()
@@ -152,7 +152,7 @@ class LicenseTest extends TestCase
         //$this->markTestIncomplete("updateLicense test not implemented");
         //load test license data into SystemLicenseBO object
         $arr=$this->license->listLicenseData($this->data); 
-        $this->arr_update["licenseID"]=(int)$arr[0]["LicenseID"];
+        $this->arr_update["licenseID"]=(int)$arr["licenseID"];
         $this->data->set($this->arr_update);
         $status=$this->license->updateLicense($this->data);
         $this->assertEquals(TRUE,$status);

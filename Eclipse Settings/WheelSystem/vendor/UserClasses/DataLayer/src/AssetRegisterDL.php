@@ -272,7 +272,10 @@ class AssetRegisterDL extends DatabaseManager implements DatabaseFunctionsInt
                 $arr_2D=array();
                 $i=0;
                 while($rows=$result->fetch_assoc()){
-                    $arr_2D["coachDetails2DArray"][$i++]=$rows;
+                    $arr["coachID"]=$rows["CoachID"];
+                    $arr["coachType"]=$rows["CoachType"];
+                    $arr["coachCategory"]=$rows["CoachCategory"];
+                    $arr_2D["coachDetails2DArray"][$i++]=$arr;
                 }
                 $this->dbClose($connector);
                 return $arr_2D;

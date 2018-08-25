@@ -1,0 +1,53 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\WearRatesDL;
+use UserClasses\BusinessObjects\WearRatesBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WearRatesSetting
+{
+    private $err;
+    private $activityLog;
+    private $activityBO;
+    private $wearRatesDL;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->wearRatesDL=new WearRatesDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
+        $this->wearRatesDL=null;
+    }
+    
+    public function showWearRateSettings():array {
+        
+    }
+    
+    public function addWearRateSettinfggs(WearRatesBO $data):bool {
+        
+    }
+    
+    public function updateWearRateSettings(WearRatesBO $data):bool {
+        
+    }
+}
+

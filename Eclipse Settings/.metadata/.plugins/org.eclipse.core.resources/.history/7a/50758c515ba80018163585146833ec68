@@ -1,0 +1,38 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WearRatesBO extends BusinessObject
+{
+    private $wearRate2DArray;
+    
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(5);
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getWearRate2DArray()
+    {
+        return $this->wearRate2DArray;
+    }
+
+    /**
+     * @param mixed $wearRate2DArray
+     */
+    public function setWearRate2DArray($wearRate2DArray)
+    {
+        $this->wearRate2DArray = $wearRate2DArray;
+    }
+   
+}
+

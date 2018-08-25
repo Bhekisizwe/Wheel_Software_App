@@ -1,0 +1,75 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\WearRatesSetting;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/WearRatesSetting.php';
+
+/**
+ * WearRatesSetting test case.
+ */
+class WearRatesSettingTest extends TestCase
+{
+
+    /**
+     *
+     * @var WearRatesSetting
+     */
+    private $wearRatesSetting;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated WearRatesSettingTest::setUp()
+        
+        $this->wearRatesSetting = new WearRatesSetting();
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated WearRatesSettingTest::tearDown()
+        $this->wearRatesSetting = null;
+        
+        parent::tearDown();
+    }
+
+    /**
+     * Tests WearRatesSetting->showWearRateSettings()
+     */
+    public function testShowWearRateSettings()
+    {
+        // TODO Auto-generated WearRatesSettingTest->testShowWearRateSettings()
+        $this->markTestIncomplete("showWearRateSettings test not implemented");
+        
+        $this->wearRatesSetting->showWearRateSettings();
+    }
+
+    /**
+     * Tests WearRatesSetting->addWearRateSettings()
+     */
+    public function testAddWearRateSettings()
+    {
+        // TODO Auto-generated WearRatesSettingTest->testAddWearRateSettings()
+        $this->markTestIncomplete("addWearRateSettings test not implemented");
+        
+        $this->wearRatesSetting->addWearRateSettings());
+    }
+
+    /**
+     * Tests WearRatesSetting->updateWearRateSettings()
+     */
+    public function testUpdateWearRateSettings()
+    {
+        // TODO Auto-generated WearRatesSettingTest->testUpdateWearRateSettings()
+        $this->markTestIncomplete("updateWearRateSettings test not implemented");
+        
+        $this->wearRatesSetting->updateWearRateSettings();
+    }
+}
+

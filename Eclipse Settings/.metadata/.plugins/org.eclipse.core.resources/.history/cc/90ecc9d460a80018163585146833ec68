@@ -1,0 +1,126 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\WearRatesSetting;
+use UserClasses\BusinessObjects\WearRatesBO;
+use UserClasses\DataLayer\WearRatesDL;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/WearRatesSetting.php';
+
+/**
+ * WearRatesSetting test case.
+ */
+class WearRatesSettingTest extends TestCase
+{
+
+    /**
+     *
+     * @var WearRatesSetting
+     */
+    private $wearRatesSetting;
+    private $data;
+    private $wearRateDL;
+    private $arr_add;
+    private $arr_update;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated WearRatesSettingTest::setUp()
+        
+        $this->wearRatesSetting = new WearRatesSetting();
+        $this->data=new WearRatesBO();
+        $this->wearRatesDL=new WearRatesDL();
+        $arr_add=array();
+        $arr_add["wearRate2DArray"][0]["paramName"]="Sh";
+        $arr_add["wearRate2DArray"][0]["wearRate"]="0.012";
+        $arr_add["wearRate2DArray"][1]["paramName"]="qR";
+        $arr_add["wearRate2DArray"][1]["wearRate"]="0.010";
+        $arr_add["wearRate2DArray"][2]["paramName"]="FW";
+        $arr_add["wearRate2DArray"][2]["wearRate"]="0.002";
+        $arr_add["wearRate2DArray"][3]["paramName"]="H";
+        $arr_add["wearRate2DArray"][3]["wearRate"]="0.03";
+        $this->arr_add=$arr_add;
+        $arr_update=array();
+        $arr_update["wearRate2DArray"][0]["paramName"]="Sh";
+        $arr_update["wearRate2DArray"][0]["wearRate"]="0.00325";
+        $arr_update["wearRate2DArray"][1]["paramName"]="qR";
+        $arr_update["wearRate2DArray"][1]["wearRate"]="0.010";
+        $arr_update["wearRate2DArray"][2]["paramName"]="FW";
+        $arr_update["wearRate2DArray"][2]["wearRate"]="0.002";
+        $arr_update["wearRate2DArray"][3]["paramName"]="H";
+        $arr_update["wearRate2DArray"][3]["wearRate"]="0.0015";
+        $this->arr_update=$arr_update;
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated WearRatesSettingTest::tearDown()
+        $this->wearRatesSetting = null;
+        $this->data=null;
+        $this->wearRatesDL=null;
+        parent::tearDown();
+    }
+
+    /**
+     * Tests WearRatesSetting->showWearRateSettings()
+     */
+    public function testShowWearRateSettingsWhenItDoesNotExist()
+    {
+        // TODO Auto-generated WearRatesSettingTest->testShowWearRateSettings()
+        $this->markTestIncomplete("showWearRateSettings test not implemented");
+        $arr=array();
+        $this->wearRatesDL->delete($arr);       //delete everything
+        $this->data->set($this->arr_add);
+        $arr_result=$this->wearRatesSetting->showWearRateSettings($this->data);
+        $this->assertEquals(0,count($arr_result));
+    }
+
+    /**
+     * Tests WearRatesSetting->addWearRateSettings()
+     */
+    public function testAddWearRateSettings()
+    {
+        // TODO Auto-generated WearRatesSettingTest->testAddWearRateSettings()
+        $this->markTestIncomplete("addWearRateSettings test not implemented");
+        $this->data->set($this->arr_add);
+        $status=$this->wearRatesSetting->addWearRateSettings($this->data);
+        $this->assertEquals(true,$status);
+    }
+    
+    public function testShowWearRateSettingsWhenItDoesExist()
+    {
+        // TODO Auto-generated WearRatesSettingTest->testShowWearRateSettings()
+        $this->markTestIncomplete("showWearRateSettings test not implemented");
+        $this->data->set($this->arr_add);
+        $arr_result=$this->wearRatesSetting->showWearRateSettings($this->data);
+        $this->assertEquals(1,count($arr_result));
+    }
+
+    /**
+     * Tests WearRatesSetting->updateWearRateSettings()
+     */
+    public function testUpdateWearRateSettings()
+    {
+        // TODO Auto-generated WearRatesSettingTest->testUpdateWearRateSettings()
+        $this->markTestIncomplete("updateWearRateSettings test not implemented");
+        $this->data->set($this->arr_update);
+        $status=$this->wearRatesSetting->updateWearRateSettings($this->data);
+        $this->assertEquals(true,$status);
+    }
+    
+    public function testListWearRateParameters()
+    {
+        // TODO Auto-generated WearRatesSettingTest->testUpdateWearRateSettings()
+        $this->markTestIncomplete("updateWearRateSettings test not implemented");
+        
+        $this->wearRatesSetting->listWearRateParameters();
+    }
+}
+

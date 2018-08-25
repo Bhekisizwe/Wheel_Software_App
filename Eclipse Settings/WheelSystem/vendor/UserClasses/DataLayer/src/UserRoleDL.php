@@ -244,8 +244,10 @@ class UserRoleDL extends DatabaseManager implements DatabaseFunctionsInt
             if($result){
                 $arr_2D=array();
                 $i=0;       //row counter
-                while($rows=$result->fetch_assoc()){                    
-                    $arr_2D["userRole2DArray"][$i++]=$rows;
+                while($rows=$result->fetch_assoc()){  
+                    $arr["roleID"]=$rows["RoleID"];
+                    $arr["userRoleName"]=$rows["UserRoleName"];
+                    $arr_2D["userRole2DArray"][$i++]=$arr;
                 }
                 $this->dbClose($connector);
                 return $arr_2D;
@@ -269,8 +271,9 @@ class UserRoleDL extends DatabaseManager implements DatabaseFunctionsInt
                 $arr_2D=array();
                 $i=0;
                 while($rows=$result->fetch_assoc()){
-                    $arr[]=$rows;   //append Associative array of $rows to the end of the array $arr
-                    $arr_2D["activityRights2DArray"][$i++]=$rows;
+                    $arr["activityID"]=$rows["ActivityID"];   //append Associative array of $rows to the end of the array $arr
+                    $arr["activityName"]=$rows["ActivityName"];
+                    $arr_2D["activityRights2DArray"][$i++]=$arr;
                 }
                 $this->dbClose($connector);
                 return $arr_2D;
@@ -293,8 +296,10 @@ class UserRoleDL extends DatabaseManager implements DatabaseFunctionsInt
             if($result){                
                 $arr_2D=array();
                 $i=0;
-                while($rows=$result->fetch_assoc()){                    
-                    $arr_2D["columnVisibility2DArray"][$i++]=$rows;
+                while($rows=$result->fetch_assoc()){  
+                    $arr["columnID"]=$rows["ColumnID"];
+                    $arr["columnName"]=$rows["ColumnName"];
+                    $arr_2D["columnVisibility2DArray"][$i++]=$arr;
                 }
                 $this->dbClose($connector);
                 return $arr_2D;

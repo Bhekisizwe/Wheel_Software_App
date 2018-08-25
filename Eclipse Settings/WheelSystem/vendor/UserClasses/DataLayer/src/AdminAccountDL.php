@@ -23,7 +23,15 @@ class AdminAccountDL extends UserAccountDL
             if($result){
                 $arr_2D=array();        //array that stores result set
                 while($rows=$result->fetch_assoc()){
-                    $arr_2D[]=$rows;    
+                    $arr["accountID"]=$rows["AccountID"];
+                    $arr["roleID"]=$rows["RoleID"];
+                    $arr["name"]=$rows["Name"];
+                    $arr["surname"]=$rows["Surname"];
+                    $arr["staffNumber"]=$rows["StaffNumber"];
+                    $arr["emailAddress"]=$rows["Email"];
+                    $arr["passwordHash"]=$rows["Password"];
+                    $arr["accountState"]=$rows["ActivityState"];
+                    $arr_2D[]=$arr;    
                 }
                 $this->dbClose($connector);
                 return $arr_2D;

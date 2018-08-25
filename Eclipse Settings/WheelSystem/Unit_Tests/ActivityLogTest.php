@@ -128,7 +128,7 @@ class ActivityLogTest extends TestCase
         $arr_2D["staffNumber"]="305941";
         $arr_2D["taskArray2D"][0]=$arr;
         $arr_2D["startDate"]="2018-08-14";
-        $arr_2D["endDate"]="2018-08-31";
+        $arr_2D["endDate"]="2018-12-31";
         $this->activityBO->set($arr_2D);
         $filename=__DIR__."\\..\\ActivityLog\\".$arr_2D["staffNumber"].".pdf";
         //make sure file does not exist on server

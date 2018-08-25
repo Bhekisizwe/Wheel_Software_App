@@ -1,0 +1,125 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WearRatesDL extends DatabaseManager implements DatabaseFunctionsInt
+{  
+     /* (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey(array $data):int
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*********RETRIEVE WheelParameters from Database*************/
+            $query="SELECT ParamID FROM WheelParameters WHERE ParamName=?";
+            $stmt=$connector->prepare($query);
+            $paramName=$data["paramName"];
+            $stmt->bind_param("s",$paramName);
+            $status=$stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($ParamID);
+            if($status){
+                $arr=array();   //array to store result set
+                while($stmt->fetch()){
+                    $arr["paramID"]=$ParamID;
+                }
+                $this->dbClose($connector);
+                return (int) $arr["paramID"];
+            }
+            else{
+                $this->dbClose($connector);
+                return 0;
+            }
+        }
+        else return 0;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***INSERT Wear Rates Data into Database*******/
+            $query="INSERT INTO WearRates";
+            $query.=" (WearID,ParamID,WearRate) ";
+            $query.="VALUES ('',?,?)";
+            //prepare SQL script for execution
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            for($i=0;$i<count($data["wearRate2DArray"]);$i++){
+                //loop through array contents
+                $paramID=$this->getPrimaryKey($data["wearRate2DArray"][$i]);
+                $wearRate=$data["wearRate2DArray"][$i]["wearRate"];                
+                $stmt->bind_param("id",$paramID,$wearRate);
+                $status_message=$stmt->execute();
+            }          
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /***UPDATE Distance Travelled Daily Data in Database*******/
+            $query="UPDATE DistanceTravelled SET Distance=? WHERE DistanceID=?";
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $distance=$data["distance"];
+            $distanceID=$data["distanceID"];
+            $stmt->bind_param("di",$distance,$distanceID);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector); //Close Database Connection
+            return $status_message;
+        }
+        else return false; 
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists(array $data):bool
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete(array $data):bool
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData(array $data):array
+    {}
+    
+    public function retrieveAllParameters():array {
+        
+    }
+}
+
