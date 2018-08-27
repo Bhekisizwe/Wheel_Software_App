@@ -1,0 +1,38 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AutoWheelSettingsBO extends ManualWheelSettingsBO
+{
+    private $alarms2DArray;
+    
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setObjectNumOfFields(7);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAlarms2DArray()
+    {
+        return $this->alarms2DArray;
+    }
+
+    /**
+     * @param mixed $alarms2DArray
+     */
+    public function setAlarms2DArray($alarms2DArray)
+    {
+        $this->alarms2DArray = $alarms2DArray;
+    }  
+}
+

@@ -1,0 +1,21 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AutoWheelSettingsBO extends ManualWheelSettingsBO
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setObjectNumOfFields(7);
+    }
+}
+

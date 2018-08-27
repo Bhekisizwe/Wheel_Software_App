@@ -1,0 +1,116 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\AutoWheelSettings;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/AutoWheelSettings.php';
+
+/**
+ * AutoWheelSettings test case.
+ */
+class AutoWheelSettingsTest extends TestCase
+{
+
+    /**
+     *
+     * @var AutoWheelSettings
+     */
+    private $autoWheelSettings;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated AutoWheelSettingsTest::setUp()
+        
+        $this->autoWheelSettings = new AutoWheelSettings();
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest::tearDown()
+        $this->autoWheelSettings = null;
+        
+        parent::tearDown();
+    }
+
+    /**
+     * Constructs the test case.
+     */
+    public function __construct()
+    {
+        // TODO Auto-generated constructor
+    }
+
+    /**
+     * Tests AutoWheelSettings->__construct()
+     */
+    public function test__construct()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->test__construct()
+        $this->markTestIncomplete("__construct test not implemented");
+        
+        $this->autoWheelSettings->__construct();
+    }
+
+    /**
+     * Tests AutoWheelSettings->__destruct()
+     */
+    public function test__destruct()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->test__destruct()
+        $this->markTestIncomplete("__destruct test not implemented");
+        
+        $this->autoWheelSettings->__destruct();
+    }
+
+    /**
+     * Tests AutoWheelSettings->showCoachWheelSettings()
+     */
+    public function testShowCoachWheelSettings()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->testShowCoachWheelSettings()
+        $this->markTestIncomplete("showCoachWheelSettings test not implemented");
+        
+        $this->autoWheelSettings->showCoachWheelSettings();
+    }
+
+    /**
+     * Tests AutoWheelSettings->listAutoWheelParameters()
+     */
+    public function testListAutoWheelParameters()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->testListAutoWheelParameters()
+        $this->markTestIncomplete("listAutoWheelParameters test not implemented");
+        
+        $this->autoWheelSettings->listAutoWheelParameters();
+    }
+
+    /**
+     * Tests AutoWheelSettings->addCoachWheelSettings()
+     */
+    public function testAddCoachWheelSettings()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->testAddCoachWheelSettings()
+        $this->markTestIncomplete("addCoachWheelSettings test not implemented");
+        
+        $this->autoWheelSettings->addCoachWheelSettings();
+    }
+
+    /**
+     * Tests AutoWheelSettings->updateCoachWheelSettings()
+     */
+    public function testUpdateCoachWheelSettings()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->testUpdateCoachWheelSettings()
+        $this->markTestIncomplete("updateCoachWheelSettings test not implemented");
+        
+        $this->autoWheelSettings->updateCoachWheelSettings();
+    }
+}
+

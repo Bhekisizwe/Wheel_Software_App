@@ -1,0 +1,151 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\AutoWheelSettings;
+use UserClasses\DataLayer\WheelAlarmSettingsDL;
+use UserClasses\BusinessObjects\AutoWheelSettingsBO;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/AutoWheelSettings.php';
+
+/**
+ * AutoWheelSettings test case.
+ */
+class AutoWheelSettingsTest extends TestCase
+{
+
+    /**
+     *
+     * @var AutoWheelSettings
+     */
+    private $autoWheelSettings;
+    private $data;
+    private $autoSettingsDL;
+    private $arr_add;
+    private $arr_update;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated AutoWheelSettingsTest::setUp()
+        
+        $this->autoWheelSettings = new AutoWheelSettings();
+        $this->data=new AutoWheelSettingsBO();
+        $this->autoSettingsDL=new WheelAlarmSettingsDL();
+        $arr_add=array();
+        $arr_add["staffNumber"]="305941";
+        $arr_add["warning2DArray"][0]["paramName"]="Sh";
+        $arr_add["warning2DArray"][0]["warningLevel"]="23.5";
+        $arr_add["alarms2DArray"][0]["alarmLevel"]="20.0";
+        $arr_add["alarms2DArray"][0]["norminalLevel"]="5.0";       
+        $arr_add["warning2DArray"][1]["paramName"]="qR";
+        $arr_add["warning2DArray"][1]["warningLevel"]="88.62";
+        $arr_add["alarms2DArray"][1]["alarmLevel"]="60.0";
+        $arr_add["alarms2DArray"][1]["norminalLevel"]="25.0";
+        $arr_add["warning2DArray"][2]["paramName"]="FW";
+        $arr_add["warning2DArray"][2]["warningLevel"]="10.25";
+        $arr_add["alarms2DArray"][2]["alarmLevel"]="8";
+        $arr_add["alarms2DArray"][2]["norminalLevel"]="0";
+        $arr_add["warning2DArray"][3]["paramName"]="H";
+        $arr_add["warning2DArray"][3]["warningLevel"]="17.8";
+        $arr_add["alarms2DArray"][3]["alarmLevel"]="10.0";
+        $arr_add["alarms2DArray"][3]["norminalLevel"]="5.0";      
+        $this->arr_add=$arr_add;
+        $arr_update=array();
+        $arr_update["staffNumber"]="305941";
+        $arr_update["warning2DArray"][0]["paramName"]="Sh";
+        $arr_update["warning2DArray"][0]["warningLevel"]="30.78";
+        $arr_update["warning2DArray"][0]["settingsID"]=1;
+        $arr_update["alarms2DArray"][0]["alarmLevel"]="25.0";
+        $arr_update["alarms2DArray"][0]["norminalLevel"]="15.0";
+        $arr_update["warning2DArray"][1]["paramName"]="qR";
+        $arr_update["warning2DArray"][1]["warningLevel"]="88.62";
+        $arr_update["warning2DArray"][1]["settingsID"]=2;
+        $arr_update["alarms2DArray"][1]["alarmLevel"]="60.0";
+        $arr_update["alarms2DArray"][1]["norminalLevel"]="25.0";
+        $arr_update["warning2DArray"][2]["paramName"]="FW";
+        $arr_update["warning2DArray"][2]["warningLevel"]="10.25";
+        $arr_update["warning2DArray"][2]["settingsID"]=3;
+        $arr_update["alarms2DArray"][2]["alarmLevel"]="7.25";
+        $arr_update["alarms2DArray"][2]["norminalLevel"]="2.0";
+        $arr_update["warning2DArray"][3]["paramName"]="H";
+        $arr_update["warning2DArray"][3]["warningLevel"]="20";
+        $arr_update["warning2DArray"][3]["settingsID"]=4; 
+        $arr_update["alarms2DArray"][3]["alarmLevel"]="12.0";
+        $arr_update["alarms2DArray"][3]["norminalLevel"]="5.15";
+        $this->arr_update=$arr_update;
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest::tearDown()
+        $this->autoWheelSettings = null;
+        $this->data=null;
+        $this->autoSettingsDL=null;
+        parent::tearDown();
+    }
+
+    /**
+     * Tests AutoWheelSettings->showCoachWheelSettings()
+     */
+    public function testShowCoachWheelSettingsWhenItDoesNotExist()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->testShowCoachWheelSettings()
+        $this->markTestIncomplete("showCoachWheelSettings test not implemented");
+        $arr=array();
+        $this->autoSettingsDL->delete($arr);       //delete everything
+        $this->data->set($this->arr_add);
+        $arr_result=$this->autoWheelSettings->showCoachWheelSettings($this->data);
+        $this->assertEquals(0,count($arr_result));
+    }
+
+    /**
+     * Tests AutoWheelSettings->listAutoWheelParameters()
+     */
+    public function testListAutoWheelParameters()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->testListAutoWheelParameters()
+        $this->markTestIncomplete("listAutoWheelParameters test not implemented");        
+        $arr=$this->autoWheelSettings->listAutoWheelParameters();
+        $this->assertEquals(4,count($arr["warning2DArray"]));
+    }
+
+    /**
+     * Tests AutoWheelSettings->addCoachWheelSettings()
+     */
+    public function testAddCoachWheelSettings()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->testAddCoachWheelSettings()
+        $this->markTestIncomplete("addCoachWheelSettings test not implemented");
+        $this->data->set($this->arr_add);
+        $status_message=$this->autoWheelSettings->addCoachWheelSettings($this->data);
+        $this->assertEquals(true,$status_message);
+    }
+    
+    public function testShowCoachWheelSettingsWhenItDoesExist()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->testShowCoachWheelSettings()
+        $this->markTestIncomplete("showCoachWheelSettings test not implemented");        
+        $this->data->set($this->arr_add);
+        $arr_result=$this->autoWheelSettings->showCoachWheelSettings($this->data);
+        $this->assertEquals(2,count($arr_result));
+    }
+
+    /**
+     * Tests AutoWheelSettings->updateCoachWheelSettings()
+     */
+    public function testUpdateCoachWheelSettings()
+    {
+        // TODO Auto-generated AutoWheelSettingsTest->testUpdateCoachWheelSettings()
+        $this->markTestIncomplete("updateCoachWheelSettings test not implemented");
+        $this->data->set($this->arr_update);
+        $status=$this->autoWheelSettings->updateCoachWheelSettings($this->data);
+        $this->assertEquals(true,$status);
+    }
+}
+

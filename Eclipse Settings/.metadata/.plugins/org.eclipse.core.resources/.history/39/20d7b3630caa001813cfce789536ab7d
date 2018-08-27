@@ -1,0 +1,22 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AutoWheelSettings
+{
+
+    /**
+     */
+    public function __construct()
+    {}
+
+    /**
+     */
+    function __destruct()
+    {}
+}
+

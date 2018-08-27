@@ -1,0 +1,159 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WheelAlarmSettingsDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey(array $data):int
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*********RETRIEVE SettingsID from Database*************/
+            $query="SELECT SettingsID FROM WarningSettings WHERE ParamID=?";
+            $stmt=$connector->prepare($query);
+            $paramID=$data["warning2DArray"][0]["paramID"];
+            $stmt->bind_param("i",$paramID);
+            $status=$stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($settingsID);
+            if($status){
+                $arr=array();   //array to store result set
+                while($stmt->fetch()){
+                    $arr["warning2DArray"][0]["settingsID"]=$settingsID;
+                }
+                $this->dbClose($connector);
+                return (int) $arr["warning2DArray"][0]["settingsID"];
+            }
+            else{
+                $this->dbClose($connector);
+                return 0;
+            }
+        }
+        else return 0;
+    }
+    
+    public function getParamID(array $data):int {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*********RETRIEVE WheelParameters from Database*************/
+            $query="SELECT ParamID FROM WheelParameters WHERE ParamName=?";
+            $stmt=$connector->prepare($query);
+            $paramName=$data["paramName"];
+            $stmt->bind_param("s",$paramName);
+            $status=$stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($ParamID);
+            if($status){
+                $arr=array();   //array to store result set
+                while($stmt->fetch()){
+                    $arr["paramID"]=$ParamID;
+                }
+                $this->dbClose($connector);
+                return (int) $arr["paramID"];
+            }
+            else{
+                $this->dbClose($connector);
+                return 0;
+            }
+        }
+        else return 0;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***INSERT WarningSettings, AlarmSettings Data into Database*******/
+                    
+            $query="INSERT INTO WarningSettings";
+            $query.=" (SettingsID,WarningLevel,ParamID) ";
+            $query.="VALUES ('',?,?)";
+            //prepare SQL script for execution
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            for($i=0;$i<count($data["warning2DArray"]);$i++){
+                //loop through array contents
+                $paramID=$this->getParamID($data);
+                $warningLevel=$data["warning2DArray"][$i]["warningLevel"];
+                $stmt->bind_param("di",$warningLevel,$paramID);
+                $status_message=$stmt->execute();
+            }
+          
+            if($status_message){
+                //successfully added the Warning Settings.
+               //let us insert the Alarm Settings
+                $query="INSERT INTO AlarmSettings (AlarmID,SettingsID,CoachID,AlarmLevel,NorminalLevel)";
+                $query.=" VALUES('',?,?,?,?)";
+                //prepare SQL script for execution
+                $stmt=$connector->prepare($query);
+                //bind parameters
+                for($i=0;$i<count($data["alarms2DArray"]);$i++){
+                    //loop through array contents
+                    $paramID=$this->getPrimaryKey($data["warning2DArray"][$i]);
+                    $warningLevel=$data["warning2DArray"][$i]["warningLevel"];
+                    $stmt->bind_param("di",$warningLevel,$paramID);
+                    $status_message=$stmt->execute();
+                }
+                $this->dbClose($connector); //Close Database Connection
+                return $status_message;
+            }
+            $this->dbClose($connector); //Close Database Connection
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(array $data):bool
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists(array $data):bool
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete(array $data):bool
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData(array $data):array
+    {}
+    
+    public function retrieveAllParameters():array {
+        
+    }
+}
+

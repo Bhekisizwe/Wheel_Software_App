@@ -1,0 +1,39 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\WheelAlarmSettingsDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AutoWheelSettings
+{
+    private $err;
+    private $activityLog;
+    private $activityBO;
+    private $autoSettingsDL;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->autoSettingsDL=new WheelAlarmSettingsDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
+        $this->autoSettingsDL=null;
+    }
+}
+

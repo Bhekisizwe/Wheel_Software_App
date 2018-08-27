@@ -1,0 +1,29 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+
+
+
+
+
+
+
+/** 
+ * @author Bheki Mthethwa
+ * 
+ */
+  class AutoWheelSettingsBO extends ManualWheelSettingsBO {
+  
+  
+
+  
+  
+  /**
+   * 
+    */
+  public  function __construct() {
+      parent::__construct();
+      
+  }
+}
+
