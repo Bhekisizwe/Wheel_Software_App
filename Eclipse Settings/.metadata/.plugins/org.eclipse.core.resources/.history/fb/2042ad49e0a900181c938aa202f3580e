@@ -1,0 +1,38 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\ManualWheelSettingsDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelSettings
+{
+    private $err;
+    private $activityLog;
+    private $activityBO;
+    private $manualSettingsDL;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->manualSettingsDL=new ManualWheelSettingsDL();
+        
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        
+    }
+}
+

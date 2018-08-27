@@ -126,7 +126,7 @@ class WearRatesSettingTest extends TestCase
         // TODO Auto-generated WearRatesSettingTest->testUpdateWearRateSettings()
         //$this->markTestIncomplete("updateWearRateSettings test not implemented");        
         $arr=$this->wearRatesSetting->listWearRateParameters();
-        $this->assertEquals(9,count($arr["wearRate2DArray"]));
+        $this->assertEquals(4,count($arr["wearRate2DArray"]));
     }
 }
 

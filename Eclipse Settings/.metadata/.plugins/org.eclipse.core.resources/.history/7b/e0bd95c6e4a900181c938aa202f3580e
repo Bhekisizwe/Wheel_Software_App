@@ -1,0 +1,122 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\ManualWheelSettings;
+use UserClasses\BusinessObjects\ManualWheelSettingsBO;
+use UserClasses\DataLayer\ManualWheelSettingsDL;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/ManualWheelSettings.php';
+
+/**
+ * ManualWheelSettings test case.
+ */
+class ManualWheelSettingsTest extends TestCase
+{
+
+    /**
+     *
+     * @var ManualWheelSettings
+     */
+    private $manualWheelSettings;
+    private $data;
+    private $manualSettingsDL;
+    private $arr_add;
+    private $arr_update;
+    
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated ManualWheelSettingsTest::setUp()
+        
+        $this->manualWheelSettings = new ManualWheelSettings();
+        $this->data=new ManualWheelSettingsBO();
+        $this->manualSettingsDL=new ManualWheelSettingsDL();
+        $arr_add=array();
+        $arr_add["staffNumber"]="305941";
+        $arr_add["warning2DArray"][0]["paramName"]="Sh";
+        $arr_add["warning2DArray"][0]["wearRate"]="0.012";
+        $arr_add["warning2DArray"][1]["paramName"]="qR";
+        $arr_add["warning2DArray"][1]["wearRate"]="0.010";
+        $arr_add["warning2DArray"][2]["paramName"]="FW";
+        $arr_add["warning2DArray"][2]["wearRate"]="0.002";
+        $arr_add["warning2DArray"][3]["paramName"]="H";
+        $arr_add["warning2DArray"][3]["wearRate"]="0.03";
+        $this->arr_add=$arr_add;
+        $arr_update=array();
+        $arr_update["staffNumber"]="305941";
+        $arr_update["warning2DArray"][0]["paramName"]="Sh";
+        $arr_update["warning2DArray"][0]["wearRate"]="0.00325";
+        $arr_update["warning2DArray"][0]["wearID"]=1;
+        $arr_update["warning2DArray"][1]["paramName"]="qR";
+        $arr_update["warning2DArray"][1]["wearRate"]="0.010";
+        $arr_update["warning2DArray"][1]["wearID"]=2;
+        $arr_update["warning2DArray"][2]["paramName"]="FW";
+        $arr_update["warning2DArray"][2]["wearRate"]="0.002";
+        $arr_update["warning2DArray"][2]["wearID"]=3;
+        $arr_update["warning2DArray"][3]["paramName"]="H";
+        $arr_update["warning2DArray"][3]["wearRate"]="0.0015";
+        $arr_update["warning2DArray"][3]["wearID"]=4;
+        $this->arr_update=$arr_update;
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest::tearDown()
+        $this->manualWheelSettings = null;
+        $this->data=null;
+        $this->manualSettingsDL=null;
+        parent::tearDown();
+    }
+    
+    /**
+     * Tests ManualWheelSettings->showGlobalWheelSettings()
+     */
+    public function testShowGlobalWheelSettings()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->testShowGlobalWheelSettings()
+        $this->markTestIncomplete("showGlobalWheelSettings test not implemented");
+        
+        $this->manualWheelSettings->showGlobalWheelSettings();
+    }
+
+    /**
+     * Tests ManualWheelSettings->listManualWheelParameters()
+     */
+    public function testListManualWheelParameters()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->testListManualWheelParameters()
+        $this->markTestIncomplete("listManualWheelParameters test not implemented");
+        
+        $this->manualWheelSettings->listManualWheelParameters();
+    }
+
+    /**
+     * Tests ManualWheelSettings->addGlobalWheelSettings()
+     */
+    public function testAddGlobalWheelSettings()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->testAddGlobalWheelSettings()
+        $this->markTestIncomplete("addGlobalWheelSettings test not implemented");
+        
+        $this->manualWheelSettings->addGlobalWheelSettings();
+    }
+
+    /**
+     * Tests ManualWheelSettings->updateGlobalWheelSettings()
+     */
+    public function testUpdateGlobalWheelSettings()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->testUpdateGlobalWheelSettings()
+        $this->markTestIncomplete("updateGlobalWheelSettings test not implemented");
+        
+        $this->manualWheelSettings->updateGlobalWheelSettings();
+    }
+}
+

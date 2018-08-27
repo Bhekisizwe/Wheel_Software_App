@@ -1,0 +1,55 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelSettingsBO extends BusinessObject
+{
+    protected $warning2DArray;
+    protected $staffNumber="";   
+    
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(6);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWarning2DArray()
+    {
+        return $this->warning2DArray;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStaffNumber()
+    {
+        return $this->staffNumber;
+    }
+
+    /**
+     * @param mixed $warning2DArray
+     */
+    public function setWarning2DArray($warning2DArray)
+    {
+        $this->warning2DArray = $warning2DArray;
+    }
+
+    /**
+     * @param string $staffNumber
+     */
+    public function setStaffNumber($staffNumber)
+    {
+        $this->staffNumber = $staffNumber;
+    }
+  
+}
+

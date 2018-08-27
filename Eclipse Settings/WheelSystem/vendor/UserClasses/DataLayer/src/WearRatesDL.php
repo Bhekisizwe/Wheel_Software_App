@@ -133,7 +133,7 @@ class WearRatesDL extends DatabaseManager implements DatabaseFunctionsInt
         $connector=$this->dbConnect();  //connect to MariaDB database
         if(isset($connector)){
             /*********RETRIEVE Wear Rates from Database*************/
-            $query="SELECT * FROM WearRates";
+            $query="SELECT * FROM WearRates,WheelParameters WHERE WearRates.ParamID=WheelParameters.ParamID";
             $result=$connector->query($query);
             if($result){
                 $arr_2D=array();   //array to store result set
@@ -142,6 +142,7 @@ class WearRatesDL extends DatabaseManager implements DatabaseFunctionsInt
                     $arr["wearID"]=$rows["WearID"];
                     $arr["paramID"]=$rows["ParamID"];
                     $arr["wearRate"]=$rows["WearRate"];
+                    $arr["paramName"]=$rows["ParamName"];
                     $arr_2D["wearRate2DArray"][$i++]=$arr; //fetch each row
                 }
                 $this->dbClose($connector);
@@ -159,7 +160,7 @@ class WearRatesDL extends DatabaseManager implements DatabaseFunctionsInt
         $connector=$this->dbConnect();  //connect to MariaDB database
         if(isset($connector)){
             /*********RETRIEVE ALL Parameter Names from Database*************/
-            $query="SELECT * FROM WheelParameters ORDER BY ParamName Asc";
+            $query="SELECT * FROM WheelParameters ORDER BY ParamID Asc LIMIT 4";
             $result=$connector->query($query);
             if($result){
                 $arr_2D=array();

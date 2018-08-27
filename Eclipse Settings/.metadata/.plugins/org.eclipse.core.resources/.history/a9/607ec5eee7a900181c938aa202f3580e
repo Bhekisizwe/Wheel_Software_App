@@ -1,0 +1,69 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\ManualWheelSettingsDL;
+use UserClasses\BusinessObjects\ManualWheelSettingsBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelSettings
+{
+    private $err;
+    private $activityLog;
+    private $activityBO;
+    private $manualSettingsDL;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->manualSettingsDL=new ManualWheelSettingsDL();        
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
+        $this->manualSettingsDL=null;
+    }
+    
+    public function showGlobalWheelSettings(ManualWheelSettingsBO $data):array {
+        if(isset($data)){
+            try {
+                $arr_2D=array();
+                $arr=$data->getArray();
+                $arr_2D=$this->wearRatesDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="WearRatesSetting";
+                $method_name="showWearRateSettings";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_2D;
+        }
+        else return NULL;
+    }
+    
+    public function listManualWheelParameters():array {
+        
+    }
+    
+    public function addGlobalWheelSettings(ManualWheelSettingsBO $data):bool {
+        
+    }
+    
+    public function updateGlobalWheelSettings(ManualWheelSettingsBO $data):bool {
+        
+    }
+}
+

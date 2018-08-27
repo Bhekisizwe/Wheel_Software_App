@@ -1,0 +1,116 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\ManualWheelSettings;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/ManualWheelSettings.php';
+
+/**
+ * ManualWheelSettings test case.
+ */
+class ManualWheelSettingsTest extends TestCase
+{
+
+    /**
+     *
+     * @var ManualWheelSettings
+     */
+    private $manualWheelSettings;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated ManualWheelSettingsTest::setUp()
+        
+        $this->manualWheelSettings = new ManualWheelSettings(/* parameters */);
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest::tearDown()
+        $this->manualWheelSettings = null;
+        
+        parent::tearDown();
+    }
+
+    /**
+     * Constructs the test case.
+     */
+    public function __construct()
+    {
+        // TODO Auto-generated constructor
+    }
+
+    /**
+     * Tests ManualWheelSettings->__construct()
+     */
+    public function test__construct()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->test__construct()
+        $this->markTestIncomplete("__construct test not implemented");
+        
+        $this->manualWheelSettings->__construct(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelSettings->__destruct()
+     */
+    public function test__destruct()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->test__destruct()
+        $this->markTestIncomplete("__destruct test not implemented");
+        
+        $this->manualWheelSettings->__destruct(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelSettings->showGlobalWheelSettings()
+     */
+    public function testShowGlobalWheelSettings()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->testShowGlobalWheelSettings()
+        $this->markTestIncomplete("showGlobalWheelSettings test not implemented");
+        
+        $this->manualWheelSettings->showGlobalWheelSettings(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelSettings->listManualWheelParameters()
+     */
+    public function testListManualWheelParameters()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->testListManualWheelParameters()
+        $this->markTestIncomplete("listManualWheelParameters test not implemented");
+        
+        $this->manualWheelSettings->listManualWheelParameters(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelSettings->addGlobalWheelSettings()
+     */
+    public function testAddGlobalWheelSettings()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->testAddGlobalWheelSettings()
+        $this->markTestIncomplete("addGlobalWheelSettings test not implemented");
+        
+        $this->manualWheelSettings->addGlobalWheelSettings(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelSettings->updateGlobalWheelSettings()
+     */
+    public function testUpdateGlobalWheelSettings()
+    {
+        // TODO Auto-generated ManualWheelSettingsTest->testUpdateGlobalWheelSettings()
+        $this->markTestIncomplete("updateGlobalWheelSettings test not implemented");
+        
+        $this->manualWheelSettings->updateGlobalWheelSettings(/* parameters */);
+    }
+}
+

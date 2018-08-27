@@ -1,0 +1,116 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\ManualWheelSettingsDL;
+use UserClasses\BusinessObjects\ManualWheelSettingsBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelSettings
+{
+    private $err;
+    private $activityLog;
+    private $activityBO;
+    private $manualSettingsDL;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->manualSettingsDL=new ManualWheelSettingsDL();        
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityLog=null;
+        $this->activityBO=null;
+        $this->manualSettingsDL=null;
+    }
+    
+    public function showGlobalWheelSettings(ManualWheelSettingsBO $data):array {
+        if(isset($data)){
+            try {
+                $arr_2D=array();
+                $arr=$data->getArray();
+                $arr_2D=$this->manualSettingsDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="ManualWheelSettings";
+                $method_name="showGlobalWheelSettings";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_2D;
+        }
+        else return NULL;
+    }
+    
+    public function listManualWheelParameters():array {
+        try {
+            $arr=$this->manualSettingsDL->retrieveAllParameters();
+        } catch (\Exception $e) {
+            $class_name="ManualWheelSettings";
+            $method_name="listManualWheelParameters";
+            $this->err->logErrors($e,null,$class_name, $method_name);
+        }
+        return $arr;
+    }
+    
+    public function addGlobalWheelSettings(ManualWheelSettingsBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->manualSettingsDL->create($arr);
+                if($status_message){
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="System Settings";
+                    $arr_data["transactionName"]="Adding Manual Wheel Measurements Settings to Database";
+                    $arr_data["activityAction"]=1;      //create
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
+                }
+            } catch (\Exception $e) {
+                $class_name="ManualWheelSettings";
+                $method_name="addGlobalWheelSettings";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function updateGlobalWheelSettings(ManualWheelSettingsBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->manualSettingsDL->update($arr);
+                if($status_message){
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="System Settings";
+                    $arr_data["transactionName"]="Updating Manual Wheel Measurements Settings in Database";
+                    $arr_data["activityAction"]=2;      //update
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
+                }
+            } catch (\Exception $e) {
+                $class_name="ManualWheelSettings";
+                $method_name="updateGlobalWheelSettings";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+}
+
