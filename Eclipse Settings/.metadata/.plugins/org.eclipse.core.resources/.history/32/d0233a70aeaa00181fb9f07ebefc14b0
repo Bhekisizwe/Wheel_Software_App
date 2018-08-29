@@ -1,0 +1,24 @@
+<?php
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class MiniProfDBUploader extends FileHandler
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct($dirpath, $filetype1, $filetype2 = null);
+    }
+
+    /**
+     */
+    function __destruct()
+    {}
+}
+

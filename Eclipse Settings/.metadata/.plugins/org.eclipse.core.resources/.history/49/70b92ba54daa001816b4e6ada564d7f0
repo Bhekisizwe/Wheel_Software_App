@@ -1,0 +1,54 @@
+<?php
+    //phpinfo();
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\BusinessLayer\Email;
+use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\BusinessLayer\TermsAndConditions;
+use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessLayer\UserAccounts;
+use UserClasses\BusinessObjects\UserAccountBO;
+use UserClasses\DataLayer\UserAccountDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessLayer\ActivityLog;
+use UserClasses\BusinessLayer\AssetRegister;
+use UserClasses\BusinessObjects\AssetRegisterBO;
+use UserClasses\BusinessLayer\AxleCoachMapping;
+use UserClasses\BusinessObjects\AxleCoachMappingBO;
+use UserClasses\BusinessLayer\WearRatesSetting;
+use UserClasses\BusinessObjects\WearRatesBO;
+use UserClasses\BusinessLayer\AutoWheelSettings;
+use UserClasses\BusinessObjects\AutoWheelSettingsBO;
+
+require __DIR__.'/vendor/autoload.php';
+$autoWheel=new AutoWheelSettings();
+$autoWheelBO=new AutoWheelSettingsBO();
+$arr_param_name=array("Sh","qR","FW","H");
+$warning=array(32.5,89.5,63.78,45.6);
+$alarm=array(20,25,30,35);
+$norminal=array(2,5,0,3);
+$coachIDArr=array(1,2,3,4);
+$i=0;
+$arr_add=array();
+foreach($coachIDArr as $value){
+    $arr_add["staffNumber"]="305941";
+    $arr_add["warning2DArray"][$i]["paramName"]=$arr_param_name[$i];
+    $arr_add["warning2DArray"][$i]["warningLevel"]=$warning[$i];
+    $arr_add["alarms2DArray"][$i]["alarmLevel"]=$alarm[$i];
+    $arr_add["alarms2DArray"][$i]["norminalLevel"]=$norminal[$i];
+    $arr_add["alarms2DArray"][$i]["coachID"]=$value;    
+    $i++;
+}
+
+$autoWheelBO->set($arr_add);
+$autoWheel->addCoachWheelSettings($autoWheelBO);
+
+//$file_path="";
+//$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
+
+
+
+
+

@@ -199,12 +199,12 @@ class UserAccountDL extends DatabaseManager implements DatabaseFunctionsInt
             $stmt->bind_param("i",$roleID);
             $status=$stmt->execute();
             $stmt->store_result();
-            $stmt->bind_result($accountID,$roleID,$name,$surname,$staffNumber,$email,$passwordHash,$accountState);
+            $stmt->bind_result($accountID,$roleid,$name,$surname,$staffNumber,$email,$passwordHash,$accountState);
             if($status){
                 $arr_2D=array();   //array to store result set
                 while($stmt->fetch()){
                     $arr["accountID"]=$accountID;
-                    $arr["roleID"]=$roleID;
+                    $arr["roleID"]=$roleid;
                     $arr["name"]=$name;
                     $arr["surname"]=$surname;
                     $arr["staffNumber"]=$staffNumber;

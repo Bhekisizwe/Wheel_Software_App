@@ -1,0 +1,277 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\MiniProfMeasurementsDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class MiniProfDBUploader extends FileHandler
+{
+    private $err;
+    private static $dirPath=__DIR__."\\..\\..\\..\\..\\MiniProf";
+    private static $fileTypePrimary="text/plain";
+    private static $fileTypeSecondary="MiniProf";
+    private $activityLog;
+    private $activityBO;
+    private $miniProfDL;
+    private $fields_arr;
+    private $numOfFields=0;
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct(self::$dirPath, self::$fileTypePrimary, self::$fileTypeSecondary);
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->miniProfDL=new MiniProfMeasurementsDL();
+        $arr=["Date",
+            "Time",
+            "SetNo",
+            "CoachNo",
+            "AxleNo",
+            "WheelID",
+            "OperatorName",
+            "Sh",
+            "qR",
+            "Hollowing",
+            "FlangeWidth"];
+        $this->fields_arr=$arr;
+        $this->numOfFields=count($arr);
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->miniProfDL=null;
+    }
+    
+    private function lowLevelReadMiniProfFile(string $filestr):array {
+        $arr_parse=array();
+        $arr_mapping=["Date"=>"measurementDate",
+            "Time"=>"measurementTime",
+            "SetNo"=>"setNumber",
+            "CoachNo"=>"coachNumber",
+            "AxleNo"=>"axleNumber",
+            "WheelID"=>"wheelID",
+            "OperatorName"=>"operatorName",
+            "Sh"=>"flangeHeight",
+            "qR"=>"toeCreep",
+            "Hollowing"=>"hollowing",
+            "FlangeWidth"=>"flangeWidth"
+        ];
+        if($filestr!=""){
+            foreach($this->fields_arr as $value){
+                $pattern="/".$value."=(.)*/";   //regular expression to search for
+                if(preg_match($pattern,$filestr,$matches)==1){
+                    $split_arr=explode("=",$matches[0]);
+                    if($value=="Date"){
+                        if($split_arr[1]!=""){
+                            $result=explode("/",$split_arr[1]);
+                            $result[2]=trim($result[2]);//remove whitespaces
+                            $split_arr[1]=trim(implode("-",array_reverse($result)));
+                        }
+                    }
+                    $arr_parse[$arr_mapping[$split_arr[0]]]=trim($split_arr[1]);
+                }
+            }
+            return $arr_parse;
+        }
+        else return $arr_parse;
+    }
+    
+    private function checkIfAllTextFileFieldsExist(string $filename) {        
+        if($filename!=""){
+            $fullpath=self::$dirPath."\\".$filename;          
+            //read textfile into a string.
+            $file_str=file_get_contents($fullpath);
+            $arr_not_found=array();   //array containing not found fields
+            $counter=0;     //counts number of fields found
+            foreach($this->fields_arr as $value){
+                //search for each field in textfile. All fields must be found
+                $pattern="/".$value."=/";
+                if(preg_match($pattern, $file_str)==1){
+                    //field found
+                    $counter++;
+                }
+                else{
+                    //field not found. Append to Array
+                    $arr_not_found[]=$value;
+                }
+            }
+            if(count($arr_not_found)>0){
+                //there were missing fields
+                $fields_str=implode(",",$arr_not_found);
+                return $fields_str;
+            }
+            else{
+                ($counter==$this->numOfFields)?$status_message=true:$status_message=false;
+                return $status_message;
+            }
+        }
+        else return false;            
+    }
+    
+    private function readDirectoryContentFileNames(MiniProfMeasurementsBO $data):array {
+        if(isset($data)){
+            //lets get fullpath of the directory to retrieve uploaded files from
+            $arr=array();
+            $fullpath=self::$dirPath."\\".$data->getMeasurementDate()."\\".$data->getSetNumber();
+            if($this->checkDirectoryExists($fullpath)){
+                $arr_result=array_diff(scandir($fullpath),array("..","."));
+                foreach($arr_result as $value){
+                    $arr[]=$value;
+                }
+                return $arr;
+            }
+            else return $arr;
+        }
+        else return NULL;
+    }
+    
+    public function readMiniProfTextFileData(MiniProfMeasurementsBO $data):bool {
+        if(isset($data)){  
+            $dataContainer=new MiniProfMeasurementsBO();
+            $arr_file_names=$this->readDirectoryContentFileNames($data);
+            $dirpartialpath=$data->getMeasurementDate()."\\".$data->getSetNumber();
+            $dirfullpath=self::$dirPath."\\".$dirpartialpath;
+            foreach($arr_file_names as $value){
+                //check if file with this filename actually already exists
+                $partialpath=$dirpartialpath."\\".$value;
+                $fullpath=$dirfullpath."\\".$value;
+                if($this->checkFileExists($partialpath)){
+                    //File exists
+                    try {
+                        //check if all MiniProf textfile fields exist
+                        if(gettype($this->checkIfAllTextFileFieldsExist($partialpath))=="boolean"){
+                            //they all exist             
+                           /*****BEGIN TO PROCESS FILE CONTENTS*******/
+                            $filestr=file_get_contents($fullpath);  
+                            $arr_parsed=$this->lowLevelReadMiniProfFile($filestr);                           
+                            $dataContainer->set($arr_parsed);    //convert array into MiniProf Object
+                            //check if the data being added already exists or not
+                            if(!$this->searchForDuplicateWheelData($dataContainer)){
+                                //duplicate data does not exist in database
+                                $this->addWheelData($dataContainer);
+                            } 
+                            $copy_data=null;
+                            /********END OF PROCESSING******************/
+                        }
+                        else{
+                            //There are missing fields
+                            if(gettype($this->checkIfAllTextFileFieldsExist($partialpath))=="string"){
+                                //then we know for certain there are missing fields
+                                $str="MiniProf TextFile ".$value." has missing fields ";
+                                $str.=$this->checkIfAllTextFileFieldsExist($partialpath);
+                                $arr["errorAssocArray"]["errorDescription"]=$str;
+                                $arr["errorAssocArray"]["errorCode"]="0x16";
+                                throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                            }                            
+                        }                            
+                    } catch (\Exception $e) {
+                        $class_name="MiniProfDBUploader";
+                        $method_name="readMiniProfTextFileData";
+                        $this->err->logErrors($e,null,$class_name, $method_name);                        
+                    }                   
+                }
+                else{
+                    //file does not exist
+                    //do nothing
+                }
+            }
+            return true;
+        }
+        else return false;
+    }
+    
+    private function searchForDuplicateWheelData(MiniProfMeasurementsBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->miniProfDL->dataExists($arr);
+            } catch (\Exception $e) {
+                $class_name="MiniProfDBUploader";
+                $method_name="searchForDuplicateWheelData";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    private function addWheelData(MiniProfMeasurementsBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->miniProfDL->create($arr);
+                if($status_message){
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="MiniProf Wheel Measurements";
+                    $arr_data["transactionName"]="Adding MiniProf Wheel Measurements to Database";
+                    $arr_data["activityAction"]=1;      //create
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
+                }
+            } catch (\Exception $e) {
+                $class_name="MiniProfDBUploader";
+                $method_name="addWheelData";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function showWheelData(MiniProfMeasurementsBO $data):array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_result=$this->miniProfDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="MiniProfDBUploader";
+                $method_name="showWheelData";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_result;
+        }
+        else return NULL;
+    }
+    
+    public function showSpecificWheelData(MiniProfMeasurementsBO $data):array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_result=$this->miniProfDL->searchSpecificWheelData($arr);
+            } catch (\Exception $e) {
+                $class_name="MiniProfDBUploader";
+                $method_name="showSpecificWheelData";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_result;
+        }
+        else return NULL;
+    }
+    
+    public function getEmailRecepients():array {
+        
+    }
+    
+    private function generateEmailMessage(array $data):array {
+        
+    }
+}
+

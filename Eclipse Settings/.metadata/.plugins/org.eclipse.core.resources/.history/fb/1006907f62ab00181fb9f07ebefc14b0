@@ -1,0 +1,118 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\MiniProfDBUploader;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+use UserClasses\DataLayer\MiniProfMeasurementsDL;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/MiniProfDBUploader.php';
+
+/**
+ * MiniProfDBUploader test case.
+ */
+class MiniProfDBUploaderTest extends TestCase
+{
+
+    /**
+     *
+     * @var MiniProfDBUploader
+     */
+    private $miniProfDBUploader;
+    private $data;
+    private $miniProfDL;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated MiniProfDBUploaderTest::setUp()
+        
+        $this->miniProfDBUploader = new MiniProfDBUploader();
+        $this->data=new MiniProfMeasurementsBO();
+        $this->miniProfDL=new MiniProfMeasurementsDL();       
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated MiniProfDBUploaderTest::tearDown()
+        $this->miniProfDBUploader = null;
+        $this->data=null;
+        $this->miniProfDL=null;
+        parent::tearDown();
+    }
+    
+    public function testShowWheelDataWhenItDoesNotExist()
+    {
+        // TODO Auto-generated MiniProfDBUploaderTest->testShowWheelData()
+        $this->markTestIncomplete("showWheelData test not implemented");        
+        $arr=array();
+        $this->miniProfDL->delete($arr);    //make sure database is empty
+        $arr["setNumber"]="N6";
+        $arr["staffNumber"]="305941";
+        $arr["measurementDate"]="2017-04-07";
+        $this->data->set($arr);
+        $arr_result=$this->miniProfDBUploader->showWheelData($this->data);
+        $this->assertEquals(0,count($arr_result));
+    }
+
+    
+    /**
+     * Tests MiniProfDBUploader->readMiniProfTextFileData()
+     */
+    public function testReadMiniProfTextFileData()
+    {
+        // TODO Auto-generated MiniProfDBUploaderTest->testReadMiniProfTextFileData()
+        $this->markTestIncomplete("readMiniProfTextFileData test not implemented");
+        $arr=array();
+        $arr["setNumber"]="N6";
+        $arr["staffNumber"]="305941";
+        $arr["measurementDate"]="2018-08-28";
+        $this->data->set($arr);
+        $status=$this->miniProfDBUploader->readMiniProfTextFileData($this->data);
+        $this->assertEquals(true,$status);
+    }
+
+    /**
+     * Tests MiniProfDBUploader->showWheelData()
+     */
+    public function testShowWheelDataWhenItDoesExist()
+    {
+        // TODO Auto-generated MiniProfDBUploaderTest->testShowWheelData()
+        $this->markTestIncomplete("showWheelData test not implemented");
+        $arr=array();
+        $arr["setNumber"]="N6";
+        $arr["staffNumber"]="305941";
+        $arr["measurementDate"]="2017-04-07";
+        $this->data->set($arr);
+        $arr_result=$this->miniProfDBUploader->showWheelData($this->data);
+        $this->assertEquals(5,count($arr_result));
+    }
+
+    /**
+     * Tests MiniProfDBUploader->showSpecificWheelData()
+     */
+    public function testShowSpecificWheelData()
+    {
+        // TODO Auto-generated MiniProfDBUploaderTest->testShowSpecificWheelData()
+        $this->markTestIncomplete("showSpecificWheelData test not implemented");
+        
+        $this->miniProfDBUploader->showSpecificWheelData();
+    }
+
+    /**
+     * Tests MiniProfDBUploader->getEmailRecepients()
+     */
+    /*public function testGetEmailRecepients()
+    {
+        // TODO Auto-generated MiniProfDBUploaderTest->testGetEmailRecepients()
+        $this->markTestIncomplete("getEmailRecepients test not implemented");
+        
+        $this->miniProfDBUploader->getEmailRecepients();
+    }*/
+}
+

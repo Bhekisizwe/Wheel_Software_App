@@ -16,11 +16,11 @@ class WearRatesSettingTest extends TestCase
      *
      * @var WearRatesSetting
      */
-    private $wearRatesSetting;
-    private $data;
-    private $wearRateDL;
-    private $arr_add;
-    private $arr_update;
+    protected $wearRatesSetting;
+    protected $data;
+    protected $wearRateDL;
+    protected $arr_add;
+    protected $arr_update;
 
     /**
      * Prepares the environment before running a test.

@@ -17,11 +17,11 @@ class AdminAccountsTest extends TestCase
      *
      * @var AdminAccounts
      */
-    private $adminAccounts;
-    private $userAccountDL;
-    private $arr_add;
-    private $data;
-    private $userAccount;
+    protected $adminAccounts;
+    protected $userAccountDL;
+    protected $arr_add;
+    protected $data;
+    protected $userAccount;
 
     /**
      * Prepares the environment before running a test.

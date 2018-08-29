@@ -16,11 +16,11 @@ class AssetRegisterTest extends TestCase
      *
      * @var AssetRegister
      */
-    private $assetRegister;
-    private $arr_add;
-    private $arr_update;
-    private $assetRegisterBO;
-    private $assetRegisterDL;
+    protected $assetRegister;
+    protected $arr_add;
+    protected $arr_update;
+    protected $assetRegisterBO;
+    protected $assetRegisterDL;
 
     /**
      * Prepares the environment before running a test.

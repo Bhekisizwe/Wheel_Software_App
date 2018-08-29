@@ -1,0 +1,320 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class MiniProfMeasurementsBO extends BusinessObject
+{
+    protected $measurementID=0;
+    protected $coachNumber="";
+    protected $setNumber="";
+    protected $axleNumber=0;
+    protected $wheelID=0;
+    protected $operatorName="";
+    protected $measurementDate="";
+    protected $measurementTime="";
+    protected $flangeHeight=0.0;
+    protected $toeCreep=0.0;
+    protected $flangeWidth=0.0;
+    protected $hollowing=0.0;
+    protected $staffNumber="";
+    
+    
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(17);
+    }
+    
+    /**
+     * @return number
+     */
+    public function getMeasurementID()
+    {
+        return $this->measurementID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCoachNumber()
+    {
+        return $this->coachNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSetNumber()
+    {
+        return $this->setNumber;
+    }
+
+    /**
+     * @return number
+     */
+    public function getAxleNumber()
+    {
+        return $this->axleNumber;
+    }
+
+    /**
+     * @return number
+     */
+    public function getWheelID()
+    {
+        return $this->wheelID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperatorName()
+    {
+        return $this->operatorName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMeasurementDate()
+    {
+        return $this->measurementDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMeasurementTime()
+    {
+        return $this->measurementTime;
+    }
+
+    /**
+     * @return number
+     */
+    public function getFlangeHeight()
+    {
+        return $this->flangeHeight;
+    }
+
+    /**
+     * @return number
+     */
+    public function getToeCreep()
+    {
+        return $this->toeCreep;
+    }
+
+    /**
+     * @return number
+     */
+    public function getFlangeWidth()
+    {
+        return $this->flangeWidth;
+    }
+
+    /**
+     * @return number
+     */
+    public function getHollowing()
+    {
+        return $this->hollowing;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStaffNumber()
+    {
+        return $this->staffNumber;
+    }
+
+    /**
+     * @param number $measurementID
+     */
+    public function setMeasurementID($measurementID)
+    {
+        $this->measurementID = $measurementID;
+    }
+
+    /**
+     * @param string $coachNumber
+     */
+    public function setCoachNumber($coachNumber)
+    {
+        $this->coachNumber = $coachNumber;
+    }
+
+    /**
+     * @param string $setNumber
+     */
+    public function setSetNumber($setNumber)
+    {
+        $this->setNumber = $setNumber;
+    }
+
+    /**
+     * @param number $axleNumber
+     */
+    public function setAxleNumber($axleNumber)
+    {
+        $this->axleNumber = $axleNumber;
+    }
+
+    /**
+     * @param number $wheelID
+     */
+    public function setWheelID($wheelID)
+    {
+        $this->wheelID = $wheelID;
+    }
+
+    /**
+     * @param string $operatorName
+     */
+    public function setOperatorName($operatorName)
+    {
+        $this->operatorName = $operatorName;
+    }
+
+    /**
+     * @param string $measurementDate
+     */
+    public function setMeasurementDate($measurementDate)
+    {
+        $this->measurementDate = $measurementDate;
+    }
+
+    /**
+     * @param string $measurementTime
+     */
+    public function setMeasurementTime($measurementTime)
+    {
+        $this->measurementTime = $measurementTime;
+    }
+
+    /**
+     * @param number $flangeHeight
+     */
+    public function setFlangeHeight($flangeHeight)
+    {
+        $this->flangeHeight = $flangeHeight;
+    }
+
+    /**
+     * @param number $toeCreep
+     */
+    public function setToeCreep($toeCreep)
+    {
+        $this->toeCreep = $toeCreep;
+    }
+
+    /**
+     * @param number $flangeWidth
+     */
+    public function setFlangeWidth($flangeWidth)
+    {
+        $this->flangeWidth = $flangeWidth;
+    }
+
+    /**
+     * @param number $hollowing
+     */
+    public function setHollowing($hollowing)
+    {
+        $this->hollowing = $hollowing;
+    }
+
+    /**
+     * @param string $staffNumber
+     */
+    public function setStaffNumber($staffNumber)
+    {
+        $this->staffNumber = $staffNumber;
+    }
+    
+    public function set(array $data){
+        
+        foreach($data as $key => $value){
+            //make the Key case insensitive by making the string comparison to be lower case
+            $key_lower=strtolower($key);
+            switch($key_lower){
+                case "adminstaffnumber":
+                    $this->adminStaffNumber=$value;
+                    break;
+                case "accountid":
+                    $this->accountID=$value;
+                    break;
+                case "roleid":
+                    $this->roleID=$value;
+                    break;
+                case "name":
+                    $this->name=$value;
+                    break;
+                case "surname":
+                    $this->surname=$value;
+                    break;
+                case "staffnumber":
+                    $this->staffNumber=$value;
+                    break;
+                case "emailaddress":
+                    $this->emailAddress=$value;
+                    break;
+                case "accountstate":
+                    $this->accountState=$value;
+                    break;
+                case "passwordhash":
+                    $this->passwordHash=$value;
+                    break;
+                case "userrolename":
+                    $this->userRoleName=$value;
+                    break;
+                case "transactionstatus":
+                    $this->transactionStatus=$value;
+                    break;
+                case "actioncode":
+                    $this->actionCode=$value;
+                    break;
+                case "errorassocarray":
+                    $this->errorAssocArray=$value;
+                    break;
+                case "dataexistsstatus":
+                    $this->dataExistsStatus=$value;
+            }
+        }
+    }
+    
+    //override the getArray method in Parent class
+    //return: Array
+    public function getArray():array {
+        //create array to contain business objects data
+        $arr=array();
+        $i=0;   //count of number of Object parameters read into array.
+        foreach($this as $key => $value){
+            if($i<$this->getObjectNumOfFields()){
+                $arr[$key]=$value;
+                $i++;
+            }
+        }
+        return $arr;
+    }
+    //override the getArray method in Parent class
+    public function setObjectParameters(array $arr) {
+        $i=0;   //counter of number of objects read from array into object
+        foreach ($this as $key => &$value){
+            if($i<$this->getObjectNumOfFields()){
+                $value=$arr[$key];
+                $i++;
+            }
+        }
+    }
+
+
+}
+

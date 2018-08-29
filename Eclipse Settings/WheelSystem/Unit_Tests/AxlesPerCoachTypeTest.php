@@ -16,10 +16,10 @@ class AxlesPerCoachTypeTest extends TestCase
      *
      * @var AxlesPerCoachType
      */
-    private $axlesPerCoachType; 
-    private $data;
-    private $arr_update;
-    private $axlesCoachDL;
+    protected $axlesPerCoachType; 
+    protected $data;
+    protected $arr_update;
+    protected $axlesCoachDL;
 
     /**
      * Prepares the environment before running a test.

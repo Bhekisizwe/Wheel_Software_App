@@ -20,12 +20,12 @@ class LicenseTest extends TestCase
      *
      * @var License
      */
-    private $license;
-    private $data;
-    private $arr_add;
-    private $arr_update;
-    private $arr_results;
-    private $deleteObj;
+    protected $license;
+    protected $data;
+    protected $arr_add;
+    protected $arr_update;
+    protected $arr_results;
+    protected $deleteObj;
 
     /**
      * Prepares the environment before running a test.

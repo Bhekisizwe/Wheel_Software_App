@@ -1,0 +1,244 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class MiniProfMeasurementsBO extends BusinessObject
+{
+    private $measurementID=0;
+    private $coachNumber="";
+    private $setNumber="";
+    private $axleNumber=0;
+    private $wheelID=0;
+    private $operatorName="";
+    private $measurementDate="";
+    private $measurementTime="";
+    private $flangeHeight=0.0;
+    private $toeCreep=0.0;
+    private $flangeWidth=0.0;
+    private $hollowing=0.0;
+    private $staffNumber="";
+    
+    
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(17);
+    }
+    
+    /**
+     * @return number
+     */
+    public function getMeasurementID()
+    {
+        return $this->measurementID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCoachNumber()
+    {
+        return $this->coachNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSetNumber()
+    {
+        return $this->setNumber;
+    }
+
+    /**
+     * @return number
+     */
+    public function getAxleNumber()
+    {
+        return $this->axleNumber;
+    }
+
+    /**
+     * @return number
+     */
+    public function getWheelID()
+    {
+        return $this->wheelID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOperatorName()
+    {
+        return $this->operatorName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMeasurementDate()
+    {
+        return $this->measurementDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMeasurementTime()
+    {
+        return $this->measurementTime;
+    }
+
+    /**
+     * @return number
+     */
+    public function getFlangeHeight()
+    {
+        return $this->flangeHeight;
+    }
+
+    /**
+     * @return number
+     */
+    public function getToeCreep()
+    {
+        return $this->toeCreep;
+    }
+
+    /**
+     * @return number
+     */
+    public function getFlangeWidth()
+    {
+        return $this->flangeWidth;
+    }
+
+    /**
+     * @return number
+     */
+    public function getHollowing()
+    {
+        return $this->hollowing;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStaffNumber()
+    {
+        return $this->staffNumber;
+    }
+
+    /**
+     * @param number $measurementID
+     */
+    public function setMeasurementID($measurementID)
+    {
+        $this->measurementID = $measurementID;
+    }
+
+    /**
+     * @param string $coachNumber
+     */
+    public function setCoachNumber($coachNumber)
+    {
+        $this->coachNumber = $coachNumber;
+    }
+
+    /**
+     * @param string $setNumber
+     */
+    public function setSetNumber($setNumber)
+    {
+        $this->setNumber = $setNumber;
+    }
+
+    /**
+     * @param number $axleNumber
+     */
+    public function setAxleNumber($axleNumber)
+    {
+        $this->axleNumber = $axleNumber;
+    }
+
+    /**
+     * @param number $wheelID
+     */
+    public function setWheelID($wheelID)
+    {
+        $this->wheelID = $wheelID;
+    }
+
+    /**
+     * @param string $operatorName
+     */
+    public function setOperatorName($operatorName)
+    {
+        $this->operatorName = $operatorName;
+    }
+
+    /**
+     * @param string $measurementDate
+     */
+    public function setMeasurementDate($measurementDate)
+    {
+        $this->measurementDate = $measurementDate;
+    }
+
+    /**
+     * @param string $measurementTime
+     */
+    public function setMeasurementTime($measurementTime)
+    {
+        $this->measurementTime = $measurementTime;
+    }
+
+    /**
+     * @param number $flangeHeight
+     */
+    public function setFlangeHeight($flangeHeight)
+    {
+        $this->flangeHeight = $flangeHeight;
+    }
+
+    /**
+     * @param number $toeCreep
+     */
+    public function setToeCreep($toeCreep)
+    {
+        $this->toeCreep = $toeCreep;
+    }
+
+    /**
+     * @param number $flangeWidth
+     */
+    public function setFlangeWidth($flangeWidth)
+    {
+        $this->flangeWidth = $flangeWidth;
+    }
+
+    /**
+     * @param number $hollowing
+     */
+    public function setHollowing($hollowing)
+    {
+        $this->hollowing = $hollowing;
+    }
+
+    /**
+     * @param string $staffNumber
+     */
+    public function setStaffNumber($staffNumber)
+    {
+        $this->staffNumber = $staffNumber;
+    }
+
+
+}
+

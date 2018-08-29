@@ -15,10 +15,10 @@ class UserRoleTest extends TestCase
      *
      * @var UserRole
      */
-    private $userRole;
-    private $data;
-    private $arr_add;
-    private $arr_update;
+    protected $userRole;
+    protected $data;
+    protected $arr_add;
+    protected $arr_update;
 
     /**
      * Prepares the environment before running a test.

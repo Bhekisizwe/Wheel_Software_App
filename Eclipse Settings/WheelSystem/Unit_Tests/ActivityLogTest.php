@@ -16,10 +16,10 @@ class ActivityLogTest extends TestCase
      *
      * @var ActivityLog
      */
-    private $activityLog;
-    private $arr_add;
-    private $activityBO;
-    private $activityLogDL;
+    protected $activityLog;
+    protected $arr_add;
+    protected $activityBO;
+    protected $activityLogDL;
 
     /**
      * Prepares the environment before running a test.

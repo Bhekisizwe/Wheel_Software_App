@@ -1,0 +1,33 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class MiniProfMeasurementsBO extends BusinessObject
+{
+    private $measurementID=0;
+    private $coachNumber="";
+    private $setNumber="";
+    private $axleNumber=0;
+    private $wheelID=0;
+    private $operatorName="";
+    private $measurementDate="";
+    private $measurementTime="";
+    private $flangeHeight=0.0;
+    private $toeCreep=0.0;
+    private $flangeWidth=0.0;
+    private $hollowing=0.0;
+    private $staffNumber="";
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(17);  
+    }
+}
+

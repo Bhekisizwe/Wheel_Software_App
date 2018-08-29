@@ -1,0 +1,62 @@
+<?php
+    //phpinfo();
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\BusinessLayer\Email;
+use UserClasses\DataLayer\SystemLicenseDL;
+use UserClasses\BusinessLayer\TermsAndConditions;
+use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessLayer\UserAccounts;
+use UserClasses\BusinessObjects\UserAccountBO;
+use UserClasses\DataLayer\UserAccountDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessLayer\ActivityLog;
+use UserClasses\BusinessLayer\AssetRegister;
+use UserClasses\BusinessObjects\AssetRegisterBO;
+use UserClasses\BusinessLayer\AxleCoachMapping;
+use UserClasses\BusinessObjects\AxleCoachMappingBO;
+use UserClasses\BusinessLayer\WearRatesSetting;
+use UserClasses\BusinessObjects\WearRatesBO;
+use UserClasses\BusinessLayer\AutoWheelSettings;
+use UserClasses\BusinessObjects\AutoWheelSettingsBO;
+use UserClasses\BusinessLayer\MiniProfDBUploader;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+use UserClasses\DataLayer\UserRoleDL;
+
+require __DIR__.'/vendor/autoload.php';
+$miniProf=new MiniProfDBUploader();
+$miniProfBO=new MiniProfMeasurementsBO();
+$miniProfBO->setMeasurementDate("2018-08-28");
+$miniProfBO->setSetNumber("N6");
+$miniProfBO->setStaffNumber("305941");
+$arr_parse=$miniProf->readMiniProfTextFileData($miniProfBO);
+$miniProfBO->setMeasurementDate("2017-04-07");
+$miniProfBO->setCoachNumber("10805");
+$miniProfBO->setWheelID(4);
+$userRole=new UserRole();
+$userRoleBO=new UserRoleBO();
+$userAccountDL=new UserAccountDL();
+$arr=$userRole->listAllUserRoles();
+foreach($arr["userRole2DArray"] as $value){
+    $arr_setter=array();
+    $activityName="Wheel Measurements Management";
+    $accessRight="C";
+    $arr_setter[]=$value;
+    $userRoleBO->setUserRole2DArray($arr_setter);
+    if($userRole->checkUserAuthorization($userRoleBO, $accessRight, $activityName)==TRUE){
+        $data_arr["roleID"]=$value["roleID"];
+        $arr_result=$userAccountDL->searchUsingRoleID($data_arr);    
+    }
+}
+echo "";
+echo "";
+
+//$file_path="";
+//$status=$userRole->checkUserAuthorization($data,$accessRight,$activityName);
+
+
+
+
+

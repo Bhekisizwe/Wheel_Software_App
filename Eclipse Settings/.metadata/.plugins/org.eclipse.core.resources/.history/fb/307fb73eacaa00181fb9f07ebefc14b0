@@ -1,0 +1,20 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class MiniProfMeasurementsBO extends BusinessObject
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+}
+

@@ -16,10 +16,10 @@ class AxleCoachMappingTest extends TestCase
      *
      * @var AxleCoachMapping
      */
-    private $axleCoachMapping;
-    private $axleBO;
-    private $axleDL;
-    private $arr_add;
+    protected $axleCoachMapping;
+    protected $axleBO;
+    protected $axleDL;
+    protected $arr_add;
 
     /**
      * Prepares the environment before running a test.

@@ -16,11 +16,11 @@ class AutoWheelSettingsTest extends TestCase
      *
      * @var AutoWheelSettings
      */
-    private $autoWheelSettings;
-    private $data;
-    private $autoSettingsDL;
-    private $arr_add;
-    private $arr_update;
+    protected $autoWheelSettings;
+    protected $data;
+    protected $autoSettingsDL;
+    protected $arr_add;
+    protected $arr_update;
 
     /**
      * Prepares the environment before running a test.

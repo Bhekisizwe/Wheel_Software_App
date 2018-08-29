@@ -1,0 +1,89 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\MiniProfMeasurementsDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class MiniProfDBUploader extends FileHandler
+{
+    private $err;
+    private static $dirPath=__DIR__."\\..\\..\\..\\..\\MiniProf";
+    private static $fileTypePrimary="text/plain";
+    private static $fileTypeSecondary="MiniProf";
+    private $activityLog;
+    private $activityBO;
+    private $miniProfDL;    
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct(self::$dirPath, self::$fileTypePrimary, self::$fileTypeSecondary);
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->miniProfDL=new MiniProfMeasurementsDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->miniProfDL=null;
+    }
+    
+    private function checkIfAllTextFileFieldsExist(string $filename):bool {
+        if($filename!=""){
+            $fullpath=self::$dirPath."\\".$filename;
+            if($this->checkFileExists($fullpath)){
+                //read textfile into a string.
+                $file_str=file_get_contents($fullpath);
+            }            
+        }
+        else return false;            
+    }
+    
+    private function readDirectoryContentFileNames(MiniProfMeasurementsBO $data):array {
+        
+    }
+    
+    public function readMiniProfTextFileData(MiniProfMeasurementsBO $data):array {
+        
+    }
+    
+    private function searchForDuplicateWheelData(MiniProfMeasurementsBO $data):bool {
+        
+    }
+    
+    private function addWheelData(MiniProfMeasurementsBO $data):bool {
+        
+    }
+    
+    public function showWheelData(MiniProfMeasurementsBO $data):array {
+        
+    }
+    
+    public function showSpecificWheelData(MiniProfMeasurementsBO $data):array {
+        
+    }
+    
+    public function getEmailRecepients():array {
+        
+    }
+    
+    private function generateEmailMessage(array $data):array {
+        
+    }
+}
+

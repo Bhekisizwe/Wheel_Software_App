@@ -15,9 +15,9 @@ class LoginCredentialsTest extends TestCase
      *
      * @var LoginCredentials
      */
-    private $loginCredentials;
-    private $data;
-    private $arr_update;
+    protected $loginCredentials;
+    protected $data;
+    protected $arr_update;
 
     /**
      * Prepares the environment before running a test.

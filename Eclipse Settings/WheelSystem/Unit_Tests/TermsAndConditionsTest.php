@@ -19,13 +19,13 @@ class TermsAndConditionsTest extends TestCase
      *
      * @var TermsAndConditions
      */
-    private $termsAndConditions;
-    private $data;
-    private $arr_results;
-    private $arr_update;
-    private $arr_add;
-    private $deleteObjLicense;
-    private $deleteObjTerms;
+    protected $termsAndConditions;
+    protected $data;
+    protected $arr_results;
+    protected $arr_update;
+    protected $arr_add;
+    protected $deleteObjLicense;
+    protected $deleteObjTerms;
 
     /**
      * Prepares the environment before running a test.

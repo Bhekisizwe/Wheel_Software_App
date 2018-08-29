@@ -16,11 +16,11 @@ class ManualWheelSettingsTest extends TestCase
      *
      * @var ManualWheelSettings
      */
-    private $manualWheelSettings;
-    private $data;
-    private $manualSettingsDL;
-    private $arr_add;
-    private $arr_update;
+    protected $manualWheelSettings;
+    protected $data;
+    protected $manualSettingsDL;
+    protected $arr_add;
+    protected $arr_update;
     
 
     /**

@@ -1,0 +1,128 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\MiniProfMeasurementsDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class MiniProfDBUploader extends FileHandler
+{
+    private $err;
+    private static $dirPath=__DIR__."\\..\\..\\..\\..\\MiniProf";
+    private static $fileTypePrimary="text/plain";
+    private static $fileTypeSecondary="MiniProf";
+    private $activityLog;
+    private $activityBO;
+    private $miniProfDL;
+    private $fields_arr;
+    private $numOfFields=0;
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct(self::$dirPath, self::$fileTypePrimary, self::$fileTypeSecondary);
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->miniProfDL=new MiniProfMeasurementsDL();
+        $arr=["Date",
+            "Time",
+            "SetNo",
+            "CoachNo",
+            "AxleNo",
+            "WheelID",
+            "OperatorName",
+            "Sh",
+            "qR",
+            "Hollowing",
+            "FlangeWidth"];
+        $this->fields_arr=$arr;
+        $this->numOfFields=count($arr);
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->miniProfDL=null;
+    }
+    
+    private function checkIfAllTextFileFieldsExist(string $filename) {        
+        if($filename!=""){
+            $fullpath=self::$dirPath."\\".$filename;          
+            //read textfile into a string.
+            $file_str=file_get_contents($fullpath);
+            $arr_not_found=array();   //array containing not found fields
+            $counter=0;     //counts number of fields found
+            foreach($this->fields_arr as $value){
+                //search for each field in textfile. All fields must be found
+                $pattern="/".$value."=/";
+                if(preg_match($pattern, $file_str)==1){
+                    //field found
+                    $counter++;
+                }
+                else{
+                    //field not found. Append to Array
+                    $arr_not_found[]=$value;
+                }
+            }
+            if(count($arr_not_found)>0){
+                //there were missing fields
+                $fields_str=implode(",",$arr_not_found);
+                return $fields_str;
+            }
+            else{
+                ($counter==$this->numOfFields)?$status_message=true:$status_message=false;
+                return $status_message;
+            }
+        }
+        else return false;            
+    }
+    
+    private function readDirectoryContentFileNames(MiniProfMeasurementsBO $data):array {
+        if(isset($data)){
+                
+        }
+        else return NULL;
+    }
+    
+    public function readMiniProfTextFileData(MiniProfMeasurementsBO $data):array {
+        
+    }
+    
+    private function searchForDuplicateWheelData(MiniProfMeasurementsBO $data):bool {
+        
+    }
+    
+    private function addWheelData(MiniProfMeasurementsBO $data):bool {
+        
+    }
+    
+    public function showWheelData(MiniProfMeasurementsBO $data):array {
+        
+    }
+    
+    public function showSpecificWheelData(MiniProfMeasurementsBO $data):array {
+        
+    }
+    
+    public function getEmailRecepients():array {
+        
+    }
+    
+    private function generateEmailMessage(array $data):array {
+        
+    }
+}
+

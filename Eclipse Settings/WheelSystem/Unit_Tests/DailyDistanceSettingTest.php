@@ -16,9 +16,9 @@ class DailyDistanceSettingTest extends TestCase
      *
      * @var DailyDistanceSetting
      */
-    private $dailyDistanceSetting;
-    private $dailyDistanceDL;
-    private $dailyDistanceBO;
+    protected $dailyDistanceSetting;
+    protected $dailyDistanceDL;
+    protected $dailyDistanceBO;
 
     /**
      * Prepares the environment before running a test.

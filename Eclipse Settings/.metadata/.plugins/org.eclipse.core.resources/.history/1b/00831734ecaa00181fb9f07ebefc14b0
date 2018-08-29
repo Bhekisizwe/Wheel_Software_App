@@ -1,0 +1,188 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\MiniProfMeasurementsDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class MiniProfDBUploader extends FileHandler
+{
+    private $err;
+    private static $dirPath=__DIR__."\\..\\..\\..\\..\\MiniProf";
+    private static $fileTypePrimary="text/plain";
+    private static $fileTypeSecondary="MiniProf";
+    private $activityLog;
+    private $activityBO;
+    private $miniProfDL;
+    private $fields_arr;
+    private $numOfFields=0;
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct(self::$dirPath, self::$fileTypePrimary, self::$fileTypeSecondary);
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->miniProfDL=new MiniProfMeasurementsDL();
+        $arr=["Date",
+            "Time",
+            "SetNo",
+            "CoachNo",
+            "AxleNo",
+            "WheelID",
+            "OperatorName",
+            "Sh",
+            "qR",
+            "Hollowing",
+            "FlangeWidth"];
+        $this->fields_arr=$arr;
+        $this->numOfFields=count($arr);
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->miniProfDL=null;
+    }
+    
+    private function checkIfAllTextFileFieldsExist(string $filename) {        
+        if($filename!=""){
+            $fullpath=self::$dirPath."\\".$filename;          
+            //read textfile into a string.
+            $file_str=file_get_contents($fullpath);
+            $arr_not_found=array();   //array containing not found fields
+            $counter=0;     //counts number of fields found
+            foreach($this->fields_arr as $value){
+                //search for each field in textfile. All fields must be found
+                $pattern="/".$value."=/";
+                if(preg_match($pattern, $file_str)==1){
+                    //field found
+                    $counter++;
+                }
+                else{
+                    //field not found. Append to Array
+                    $arr_not_found[]=$value;
+                }
+            }
+            if(count($arr_not_found)>0){
+                //there were missing fields
+                $fields_str=implode(",",$arr_not_found);
+                return $fields_str;
+            }
+            else{
+                ($counter==$this->numOfFields)?$status_message=true:$status_message=false;
+                return $status_message;
+            }
+        }
+        else return false;            
+    }
+    
+    private function readDirectoryContentFileNames(MiniProfMeasurementsBO $data):array {
+        if(isset($data)){
+            //lets get fullpath of the directory to retrieve uploaded files from
+            $arr=array();
+            $fullpath=self::$dirPath."\\".$data->getMeasurementDate()."\\".$data->getSetNumber();
+            if($this->checkDirectoryExists($fullpath)){
+                $arr_result=array_diff(scandir($fullpath),array("..","."));
+                foreach($arr_result as $value){
+                    $arr[]=$value;
+                }
+                return $arr;
+            }
+            else return $arr;
+        }
+        else return NULL;
+    }
+    
+    public function readMiniProfTextFileData(MiniProfMeasurementsBO $data):array {
+        if(isset($data)){
+            //check if file with this filename actually already exists
+            $arr_file_names=$this->readDirectoryContentFileNames($data);
+            foreach($arr_file_names as $value){
+                if($this->checkFileExists($value)){
+                    //File exists
+                    try {
+                        //check if all MiniProf textfile fields exist
+                        if($this->checkIfAllTextFileFieldsExist($value)==TRUE){
+                            //they all exist             
+                           /*****BEGIN TO PROCESS FILE CONTENTS*******/
+                            $pointer=fopen($fullpath,'r');   //open for reading
+                            $readline=fgets($pointer);  //read first line of CSV file
+                            fclose($pointer);
+                            //search for Delimiter that is applicable.
+                            $file=fopen($fullpath,'r');
+                            if(preg_match("/,/", $readline)==1){
+                                $delimiter=",";
+                            }
+                            if(preg_match("/;/", $readline)==1){
+                                $delimiter=";";
+                            }
+                            $headers_skip=fgetcsv($file,null,$delimiter);   //skip headers
+                            while(($row_arr=fgetcsv($file,null,$delimiter))!== FALSE){
+                                $arr[]=$row_arr; //append row of data to the end of the 2D Array
+                            }
+                            fclose($file);  //close the file
+                            /********END OF PROCESSING******************/
+                        }
+                        else{
+                            //There are missing fields
+                            $str="Asset register CSV Textfile has missing data.";
+                            $str.="Please consult the HELP documentation to correctly setup the CSV file for import.";
+                            $arr["errorAssocArray"]["errorDescription"]=$str;
+                            $arr["errorAssocArray"]["errorCode"]="0x02";
+                            throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                        }                            
+                    } catch (\Exception $e) {
+                        $class_name="AssetRegister";
+                        $method_name="readCSVFileAssetsData";
+                        $this->err->logErrors($e,null,$class_name, $method_name);
+                    }
+                    return $arr;
+                }
+                else{
+                    //file does not exist
+                    //do nothing
+                }
+            }            
+        }
+        else return NULL;
+    }
+    
+    private function searchForDuplicateWheelData(MiniProfMeasurementsBO $data):bool {
+        
+    }
+    
+    private function addWheelData(MiniProfMeasurementsBO $data):bool {
+        
+    }
+    
+    public function showWheelData(MiniProfMeasurementsBO $data):array {
+        
+    }
+    
+    public function showSpecificWheelData(MiniProfMeasurementsBO $data):array {
+        
+    }
+    
+    public function getEmailRecepients():array {
+        
+    }
+    
+    private function generateEmailMessage(array $data):array {
+        
+    }
+}
+

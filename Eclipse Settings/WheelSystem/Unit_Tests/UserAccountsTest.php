@@ -18,14 +18,14 @@ class UserAccountsTest extends TestCase
      *
      * @var UserAccounts
      */
-    private $userAccounts;
-    private $userAccountDL;
-    private $data;
-    private $arr_add;
-    private $arr_update;
-    private $licensedata;
-    private $license;
-    private $licenseBO;
+    protected $userAccounts;
+    protected $userAccountDL;
+    protected $data;
+    protected $arr_add;
+    protected $arr_update;
+    protected $licensedata;
+    protected $license;
+    protected $licenseBO;
 
     /**
      * Prepares the environment before running a test.

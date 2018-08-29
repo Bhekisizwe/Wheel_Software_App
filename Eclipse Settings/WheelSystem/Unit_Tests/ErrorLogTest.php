@@ -18,8 +18,8 @@ class ErrorLogTest extends TestCase
      *
      * @var ErrorLog
      */
-    private $errorLog;
-    private $file_path;
+    protected $errorLog;
+    protected $file_path;
 
     /**
      * Prepares the environment before running a test.
