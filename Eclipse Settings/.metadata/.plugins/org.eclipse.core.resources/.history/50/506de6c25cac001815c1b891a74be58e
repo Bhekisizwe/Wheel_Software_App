@@ -1,0 +1,27 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelMeasurementsBO extends MiniProfMeasurementsBO
+{
+    protected $manualID=0;
+    protected $spreadRim=0.0;
+    protected $wheelSkid=0.0;
+    protected $cutTyreWidth=0.0;
+    protected $cutTyreDepth=0.0;
+    protected $cutTyreDistanceFromFlange=0.0;
+    
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setObjectNumOfFields(25);
+    }
+}
+

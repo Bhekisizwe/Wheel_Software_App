@@ -24,16 +24,30 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
 use UserClasses\BusinessLayer\MiniProfDBUploader;
 use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
 use UserClasses\DataLayer\UserRoleDL;
+use UserClasses\DataLayer\ManualWheelMeasurementsDL;
+use UserClasses\BusinessObjects\ManualWheelMeasurementsBO;
+use UserClasses\BusinessLayer\ManualWheelMeasurements;
 
 require __DIR__.'/vendor/autoload.php';
-$miniProf=new MiniProfDBUploader();
-$miniProfBO=new MiniProfMeasurementsBO();
-$miniProfBO->setMeasurementDate("2018-08-28");
-$miniProfBO->setSetNumber("N6");
-$miniProfBO->setStaffNumber("305941");
-$arr_parse=$miniProf->readMiniProfTextFileData($miniProfBO);
-$miniProfBO->setMeasurementDate("2017-04-07");
-$miniProf->getEmailRecepients($miniProfBO);
+$manual=new ManualWheelMeasurements();
+$manualBO=new ManualWheelMeasurementsBO();
+$manualBO->setCutTyreWidth(23.58);
+$manualBO->setCutTyreDistanceFromFlange(35.78);
+$manualBO->setSpreadRim(15.56);
+$manualBO->setCutTyreDepth(10);
+$manualBO->setWheelSkid(0.35);
+$manualBO->setMeasurementID(3);
+$manualBO->setGibsonDescription("Mfundo there is something wrong here");
+$manualBO->setStaffNumber("305941");
+/*$manualBO->setReportEndDate("2017-04-07");
+$manualBO->setReportStartDate("2017-04-07");
+$manualBO->setCoachNumber("10805");
+$manualBO->setWheelID(6);
+$manualBO->setMeasurementDate("2017-04-07");*/
+//$status=$manual->addManualWheelMeasurements($manualBO);
+$arr_parse=$manual->updateManualWheelData($manualBO);
+//print_r($arr_parse);
+
 echo "";
 echo "";
 

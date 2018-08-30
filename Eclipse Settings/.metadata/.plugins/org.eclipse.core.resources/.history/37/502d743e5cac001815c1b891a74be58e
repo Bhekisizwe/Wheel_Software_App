@@ -1,0 +1,19 @@
+<?php
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelMeasurementsBO extends MiniProfMeasurementsBO
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+}
+

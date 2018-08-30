@@ -112,7 +112,7 @@ class UserRoleDL extends DatabaseManager implements DatabaseFunctionsInt
                 //$i is the row counter
                 $accessID=$data["activityRights2DArray"][$i]["accessID"];
                 $activityRights=$data["activityRights2DArray"][$i]["activityRights"];
-                $stmt->bind_param("si",$activityRights,$accessID);
+                $stmt->bind_param("ss",$activityRights,$accessID);
                 $status_message=$stmt->execute();
             }
             //update column visibility for this role if the data exists

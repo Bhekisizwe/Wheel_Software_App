@@ -1,0 +1,73 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\ManualWheelMeasurementsDL;
+use UserClasses\BusinessObjects\ManualWheelMeasurementsBO;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelMeasurements
+{
+    private $activityLog;
+    private $activityBO;
+    private $manualWheelDL;
+    private $err;
+    private $miniProf;
+    private $miniProfBO;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->manualWheelDL=new ManualWheelMeasurementsDL();
+        $this->miniProf=new MiniProfDBUploader();
+        $this->miniProfBO=new MiniProfMeasurementsBO();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->miniProf=null;
+        $this->manualWheelDL=null;
+        $this->miniProfBO=null;
+    }
+    
+    public function searchForAutoWheelProfile(ManualWheelMeasurementsBO $data):array {
+        if(isset($data)){
+            $arr=array();
+            $this->miniProfBO->set($data->getArray());
+            $arr=$this->miniProf->showSpecificWheelData($this->miniProfBO);    
+        }
+        else return NULL;
+    }
+    
+    public function addManualWheelMeasurements(ManualWheelMeasurementsBO $data):bool {
+        
+    }
+    
+    public function showManualWheelData(ManualWheelMeasurementsBO $data):array {
+        
+    }
+    
+    public function updateManualWheelData(ManualWheelMeasurementsBO $data):bool {
+        
+    }
+    
+    public function getWheelReportData(ManualWheelMeasurementsBO $data):array {
+        
+    }
+}
+

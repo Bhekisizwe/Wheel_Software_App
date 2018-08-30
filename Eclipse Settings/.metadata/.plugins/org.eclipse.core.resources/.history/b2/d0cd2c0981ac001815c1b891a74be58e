@@ -1,0 +1,116 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\ManualWheelMeasurementsDL;
+use UserClasses\BusinessObjects\ManualWheelMeasurementsBO;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelMeasurements
+{
+    private $activityLog;
+    private $activityBO;
+    private $manualWheelDL;
+    private $err;
+    private $miniProf;
+    private $miniProfBO;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->manualWheelDL=new ManualWheelMeasurementsDL();
+        $this->miniProf=new MiniProfDBUploader();
+        $this->miniProfBO=new MiniProfMeasurementsBO();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->miniProf=null;
+        $this->manualWheelDL=null;
+        $this->miniProfBO=null;
+    }
+    
+    public function searchForAutoWheelProfile(ManualWheelMeasurementsBO $data):array {
+        if(isset($data)){
+            $arr=array();
+            $this->miniProfBO->set($data->getArray());
+            $arr=$this->miniProf->showSpecificWheelData($this->miniProfBO);  
+            return $arr;
+        }
+        else return NULL;
+    }
+    
+    public function addManualWheelMeasurements(ManualWheelMeasurementsBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->miniProfDL->create($arr);
+                if($status_message){
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="MiniProf Wheel Measurements";
+                    $arr_data["transactionName"]="Adding MiniProf Wheel Measurements to Database";
+                    $arr_data["activityAction"]=1;      //create
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
+                }
+            } catch (\Exception $e) {
+                $class_name="MiniProfDBUploader";
+                $method_name="addWheelData";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function showManualWheelData(ManualWheelMeasurementsBO $data):array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_result=$this->manualWheelDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="ManualWheelMeasurements";
+                $method_name="showManualWheelData";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_result;
+        }
+        else return NULL;
+    }
+    
+    public function updateManualWheelData(ManualWheelMeasurementsBO $data):bool {
+        
+    }
+    
+    public function getWheelReportData(ManualWheelMeasurementsBO $data):array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_result=$this->manualWheelDL->readWheelDataForReport($arr);
+            } catch (\Exception $e) {
+                $class_name="ManualWheelMeasurements";
+                $method_name="getWheelReportData";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_result;
+        }
+        else return NULL;
+    }
+}
+

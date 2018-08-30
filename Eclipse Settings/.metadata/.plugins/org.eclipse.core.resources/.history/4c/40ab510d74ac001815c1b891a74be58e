@@ -1,0 +1,127 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\ManualWheelMeasurements;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/ManualWheelMeasurements.php';
+
+/**
+ * ManualWheelMeasurements test case.
+ */
+class ManualWheelMeasurementsTest extends TestCase
+{
+
+    /**
+     *
+     * @var ManualWheelMeasurements
+     */
+    private $manualWheelMeasurements;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated ManualWheelMeasurementsTest::setUp()
+        
+        $this->manualWheelMeasurements = new ManualWheelMeasurements(/* parameters */);
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest::tearDown()
+        $this->manualWheelMeasurements = null;
+        
+        parent::tearDown();
+    }
+
+    /**
+     * Constructs the test case.
+     */
+    public function __construct()
+    {
+        // TODO Auto-generated constructor
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->__construct()
+     */
+    public function test__construct()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->test__construct()
+        $this->markTestIncomplete("__construct test not implemented");
+        
+        $this->manualWheelMeasurements->__construct(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->__destruct()
+     */
+    public function test__destruct()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->test__destruct()
+        $this->markTestIncomplete("__destruct test not implemented");
+        
+        $this->manualWheelMeasurements->__destruct(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->searchForAutoWheelProfile()
+     */
+    public function testSearchForAutoWheelProfile()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testSearchForAutoWheelProfile()
+        $this->markTestIncomplete("searchForAutoWheelProfile test not implemented");
+        
+        $this->manualWheelMeasurements->searchForAutoWheelProfile(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->addManualWheelMeasurements()
+     */
+    public function testAddManualWheelMeasurements()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testAddManualWheelMeasurements()
+        $this->markTestIncomplete("addManualWheelMeasurements test not implemented");
+        
+        $this->manualWheelMeasurements->addManualWheelMeasurements(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->showManualWheelData()
+     */
+    public function testShowManualWheelData()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testShowManualWheelData()
+        $this->markTestIncomplete("showManualWheelData test not implemented");
+        
+        $this->manualWheelMeasurements->showManualWheelData(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->updateManualWheelData()
+     */
+    public function testUpdateManualWheelData()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testUpdateManualWheelData()
+        $this->markTestIncomplete("updateManualWheelData test not implemented");
+        
+        $this->manualWheelMeasurements->updateManualWheelData(/* parameters */);
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->getWheelReportData()
+     */
+    public function testGetWheelReportData()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testGetWheelReportData()
+        $this->markTestIncomplete("getWheelReportData test not implemented");
+        
+        $this->manualWheelMeasurements->getWheelReportData(/* parameters */);
+    }
+}
+

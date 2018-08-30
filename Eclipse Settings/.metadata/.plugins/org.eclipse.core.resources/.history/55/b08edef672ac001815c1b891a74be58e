@@ -1,0 +1,32 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelMeasurements
+{
+    private $activityLog;
+    private $activityBO;
+    private $manualWheelDL;
+    private $err;
+    private $miniProf;
+
+    /**
+     */
+    public function __construct()
+    {
+        
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        
+    }
+}
+

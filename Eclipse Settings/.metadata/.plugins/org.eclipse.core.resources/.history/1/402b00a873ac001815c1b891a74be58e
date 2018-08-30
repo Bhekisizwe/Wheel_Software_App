@@ -1,0 +1,43 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\ManualWheelMeasurementsDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManualWheelMeasurements
+{
+    private $activityLog;
+    private $activityBO;
+    private $manualWheelDL;
+    private $err;
+    private $miniProf;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->manualWheelDL=new ManualWheelMeasurementsDL();
+        $this->miniProf=new MiniProfDBUploader();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->miniProf=null;
+        $this->manualWheelDL=null;
+    }
+}
+

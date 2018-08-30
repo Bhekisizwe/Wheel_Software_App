@@ -1,0 +1,166 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\ManualWheelMeasurements;
+use UserClasses\DataLayer\ManualWheelMeasurementsDL;
+use UserClasses\BusinessObjects\ManualWheelMeasurementsBO;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/ManualWheelMeasurements.php';
+
+/**
+ * ManualWheelMeasurements test case.
+ */
+class ManualWheelMeasurementsTest extends TestCase
+{
+
+    /**
+     *
+     * @var ManualWheelMeasurements
+     */
+    private $manualWheelMeasurements;
+    private $manualDL;
+    private $data;
+    private $arr_add;
+    private $arr_update;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated ManualWheelMeasurementsTest::setUp()
+        
+        $this->manualWheelMeasurements = new ManualWheelMeasurements();
+        $this->manualDL=new ManualWheelMeasurementsDL();
+        $this->data=new ManualWheelMeasurementsBO();
+        $arr_add=array();
+        $arr_add["staffNumber"]="305941";
+        $arr_add["spreadRim"]=30.35;
+        $arr_add["wheelSkid"]=55.89;
+        $arr_add["cutTyreDepth"]=12.25;
+        $arr_add["cutTyreWidth"]=28.63;
+        $arr_add["cutTyreDistanceFromFlange"]=20.0;
+        $arr_add["measurementID"]=3;
+        $this->arr_add=$arr_add;
+        $arr_update=array();
+        $arr_update["staffNumber"]="305941";
+        $arr_update["spreadRim"]=23.78;
+        $arr_update["wheelSkid"]=55.89;
+        $arr_update["cutTyreDepth"]=8.75;
+        $arr_update["cutTyreWidth"]=28.63;
+        $arr_update["cutTyreDistanceFromFlange"]=18.99;
+        $arr_update["measurementID"]=3;
+        $this->arr_update=$arr_update;
+        
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest::tearDown()
+        $this->manualWheelMeasurements = null;
+        $this->manualDL=null;
+        $this->data=null;
+        parent::tearDown();
+    }    
+
+    /**
+     * Tests ManualWheelMeasurements->searchForAutoWheelProfile()
+     */
+    public function testSearchForAutoWheelProfile()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testSearchForAutoWheelProfile()
+        $this->markTestIncomplete("searchForAutoWheelProfile test not implemented");
+        $arr=array();
+        $arr["coachNumber"]="10805";
+        $arr["wheelID"]=6;
+        $arr["measurementDate"]="2017-04-07";
+        $this->data->set($arr);
+        $arr_result=$this->manualWheelMeasurements->searchForAutoWheelProfile($this->data);
+        $this->assertEquals(1,count($arr_result));
+    }
+    
+    /**
+     * Tests ManualWheelMeasurements->showManualWheelData()
+     */
+    public function testShowManualWheelDataWhenItDoesNotExist()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testShowManualWheelData()
+        $this->markTestIncomplete("showManualWheelData test not implemented");
+        $arr=array();
+        $this->manualDL->delete($arr);      //make sure database is empty
+        $arr["measurementID"]=3;       
+        $this->data->set($arr);
+        $arr_result=$this->manualWheelMeasurements->showManualWheelData($this->data);
+        $this->assertEquals(0,count($arr_result));
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->addManualWheelMeasurements()
+     */
+    public function testAddManualWheelMeasurements()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testAddManualWheelMeasurements()
+        $this->markTestIncomplete("addManualWheelMeasurements test not implemented");
+        $this->data->set($this->arr_add);
+        $status=$this->manualWheelMeasurements->addManualWheelMeasurements($this->data);
+        $this->assertEquals(true,$status);
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->showManualWheelData()
+     */
+    public function testShowManualWheelDataWhenItDoesExist()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testShowManualWheelData()
+        $this->markTestIncomplete("showManualWheelData test not implemented");
+        $arr=array();        
+        $arr["measurementID"]=3;
+        $this->data->set($arr);
+        $arr_result=$this->manualWheelMeasurements->showManualWheelData($this->data);
+        $this->assertEquals(1,count($arr_result));
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->updateManualWheelData()
+     */
+    public function testUpdateManualWheelData()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testUpdateManualWheelData()
+        $this->markTestIncomplete("updateManualWheelData test not implemented");
+        $this->data->set($this->arr_update);
+        $status=$this->manualWheelMeasurements->updateManualWheelData($this->data);
+        $this->assertEquals(true,$status);
+    }
+
+    /**
+     * Tests ManualWheelMeasurements->getWheelReportData()
+     */
+    public function testGetWheelReportDataOutOfRangeDates()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testGetWheelReportData()
+        $this->markTestIncomplete("getWheelReportData test not implemented");
+        $arr=array();
+        $arr["reportStartDate"]="2018-04-07";
+        $arr["reportEndDate"]="2018-04-07";
+        $this->data->set($arr);
+        $arr_result=$this->manualWheelMeasurements->getWheelReportData($this->data);
+        $this->assertEquals(0,count($arr_result));
+    }
+    
+    public function testGetWheelReportDataDatesWithinRange()
+    {
+        // TODO Auto-generated ManualWheelMeasurementsTest->testGetWheelReportData()
+        $this->markTestIncomplete("getWheelReportData test not implemented");
+        $arr=array();
+        $arr["reportStartDate"]="2017-04-07";
+        $arr["reportEndDate"]="2017-04-07";
+        $this->data->set($arr);
+        $arr_result=$this->manualWheelMeasurements->getWheelReportData($this->data);
+        $this->assertEquals(5,count($arr_result));
+    }
+}
+
