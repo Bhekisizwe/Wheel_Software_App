@@ -1,0 +1,110 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WheelReprofilingDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(array $data)
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***INSERT Wheel Reprofiling Data into Database*******/
+            $query="INSERT INTO WheelReprofilingData";
+            $query.=" (ReprofilingID,AxleSerialNumber,InitLeftDiameter,FinalLeftDiameter,InitRightDiameter,FinalRightDiameter,Cost,DOW,ServiceProvider) ";
+            $query.="VALUES ('',?,?,?,?,?,?,?,?)";
+            //prepare SQL script for execution
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $axleSerialNumber=$data["axleSerialNumber"];
+            $initLeftDia=$data["initialLeftDiameter"];
+            $finalLeftDia=$data["finalLeftDiameter"];
+            $initRightDia=$data["initialRightDiameter"];
+            $finalRightDia=$data["finalRightDiameter"];
+            $cost=$data["costOfService"];
+            $dow=$data["dateOfService"];
+            $serviceProvider=$data["serviceProviderName"];          
+            $stmt->bind_param("sdddddss",$axleSerialNumber,$initLeftDia,$finalLeftDia,$initRightDia,$finalRightDia,$cost,$dow,$serviceProvider);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(array $data)
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /***UPDATE Wheel Reprofiling Data in Database*******/
+            $query="UPDATE WheelReprofilingData SET ";
+            $query.="AxleSerialNumber=?,InitLeftDiameter=?,FinalLeftDiameter=?,InitRightDiameter=?,";
+            $query.="FinalRightDiameter=?,Cost=?,DOW=?,ServiceProvider=? WHERE ReprofilingID=?";
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $axleSerialNumber=$data["axleSerialNumber"];
+            $initLeftDia=$data["initialLeftDiameter"];
+            $finalLeftDia=$data["finalLeftDiameter"];
+            $initRightDia=$data["initialRightDiameter"];
+            $finalRightDia=$data["finalRightDiameter"];
+            $cost=$data["costOfService"];
+            $dow=$data["dateOfService"];
+            $serviceProvider=$data["serviceProviderName"];
+            $reprofilingID=$data["reprofilingID"];
+            $stmt->bind_param("sdddddsss",$axleSerialNumber,$initLeftDia,$finalLeftDia,$initRightDia,$finalRightDia,$cost,$dow,$serviceProvider,$reprofilingID);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector); //Close Database Connection
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData(array $data)
+    {}
+}
+

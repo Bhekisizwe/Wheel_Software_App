@@ -7,11 +7,15 @@
     require __DIR__.'/vendor/autoload.php';   
  
     $app = new \Slim\App(); 
-    $app->get('/managewheels', function (Request $request, Response $response, array $args) {
-        //Read HTML file contents at once
+    $app->get('/managewheels', function (Request $request, Response $response, array $args) use ($app) {
+        //Read HTML file contents at once        
+        $app->redirect("/managewheels", "/showwheels");
+    });
+    
+    $app->get('/showwheels', function (Request $request, Response $response, array $args) {
         $filename="wheels.html";
         file_exists($filename)?$str=file_get_contents($filename):$str="Fuck You";
-        $res=$response->withHeader("Content-Type", "text/html");        
+        $res=$response->withHeader("Content-Type", "text/html");
         return $res->getBody()->write($str);
     });
     

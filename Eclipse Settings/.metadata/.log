@@ -9850,3 +9850,130 @@ java.net.ConnectException: Connection timed out: connect
 	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientFileSystemBrowser.runRequest(HttpClientFileSystemBrowser.java:263)
 	at org.eclipse.ecf.provider.filetransfer.browse.AbstractFileSystemBrowser$DirectoryJob.run(AbstractFileSystemBrowser.java:69)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
+!SESSION 2018-08-30 23:32:49.438 -----------------------------------------------
+eclipse.buildId=4.7.3.M20180301-0715
+java.version=1.8.0_172
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_ZA
+Framework arguments:  -product org.eclipse.epp.package.php.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.php.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-08-30 23:33:07.251
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Bheki Mthethwa'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-08-30 23:33:10.692
+!MESSAGE PHP executable /resources/php5/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-08-30 23:33:10.700
+!MESSAGE PHP executable /resources/php5/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-08-30 23:33:10.702
+!MESSAGE PHP executable /resources/php53/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-08-30 23:33:10.703
+!MESSAGE PHP executable /resources/php53/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2018-08-30 23:42:43.009
+!MESSAGE Unable to connect to repository http://eclipse.piece-framework.com/content.xml
+!STACK 0
+java.net.ConnectException: Connection timed out: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:120)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:179)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:328)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:612)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:447)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:884)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientFileSystemBrowser.runRequest(HttpClientFileSystemBrowser.java:263)
+	at org.eclipse.ecf.provider.filetransfer.browse.AbstractFileSystemBrowser$DirectoryJob.run(AbstractFileSystemBrowser.java:69)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
+!SESSION 2018-08-31 09:18:52.416 -----------------------------------------------
+eclipse.buildId=4.7.3.M20180301-0715
+java.version=1.8.0_172
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_ZA
+Framework arguments:  -product org.eclipse.epp.package.php.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.php.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-08-31 09:19:10.032
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Bheki Mthethwa'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-08-31 09:19:13.007
+!MESSAGE PHP executable /resources/php5/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-08-31 09:19:13.011
+!MESSAGE PHP executable /resources/php5/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-08-31 09:19:13.013
+!MESSAGE PHP executable /resources/php53/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-08-31 09:19:13.014
+!MESSAGE PHP executable /resources/php53/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.core 4 4 2018-08-31 10:03:47.954
+!MESSAGE null
+!STACK 0
+org.eclipse.jface.text.BadLocationException
+	at org.eclipse.jface.text.AbstractDocument.get(AbstractDocument.java:965)
+	at org.eclipse.php.internal.core.builder.TaskTagBuildParticipantFactory$TaskTagBuildParticipantParticipant.build(TaskTagBuildParticipantFactory.java:264)
+	at org.eclipse.dltk.internal.core.ReconcileBuilder.run(ReconcileBuilder.java:108)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.dltk.internal.core.ReconcileBuilder.build(ReconcileBuilder.java:85)
+	at org.eclipse.dltk.internal.core.AbstractSourceModule.buildStructure(AbstractSourceModule.java:539)
+	at org.eclipse.dltk.internal.core.Openable.generateInfos(Openable.java:197)
+	at org.eclipse.dltk.internal.core.ModelElement.openWhenClosed(ModelElement.java:199)
+	at org.eclipse.dltk.internal.core.SourceModule.makeConsistent(SourceModule.java:263)
+	at org.eclipse.dltk.internal.core.ReconcileWorkingCopyOperation.makeConsistent(ReconcileWorkingCopyOperation.java:77)
+	at org.eclipse.dltk.internal.core.ReconcileWorkingCopyOperation.executeOperation(ReconcileWorkingCopyOperation.java:57)
+	at org.eclipse.dltk.internal.core.ModelOperation.run(ModelOperation.java:703)
+	at org.eclipse.dltk.internal.core.ModelOperation.runOperation(ModelOperation.java:769)
+	at org.eclipse.dltk.internal.core.SourceModule.reconcile(SourceModule.java:311)
+	at org.eclipse.php.internal.ui.editor.validation.PHPReconcilingStrategy.reconcile(PHPReconcilingStrategy.java:133)
+	at org.eclipse.php.internal.ui.editor.validation.PHPReconcilingStrategy.access$0(PHPReconcilingStrategy.java:121)
+	at org.eclipse.php.internal.ui.editor.validation.PHPReconcilingStrategy$1.run(PHPReconcilingStrategy.java:95)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.php.internal.ui.editor.validation.PHPReconcilingStrategy.reconcile(PHPReconcilingStrategy.java:92)
+	at org.eclipse.php.internal.ui.editor.validation.PHPReconcilingStrategy.reconcile(PHPReconcilingStrategy.java:77)
+	at org.eclipse.wst.sse.ui.internal.reconcile.DirtyRegionProcessor.process(DirtyRegionProcessor.java:606)
+	at org.eclipse.wst.sse.ui.internal.reconcile.DocumentRegionProcessor.process(DocumentRegionProcessor.java:310)
+	at org.eclipse.wst.sse.ui.internal.reconcile.StructuredRegionProcessor.process(StructuredRegionProcessor.java:258)
+	at org.eclipse.wst.sse.ui.internal.reconcile.DirtyRegionProcessor$BackgroundThread.run(DirtyRegionProcessor.java:691)
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2018-08-31 10:18:58.346
+!MESSAGE Unable to connect to repository http://eclipse.piece-framework.com/content.xml
+!STACK 0
+java.net.ConnectException: Connection timed out: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:120)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:179)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:328)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:612)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:447)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:884)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientFileSystemBrowser.runRequest(HttpClientFileSystemBrowser.java:263)
+	at org.eclipse.ecf.provider.filetransfer.browse.AbstractFileSystemBrowser$DirectoryJob.run(AbstractFileSystemBrowser.java:69)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)

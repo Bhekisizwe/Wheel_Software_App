@@ -1,0 +1,118 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AlarmEventLoggerDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey(array $data):int
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***INSERT Alarm Event Data into Database*******/
+            $query="INSERT INTO AlarmEventLog";
+            $query.=" (RefID,MeasurementID,AlarmCause,DefectSize,RefDate,PredictedDate) ";
+            $query.="VALUES ('',?,?,?,?,?)";
+            //prepare SQL script for execution
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $refDate=$data["referenceDate"];
+            $measurementID=$data["measurementID"];
+            $alarmCause=$data["alarmCause"];
+            $defectSize=$data["defectSize"];
+            $predictedDate=$data["predictedWheelFailureDate"];
+            $stmt->bind_param("ssdss",$measurementID,$alarmCause,$defectSize,$refDate,$predictedDate);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(array $data):bool
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*****Check if UserRole Name already exists in Database*******/
+            $query="SELECT RefID FROM AlarmEventLog WHERE MeasurementID=?";
+            $stmt=$connector->prepare($query);
+            $measurementID=$data["measurementID"];
+            $stmt->bind_param("s",$measurementID);
+            $status=$stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($refid);
+            if($status){
+                ($stmt->num_rows>0)?$status_message=true:$status_message=false;
+                $this->dbClose($connector);
+                return $status_message;
+            }
+            else{
+                $this->dbClose($connector);
+                return false;
+            }
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            $query="DELETE FROM AlarmEventLog";
+            $status_message=$connector->query($query);
+            $query="ALTER TABLE AlarmEventLog AUTO_INCREMENT=0";
+            $status_message=$connector->query($query);
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData(array $data):array
+    {
+        
+    }
+}
+

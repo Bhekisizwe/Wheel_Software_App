@@ -1,0 +1,61 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WheelReprofilingDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData(array $data)
+    {}
+}
+

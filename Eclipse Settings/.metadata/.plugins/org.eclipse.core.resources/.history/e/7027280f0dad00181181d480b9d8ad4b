@@ -1,0 +1,68 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\AlarmEventLoggerDL;
+use UserClasses\BusinessObjects\WheelMeasurementsComparisonBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AlarmEventLogger
+{
+    private $activityLog;
+    private $activityBO;
+    private $alarmEventDL;
+    private $err;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->alarmEventDL=new AlarmEventLoggerDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->alarmEventDL=null;
+    }
+    
+    public function searchAlarmEvents(WheelMeasurementsComparisonBO $data):array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_result=$this->alarmEventDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="ManualWheelMeasurements";
+                $method_name="showManualWheelData";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_result;
+        }
+        else return NULL;
+    }
+    
+    private function checkAlarmEventExists(WheelMeasurementsComparisonBO $data):bool {
+        
+    }
+    
+    public function addAlarmEvent(WheelMeasurementsComparisonBO $data):bool {
+        
+    }
+    
+    public function updateAlarmEvent(WheelMeasurementsComparisonBO $data):bool {
+        
+    }
+}
+

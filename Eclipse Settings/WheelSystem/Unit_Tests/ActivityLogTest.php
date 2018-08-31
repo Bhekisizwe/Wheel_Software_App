@@ -85,7 +85,7 @@ class ActivityLogTest extends TestCase
         //$this->markTestIncomplete("listAllActivityNames test not implemented");
         
         $arr=$this->activityLog->listAllActivityNames();
-        $this->assertEquals(8,count($arr["taskArray2D"]));
+        $this->assertEquals(9,count($arr["taskArray2D"]));
     }
 
     /**

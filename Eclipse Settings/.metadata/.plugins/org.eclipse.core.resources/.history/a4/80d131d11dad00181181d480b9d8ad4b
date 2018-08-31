@@ -1,0 +1,126 @@
+<?php
+
+
+require_once 'vendor/UserClasses/BusinessLayer/src/WheelReprofilingData.php';
+
+
+/**
+ * WheelReprofilingData test case.
+ */
+class WheelReprofilingDataTest extends TestCase
+{
+	
+	/**
+	 * @var WheelReprofilingData
+	 */
+	private $wheelReprofilingData;
+	
+
+	/**
+	 * Prepares the environment before running a test.
+	 */
+	protected function setUp()
+	{
+		parent::setUp();
+
+		// TODO Auto-generated WheelReprofilingDataTest::setUp()
+		
+		$this->wheelReprofilingData = new WheelReprofilingData(/* parameters */);
+		
+	}
+
+	/**
+	 * Cleans up the environment after running a test.
+	 */
+	protected function tearDown()
+	{
+		// TODO Auto-generated WheelReprofilingDataTest::tearDown()
+		
+		$this->wheelReprofilingData = null;
+		
+		parent::tearDown();
+	}
+
+	/**
+	 * Constructs the test case.
+	 */
+	public function __construct()
+	{
+		// TODO Auto-generated constructor
+	}
+
+	
+	/**
+	 * Tests WheelReprofilingData->__construct()
+	 */
+	public function test__construct()
+	{
+		// TODO Auto-generated WheelReprofilingDataTest->test__construct()
+		$this->markTestIncomplete("__construct test not implemented");
+		
+		$this->wheelReprofilingData->__construct(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests WheelReprofilingData->__destruct()
+	 */
+	public function test__destruct()
+	{
+		// TODO Auto-generated WheelReprofilingDataTest->test__destruct()
+		$this->markTestIncomplete("__destruct test not implemented");
+		
+		$this->wheelReprofilingData->__destruct(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests WheelReprofilingData->searchForReprofilingData()
+	 */
+	public function testSearchForReprofilingData()
+	{
+		// TODO Auto-generated WheelReprofilingDataTest->testSearchForReprofilingData()
+		$this->markTestIncomplete("searchForReprofilingData test not implemented");
+		
+		$this->wheelReprofilingData->searchForReprofilingData(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests WheelReprofilingData->addReprofilingData()
+	 */
+	public function testAddReprofilingData()
+	{
+		// TODO Auto-generated WheelReprofilingDataTest->testAddReprofilingData()
+		$this->markTestIncomplete("addReprofilingData test not implemented");
+		
+		$this->wheelReprofilingData->addReprofilingData(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests WheelReprofilingData->updateReprofilingData()
+	 */
+	public function testUpdateReprofilingData()
+	{
+		// TODO Auto-generated WheelReprofilingDataTest->testUpdateReprofilingData()
+		$this->markTestIncomplete("updateReprofilingData test not implemented");
+		
+		$this->wheelReprofilingData->updateReprofilingData(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests WheelReprofilingData->checkReprofilingDataExists()
+	 */
+	public function testCheckReprofilingDataExists()
+	{
+		// TODO Auto-generated WheelReprofilingDataTest->testCheckReprofilingDataExists()
+		$this->markTestIncomplete("checkReprofilingDataExists test not implemented");
+		
+		$this->wheelReprofilingData->checkReprofilingDataExists(/* parameters */);
+		
+	}
+	
+}
+

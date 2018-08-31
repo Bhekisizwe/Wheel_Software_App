@@ -1,0 +1,111 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\AlarmEventLogger;
+use UserClasses\BusinessObjects\WheelMeasurementsComparisonBO;
+use UserClasses\DataLayer\AlarmEventLoggerDL;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/AlarmEventLogger.php';
+
+/**
+ * AlarmEventLogger test case.
+ */
+class AlarmEventLoggerTest extends TestCase
+{
+
+    /**
+     *
+     * @var AlarmEventLogger
+     */
+    private $alarmEventLogger;
+    private $data;
+    private $arr_add;   
+    private $alarmEventDL;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated AlarmEventLoggerTest::setUp()
+        
+        $this->alarmEventLogger = new AlarmEventLogger();
+        $this->data=new WheelMeasurementsComparisonBO();
+        $this->alarmEventDL=new AlarmEventLoggerDL();
+        $arr_add=array();
+        $arr_add["staffNumber"]="305941";
+        $arr_add["measurementID"]=3;
+        $arr_add["referenceDate"]="2017-04-07";
+        $arr_add["alarmCause"]="Flange Height violated its alarm threshold of 35mm";
+        $arr_add["defectSize"]=35.78;
+        $arr_add["predictedWheelFailureDate"]="2017-07-09";
+        $this->arr_add=$arr_add;        
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated AlarmEventLoggerTest::tearDown()
+        $this->alarmEventLogger = null;
+        $this->data=null;
+        $this->alarmEventDL=null;
+        parent::tearDown();
+    }
+
+
+    /**
+     * Tests AlarmEventLogger->searchAlarmEvents()
+     */
+    public function testSearchAlarmEventsWhenItDoesNotExist()
+    {
+        // TODO Auto-generated AlarmEventLoggerTest->testSearchAlarmEvents()
+        $this->markTestIncomplete("searchAlarmEvents test not implemented");
+        $arr=array();
+        $this->alarmEventDL->delete($arr);  //make sure the Databse is empty
+        $arr["alarmSearchStartDate"]="2017-04-07";
+        $arr["alarmSearchEndDate"]="2017-04-07";
+        $this->data->set($arr);
+        $arr_result=$this->alarmEventLogger->searchAlarmEvents($this->data);
+        $this->assertEquals(0,count($arr_result));
+    }
+
+    /**
+     * Tests AlarmEventLogger->addAlarmEvent()
+     */
+    public function testAddAlarmEventWhenItDoesNotExist()
+    {
+        // TODO Auto-generated AlarmEventLoggerTest->testAddAlarmEvent()
+        $this->markTestIncomplete("addAlarmEvent test not implemented");
+        $arr=array();
+        $this->alarmEventDL->delete($arr);  //make sure the Databse is empty
+        $this->data->set($this->arr_add);
+        $status=$this->alarmEventLogger->addAlarmEvent($this->data);
+        $this->assertEquals(true,$status);
+    }
+    
+    public function testSearchAlarmEventsWhenItDoesExist()
+    {
+        // TODO Auto-generated AlarmEventLoggerTest->testSearchAlarmEvents()
+        $this->markTestIncomplete("searchAlarmEvents test not implemented");
+        $arr=array();    
+        $arr["alarmSearchStartDate"]="2017-04-07";
+        $arr["alarmSearchEndDate"]="2017-04-07";
+        $this->data->set($arr);
+        $arr_result=$this->alarmEventLogger->searchAlarmEvents($this->data);
+        $this->assertEquals(1,count($arr_result));        
+    }
+    
+    public function testAddAlarmEventWhenItDoesExist()
+    {
+        // TODO Auto-generated AlarmEventLoggerTest->testAddAlarmEvent()
+        $this->markTestIncomplete("addAlarmEvent test not implemented");
+        $this->data->set($this->arr_add);
+        $status=$this->alarmEventLogger->addAlarmEvent($this->data);
+        $this->assertEquals(true,$status);
+    }
+    
+}
+

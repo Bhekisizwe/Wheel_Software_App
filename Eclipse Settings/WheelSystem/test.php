@@ -27,25 +27,45 @@ use UserClasses\DataLayer\UserRoleDL;
 use UserClasses\DataLayer\ManualWheelMeasurementsDL;
 use UserClasses\BusinessObjects\ManualWheelMeasurementsBO;
 use UserClasses\BusinessLayer\ManualWheelMeasurements;
+use UserClasses\DataLayer\AlarmEventLoggerDL;
+use UserClasses\BusinessObjects\WheelMeasurementsComparisonBO;
+use UserClasses\DataLayer\WheelReprofilingDL;
+use UserClasses\BusinessObjects\WheelReprofilingDataBO;
 
 require __DIR__.'/vendor/autoload.php';
-$manual=new ManualWheelMeasurements();
-$manualBO=new ManualWheelMeasurementsBO();
-$manualBO->setCutTyreWidth(23.58);
+$wheelReprof=new WheelReprofilingDL();
+$wheelReprofBO=new WheelReprofilingDataBO();
+/*$alarmEventBO=new WheelMeasurementsComparisonBO();
+$alarmEventBO->setMeasurementID(3);
+$alarmEventBO->setAlarmCause("Mabhebhane Sphe Mkhize is an idiot");
+$alarmEventBO->setDefectSize(350);
+$alarmEventBO->setPredictedWheelFailureDate("2018-07-09");*/
+
+/*$arr["alarmSearchStartDate"]="2017-04-07";
+$arr["alarmSearchEndDate"]="2018-08-09";*/
+//$wheelReprofBO->setReprofilingID(1);
+$wheelReprofBO->setAxleSerialNumber("MXR2A");
+$wheelReprofBO->setStartDate("2018-07-09");
+$wheelReprofBO->setEndDate("2018-07-10");
+$arr=$wheelReprofBO->getArray();
+$arr_results=$wheelReprof->searchData($arr);
+
+//$manualBO=new ManualWheelMeasurementsBO();
+/*$manualBO->setCutTyreWidth(23.58);
 $manualBO->setCutTyreDistanceFromFlange(35.78);
 $manualBO->setSpreadRim(15.56);
 $manualBO->setCutTyreDepth(10);
 $manualBO->setWheelSkid(0.35);
 $manualBO->setMeasurementID(3);
 $manualBO->setGibsonDescription("Mfundo there is something wrong here");
-$manualBO->setStaffNumber("305941");
+$manualBO->setStaffNumber("305941");*/
 /*$manualBO->setReportEndDate("2017-04-07");
 $manualBO->setReportStartDate("2017-04-07");
 $manualBO->setCoachNumber("10805");
 $manualBO->setWheelID(6);
 $manualBO->setMeasurementDate("2017-04-07");*/
 //$status=$manual->addManualWheelMeasurements($manualBO);
-$arr_parse=$manual->updateManualWheelData($manualBO);
+//$arr_parse=$manual->updateManualWheelData($manualBO);
 //print_r($arr_parse);
 
 echo "";

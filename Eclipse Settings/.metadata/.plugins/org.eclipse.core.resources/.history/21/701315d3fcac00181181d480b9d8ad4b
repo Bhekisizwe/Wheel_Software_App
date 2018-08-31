@@ -1,0 +1,114 @@
+<?php
+
+
+require_once 'vendor/UserClasses/BusinessLayer/src/AlarmEventLogger.php';
+
+
+/**
+ * AlarmEventLogger test case.
+ */
+class AlarmEventLoggerTest extends TestCase
+{
+	
+	/**
+	 * @var AlarmEventLogger
+	 */
+	private $alarmEventLogger;
+	
+
+	/**
+	 * Prepares the environment before running a test.
+	 */
+	protected function setUp()
+	{
+		parent::setUp();
+
+		// TODO Auto-generated AlarmEventLoggerTest::setUp()
+		
+		$this->alarmEventLogger = new AlarmEventLogger(/* parameters */);
+		
+	}
+
+	/**
+	 * Cleans up the environment after running a test.
+	 */
+	protected function tearDown()
+	{
+		// TODO Auto-generated AlarmEventLoggerTest::tearDown()
+		
+		$this->alarmEventLogger = null;
+		
+		parent::tearDown();
+	}
+
+	/**
+	 * Constructs the test case.
+	 */
+	public function __construct()
+	{
+		// TODO Auto-generated constructor
+	}
+
+	
+	/**
+	 * Tests AlarmEventLogger->__construct()
+	 */
+	public function test__construct()
+	{
+		// TODO Auto-generated AlarmEventLoggerTest->test__construct()
+		$this->markTestIncomplete("__construct test not implemented");
+		
+		$this->alarmEventLogger->__construct(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests AlarmEventLogger->__destruct()
+	 */
+	public function test__destruct()
+	{
+		// TODO Auto-generated AlarmEventLoggerTest->test__destruct()
+		$this->markTestIncomplete("__destruct test not implemented");
+		
+		$this->alarmEventLogger->__destruct(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests AlarmEventLogger->searchAlarmEvents()
+	 */
+	public function testSearchAlarmEvents()
+	{
+		// TODO Auto-generated AlarmEventLoggerTest->testSearchAlarmEvents()
+		$this->markTestIncomplete("searchAlarmEvents test not implemented");
+		
+		$this->alarmEventLogger->searchAlarmEvents(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests AlarmEventLogger->addAlarmEvent()
+	 */
+	public function testAddAlarmEvent()
+	{
+		// TODO Auto-generated AlarmEventLoggerTest->testAddAlarmEvent()
+		$this->markTestIncomplete("addAlarmEvent test not implemented");
+		
+		$this->alarmEventLogger->addAlarmEvent(/* parameters */);
+		
+	}
+	
+	/**
+	 * Tests AlarmEventLogger->updateAlarmEvent()
+	 */
+	public function testUpdateAlarmEvent()
+	{
+		// TODO Auto-generated AlarmEventLoggerTest->testUpdateAlarmEvent()
+		$this->markTestIncomplete("updateAlarmEvent test not implemented");
+		
+		$this->alarmEventLogger->updateAlarmEvent(/* parameters */);
+		
+	}
+	
+}
+

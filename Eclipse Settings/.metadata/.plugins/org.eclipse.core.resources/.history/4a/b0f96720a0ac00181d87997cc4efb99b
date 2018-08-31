@@ -1,0 +1,32 @@
+<?php
+    //use UserClasses\BusinessLayer\DailyDistanceSetting;
+    
+    use \Psr\Http\Message\ServerRequestInterface as Request;
+    use \Psr\Http\Message\ResponseInterface as Response;
+   
+    require __DIR__.'/vendor/autoload.php';   
+ 
+    $app = new \Slim\App(); 
+    $app->get('/managewheels', function (Request $request, Response $response, array $args) use ($app) {
+        //Read HTML file contents at once
+        $filename="wheels.html";
+        file_exists($filename)?$str=file_get_contents($filename):$str="Fuck You";
+        //$res=$response->withHeader("Content-Type", "text/html");        
+        //return $res->getBody()->write($str);
+        $app->redirect("/managewheels", "/showwheels");
+    });
+    
+    $app->post('/distance/add', function (Request $request, Response $response, array $args) {
+        //Return Associative Array
+        $arr=json_decode($request->getBody()->getContents(),TRUE); 
+        //$arr_json=json_encode($arr);
+       
+        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+             
+    }); 
+    
+    $app->run();
+     
+?>

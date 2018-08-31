@@ -1,0 +1,35 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\WheelReprofilingDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WheelReprofilingData
+{
+    private $activityLog;
+    private $activityBO;
+    private $wheelReprofDL;
+    private $err;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->wheelReprofDL=new WheelReprofilingDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {}
+}
+

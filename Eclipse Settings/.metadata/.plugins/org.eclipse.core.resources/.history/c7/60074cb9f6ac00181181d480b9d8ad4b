@@ -1,0 +1,21 @@
+<?php
+delcare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WheelMeasurementsComparisonBO extends ManualWheelMeasurementsBO
+{
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        
+    }
+}
+

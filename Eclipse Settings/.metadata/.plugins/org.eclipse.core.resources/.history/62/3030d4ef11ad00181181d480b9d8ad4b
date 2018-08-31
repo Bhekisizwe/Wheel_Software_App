@@ -1,0 +1,87 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WheelReprofilingDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(array $data)
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***INSERT Wheel Reprofiling Data into Database*******/
+            $query="INSERT INTO WheelReprofilingData";
+            $query.=" (ReprofilingID,AxleSerialNumber,InitLeftDiameter,FinalLeftDiameter,InitRightDiameter,FinalRightDiameter,Cost,DOW,ServiceProvider) ";
+            $query.="VALUES ('',?,?,?,?,?,?,?,?)";
+            //prepare SQL script for execution
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $refDate=$data["axleSerialNumber"];
+            $measurementID=$data["initialLeftDiameter"];
+            $alarmCause=$data["finalLeftDiameter"];
+            $defectSize=$data["initialRightDiameter"];
+            $predictedDate=$data["finalRightDiameter"];
+            $measurementID=$data["initialLeftDiameter"];
+            $alarmCause=$data["finalLeftDiameter"];
+            $defectSize=$data["initialRightDiameter"];
+            $predictedDate=$data["finalRightDiameter"];
+            $stmt->bind_param("ssdss",$measurementID,$alarmCause,$defectSize,$refDate,$predictedDate);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete(array $data)
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData(array $data)
+    {}
+}
+

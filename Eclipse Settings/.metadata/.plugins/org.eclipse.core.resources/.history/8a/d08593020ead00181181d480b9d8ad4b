@@ -1,0 +1,100 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\DataLayer\AlarmEventLoggerDL;
+use UserClasses\BusinessObjects\WheelMeasurementsComparisonBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AlarmEventLogger
+{
+    private $activityLog;
+    private $activityBO;
+    private $alarmEventDL;
+    private $err;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->alarmEventDL=new AlarmEventLoggerDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->alarmEventDL=null;
+    }
+    
+    public function searchAlarmEvents(WheelMeasurementsComparisonBO $data):array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_result=$this->alarmEventDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="AlarmEventLogger";
+                $method_name="searchAlarmEvents";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_result;
+        }
+        else return NULL;
+    }
+    
+    private function checkAlarmEventExists(WheelMeasurementsComparisonBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->alarmEventDL->dataExists($arr);
+            } catch (\Exception $e) {
+                $class_name="AlarmEventLogger";
+                $method_name="checkAlarmEventExists";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    public function addAlarmEvent(WheelMeasurementsComparisonBO $data):bool {
+        
+    }
+    
+    public function updateAlarmEvent(WheelMeasurementsComparisonBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->alarmEventDL->update($arr);
+                if($status_message){
+                    $arr_data=array();
+                    $arr_data["taskArray2D"][0]["taskName"]="Manual Wheel Measurements";
+                    $arr_data["transactionName"]="Updating Manual Wheel Measurements in Database";
+                    $arr_data["activityAction"]=2;      //update
+                    $arr_data["staffNumber"]=$data->getStaffNumber();
+                    $this->activityBO->set($arr_data);
+                    $this->activityLog->addActivityData($this->activityBO);
+                }
+            } catch (\Exception $e) {
+                $class_name="AlarmEventLogger";
+                $method_name="updateAlarmEvent";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $status_message;
+        }
+        else return false;
+    }
+}
+

@@ -1,0 +1,28 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WheelReprofilingDataBO extends BusinessObject
+{
+    private $reprofilingID=0;
+    private $axleSerialNumber="";
+    private $initialLeftDiameter=0.0;
+    private $initialRightDiameter=0.0;
+    private $finalLeftDiameter=0.0;
+    private $finalRightDiameter=0.0;
+    private $costOfService=0.0;
+    private $
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->setObjectNumOfFields(18);
+    }
+}
+

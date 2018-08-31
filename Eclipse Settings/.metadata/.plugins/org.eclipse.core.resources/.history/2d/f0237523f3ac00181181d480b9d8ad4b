@@ -1,0 +1,209 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\DataLayer;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class AlarmEventLoggerDL extends DatabaseManager implements DatabaseFunctionsInt
+{
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::getPrimaryKey()
+     */
+    public function getPrimaryKey(array $data):int
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::create()
+     */
+    public function create(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            //successfully connected to database
+            /***INSERT Alarm Event Data into Database*******/
+            $query="INSERT INTO AlarmEventLog";
+            $query.=" (RefID,MeasurementID,AlarmCause,DefectSize,RefDate,PredictedDate) ";
+            $query.="VALUES ('',?,?,?,?,?)";
+            //prepare SQL script for execution
+            $stmt=$connector->prepare($query);
+            //bind parameters
+            $refDate=$data["referenceDate"];
+            $measurementID=$data["measurementID"];
+            $alarmCause=$data["alarmCause"];
+            $defectSize=$data["defectSize"];
+            $predictedDate=$data["predictedWheelFailureDate"];
+            $stmt->bind_param("ssdss",$measurementID,$alarmCause,$defectSize,$refDate,$predictedDate);
+            $status_message=$stmt->execute();
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::update()
+     */
+    public function update(array $data):bool
+    {}
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::dataExists()
+     */
+    public function dataExists(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*****Check if Alarm Event for a specific Wheel Measurement already exists in Database*******/
+            $query="SELECT RefID FROM AlarmEventLog WHERE MeasurementID=?";
+            $stmt=$connector->prepare($query);
+            $measurementID=$data["measurementID"];
+            $stmt->bind_param("s",$measurementID);
+            $status=$stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($refid);
+            if($status){
+                ($stmt->num_rows>0)?$status_message=true:$status_message=false;
+                $this->dbClose($connector);
+                return $status_message;
+            }
+            else{
+                $this->dbClose($connector);
+                return false;
+            }
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::delete()
+     */
+    public function delete(array $data):bool
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            $query="DELETE FROM AlarmEventLog";
+            $status_message=$connector->query($query);
+            $query="ALTER TABLE AlarmEventLog AUTO_INCREMENT=0";
+            $status_message=$connector->query($query);
+            $this->dbClose($connector);
+            return $status_message;
+        }
+        else return false;
+    }
+
+    /**
+     * (non-PHPdoc)
+     *
+     * @see \UserClasses\DataLayer\DatabaseFunctionsInt::searchData()
+     */
+    public function searchData(array $data):array
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*********RETRIEVE MiniProf and/or Manual Wheel Measurements and Alarm Events Data from Database*************/
+            $query="SELECT * FROM WheelMeasurements,ManualMeasurements,AlarmEventLog ";
+            $query.="WHERE (AlarmEventLog.RefDate>=? AND AlarmEventLog.RefDate<=?) ";
+            $query.="AND (WheelMeasurements.MeasurementID=ManualMeasurements.MeasurementID AND ";
+            $query.="ManualMeasurements.MeasurementID=AlarmEventLog.MeasurementID";
+            $stmt=$connector->prepare($query);
+            $alarmStartDate=$data["alarmSearchStartDate"];
+            $alarmEndDate=$data["alarmSearchEndDate"];
+            $stmt->bind_param("ss",$alarmStartDate,$alarmEndDate);
+            $status=$stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($measurementID,$coachNumber,$setNumber,$axleNumber,$wheelID,$operatorName,$measDate,$measTime,$Sh,$qR,$FW,$H,$manualID,$measurementid,$SR,$CTW,$CTD,$CTDFF,$WS,$gibsonDescr,$refID,$measID,$alarmCause,$defectSize,$refDate,$predictedDate);
+            if($status){
+                $store_keys=array();
+                $arr_2D=array();   //array to store result set
+                while($stmt->fetch()){
+                    $arr["measurementID"]=$measurementID;
+                    $store_keys[]=$measurementID;
+                    $arr["spreadRim"]=$SR;
+                    $arr["cutTyreWidth"]=$CTW;
+                    $arr["cutTyreDepth"]=$CTD;
+                    $arr["cutTyreDistanceFromFlange"]=$CTDFF;
+                    $arr["wheelSkid"]=$WS;
+                    $arr["hollowing"]=$H;
+                    $arr["flangeWidth"]=$FW;
+                    $arr["toeCreep"]=$qR;
+                    $arr["flangeHeight"]=$Sh;
+                    $arr["measurementTime"]=$measTime;
+                    $arr["measurementDate"]=$measDate;
+                    $arr["operatorName"]=$operatorName;
+                    $arr["wheelID"]=$wheelID;
+                    $arr["axleNumber"]=$axleNumber;
+                    $arr["setNumber"]=$setNumber;
+                    $arr["coachNumber"]=$coachNumber;
+                    $arr["gibsonDescription"]=$gibsonDescr;
+                    $arr["alarmCause"]=$alarmCause;
+                    $arr["defectSize"]=$defectSize;
+                    $arr["referenceDate"]=$refDate;
+                    $arr["predictedWheelFailureDate"]=$predictedDate;
+                    $arr_2D[]=$arr;
+                }
+                //search for the other rows in WheelMeasurements with different MeasurementIDs
+                if(count($store_keys)>0){
+                    $string_of_ids=implode(",",$store_keys);
+                    $IN_STRING="(".$string_of_ids.")";
+                }
+                else {
+                    $IN_STRING="(0)";
+                }
+                $query="SELECT * FROM WheelMeasurements,AlarmEventLog ";
+                $query.="WHERE (AlarmEventLog.RefDate>=? AND AlarmEventLog.RefDate<=?) ";
+                $query.="AND (WheelMeasurements.MeasurementID=AlarmEventLog.MeasurementID) AND ";
+                $query.="WheelMeasurements.MeasurementID NOT IN ".$IN_STRING;
+                $stmt=$connector->prepare($query);               
+                $stmt->bind_param("ss",$alarmStartDate,$alarmEndDate);
+                $status=$stmt->execute();
+                $stmt->store_result();
+                $stmt->bind_result($measurementID,$coachNumber,$setNumber,$axleNumber,$wheelID,$operatorName,$measDate,$measTime,$Sh,$qR,$FW,$H,$refID,$measID,$alarmCause,$defectSize,$refDate,$predictedDate);
+                if($status){
+                    while($stmt->fetch()){
+                        $arr["measurementID"]=$measurementID;
+                        $arr["spreadRim"]="";
+                        $arr["cutTyreWidth"]="";
+                        $arr["cutTyreDepth"]="";
+                        $arr["cutTyreDistanceFromFlange"]="";
+                        $arr["wheelSkid"]="";
+                        $arr["gibsonDescription"]="";
+                        $arr["hollowing"]=$H;
+                        $arr["flangeWidth"]=$FW;
+                        $arr["toeCreep"]=$qR;
+                        $arr["flangeHeight"]=$Sh;
+                        $arr["measurementTime"]=$measTime;
+                        $arr["measurementDate"]=$measDate;
+                        $arr["operatorName"]=$operatorName;
+                        $arr["wheelID"]=$wheelID;
+                        $arr["axleNumber"]=$axleNumber;
+                        $arr["setNumber"]=$setNumber;
+                        $arr["coachNumber"]=$coachNumber;
+                        $arr_2D[]=$arr;
+                    }
+                }
+                $this->dbClose($connector);
+                return $arr_2D;
+            }
+            else{
+                $this->dbClose($connector);
+                return NULL;
+            }
+        }
+        else return NULL;
+    }
+}
+

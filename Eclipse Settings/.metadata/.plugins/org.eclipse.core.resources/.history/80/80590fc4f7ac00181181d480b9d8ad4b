@@ -1,0 +1,37 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessObjects;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WheelMeasurementsComparisonBO extends ManualWheelMeasurementsBO
+{
+    private $refID;
+    private $flangeHeightStatus=0;
+    private $toeCreepStatus=0;
+    private $flangeWidthStatus=0;
+    private $hollowingStatus=0;
+    private $spreadRimStatus=0;
+    private $wheelSkidStatus=0;
+    private $cutTyreWidthStatus=0;
+    private $cutTyreDepthStatus=0;
+    private $cutTyreDistanceFromFlangeStatus=0;
+    private $predictedWheelFailureDate="";
+    private $referenceDate="";
+    private $alarmCause="";
+    private $defectSize=0.0;
+    private $alarmSearchStartDate="";
+    private $alarmSearchEndDate="";
+
+    /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setObjectNumOfFields(42);
+    }
+}
+
