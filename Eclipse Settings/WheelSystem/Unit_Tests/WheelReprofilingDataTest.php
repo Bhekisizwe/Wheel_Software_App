@@ -1,6 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use UserClasses\BusinessLayer\WheelReprofilingData;
+use UserClasses\DataLayer\WheelReprofilingDL;
+use UserClasses\BusinessObjects\WheelReprofilingDataBO;
 
 require_once 'vendor/UserClasses/BusinessLayer/src/WheelReprofilingData.php';
 
@@ -15,6 +17,10 @@ class WheelReprofilingDataTest extends TestCase
      * @var WheelReprofilingData
      */
     private $wheelReprofilingData;
+    private $wheelReprofDL;
+    private $data;
+    private $arr_add;
+    private $arr_update;
 
     /**
      * Prepares the environment before running a test.
@@ -26,6 +32,32 @@ class WheelReprofilingDataTest extends TestCase
         // TODO Auto-generated WheelReprofilingDataTest::setUp()
         
         $this->wheelReprofilingData = new WheelReprofilingData();
+        $this->wheelReprofDL=new WheelReprofilingDL();
+        $this->data=new WheelReprofilingDataBO();
+        $arr_add=array();
+        $arr_add["staffNumber"]="305941";
+        $arr_add["axleSerialNumber"]="MX2RA";
+        $arr_add["initialLeftDiameter"]=1010.25;
+        $arr_add["finalLeftDiameter"]=998.75;
+        $arr_add["initialRightDiameter"]=1012.32;
+        $arr_add["finalRightDiameter"]=1001.23;
+        $arr_add["costOfService"]=157023.78;
+        $arr_add["dateOfService"]="2018-09-01";
+        $arr_add["serviceProviderName"]="TRANSNET ENGINEERING";
+        $this->arr_add=$arr_add;
+        $arr_update=array();
+        $arr_update["staffNumber"]="305941";
+        $arr_update["reprofilingID"]=1;
+        $arr_update["axleSerialNumber"]="MX2RA";
+        $arr_update["initialLeftDiameter"]=1020.25;
+        $arr_update["finalLeftDiameter"]=998.75;
+        $arr_update["initialRightDiameter"]=1012.32;
+        $arr_update["finalRightDiameter"]=789.23;
+        $arr_update["costOfService"]=100023.78;
+        $arr_update["dateOfService"]="2018-09-01";
+        $arr_update["serviceProviderName"]="PRASA";
+        $this->arr_update=$arr_update;
+        
     }
 
     /**
@@ -35,19 +67,40 @@ class WheelReprofilingDataTest extends TestCase
     {
         // TODO Auto-generated WheelReprofilingDataTest::tearDown()
         $this->wheelReprofilingData = null;
-        
+        $this->wheelReprofDL=null;
+        $this->data=null;
         parent::tearDown();
     }
 
     /**
      * Tests WheelReprofilingData->searchForReprofilingData()
      */
-    public function testSearchForReprofilingData()
+    public function testSearchForReprofilingDataWhenItDoesNotExist()
     {
         // TODO Auto-generated WheelReprofilingDataTest->testSearchForReprofilingData()
-        $this->markTestIncomplete("searchForReprofilingData test not implemented");
-        
-        $this->wheelReprofilingData->searchForReprofilingData();
+        //$this->markTestIncomplete("searchForReprofilingData test not implemented");
+        $arr=array();
+        $this->wheelReprofDL->delete($arr);
+        $arr["axleSerialNumber"]="MX2RA";
+        $arr["startDate"]="2018-08-31";
+        $arr["endDate"]="2018-09-02";
+        $this->data->set($arr);
+        $arr_results=$this->wheelReprofilingData->searchForReprofilingData($this->data);
+        $this->assertEquals(0,count($arr_results));
+    }
+    
+    public function testCheckReprofilingDataExistsWhenItDoesNot()
+    {
+        // TODO Auto-generated WheelReprofilingDataTest->testCheckReprofilingDataExists()
+        //$this->markTestIncomplete("checkReprofilingDataExists test not implemented");
+        $arr=array();
+        $this->wheelReprofDL->delete($arr);
+        $arr["axleSerialNumber"]="MX2RA";
+        $arr["dateOfService"]="2018-09-01";
+        $arr["serviceProviderName"]="Transnet Engineering";
+        $this->data->set($arr);
+        $status=$this->wheelReprofilingData->checkReprofilingDataExists($this->data);
+        $this->assertEquals(false,$status);
     }
 
     /**
@@ -56,9 +109,23 @@ class WheelReprofilingDataTest extends TestCase
     public function testAddReprofilingData()
     {
         // TODO Auto-generated WheelReprofilingDataTest->testAddReprofilingData()
-        $this->markTestIncomplete("addReprofilingData test not implemented");
-        
-        $this->wheelReprofilingData->addReprofilingData();
+        //$this->markTestIncomplete("addReprofilingData test not implemented");
+        $this->data->set($this->arr_add);
+        $status=$this->wheelReprofilingData->addReprofilingData($this->data);
+        $this->assertEquals(true,$status);
+    }
+    
+    public function testSearchForReprofilingDataWhenItDoesExist()
+    {
+        // TODO Auto-generated WheelReprofilingDataTest->testSearchForReprofilingData()
+        //$this->markTestIncomplete("searchForReprofilingData test not implemented");
+        $arr=array();      
+        $arr["axleSerialNumber"]="MX2RA";
+        $arr["startDate"]="2018-08-31";
+        $arr["endDate"]="2018-09-02";
+        $this->data->set($arr);
+        $arr_results=$this->wheelReprofilingData->searchForReprofilingData($this->data);
+        $this->assertEquals(1,count($arr_results));
     }
 
     /**
@@ -67,20 +134,26 @@ class WheelReprofilingDataTest extends TestCase
     public function testUpdateReprofilingData()
     {
         // TODO Auto-generated WheelReprofilingDataTest->testUpdateReprofilingData()
-        $this->markTestIncomplete("updateReprofilingData test not implemented");
-        
-        $this->wheelReprofilingData->updateReprofilingData();
+        //$this->markTestIncomplete("updateReprofilingData test not implemented");
+        $this->data->set($this->arr_update);
+        $status=$this->wheelReprofilingData->updateReprofilingData($this->data);
+        $this->assertEquals(true,$status);
     }
 
     /**
      * Tests WheelReprofilingData->checkReprofilingDataExists()
      */
-    public function testCheckReprofilingDataExists()
+    public function testCheckReprofilingDataExistsWhenItDoes()
     {
         // TODO Auto-generated WheelReprofilingDataTest->testCheckReprofilingDataExists()
-        $this->markTestIncomplete("checkReprofilingDataExists test not implemented");
-        
-        $this->wheelReprofilingData->checkReprofilingDataExists();
+        //$this->markTestIncomplete("checkReprofilingDataExists test not implemented");
+        $arr=array();    
+        $arr["axleSerialNumber"]="MX2RA";
+        $arr["dateOfService"]="2018-09-01";
+        $arr["serviceProviderName"]="Prasa";
+        $this->data->set($arr);
+        $status=$this->wheelReprofilingData->checkReprofilingDataExists($this->data);
+        $this->assertEquals(true,$status);
     }
 }
 

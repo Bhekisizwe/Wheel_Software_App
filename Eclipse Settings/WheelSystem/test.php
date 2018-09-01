@@ -31,9 +31,10 @@ use UserClasses\DataLayer\AlarmEventLoggerDL;
 use UserClasses\BusinessObjects\WheelMeasurementsComparisonBO;
 use UserClasses\DataLayer\WheelReprofilingDL;
 use UserClasses\BusinessObjects\WheelReprofilingDataBO;
+use UserClasses\BusinessLayer\WheelReprofilingData;
 
 require __DIR__.'/vendor/autoload.php';
-$wheelReprof=new WheelReprofilingDL();
+$wheelReprof=new WheelReprofilingData();
 $wheelReprofBO=new WheelReprofilingDataBO();
 /*$alarmEventBO=new WheelMeasurementsComparisonBO();
 $alarmEventBO->setMeasurementID(3);
@@ -47,8 +48,8 @@ $arr["alarmSearchEndDate"]="2018-08-09";*/
 $wheelReprofBO->setAxleSerialNumber("MXR2A");
 $wheelReprofBO->setStartDate("2018-07-09");
 $wheelReprofBO->setEndDate("2018-07-10");
-$arr=$wheelReprofBO->getArray();
-$arr_results=$wheelReprof->searchData($arr);
+
+$arr_results=$wheelReprof->searchForReprofilingData($wheelReprofBO);
 
 //$manualBO=new ManualWheelMeasurementsBO();
 /*$manualBO->setCutTyreWidth(23.58);

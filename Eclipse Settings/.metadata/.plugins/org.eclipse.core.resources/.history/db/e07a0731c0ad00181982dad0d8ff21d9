@@ -1,0 +1,127 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\WheelReprofilingData;
+use UserClasses\DataLayer\WheelReprofilingDL;
+use UserClasses\BusinessObjects\WheelReprofilingDataBO;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/WheelReprofilingData.php';
+
+/**
+ * WheelReprofilingData test case.
+ */
+class WheelReprofilingDataTest extends TestCase
+{
+
+    /**
+     *
+     * @var WheelReprofilingData
+     */
+    private $wheelReprofilingData;
+    private $wheelReprofDL;
+    private $data;
+    private $arr_add;
+    private $arr_update;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated WheelReprofilingDataTest::setUp()
+        
+        $this->wheelReprofilingData = new WheelReprofilingData();
+        $this->wheelReprofDL=new WheelReprofilingDL();
+        $this->data=new WheelReprofilingDataBO();
+        $arr_add=array();
+        $arr_add["staffNumber"]="305941";
+        $arr_add["axleSerialNumber"]="MX2RA";
+        $arr_add["initialLeftDiameter"]=1010.25;
+        $arr_add["finalLeftDiameter"]=998.75;
+        $arr_add["initialRightDiameter"]=1012.32;
+        $arr_add["finalRightDiameter"]=1001.23;
+        $arr_add["costOfService"]=157023.78;
+        $arr_add["dateOfService"]="2018-09-01";
+        $arr_add["serviceProviderName"]="TRANSNET ENGINEERING";
+        $this->arr_add=$arr_add;
+        $arr_update=array();
+        $arr_update["staffNumber"]="305941";
+        $arr_update["reprofilingID"]=1;
+        $arr_update["axleSerialNumber"]="MX2RA";
+        $arr_update["initialLeftDiameter"]=1020.25;
+        $arr_update["finalLeftDiameter"]=998.75;
+        $arr_update["initialRightDiameter"]=1012.32;
+        $arr_update["finalRightDiameter"]=789.23;
+        $arr_update["costOfService"]=100023.78;
+        $arr_update["dateOfService"]="2018-09-02";
+        $arr_update["serviceProviderName"]="PRASA";
+        $this->arr_update=$arr_update;
+        
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated WheelReprofilingDataTest::tearDown()
+        $this->wheelReprofilingData = null;
+        $this->wheelReprofDL=null;
+        $this->data=null;
+        parent::tearDown();
+    }
+
+    /**
+     * Tests WheelReprofilingData->searchForReprofilingData()
+     */
+    public function testSearchForReprofilingDataWhenItDoesNotExist()
+    {
+        // TODO Auto-generated WheelReprofilingDataTest->testSearchForReprofilingData()
+        $this->markTestIncomplete("searchForReprofilingData test not implemented");
+        
+        $this->wheelReprofilingData->searchForReprofilingData();
+    }
+
+    /**
+     * Tests WheelReprofilingData->addReprofilingData()
+     */
+    public function testAddReprofilingData()
+    {
+        // TODO Auto-generated WheelReprofilingDataTest->testAddReprofilingData()
+        $this->markTestIncomplete("addReprofilingData test not implemented");
+        
+        $this->wheelReprofilingData->addReprofilingData();
+    }
+    
+    public function testSearchForReprofilingDataWhenItDoesExist()
+    {
+        // TODO Auto-generated WheelReprofilingDataTest->testSearchForReprofilingData()
+        $this->markTestIncomplete("searchForReprofilingData test not implemented");
+        
+        $this->wheelReprofilingData->searchForReprofilingData();
+    }
+
+    /**
+     * Tests WheelReprofilingData->updateReprofilingData()
+     */
+    public function testUpdateReprofilingData()
+    {
+        // TODO Auto-generated WheelReprofilingDataTest->testUpdateReprofilingData()
+        $this->markTestIncomplete("updateReprofilingData test not implemented");
+        
+        $this->wheelReprofilingData->updateReprofilingData();
+    }
+
+    /**
+     * Tests WheelReprofilingData->checkReprofilingDataExists()
+     */
+    public function testCheckReprofilingDataExists()
+    {
+        // TODO Auto-generated WheelReprofilingDataTest->testCheckReprofilingDataExists()
+        $this->markTestIncomplete("checkReprofilingDataExists test not implemented");
+        
+        $this->wheelReprofilingData->checkReprofilingDataExists();
+    }
+}
+

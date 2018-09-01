@@ -1,0 +1,84 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\DataLayer\WheelReprofilingDL;
+use UserClasses\BusinessObjects\ActivityLogBO;
+use UserClasses\BusinessObjects\WheelReprofilingDataBO;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class WheelReprofilingData
+{
+    private $activityLog;
+    private $activityBO;
+    private $wheelReprofDL;
+    private $err;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->err=new ErrorLog();
+        $this->activityLog=new ActivityLog();
+        $this->activityBO=new ActivityLogBO();
+        $this->wheelReprofDL=new WheelReprofilingDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->activityBO=null;
+        $this->activityLog=null;
+        $this->wheelReprofDL=null;
+    }
+    
+    public function searchForReprofilingData(WheelReprofilingDataBO $data):array {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $arr_result=$this->wheelReprofDL->searchData($arr);
+            } catch (\Exception $e) {
+                $class_name="WheelReprofilingData";
+                $method_name="searchForReprofilingData";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            return $arr_result;
+        }
+        else return NULL;
+    }
+    
+    public function addReprofilingData(WheelReprofilingDataBO $data):bool {
+        
+    }
+    
+    public function updateReprofilingData(WheelReprofilingDataBO $data):bool {
+        
+    }
+    
+    public function checkReprofilingDataExists(WheelReprofilingDataBO $data):bool {
+        if(isset($data)){
+            try {
+                $arr=$data->getArray();
+                $status_message=$this->wheelReprofDL->dataExists($arr);
+            } catch (\Exception $e) {
+                $class_name="WheelReprofilingData";
+                $method_name="checkReprofilingDataExists";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }
+            
+            return $status_message;
+        }
+        else return false;
+    }
+    
+    private function calculateCutLength(float $initialDiameter,float $finalDiameter):float {
+        
+    }
+}
+
