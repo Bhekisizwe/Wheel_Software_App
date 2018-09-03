@@ -10,15 +10,15 @@ namespace UserClasses\BusinessObjects;
 class WheelMeasurementsComparisonBO extends ManualWheelMeasurementsBO
 {
     private $refID=0;
-    private $flangeHeightStatus=0;
-    private $toeCreepStatus=0;
-    private $flangeWidthStatus=0;
-    private $hollowingStatus=0;
-    private $spreadRimStatus=0;
-    private $wheelSkidStatus=0;
-    private $cutTyreWidthStatus=0;
-    private $cutTyreDepthStatus=0;
-    private $cutTyreDistanceFromFlangeStatus=0;
+    private $flangeHeightStatus=1;
+    private $toeCreepStatus=1;
+    private $flangeWidthStatus=1;
+    private $hollowingStatus=1;
+    private $spreadRimStatus=1;
+    private $wheelSkidStatus=1;
+    private $cutTyreWidthStatus=1;
+    private $cutTyreDepthStatus=1;
+    private $cutTyreDistanceFromFlangeStatus=1;
     private $predictedWheelFailureDate="";
     private $referenceDate="";
     private $alarmCause="";

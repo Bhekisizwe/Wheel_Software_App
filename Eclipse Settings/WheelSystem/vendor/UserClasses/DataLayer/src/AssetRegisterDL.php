@@ -30,10 +30,38 @@ class AssetRegisterDL extends DatabaseManager implements DatabaseFunctionsInt
             if($status){
                 $arr=array();   //array to store result set
                 while($stmt->fetch()){                    
-                    $arr["coachDetails2DArray"][0]["coachID"]=$coachID;                    
+                    //do nothing                    
                 }
                 $this->dbClose($connector);
-                return (int) $arr["coachDetails2DArray"][0]["coachID"];                
+                return (int) $coachID;                
+            }
+            else{
+                $this->dbClose($connector);
+                return 0;
+            }
+        }
+        else return 0;
+    }
+    
+    public function getCoachIDFromCoachNumber(array $data):int
+    {
+        $connector=$this->dbConnect();  //connect to MariaDB database
+        if(isset($connector)){
+            /*********RETRIEVE CoachID Data from Database*************/
+            $query="SELECT CoachID FROM AssetRegister WHERE CoachNumber=?";
+            $stmt=$connector->prepare($query);
+            $coachNumber=$data["coachNumber"];
+            $stmt->bind_param("s",$coachNumber);
+            $status=$stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($coachID);
+            if($status){
+                $arr=array();   //array to store result set
+                while($stmt->fetch()){
+                    //do nothing
+                }
+                $this->dbClose($connector);
+                return (int) $coachID;
             }
             else{
                 $this->dbClose($connector);

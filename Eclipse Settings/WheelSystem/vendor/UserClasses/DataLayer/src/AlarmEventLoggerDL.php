@@ -194,11 +194,11 @@ class AlarmEventLoggerDL extends DatabaseManager implements DatabaseFunctionsInt
                 if($status){
                     while($stmt->fetch()){
                         $arr["measurementID"]=$measurementID;
-                        $arr["spreadRim"]="";
-                        $arr["cutTyreWidth"]="";
-                        $arr["cutTyreDepth"]="";
-                        $arr["cutTyreDistanceFromFlange"]="";
-                        $arr["wheelSkid"]="";
+                        $arr["spreadRim"]=0;
+                        $arr["cutTyreWidth"]=0;
+                        $arr["cutTyreDepth"]=0;
+                        $arr["cutTyreDistanceFromFlange"]=0;
+                        $arr["wheelSkid"]=0;
                         $arr["gibsonDescription"]="";
                         $arr["hollowing"]=$H;
                         $arr["flangeWidth"]=$FW;

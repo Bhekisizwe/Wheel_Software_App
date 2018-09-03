@@ -32,43 +32,16 @@ use UserClasses\BusinessObjects\WheelMeasurementsComparisonBO;
 use UserClasses\DataLayer\WheelReprofilingDL;
 use UserClasses\BusinessObjects\WheelReprofilingDataBO;
 use UserClasses\BusinessLayer\WheelReprofilingData;
+use UserClasses\BusinessLayer\WheelMeasurementsComparison;
+use UserClasses\BusinessObjects\ManualWheelSettingsBO;
 
 require __DIR__.'/vendor/autoload.php';
-$wheelReprof=new WheelReprofilingData();
-$wheelReprofBO=new WheelReprofilingDataBO();
-/*$alarmEventBO=new WheelMeasurementsComparisonBO();
-$alarmEventBO->setMeasurementID(3);
-$alarmEventBO->setAlarmCause("Mabhebhane Sphe Mkhize is an idiot");
-$alarmEventBO->setDefectSize(350);
-$alarmEventBO->setPredictedWheelFailureDate("2018-07-09");*/
 
-/*$arr["alarmSearchStartDate"]="2017-04-07";
-$arr["alarmSearchEndDate"]="2018-08-09";*/
-//$wheelReprofBO->setReprofilingID(1);
-$wheelReprofBO->setAxleSerialNumber("MXR2A");
-$wheelReprofBO->setStartDate("2018-07-09");
-$wheelReprofBO->setEndDate("2018-07-10");
-
-$arr_results=$wheelReprof->searchForReprofilingData($wheelReprofBO);
-
-//$manualBO=new ManualWheelMeasurementsBO();
-/*$manualBO->setCutTyreWidth(23.58);
-$manualBO->setCutTyreDistanceFromFlange(35.78);
-$manualBO->setSpreadRim(15.56);
-$manualBO->setCutTyreDepth(10);
-$manualBO->setWheelSkid(0.35);
-$manualBO->setMeasurementID(3);
-$manualBO->setGibsonDescription("Mfundo there is something wrong here");
-$manualBO->setStaffNumber("305941");*/
-/*$manualBO->setReportEndDate("2017-04-07");
-$manualBO->setReportStartDate("2017-04-07");
-$manualBO->setCoachNumber("10805");
-$manualBO->setWheelID(6);
-$manualBO->setMeasurementDate("2017-04-07");*/
-//$status=$manual->addManualWheelMeasurements($manualBO);
-//$arr_parse=$manual->updateManualWheelData($manualBO);
-//print_r($arr_parse);
-
+$wheelComparison=new WheelMeasurementsComparison();
+$manualMeasBO=new ManualWheelMeasurementsBO();
+$manualMeasBO->setReportStartDate("2017-03-25");
+$manualMeasBO->setReportEndDate("2017-04-07");
+$arr=$wheelComparison->getMeasurementsExceptionList($manualMeasBO);
 echo "";
 echo "";
 
