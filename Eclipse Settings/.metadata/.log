@@ -10401,3 +10401,130 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 14:52:58.259
 !MESSAGE PHP executable /resources/php53/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+!SESSION 2018-09-03 15:06:08.732 -----------------------------------------------
+eclipse.buildId=4.7.3.M20180301-0715
+java.version=1.8.0_172
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_ZA
+Framework arguments:  -product org.eclipse.epp.package.php.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.php.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-09-03 15:06:27.861
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Bheki Mthethwa'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 15:06:30.377
+!MESSAGE PHP executable /resources/php5/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 15:06:30.379
+!MESSAGE PHP executable /resources/php5/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 15:06:30.380
+!MESSAGE PHP executable /resources/php53/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 15:06:30.382
+!MESSAGE PHP executable /resources/php53/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+!SESSION 2018-09-03 15:24:35.944 -----------------------------------------------
+eclipse.buildId=4.7.3.M20180301-0715
+java.version=1.8.0_172
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_ZA
+Framework arguments:  -product org.eclipse.epp.package.php.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.php.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-09-03 15:24:56.678
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Bheki Mthethwa'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 15:24:56.983
+!MESSAGE PHP executable /resources/php5/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 15:24:56.985
+!MESSAGE PHP executable /resources/php5/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 15:24:56.988
+!MESSAGE PHP executable /resources/php53/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 15:24:56.991
+!MESSAGE PHP executable /resources/php53/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+!SESSION 2018-09-03 17:31:23.723 -----------------------------------------------
+eclipse.buildId=4.7.3.M20180301-0715
+java.version=1.8.0_172
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_ZA
+Framework arguments:  -product org.eclipse.epp.package.php.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.php.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-09-03 17:31:42.322
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Bheki Mthethwa'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 17:31:42.905
+!MESSAGE PHP executable /resources/php5/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 17:31:42.907
+!MESSAGE PHP executable /resources/php5/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 17:31:42.909
+!MESSAGE PHP executable /resources/php53/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 17:31:42.910
+!MESSAGE PHP executable /resources/php53/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+!SESSION 2018-09-03 22:29:55.909 -----------------------------------------------
+eclipse.buildId=4.7.3.M20180301-0715
+java.version=1.8.0_172
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_ZA
+Framework arguments:  -product org.eclipse.epp.package.php.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.php.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-09-03 22:30:12.532
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Bheki Mthethwa'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 22:30:15.426
+!MESSAGE PHP executable /resources/php5/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 22:30:15.433
+!MESSAGE PHP executable /resources/php5/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 22:30:15.435
+!MESSAGE PHP executable /resources/php53/php.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.php.debug.core 1 1001 2018-09-03 22:30:15.436
+!MESSAGE PHP executable /resources/php53/php-cgi.exe not found neither in plugin org.zend.php.debug.debugger nor in fragments attached to it
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2018-09-03 22:39:48.338
+!MESSAGE Unable to connect to repository http://eclipse.piece-framework.com/content.xml
+!STACK 0
+java.net.ConnectException: Connection timed out: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.doConnect(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(Unknown Source)
+	at java.net.AbstractPlainSocketImpl.connect(Unknown Source)
+	at java.net.PlainSocketImpl.connect(Unknown Source)
+	at java.net.SocksSocketImpl.connect(Unknown Source)
+	at java.net.Socket.connect(Unknown Source)
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:120)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:179)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:328)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:612)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:447)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:884)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientFileSystemBrowser.runRequest(HttpClientFileSystemBrowser.java:263)
+	at org.eclipse.ecf.provider.filetransfer.browse.AbstractFileSystemBrowser$DirectoryJob.run(AbstractFileSystemBrowser.java:69)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)

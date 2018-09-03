@@ -9,6 +9,7 @@ use UserClasses\BusinessObjects\WearRatesBO;
 use UserClasses\BusinessObjects\ManualWheelSettingsBO;
 use UserClasses\BusinessObjects\AutoWheelSettingsBO;
 use UserClasses\DataLayer\AssetRegisterDL;
+use UserClasses\DataLayer\UserAccountDL;
 
 /**
  *
@@ -26,12 +27,14 @@ class WheelMeasurementsComparison
     private $wearRatesBO;
     private $dailyDistance;
     private $dailyDistanceBO;
+    private $sender;
 
     /**
      */
     public function __construct()
     {
         $this->err=new ErrorLog();
+        $this->sender=new Email();
         $this->manualWheelMeas=new ManualWheelMeasurements();
         $this->autoWheelSettings=new AutoWheelSettings();
         $this->manualWheelSettings=new ManualWheelSettings();
@@ -47,6 +50,7 @@ class WheelMeasurementsComparison
     function __destruct()
     {
         $this->err=null;
+        $this->sender=null;
         $this->manualWheelMeas=null;
         $this->autoWheelSettings=null;
         $this->manualWheelSettings=null;
@@ -100,10 +104,13 @@ class WheelMeasurementsComparison
     
     public function checkWearRatesSettingsExist():bool {       
         $arr=$this->wearRates->showWearRateSettings($this->wearRatesBO);
-        if(count($arr["wearRate2DArray"])>=4){
-            return true;
+        if(count($arr)>0){
+            if(count($arr["wearRate2DArray"])>=4){
+                return true;
+            }
+            else return false;
         }
-        else return false;      
+        else return false;            
     }
     
     public function checkDailyDistanceSettingExists():bool {        
@@ -428,15 +435,34 @@ class WheelMeasurementsComparison
     public function getMeasurementsExceptionList(ManualWheelMeasurementsBO $data):array {
         if(isset($data)) {
             $exceptionList=array();
+            $missingCoachList=array();
             $manualsettings=new ManualWheelSettingsBO();
             $autosettings=new AutoWheelSettingsBO();
             $arr=$this->getWheelMeasurements($data); //get wheel measurements between the specified start and end dates
             //compare settings to wheel measurements. Calculate the predicted failure date too
             foreach($arr as $value){
-                //loop through all wheel measurements
-                $arr_list=$this->compareWheelMeasurementsToSettings($value, $autosettings, $manualsettings);
-                if($arr_list["addToExceptionList"]==true){
-                    $exceptionList[]=$arr_list;    
+                //loop through all wheel measurements               
+                $data->setCoachNumber($value["coachNumber"]);
+                if($this->checkAutoSettingsExist($data)){
+                    $arr_list=$this->compareWheelMeasurementsToSettings($value, $autosettings, $manualsettings);
+                    if($arr_list["addToExceptionList"]==true){
+                        $exceptionList[]=$arr_list;
+                    }
+                }
+                else{
+                    //record the Coach Number with missing MiniProf threshold settings or missing entry in Asset Register                    
+                    $missingCoachList[]=$value["coachNumber"];
+                }    
+            
+            }
+            if(count($missingCoachList)>0){
+                //we know there is something wrong. Send Email of this to Administrator
+                $coachList=array_unique($missingCoachList); //make sure Coach Numbers are Unique
+                $recepients_accounts=$this->getEmailReceipients();
+                foreach($recepients_accounts as $value){
+                    //send emails to all the administrators.
+                    $email_arr=$this->generateEmailMessage($value, $coachList);
+                    $this->sender->sendEmail($email_arr);
                 }
             }
             //destroy objects
@@ -445,6 +471,45 @@ class WheelMeasurementsComparison
             return $exceptionList;
         }
         else return NULL;
+    }
+    
+    private function getEmailReceipients():array {
+        $userRole=new UserRole();  
+        $userAccountDL=new UserAccountDL();
+        //extract all user roles
+        $arr=$userRole->listAllUserRoles();
+        if(count($arr)>0){
+            foreach($arr["userRole2DArray"] as $value){
+                if($value["userRoleName"]=="Admin"){
+                    //get the RoleID of the Administrator
+                    $roleID=$value["roleID"];
+                    break;
+                }
+            }
+            $data["roleID"]=$roleID;
+            //search for the user accounts that are assigned to the Administrator user role.
+            $arr_accounts=$userAccountDL->searchUsingRoleID($data);
+            //destroy objects 
+            unset($userAccountDL);
+            unset($userRole);
+            return $arr_accounts;
+        }
+        else {
+            unset($userAccountDL);
+            unset($userRole);
+            return $arr;        
+        }
+    }
+    
+    private function generateEmailMessage(array $arr,array $coachList):array {
+        $arr_email["to"]=$arr["emailAddress"];
+        $arr_email["subject"]="Missing Settings";
+        $body="Dear ".$arr["name"]." ".$arr["surname"]."<p>";
+        $body.="Please login into the website and make sure that the wheel measurement alarm settings for the coach(s) ".implode(",",$coachList)."<br>";
+        $body.="are actually setup. Also make sure that these listed coach(s) are included in the system Asset Register.<p>";    
+        $body.=" By Order (Gqunsu Engineering Pty Ltd)";
+        $arr_email["body"]=$body; 
+        return $arr_email;
     }
 }
 
