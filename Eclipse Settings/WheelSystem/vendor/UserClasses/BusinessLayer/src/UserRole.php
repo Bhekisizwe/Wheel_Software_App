@@ -155,6 +155,7 @@ class UserRole
                         break;  //exit loop
                     }
                 }
+                else $status_message=false;
             }
             return $status_message;
         }

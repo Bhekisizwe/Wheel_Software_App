@@ -34,14 +34,23 @@ use UserClasses\BusinessObjects\WheelReprofilingDataBO;
 use UserClasses\BusinessLayer\WheelReprofilingData;
 use UserClasses\BusinessLayer\WheelMeasurementsComparison;
 use UserClasses\BusinessObjects\ManualWheelSettingsBO;
+use UserClasses\BusinessLayer\PlanningReport;
 
 require __DIR__.'/vendor/autoload.php';
 
-$wheelComparison=new WheelMeasurementsComparison();
+$planningReport=new PlanningReport();
 $manualMeasBO=new ManualWheelMeasurementsBO();
 $manualMeasBO->setReportStartDate("2017-03-25");
 $manualMeasBO->setReportEndDate("2017-04-07");
-$arr=$wheelComparison->getMeasurementsExceptionList($manualMeasBO);
+$reportData=$planningReport->generateReportData($manualMeasBO);
+$userRoles=$planningReport->getUserRolesWithReadAccess();
+$visibilityArr=$planningReport->getReportColumnsVisibilityPerUserRole($userRoles);
+foreach($visibilityArr as $roleID => $value){
+    $report=$planningReport->produceReportPerUserRole($value, $reportData);
+    $staffNumber="305941";
+    $planningReport->writeReportToMSExcel($report, $staffNumber, $roleID);    
+}
+
 echo "";
 echo "";
 

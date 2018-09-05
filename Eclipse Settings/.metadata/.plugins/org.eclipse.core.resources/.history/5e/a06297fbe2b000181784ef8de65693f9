@@ -1,0 +1,116 @@
+<?php
+use PHPUnit\Framework\TestCase;
+use UserClasses\BusinessLayer\PlanningReport;
+
+require_once 'vendor/UserClasses/BusinessLayer/src/PlanningReport.php';
+
+/**
+ * PlanningReport test case.
+ */
+class PlanningReportTest extends TestCase
+{
+
+    /**
+     *
+     * @var PlanningReport
+     */
+    private $planningReport;
+
+    /**
+     * Prepares the environment before running a test.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        
+        // TODO Auto-generated PlanningReportTest::setUp()
+        
+        $this->planningReport = new PlanningReport();
+    }
+
+    /**
+     * Cleans up the environment after running a test.
+     */
+    protected function tearDown()
+    {
+        // TODO Auto-generated PlanningReportTest::tearDown()
+        $this->planningReport = null;
+        
+        parent::tearDown();
+    }
+
+    /**
+     * Constructs the test case.
+     */
+    public function __construct()
+    {
+        // TODO Auto-generated constructor
+    }
+
+    /**
+     * Tests PlanningReport->__construct()
+     */
+    public function test__construct()
+    {
+        // TODO Auto-generated PlanningReportTest->test__construct()
+        $this->markTestIncomplete("__construct test not implemented");
+        
+        $this->planningReport->__construct();
+    }
+
+    /**
+     * Tests PlanningReport->__destruct()
+     */
+    public function test__destruct()
+    {
+        // TODO Auto-generated PlanningReportTest->test__destruct()
+        $this->markTestIncomplete("__destruct test not implemented");
+        
+        $this->planningReport->__destruct();
+    }
+
+    /**
+     * Tests PlanningReport->generateReportData()
+     */
+    public function testGenerateReportData()
+    {
+        // TODO Auto-generated PlanningReportTest->testGenerateReportData()
+        $this->markTestIncomplete("generateReportData test not implemented");
+        
+        $this->planningReport->generateReportData();
+    }
+
+    /**
+     * Tests PlanningReport->getUserRolesWithReadAccess()
+     */
+    public function testGetUserRolesWithReadAccess()
+    {
+        // TODO Auto-generated PlanningReportTest->testGetUserRolesWithReadAccess()
+        $this->markTestIncomplete("getUserRolesWithReadAccess test not implemented");
+        
+        $this->planningReport->getUserRolesWithReadAccess();
+    }
+
+    /**
+     * Tests PlanningReport->getReportColumnsVisibilityPerUserRole()
+     */
+    public function testGetReportColumnsVisibilityPerUserRole()
+    {
+        // TODO Auto-generated PlanningReportTest->testGetReportColumnsVisibilityPerUserRole()
+        $this->markTestIncomplete("getReportColumnsVisibilityPerUserRole test not implemented");
+        
+        $this->planningReport->getReportColumnsVisibilityPerUserRole();
+    }
+
+    /**
+     * Tests PlanningReport->produceReportPerUserRole()
+     */
+    public function testProduceReportPerUserRole()
+    {
+        // TODO Auto-generated PlanningReportTest->testProduceReportPerUserRole()
+        $this->markTestIncomplete("produceReportPerUserRole test not implemented");
+        
+        $this->planningReport->produceReportPerUserRole();
+    }
+}
+

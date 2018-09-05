@@ -1,0 +1,286 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessObjects\UserAccountBO;
+use UserClasses\BusinessObjects\ManualWheelMeasurementsBO;
+use phpDocumentor\Reflection\Types\Parent_;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use UserClasses\DataLayer\UserRoleDL;
+use UserClasses\DataLayer\UserAccountDL;
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class PlanningReport extends FileHandler
+{
+    private $err;
+    private static $dirPath=__DIR__."\\..\\..\\..\\..\\PlanningReport";
+    private $wheelMeasComparison;
+    private $userRole;
+    private $userAccounts;
+    private $userRoleBO;
+    private $userAccountsBO;
+    private $sender;
+    private $userAccountDL;
+
+    /**
+     */
+    public function __construct()
+    {
+        Parent::__construct(self::$dirPath, "");
+        $this->err=new ErrorLog();
+        $this->sender=new Email();
+        $this->wheelMeasComparison=new WheelMeasurementsComparison();
+        $this->userRole=new UserRole();
+        $this->userAccounts=new UserAccounts();
+        $this->userRoleBO=new UserRoleBO();
+        $this->userAccountsBO=new UserAccountBO();
+        $this->userAccountDL=new UserAccountDL();
+    }
+
+    /**
+     */
+    function __destruct()
+    {
+        $this->err=null;
+        $this->sender=null;
+        $this->wheelMeasComparison=null;
+        $this->userRole=null;
+        $this->userAccounts=null;
+        $this->userRoleBO=null;
+        $this->userAccountsBO=null;    
+        $this->userAccountDL=null;
+    }
+    
+    public function generateReportData(ManualWheelMeasurementsBO $data):array {
+        if(isset($data)){
+            $arr=$this->wheelMeasComparison->getMeasurementsExceptionList($data); 
+            return $arr;
+        }
+        else return NULL;
+    }
+    
+    public function getUserRolesWithReadAccess():array {
+        //retreive all user roles and scroll throught them to see which one has 
+        //read access to the Planning Report
+        $roles_list_arr=$this->userRole->listAllUserRoles();
+        $arr=array();
+        $userrole_arr=array();
+        foreach($roles_list_arr["userRole2DArray"] as $value){
+            $arr["userRole2DArray"][0]["roleID"]=$value["roleID"];
+            $this->userRoleBO->set($arr);
+            $accessRight="R";       //read access rights
+            $activityName="Planning Report Management";
+            if($this->userRole->checkUserAuthorization($this->userRoleBO, $accessRight, $activityName)==true){
+                $userrole_arr[]=$value["roleID"];//add role ID to array list of those with Read Access    
+            }
+        }
+        return $userrole_arr;            
+    }
+    
+    public function getReportColumnsVisibilityPerUserRole(array $userRole):array {
+        $arr=array();
+        if(count($userRole)>0){
+            foreach($userRole as $value){
+                //scroll through all the user roles with read access
+                //look for their access rights for individual columns
+                $data["userRole2DArray"][0]["roleID"]=$value;
+                $this->userRoleBO->set($data);
+                $arr_result=$this->userRole->listUserAccessRights($this->userRoleBO);
+                if(array_key_exists("columnVisibility2DArray",$arr_result)){
+                    $arr[$value]=$arr_result["columnVisibility2DArray"];    //map roleID to column visibility
+                }                
+            }
+            return $arr;
+        }
+        else return $arr;
+    }
+    
+    public function produceReportPerUserRole(array $columnVisibility,array $reportData) {
+        $report=array();            
+        if(count($columnVisibility)>0 && count($reportData)>0){
+            for($i=0;$i<count($reportData);$i++){                
+                $header=array();
+                $field_values=array();
+                foreach($reportData[$i] as $key => $value){                   
+                    switch($key){
+                        case "coachNumber":
+                            $columnName="Coach Number";
+                            if($this->determineColumnVisibility($columnName, $columnVisibility)){
+                                //add column header to header array and add value to field values array
+                                $header[]=$columnName;
+                                $field_values[]=$value;                                
+                            }                           
+                            break;
+                        case "axleNumber":
+                            $columnName="Axle Number";
+                            if($this->determineColumnVisibility($columnName, $columnVisibility)){
+                                //add column header to header array and add value to field values array
+                                $header[]=$columnName;
+                                $field_values[]=$value;
+                            }                           
+                            break;
+                        case "wheelID":
+                            $columnName="Wheel ID";
+                            if($this->determineColumnVisibility($columnName, $columnVisibility)){
+                                //add column header to header array and add value to field values array
+                                $header[]=$columnName;
+                                $field_values[]=$value;
+                            }                           
+                            break;
+                        case "defectSize":
+                            $columnName="Defect Size";
+                            if($this->determineColumnVisibility($columnName, $columnVisibility)){
+                                //add column header to header array and add value to field values array
+                                $header[]=$columnName;
+                                $field_values[]=$value;
+                            }                            
+                            break;
+                        case "referenceDate":
+                            $columnName="Reference Date";
+                            if($this->determineColumnVisibility($columnName, $columnVisibility)){
+                                //add column header to header array and add value to field values array
+                                $header[]=$columnName;
+                                $field_values[]=$value;
+                            }                           
+                            break;
+                        case "daysBeforeFailure":
+                            $columnName="Number of Days before Failure";
+                            if($this->determineColumnVisibility($columnName, $columnVisibility)){
+                                //add column header to header array and add value to field values array
+                                $header[]=$columnName;
+                                $field_values[]=$value;
+                            }                           
+                            break;
+                        case "predictedWheelFailureDate":
+                            $columnName="Predicted Date of Failure";
+                            if($this->determineColumnVisibility($columnName, $columnVisibility)){
+                                //add column header to header array and add value to field values array
+                                $header[]=$columnName;
+                                $field_values[]=$value;
+                            }                           
+                            break;
+                        case "alarmCause":                            
+                            $columnName="Comment";
+                            if($this->determineColumnVisibility($columnName, $columnVisibility)){
+                                //add column header to header array and add value to field values array
+                                $header[]=$columnName;
+                                $field_values[]=$value;
+                            }                                                     
+                    }                    
+                }
+                if($i==0){
+                    //first iteration, add the Report headers and first field values
+                    $report[]=$header;
+                    $report[]=$field_values;
+                }
+                if($i>=1){
+                    //the other iteration just add field values only
+                    $report[]=$field_values;
+                }
+            }
+            //let us write the report data to the MS Excel spreadsheet
+            return $report;
+        }
+        else return $report;
+    }
+    
+    private function determineColumnVisibility(string $columnName,array $columnRights):bool {
+        if($columnName!="" && count($columnRights)>0){
+            foreach($columnRights as $value){
+                if($columnName==$value["columnName"]){
+                    //retrive the visibility value for this Column Name
+                    ($value["columnVisibility"]==1)?$status_message=true:$status_message=false;
+                    return $status_message;
+                }
+            }
+        }
+        else return false;
+    }
+    
+    public function writeReportToMSExcel(array $reportData,string $staffNumber,int $roleID) {
+        if(count($reportData)>0 && $staffNumber!=""){
+            try {
+                //check if Directory Exists first
+                $filename="report_".$staffNumber."_".$roleID.".xlsx";
+                if($this->checkDirectoryExists()){
+                    //it does. then check if File exists                   
+                    if($this->checkFileExists($filename)){
+                        //if it does, delete it
+                        $this->deleteFile($filename);
+                    }
+                    //write data to MSExcel 2007 and Later
+                    $this->writeToExcel($reportData,$filename);  
+                    $userAccounts=$this->getEmailRecepients($roleID);
+                    foreach($userAccounts as $userAccount){
+                        $this->generateEmailMessage($userAccount, $staffNumber, $roleID);    
+                    }
+                }
+                else{
+                    //it does not. Create It!
+                    if($this->createDirectory()){
+                        //write data to MSExcel 2007 and Later
+                        $this->writeToExcel($reportData,$filename);
+                    }                    
+                }               
+            } catch (\Exception $e) {
+                $class_name="PlanningReport";
+                $method_name="writeReportToMSExcel";
+                $this->err->logErrors($e,null,$class_name, $method_name);
+            }            
+        }    
+    }
+    
+    private function writeToExcel(array $reportData,string $filename){
+        $workBook=new Spreadsheet();
+        $alphabet=range("A", "Z");      //create letters of the Alphabet.
+        $sheet=$workBook->getActiveSheet();
+        for($row=0;$row<count($reportData);$row++){
+            //$row is the row position of the report
+            for($column=0;$column<count($reportData[$row]);$column++){
+                //$column is the column position of the report
+                $sheet->setCellValue($alphabet[$column]."".($row+1), $reportData[$row][$column]);
+            }            
+        }        
+        $writer=new Xlsx($workBook);
+        $fullFilePath=self::$dirPath."\\".$filename;
+        $writer->save($fullFilePath);
+        //destroy objects
+        unset($writer);
+        unset($sheet);
+        unset($workBook);
+    }
+    
+    private function getEmailRecepients(int $roleID):array {
+        $recepients=array();
+        try {            
+            $data["roleID"]=$roleID;
+            $recepients=$this->userAccountDL->searchUsingRoleID($data);            
+        } catch (\Exception $e) {
+            $class_name="PlanningReport";
+            $method_name="getEmailRecepients";
+            $this->err->logErrors($e,null,$class_name, $method_name);
+        }
+        return $recepients;
+    }
+    
+    private function generateEmailMessage(array $userAccount,string $staffNumber,int $roleID):array {
+        //generate email array
+        $arr_email=array();
+        $arr_email["to"]=$userAccount["emailAddress"];
+        $arr_email["subject"]="Planning Report";
+        $body="Dear Sir/Madam<p>";
+        $body.="Please find attached the requested planning report. <p>";
+        $body.=" By Order (Gqunsu Engineering Pty Ltd)";
+        $arr_email["body"]=$body;
+        $arr_email["file"]=self::$dirPath."\\report_".$staffNumber."_".$roleID.".xlsx";
+        unset($data);
+        return $arr_email;
+    }
+}
+

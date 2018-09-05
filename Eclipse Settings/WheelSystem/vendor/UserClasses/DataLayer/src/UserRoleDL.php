@@ -206,7 +206,7 @@ class UserRoleDL extends DatabaseManager implements DatabaseFunctionsInt
                 $query="SELECT PlanningReportColumns.PlanningID,PlanningReportColumns.ColumnID,";
                 $query.="PlanningReportColumns.ColumnVisibility,ReportColumns.ColumnName";
                 $query.=" FROM PlanningReportColumns,ReportColumns WHERE PlanningReportColumns.RoleID=? AND";
-                $query.=" ReportColumns.ColumnID=PlanningReportColumns.ColumnID";
+                $query.=" ReportColumns.ColumnID=PlanningReportColumns.ColumnID ORDER BY PlanningReportColumns.ColumnID Asc";
                 $stmt=$connector->prepare($query);
                 $stmt->bind_param("i", $data["userRole2DArray"][0]["roleID"]);
                 $status_message=$stmt->execute();

@@ -252,6 +252,7 @@ class WheelMeasurementsComparison
                             //warning level violated therefore the failure date is today's date.                            
                             $arr_predicted_dates["Flange Height"]=$data["measurementDate"];  
                             $arr["Flange Height"]["defectSize"]=$data["flangeHeight"];
+                            $arr["Flange Height"]["daysBeforeFailure"]=0;
                         }
                         elseif($value==2){
                             //calculate failure date using formula. Only alarm level has been violated
@@ -271,6 +272,7 @@ class WheelMeasurementsComparison
                             $dateObj->add(new \DateInterval("P".$numberOfDaysLeft."D"));
                             $arr_predicted_dates["Flange Height"]=$dateObj->format("Y-m-d");
                             $arr["Flange Height"]["defectSize"]=$data["flangeHeight"];
+                            $arr["Flange Height"]["daysBeforeFailure"]=$numberOfDaysLeft;
                             unset($dateObj);
                         }
                         else{
@@ -282,6 +284,7 @@ class WheelMeasurementsComparison
                             //warning level violated therefore the failure date is the Date of Measurement
                             $arr_predicted_dates["Flange Width"]=$data["measurementDate"];
                             $arr["Flange Width"]["defectSize"]=$data["flangeWidth"];
+                            $arr["Flange Width"]["daysBeforeFailure"]=0;
                         }
                         elseif($value==2){
                             //calculate failure date using formula. Only alarm level has been violated
@@ -302,6 +305,7 @@ class WheelMeasurementsComparison
                             $dateObj->add(new \DateInterval("P".$numberOfDaysLeft."D"));
                             $arr_predicted_dates["Flange Width"]=$dateObj->format("Y-m-d");
                             $arr["Flange Width"]["defectSize"]=$data["flangeWidth"];
+                            $arr["Flange Width"]["daysBeforeFailure"]=$numberOfDaysLeft;
                             unset($dateObj);
                         }
                         else{
@@ -313,6 +317,7 @@ class WheelMeasurementsComparison
                             //warning level violated therefore the failure date is the Date of Measurement
                             $arr_predicted_dates["Toe Creep"]=$data["measurementDate"];
                             $arr["Toe Creep"]["defectSize"]=$data["toeCreep"];
+                            $arr["Toe Creep"]["daysBeforeFailure"]=0;
                         }
                         elseif($value==2){
                             //calculate failure date using formula. Only alarm level has been violated
@@ -333,6 +338,7 @@ class WheelMeasurementsComparison
                             $dateObj->add(new \DateInterval("P".$numberOfDaysLeft."D"));
                             $arr_predicted_dates["Toe Creep"]=$dateObj->format("Y-m-d");
                             $arr["Toe Creep"]["defectSize"]=$data["toeCreep"];
+                            $arr["Toe Creep"]["daysBeforeFailure"]=$numberOfDaysLeft;
                             unset($dateObj);
                         }
                         else{
@@ -344,6 +350,7 @@ class WheelMeasurementsComparison
                             //warning level violated therefore the failure date is the Date of Measurement
                             $arr_predicted_dates["Hollowing"]=$data["measurementDate"];
                             $arr["Hollowing"]["defectSize"]=$data["hollowing"];
+                            $arr["Hollowing"]["daysBeforeFailure"]=0;
                         }
                         elseif($value==2){
                             //calculate failure date using formula. Only alarm level has been violated
@@ -364,6 +371,7 @@ class WheelMeasurementsComparison
                             $dateObj->add(new \DateInterval("P".$numberOfDaysLeft."D"));
                             $arr_predicted_dates["Hollowing"]=$dateObj->format("Y-m-d");
                             $arr["Hollowing"]["defectSize"]=$data["hollowing"];
+                            $arr["Hollowing"]["daysBeforeFailure"]=$numberOfDaysLeft;
                             unset($dateObj);
                         }
                         else{
@@ -375,6 +383,7 @@ class WheelMeasurementsComparison
                             //warning level violated therefore the failure date is the Date of Measurement
                             $arr_predicted_dates["Spread Rim"]=$data["measurementDate"];
                             $arr["Spread Rim"]["defectSize"]=$data["spreadRim"];
+                            $arr["Spread Rim"]["daysBeforeFailure"]=0;
                         }
                         else{
                             //do nothing
@@ -385,6 +394,7 @@ class WheelMeasurementsComparison
                             //warning level violated therefore the failure date is the Date of Measurement
                             $arr_predicted_dates["Wheel Skid"]=$data["measurementDate"];
                             $arr["Wheel Skid"]["defectSize"]=$data["wheelSkid"];
+                            $arr["Wheel Skid"]["daysBeforeFailure"]=0;
                         }
                         else{
                             //do nothing
@@ -395,6 +405,7 @@ class WheelMeasurementsComparison
                             //warning level violated therefore the failure date is the Date of Measurement
                             $arr_predicted_dates["Cut Tyre Depth"]=$data["measurementDate"];
                             $arr["Cut Tyre Depth"]["defectSize"]=$data["cutTyreDepth"];
+                            $arr["Cut Tyre Depth"]["daysBeforeFailure"]=0;
                         }
                         else{
                             //do nothing
@@ -405,6 +416,7 @@ class WheelMeasurementsComparison
                             //warning level violated therefore the failure date is the Date of Measurement
                             $arr_predicted_dates["Cut Tyre Width"]=$data["measurementDate"];
                             $arr["Cut Tyre Width"]["defectSize"]=$data["cutTyreWidth"];
+                            $arr["Cut Tyre Width"]["daysBeforeFailure"]=0;
                         }
                         else{
                             //do nothing
@@ -415,6 +427,7 @@ class WheelMeasurementsComparison
                             //warning level violated therefore the failure date is the Date of Measurement
                             $arr_predicted_dates["Cut Tyre Distance From Flange"]=$data["measurementDate"];
                             $arr["Cut Tyre Distance From Flange"]["defectSize"]=$data["cutTyreDistanceFromFlange"];
+                            $arr["Cut Tyre Distance From Flange"]["daysBeforeFailure"]=0;
                         }
                         else{
                             //do nothing
@@ -422,11 +435,12 @@ class WheelMeasurementsComparison
                         
                 }
             }
-            //determine closest date to the measurement date.
-            $data["predictedWheelFailureDate"]=min($arr_predicted_dates); 
-            $data["alarmCause"]="The ".array_search($data["predictedWheelFailureDate"], $arr_predicted_dates)." has violated the wheel settings thresholds";
+            //determine closest date to the measurement date.            
+            $data["defectSize"]=$arr[array_search(min($arr_predicted_dates), $arr_predicted_dates)]["defectSize"];
             $data["referenceDate"]=$data["measurementDate"];
-            $data["defectSize"]=$arr[array_search($data["predictedWheelFailureDate"], $arr_predicted_dates)]["defectSize"];
+            $data["daysBeforeFailure"]=$arr[array_search(min($arr_predicted_dates), $arr_predicted_dates)]["daysBeforeFailure"];
+            $data["predictedWheelFailureDate"]=min($arr_predicted_dates); 
+            $data["alarmCause"]="The ".array_search(min($arr_predicted_dates), $arr_predicted_dates)." has violated the wheel alarm settings thresholds";
             return $data;
         }
         else return NULL;

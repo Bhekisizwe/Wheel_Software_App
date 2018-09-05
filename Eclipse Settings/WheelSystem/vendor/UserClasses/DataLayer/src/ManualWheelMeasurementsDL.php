@@ -179,10 +179,10 @@ class ManualWheelMeasurementsDL extends DatabaseManager implements DatabaseFunct
                     $arr["measurementTime"]=$measTime;
                     $arr["measurementDate"]=$measDate;
                     $arr["operatorName"]=$operatorName;
-                    $arr["wheelID"]=$wheelID;
-                    $arr["axleNumber"]=$axleNumber;
-                    $arr["setNumber"]=$setNumber;
                     $arr["coachNumber"]=$coachNumber;
+                    $arr["setNumber"]=$setNumber;
+                    $arr["axleNumber"]=$axleNumber;
+                    $arr["wheelID"]=$wheelID;                  
                     $arr["gibsonDescription"]=$gibsonDescr;
                     $arr_2D[]=$arr;                  
                 }
@@ -220,10 +220,10 @@ class ManualWheelMeasurementsDL extends DatabaseManager implements DatabaseFunct
                         $arr["measurementTime"]=$measTime;
                         $arr["measurementDate"]=$measDate;
                         $arr["operatorName"]=$operatorName;
-                        $arr["wheelID"]=$wheelID;
-                        $arr["axleNumber"]=$axleNumber;
-                        $arr["setNumber"]=$setNumber;
                         $arr["coachNumber"]=$coachNumber;
+                        $arr["setNumber"]=$setNumber;
+                        $arr["axleNumber"]=$axleNumber;
+                        $arr["wheelID"]=$wheelID; 
                         $arr_2D[]=$arr;
                     }
                 }

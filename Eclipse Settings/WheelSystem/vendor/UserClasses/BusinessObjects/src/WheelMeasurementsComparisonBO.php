@@ -25,14 +25,31 @@ class WheelMeasurementsComparisonBO extends ManualWheelMeasurementsBO
     private $defectSize=0.0;
     private $alarmSearchStartDate="";
     private $alarmSearchEndDate="";
+    private $daysBeforeFailure=0;
     
     /**
      */
     public function __construct()
     {
         parent::__construct();
-        $this->setObjectNumOfFields(42);
+        $this->setObjectNumOfFields(43);
     }
+    
+    /**
+     * @return number
+     */
+    public function getDaysBeforeFailure()
+    {
+        return $this->daysBeforeFailure;
+    }
+
+    /**
+     * @param number $daysBeforeFailure
+     */
+    public function setDaysBeforeFailure($daysBeforeFailure)
+    {
+        $this->daysBeforeFailure = $daysBeforeFailure;
+    }  
     
     /**
      * @return mixed
@@ -296,6 +313,9 @@ class WheelMeasurementsComparisonBO extends ManualWheelMeasurementsBO
             //make the Key case insensitive by making the string comparison to be lower case
             $key_lower=strtolower($key);
             switch($key_lower){
+                case "daysbeforefailure":
+                    $this->daysBeforeFailure=$value;
+                    break;
                 case "flangeheightstatus":
                     $this->flangeHeightStatus=$value;
                     break;
