@@ -171,7 +171,7 @@ class UserAccountsTest extends TestCase
             }
             $i++;
         }        
-        $this->assertEquals(5,$counter);
+        $this->assertEquals(4,$counter);
     }
 
     /**

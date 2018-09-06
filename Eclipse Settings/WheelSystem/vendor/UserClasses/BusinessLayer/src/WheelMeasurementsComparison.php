@@ -28,6 +28,7 @@ class WheelMeasurementsComparison
     private $dailyDistance;
     private $dailyDistanceBO;
     private $sender;
+    private $alarmLogger;
 
     /**
      */
@@ -43,6 +44,7 @@ class WheelMeasurementsComparison
         $this->dailyDistance=new DailyDistanceSetting();
         $this->dailyDistanceBO=new DailyDistanceSettingBO();
         $this->wearRatesBO=new WearRatesBO();
+        $this->alarmLogger=new AlarmEventLogger();
     }
 
     /**
@@ -59,6 +61,7 @@ class WheelMeasurementsComparison
         $this->dailyDistance=null;
         $this->dailyDistanceBO=null;
         $this->wearRatesBO=null;
+        $this->alarmLogger=null;
     }
     
     public function checkManualSettingsExist(ManualWheelSettingsBO $data):bool {
@@ -450,6 +453,7 @@ class WheelMeasurementsComparison
         if(isset($data)) {
             $exceptionList=array();
             $missingCoachList=array();
+            $wheelMeasCompareBO=new WheelMeasurementsComparisonBO();
             $manualsettings=new ManualWheelSettingsBO();
             $autosettings=new AutoWheelSettingsBO();
             $arr=$this->getWheelMeasurements($data); //get wheel measurements between the specified start and end dates
@@ -461,6 +465,9 @@ class WheelMeasurementsComparison
                     $arr_list=$this->compareWheelMeasurementsToSettings($value, $autosettings, $manualsettings);
                     if($arr_list["addToExceptionList"]==true){
                         $exceptionList[]=$arr_list;
+                        $arr_list["staffNumber"]=$data->getStaffNumber();
+                        $wheelMeasCompareBO->set($arr_list);
+                        $this->alarmLogger->addAlarmEvent($wheelMeasCompareBO);
                     }
                 }
                 else{
@@ -481,6 +488,7 @@ class WheelMeasurementsComparison
             }
             //destroy objects
             unset($manualsettings);
+            unset($wheelMeasCompareBO);
             unset($autosettings);
             return $exceptionList;
         }

@@ -1,0 +1,23 @@
+<?php
+    $app->get('/managewheels', function (Request $request, Response $response, array $args) use ($app) {
+        
+    });
+        
+        $app->get('/showwheels', function (Request $request, Response $response, array $args) {
+            
+            $res=$response->withHeader("Content-Type", "text/html");
+            return $res->getBody()->write($str);
+        });
+            
+            $app->post('/distance/add', function (Request $request, Response $response, array $args) {
+                //Return Associative Array
+                $arr=json_decode($request->getBody()->getContents(),TRUE);
+                
+                
+                $arr_json=json_encode($arr);    //Return JSON Data Object
+                $res=$response->withHeader("Content-Type", "application/json");
+                return $res->getBody()->write($arr_json);
+                
+            });
+            
+?>

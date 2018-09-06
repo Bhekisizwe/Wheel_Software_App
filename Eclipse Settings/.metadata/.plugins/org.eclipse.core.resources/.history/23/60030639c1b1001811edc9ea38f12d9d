@@ -1,0 +1,25 @@
+<?php
+declare(strict_types=1);
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+    //View Specific Activity Logs
+    $app->get('/activitylog/{daterange}', function (Request $request, Response $response, array $args) {
+        $arr["name"]="Bhekisizwe";
+        $arr["surname"]="Mthethwa";
+        $arr_json=json_encode($arr);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //View All Activity Names
+    $app->get('/activitylog/', function (Request $request, Response $response, array $args) {
+        $arr["name"]="Bhekisizwe";
+        $arr["surname"]="Mthethwa";
+        $arr_json=json_encode($arr);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+            
+    
+?>
+

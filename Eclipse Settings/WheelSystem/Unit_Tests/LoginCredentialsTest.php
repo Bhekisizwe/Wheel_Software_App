@@ -38,7 +38,7 @@ class LoginCredentialsTest extends TestCase
         $arr_update["staffNumber"]="305941";
         $arr_update["emailAddress"]="bmthethwa@gqunsueng.co.za";
         $arr_update["passwordHash"]="induction";
-        $arr_update["accountState"]=0;
+        $arr_update["accountState"]=1;
         $arr_update["adminStaffNumber"]="305941";
         $this->arr_update=$arr_update;
     }
@@ -52,8 +52,20 @@ class LoginCredentialsTest extends TestCase
         $this->loginCredentials = null;
         $this->data=null;
         parent::tearDown();
-    }  
+    }
 
+    /**
+     * Tests LoginCredentials->updateUserPassword()
+     */
+    public function testUpdateUserPassword()
+    {
+        // TODO Auto-generated LoginCredentialsTest->testUpdateUserPassword()
+        //$this->markTestIncomplete("updateUserPassword test not implemented");
+        $this->data->set($this->arr_update);      
+        $status=$this->loginCredentials->updateUserPassword($this->data);
+        $this->assertEquals(true,$status);
+    }
+    
     /**
      * Tests LoginCredentials->findUserAccountMatch()
      */
@@ -66,18 +78,6 @@ class LoginCredentialsTest extends TestCase
         $arr["passwordHash"]="induction";
         $this->data->set($arr);
         $status=$this->loginCredentials->findUserAccountMatch($this->data);
-        $this->assertEquals(true,$status);
-    }
-
-    /**
-     * Tests LoginCredentials->updateUserPassword()
-     */
-    public function testUpdateUserPassword()
-    {
-        // TODO Auto-generated LoginCredentialsTest->testUpdateUserPassword()
-        //$this->markTestIncomplete("updateUserPassword test not implemented");
-        $this->data->set($this->arr_update);      
-        $status=$this->loginCredentials->updateUserPassword($this->data);
         $this->assertEquals(true,$status);
     }
 

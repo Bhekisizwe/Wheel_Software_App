@@ -1,34 +1,67 @@
 <?php
-    //use UserClasses\BusinessLayer\DailyDistanceSetting;
-    
-    use \Psr\Http\Message\ServerRequestInterface as Request;
-    use \Psr\Http\Message\ResponseInterface as Response;
+declare(strict_types=1);
+    //use UserClasses\BusinessLayer\DailyDistanceSetting;  
    
     require __DIR__.'/vendor/autoload.php';   
  
     $app = new \Slim\App(); 
-    $app->get('/managewheels', function (Request $request, Response $response, array $args) use ($app) {
-        //Read HTML file contents at once        
-        $app->redirect("/managewheels", "/showwheels");
-    });
+        
+    //Create, Edit and View System License Task
+    include 'systemlicense.php';
     
-    $app->get('/showwheels', function (Request $request, Response $response, array $args) {
-        $filename="wheels.html";
-        file_exists($filename)?$str=file_get_contents($filename):$str="Fuck You";
-        $res=$response->withHeader("Content-Type", "text/html");
-        return $res->getBody()->write($str);
-    });
+    //Create, Edit and View Terms and Conditions Task
+    include 'termsconditions.php';
     
-    $app->post('/distance/add', function (Request $request, Response $response, array $args) {
-        //Return Associative Array
-        $arr=json_decode($request->getBody()->getContents(),TRUE); 
-        //$arr_json=json_encode($arr);
-       
-        $arr_json=json_encode($arr);    //Return JSON Data Object
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
-             
-    }); 
+    //Create, Edit and View Admin Accounts Task
+    include 'adminaccount.php';
+    
+   //Create, Edit and View User Accountss Task
+    include 'useraccount.php';
+    
+    //Edit and View login Task
+    include 'login.php';
+    
+    //Create, Edit and View User Roles Task
+    include 'userrole.php';
+    
+    //Import Asset Register CSV File, Create, Edit and View Asset Register Task
+    include 'assetregister.php';
+    
+    //Create, Edit and View Number of Axles Per Coach Task
+    include 'axlespercoach.php';
+    
+    //Import Mapping CSV File, Create, Edit and View Axle-Coach Mapping Task
+    include 'axlecoachmapping.php';
+    
+    //Create, Edit and View MiniProf Alarm settings Task
+    include 'wheelalarmsettings.php';
+    
+    //Create, Edit and View Manual Alarm settings Task
+    include 'manualwheelsettings.php';
+    
+    //Create, Edit and View Wear Rates Settings Task
+    include 'wearratessettings.php';
+    
+    //Create, Edit and View Daily Distance setting Task
+    include 'dailydistancesetting.php';
+    
+    //Import MiniProf TextFile and View MiniProf Measurements Task
+    include 'miniprofmeasurements.php';
+    
+    //Create, Edit and View Manual Measurements Task
+    include 'manualmeasurements.php';
+    
+    //Create, Edit and View Wheel Reprofiling Task
+    include 'wheelreprofiling.php';
+    
+    //View Activity Log Task
+    include 'activityservice.php';
+    
+    //View Alarm Events Task
+    include 'alarmevent.php';
+    
+    //Generate Planning Report Task
+    include 'planningreport.php';
     
     $app->run();
      

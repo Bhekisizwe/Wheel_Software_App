@@ -1,0 +1,12 @@
+<?php
+declare(strict_types=1);
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+    //View
+    $app->get('/alarmevent', function (Request $request, Response $response, array $args) {
+        
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+?>

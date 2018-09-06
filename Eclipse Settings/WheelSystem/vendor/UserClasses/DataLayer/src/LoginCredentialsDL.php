@@ -13,7 +13,7 @@ class LoginCredentialsDL extends UserAccountDL
         $connector=$this->dbConnect();  //connect to MariaDB database
         if(isset($connector)){
             /*****Check if Login Details Pair exist in Database*******/
-            $query="SELECT RoleID FROM UserAccounts WHERE StaffNumber=? AND Password=?";
+            $query="SELECT RoleID FROM UserAccounts WHERE StaffNumber=? AND Password=? AND ActivityState=1";
             $stmt=$connector->prepare($query);
             $staffNumber=$data["staffNumber"];
             $passwordHash=$data["passwordHash"];

@@ -42,6 +42,7 @@ $planningReport=new PlanningReport();
 $manualMeasBO=new ManualWheelMeasurementsBO();
 $manualMeasBO->setReportStartDate("2017-03-25");
 $manualMeasBO->setReportEndDate("2017-04-07");
+$manualMeasBO->setStaffNumber("305941");
 $reportData=$planningReport->generateReportData($manualMeasBO);
 $userRoles=$planningReport->getUserRolesWithReadAccess();
 $visibilityArr=$planningReport->getReportColumnsVisibilityPerUserRole($userRoles);
