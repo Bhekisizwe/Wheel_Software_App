@@ -25,6 +25,7 @@ class AdminAccountDL extends UserAccountDL
                 while($rows=$result->fetch_assoc()){
                     $arr["accountID"]=$rows["AccountID"];
                     $arr["roleID"]=$rows["RoleID"];
+                    $arr["userRoleName"]=$rows["UserRoleName"];
                     $arr["name"]=$rows["Name"];
                     $arr["surname"]=$rows["Surname"];
                     $arr["staffNumber"]=$rows["StaffNumber"];

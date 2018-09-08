@@ -192,8 +192,8 @@ class TermsAndConditions
         $data=new TermsConditionsBO();
         $arr_results=$this->listTermsData($data);
         $body="Dear Super Administrator<p>";
-        $body.="The contractual terms and conditions information, for ".$arr_results[0]["CompanyName"]." based in";
-        $body.=" ".$arr_results[0]["Surburb"]." in ".$arr_results[0]["City"]." has been updated<p>";
+        $body.="The contractual terms and conditions information, for ".$arr_results["companyName"]." based in";
+        $body.=" ".$arr_results["postalAddressArray"]["surburb"]." in ".$arr_results["postalAddressArray"]["city"]." has been updated<p>";
         $body.=" By Order (Gqunsu Engineering Pty Ltd)";
         $arr_email["body"]=$body;
         //destroy objects

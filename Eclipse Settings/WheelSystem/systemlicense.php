@@ -1,22 +1,70 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\License;
+use UserClasses\BusinessObjects\SystemLicenseBO;
     //View
     $app->get('/systemlicense', function (Request $request, Response $response, array $args) {
-        $arr["name"]="Bhekisizwe";
-        $arr["surname"]="Mthethwa";
+        //Create Objects
+        $license=new License();
+        $licenseBO=new SystemLicenseBO();
+        if(isset($_SESSION["staffNumber"])){
+            if($license->checkLicenseExists($licenseBO)){
+                $licenseBO->setDataExistsStatus(true);
+                $lic_arr=$license->listLicenseData($licenseBO);
+                $licenseBO->set($lic_arr);
+            }
+            else {
+                $licenseBO->setDataExistsStatus(false);
+            }
+            $licenseBO->setTransactionStatus(true);
+            $arr=$licenseBO->getArray();
+        }
+        else{
+            $licenseBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $licenseBO->set($arr_error);
+            $arr=$licenseBO->getArray();
+        }        
         $arr_json=json_encode($arr);
+        //destroy objects
+        unset($license);
+        unset($licenseBO);
         $res=$response->withHeader("Content-Type", "application/json");
         return $res->getBody()->write($arr_json);
     });
     
     //Add        
     $app->post('/systemlicense/add', function (Request $request, Response $response, array $args) {
-        //Return Associative Array
-        $arr=json_decode($request->getBody()->getContents(),TRUE);
-        
-        
-        $arr_json=json_encode($arr);    //Return JSON Data Object
+        //Create Objects
+        $license=new License();
+        $licenseBO=new SystemLicenseBO();
+        //Return Associative Array        
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $licenseBO->set($form_data);
+            $licenseBO->setStaffNumber($_SESSION["staffNumber"]);
+            $licenseBO->setTransactionStatus($license->addLicense($licenseBO));            
+            $arr=$licenseBO->getArray();
+        }
+        else{
+            $licenseBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $licenseBO->set($arr_error);           
+            $arr=$licenseBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($license);
+        unset($licenseBO);         
         $res=$response->withHeader("Content-Type", "application/json");
         return $res->getBody()->write($arr_json);
         
@@ -24,11 +72,31 @@ use \Psr\Http\Message\ResponseInterface as Response;
     
     //Update
     $app->post('/systemlicense/update', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $license=new License();
+        $licenseBO=new SystemLicenseBO();
         //Return Associative Array
-        $arr=json_decode($request->getBody()->getContents(),TRUE);
-        
-        
-        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $licenseBO->set($form_data);
+            $licenseBO->setStaffNumber($_SESSION["staffNumber"]);
+            $licenseBO->setTransactionStatus($license->updateLicense($licenseBO));
+            $arr=$licenseBO->getArray();
+        }
+        else{
+            $licenseBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $licenseBO->set($arr_error);
+            $arr=$licenseBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($license);
+        unset($licenseBO);        
         $res=$response->withHeader("Content-Type", "application/json");
         return $res->getBody()->write($arr_json);
         

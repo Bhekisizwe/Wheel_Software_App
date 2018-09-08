@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+session_start();
     //use UserClasses\BusinessLayer\DailyDistanceSetting;  
    
     require __DIR__.'/vendor/autoload.php';   

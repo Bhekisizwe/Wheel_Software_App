@@ -168,8 +168,8 @@ class License
         $data=new SystemLicenseBO();
         $arr_results=$this->listLicenseData($data);
         $body="Dear Super Administrator<p>";
-        $body.="The licensing information, from ".$arr_results[0]["CompanyName"]." based in";
-        $body.=" ".$arr_results[0]["Surburb"]." in ".$arr_results[0]["City"]." has been updated<p>";
+        $body.="The licensing information, from ".$arr_results["companyName"]." based in";
+        $body.=" ".$arr_results["postalAddressArray"]["surburb"]." in ".$arr_results["postalAddressArray"]["city"]." has been updated<p>";
         $body.=" By Order (Gqunsu Engineering Pty Ltd)";
         $arr_email["body"]=$body;
         unset($data);

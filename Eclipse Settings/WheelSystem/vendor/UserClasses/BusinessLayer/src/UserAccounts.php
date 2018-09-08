@@ -174,7 +174,7 @@ class UserAccounts
                         $arr_email=$this->generateEmailMessage($arr,"update");
                         $this->sender->sendEmail($arr_email);
                     }
-                    else throw new \Exception("Failed to update password!");
+                    else throw new \Exception("Failed to reset password!");
                 }
             } catch (\Exception $e) {                
                 $class_name="UserAccounts";
