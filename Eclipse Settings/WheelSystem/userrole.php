@@ -1,36 +1,133 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
     //View All User Roles, Activity Names, and Report Column Names
     $app->get('/userrole', function (Request $request, Response $response, array $args) {
-        $arr["name"]="Bhekisizwe";
-        $arr["surname"]="Mthethwa";
+        //Create Objects
+        $role=new UserRole();
+        $roleBO=new UserRoleBO();
+        if(isset($_SESSION["staffNumber"])){           
+            $list_roles_arr=$role->listAllUserRoles();
+            $list_activity_arr=$role->listAllActivities();
+            $list_reportcol_arr=$role->listAllColumns();
+            $roleBO->set($list_roles_arr);
+            $roleBO->set($list_activity_arr);
+            $roleBO->set($list_reportcol_arr);
+            $roleBO->setTransactionStatus(true);
+            $arr=$roleBO->getArray();
+        }
+        else{
+            $roleBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $roleBO->set($arr_error);
+            $arr=$roleBO->getArray();
+        }
         $arr_json=json_encode($arr);
+        //destroy objects
+        unset($role);
+        unset($roleBO);
         $res=$response->withHeader("Content-Type", "application/json");
         return $res->getBody()->write($arr_json);
     });
     
     //Check if User Role exists
     $app->get('/userrole/checkexistence/{userrolename}', function (Request $request, Response $response, array $args) {
-        
+        //Create Objects
+        $role=new UserRole();
+        $roleBO=new UserRoleBO();
+        $userRoleName=$args["userrolename"];
+        $role_arr["userRole2DArray"][0]["userRoleName"]=$userRoleName;
+        $arr=array();
+        if(isset($_SESSION["staffNumber"])){
+            $roleBO->set($role_arr);
+            $roleBO->setDataExistsStatus($role->checkUserRoleExists($roleBO));
+            $roleBO->setTransactionStatus(true);
+            $arr=$roleBO->getArray();
+        }
+        else{
+            $roleBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $roleBO->set($arr_error);
+            $arr=$roleBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($role);
+        unset($roleBO);
         $res=$response->withHeader("Content-Type", "application/json");
         return $res->getBody()->write($arr_json);
     });
     
     //View Access Rights
     $app->get('/userrole/{roleid}', function (Request $request, Response $response, array $args) {
-        
+        //Create Objects
+        $role=new UserRole();
+        $roleBO=new UserRoleBO();
+        $roleID=$args["roleid"];
+        $role_arr["userRole2DArray"][0]["roleID"]=$roleID;
+        $arr=array();
+        if(isset($_SESSION["staffNumber"])){
+            $roleBO->set($role_arr);
+            $access_arr=$role->listUserAccessRights($roleBO);
+            $roleBO->setTransactionStatus(true);
+            $roleBO->set($access_arr);
+            $arr=$roleBO->getArray();
+        }
+        else{
+            $roleBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $roleBO->set($arr_error);
+            $arr=$roleBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($role);
+        unset($roleBO);
         $res=$response->withHeader("Content-Type", "application/json");
         return $res->getBody()->write($arr_json);
     });
     
     //Add
     $app->post('/userrole/add', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $role=new UserRole();
+        $roleBO=new UserRoleBO();
         //Return Associative Array
-        $arr=json_decode($request->getBody()->getContents(),TRUE);
-        
-        
-        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $roleBO->set($form_data);
+            $roleBO->setStaffNumber($_SESSION["staffNumber"]);
+            $roleBO->setTransactionStatus($role->addUserRole($roleBO));           
+            $arr=$roleBO->getArray();
+        }
+        else{
+            $roleBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $roleBO->set($arr_error);
+            $arr=$roleBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($role);
+        unset($roleBO);  
         $res=$response->withHeader("Content-Type", "application/json");
         return $res->getBody()->write($arr_json);
         
@@ -38,11 +135,31 @@ use \Psr\Http\Message\ResponseInterface as Response;
         
     //Update
     $app->post('/userrole/update', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $role=new UserRole();
+        $roleBO=new UserRoleBO();
         //Return Associative Array
-        $arr=json_decode($request->getBody()->getContents(),TRUE);
-        
-        
-        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $roleBO->set($form_data);            
+            $roleBO->setStaffNumber($_SESSION["staffNumber"]);
+            $roleBO->setTransactionStatus($role->updateUserRole($roleBO));
+            $arr=$roleBO->getArray();
+        }
+        else{
+            $roleBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $roleBO->set($arr_error);
+            $arr=$roleBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($role);
+        unset($roleBO);  
         $res=$response->withHeader("Content-Type", "application/json");
         return $res->getBody()->write($arr_json);
         

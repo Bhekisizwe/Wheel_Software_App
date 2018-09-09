@@ -1,0 +1,46 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\ActivityLog;
+use UserClasses\BusinessObjects\ActivityLogBO;
+    //View Specific Activity Logs
+    $app->get('/activityservice/{daterange}', function (Request $request, Response $response, array $args) {
+        $arr["name"]="Bhekisizwe";
+        $arr["surname"]="Mthethwa Activity";
+        $arr_json=json_encode($arr);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //View All Activity Names
+    $app->get('/activityservice', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $activity=new ActivityLog();
+        $activityBO=new ActivityLogBO();
+        if(isset($_SESSION["staffNumber"])){
+            $list_activitynames_arr=$activity->listAllActivityNames();            
+            $activityBO->set($list_activitynames_arr);            
+            $activityBO->setTransactionStatus(true);
+            $arr=$activityBO->getArray();
+        }
+        else{
+            $activityBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $activityBO->set($arr_error);
+            $arr=$activityBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($activity);
+        unset($activityBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+            
+    
+?>
+

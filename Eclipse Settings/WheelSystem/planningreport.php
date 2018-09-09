@@ -1,12 +1,103 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-    //Generate Planning Report
+use UserClasses\BusinessLayer\PlanningReport;
+use UserClasses\BusinessObjects\ManualWheelMeasurementsBO;
+use UserClasses\BusinessLayer\WheelMeasurementsComparison;
+use UserClasses\BusinessObjects\ManualWheelSettingsBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+           
+    //Generate MS Excel Planning Report and email it.
     $app->get('/planningreportservice/{daterange}', function (Request $request, Response $response, array $args) {
-        $arr["name"]="Bhekisizwe";
-        $arr["surname"]="Mthethwa Plan";
+        //Create Objects
+        $planning=new PlanningReport();
+        $wheelcompare=new WheelMeasurementsComparison();
+        $manualSettingsBO=new ManualWheelSettingsBO();
+        $planningBO=new ManualWheelMeasurementsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $searchdatesstr=$args["daterange"];
+        $date_arr=explode("_",$searchdatesstr);        
+        $arr=array();
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Planning Report Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $planningBO->setStaffNumber($_SESSION["staffNumber"]);
+                $planningBO->setReportStartDate($date_arr[0]);
+                $planningBO->setReportEndDate($date_arr[1]);
+                if($wheelcompare->checkManualSettingsExist($manualSettingsBO)){
+                    if($wheelcompare->checkDailyDistanceSettingExists()){
+                        if($wheelcompare->checkWearRatesSettingsExist()){
+                            //everything is setup OK. Proceed
+                            $reportData=$planning->generateReportData($planningBO);
+                            $userRoles=$planning->getUserRolesWithReadAccess();
+                            $visibilityArr=$planning->getReportColumnsVisibilityPerUserRole($userRoles);
+                            foreach($visibilityArr as $roleID => $value){
+                                $report=$planning->produceReportPerUserRole($value, $reportData);
+                                $staffNumber=$_SESSION["staffNumber"];
+                                $planning->writeReportToMSExcel($report, $staffNumber, $roleID);
+                            }
+                            $planningBO->setTransactionStatus(true);
+                        }
+                        else{
+                            $arr_err=array();
+                            $arr_err["errorCode"]="0x12";
+                            $arr_err["errorDescription"]="Please setup the wheel wear rates first, they are missing.";
+                            $arr_error["errorAssocArray"][12]=$arr_err;
+                            $planningBO->set($arr_error);
+                        }
+                    }
+                    else{
+                        $arr_err=array();
+                        $arr_err["errorCode"]="0x13";
+                        $arr_err["errorDescription"]="Please setup the average daily distance travelled, it is missing.";
+                        $arr_error["errorAssocArray"][13]=$arr_err;
+                        $planningBO->set($arr_error);
+                    }
+                }
+                else{
+                    //state the manual settings error
+                    $arr_err=array();
+                    $arr_err["errorCode"]="0x14";
+                    $arr_err["errorDescription"]="Please setup the manual wheel measurements alarm settings, they are missing.";
+                    $arr_error["errorAssocArray"][14]=$arr_err;
+                    $planningBO->set($arr_error);
+                }
+                $arr=$planningBO->getArray();
+            }
+            else{
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $planningBO->set($arr_error);
+                $arr=$planningBO->getArray();
+            }            
+        }
+        else{
+            $planningBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $planningBO->set($arr_error);
+            $arr=$planningBO->getArray();
+        }
         $arr_json=json_encode($arr);
+        //destroy objects
+        unset($planning);
+        unset($planningBO);
+        unset($manualSettingsBO);
+        unset($wheelcompare);
+        unset($userrole);
+        unset($userroleBO);
         $res=$response->withHeader("Content-Type", "application/json");
         return $res->getBody()->write($arr_json);
     });
+        
 ?>

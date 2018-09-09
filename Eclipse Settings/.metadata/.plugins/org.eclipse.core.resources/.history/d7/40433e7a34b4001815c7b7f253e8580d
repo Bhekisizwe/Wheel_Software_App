@@ -1,0 +1,63 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\AlarmEventLogger;
+use UserClasses\BusinessObjects\WheelMeasurementsComparisonBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+    //View Alarms for Specific Date Range
+    $app->get('/alarmevent/{daterange}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $alarm=new AlarmEventLogger();
+        $alarmBO=new WheelMeasurementsComparisonBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $searchdatesstr=$args["daterange"];
+        $date_arr=explode("_",$searchdatesstr);     
+        $arr=array();
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Wheel Measurements Management";
+            $arr=$userroleBO->getArray();
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $alarmBO->setAlarmSearchStartDate($date_arr[0]);
+                $alarmBO->setAlarmSearchEndDate($date_arr[1]);
+                $alarm_arr=$alarm->searchAlarmEvents($alarmBO);
+                $alarmBO->setTransactionStatus(true);
+                for($j=0;$j<count($alarm_arr);$j++){
+                    $alarmBO->set($alarm_arr[$j]);            ;
+                    $arr[]=$alarmBO->getArray();
+                }
+            }
+            else{
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $alarmBO->set($arr_error);
+                $arr=$alarmBO->getArray();
+            }            
+        }
+        else{
+            $alarmBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $alarmBO->set($arr_error);
+            $arr=$alarmBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($alarm);
+        unset($alarmBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+?>

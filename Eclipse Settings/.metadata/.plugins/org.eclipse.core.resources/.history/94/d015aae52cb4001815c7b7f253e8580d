@@ -1,0 +1,43 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\AlarmEventLogger;
+use UserClasses\BusinessObjects\WheelMeasurementsComparisonBO;
+    //View Alarms for Specific Date Range
+    $app->get('/alarmevent/{daterange}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $alarm=new AlarmEventLogger();
+        $alarmBO=new WheelMeasurementsComparisonBO();
+        $searchdatesstr=$args["daterange"];
+        $date_arr=explode("_",$searchdatesstr);     
+        $arr=array();
+        if(isset($_SESSION["staffNumber"])){
+            $activityBO->setStartDate($date_arr[count($date_arr)-2]);
+            $activityBO->setEndDate($date_arr[count($date_arr)-1]);
+            $activityBO->set($taskid_arr);
+            $activity_arr=$activity->searchForActivityReports($activityBO);
+            $activityBO->setTransactionStatus(true);
+            for($j=0;$j<count($activity_arr);$j++){
+                $activityBO->set($activity_arr[$j]);            ;
+                $arr[]=$activityBO->getArray();
+            }
+        }
+        else{
+            $activityBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $activityBO->set($arr_error);
+            $arr=$activityBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($activity);
+        unset($activityBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+?>

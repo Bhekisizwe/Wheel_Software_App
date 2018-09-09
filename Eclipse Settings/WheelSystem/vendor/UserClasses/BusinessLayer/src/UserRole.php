@@ -140,23 +140,26 @@ class UserRole
     
     public function checkUserAuthorization(UserRoleBO $data,string $accessRight,string $activityName):bool {
         if(isset($data) && $accessRight!="" && $activityName!=""){
-            $arr=$this->listUserAccessRights($data);    //get user access rights for the specific Role            
-            foreach($arr["activityRights2DArray"] as $value){
-                if($value["activityName"]==$activityName){
-                    //we will only enter here once
-                    $arr_data=explode(" ",$value["activityRights"]);  
-                    if(array_search($accessRight, $arr_data)===false){
-                        //we do not have access rights here
-                        $status_message=false;
-                        break;  //exit loop
+            $arr=$this->listUserAccessRights($data);    //get user access rights for the specific Role  
+            if(count($arr)>0){
+                foreach($arr["activityRights2DArray"] as $value){
+                    if($value["activityName"]==$activityName){
+                        //we will only enter here once
+                        $arr_data=explode(" ",$value["activityRights"]);
+                        if(array_search($accessRight, $arr_data)===false){
+                            //we do not have access rights here
+                            $status_message=false;
+                            break;  //exit loop
+                        }
+                        else{
+                            $status_message=true;   //we have access rights
+                            break;  //exit loop
+                        }
                     }
-                    else{
-                        $status_message=true;   //we have access rights
-                        break;  //exit loop
-                    }
+                    else $status_message=false;
                 }
-                else $status_message=false;
             }
+            else $status_message=false;            
             return $status_message;
         }
         else return false;

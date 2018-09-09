@@ -17,6 +17,8 @@ use UserClasses\BusinessObjects\UserAccountBO;
             //match found. Set SESSION variable and start session
             //set Transaction Status to true
             $_SESSION["staffNumber"]=$userAccountBO->getStaffNumber();
+            $user_arr=$loginObj->listUserAccount($userAccountBO);            
+            $_SESSION["roleID"]=$user_arr["roleID"];
             $userAccountBO->setTransactionStatus(true);
             $userAccountBO->setDataExistsStatus(true);
             $userAccountBO->setPasswordHash("");
