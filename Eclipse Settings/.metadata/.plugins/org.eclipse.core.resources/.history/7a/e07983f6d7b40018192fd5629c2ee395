@@ -1,0 +1,113 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\ManualWheelSettings;
+use UserClasses\BusinessObjects\ManualWheelSettingsBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+    //View All Manual Wheel Parameter Names
+    $app->get('/manualwheelsettings', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $manualSettings=new ManualWheelSettings();
+        $manualSettingsBO=new ManualWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        if(isset($_SESSION["staffNumber"])){ 
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Wheel Measurements Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $manual_settings_arr=$manualSettings->listManualWheelParameters();                
+                $manualSettingsBO->set($manual_settings_arr);
+            }
+           
+            $licenseBO->set($lic_arr);     
+            
+            $licenseBO->setTransactionStatus(true);
+            $arr=$licenseBO->getArray();
+        }
+        else{
+            $licenseBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $licenseBO->set($arr_error);
+            $arr=$licenseBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($license);
+        unset($licenseBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Add
+    $app->post('/manualwheelsettings/add', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $license=new License();
+        $licenseBO=new SystemLicenseBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $licenseBO->set($form_data);
+            $licenseBO->setStaffNumber($_SESSION["staffNumber"]);
+            $licenseBO->setTransactionStatus($license->addLicense($licenseBO));
+            $arr=$licenseBO->getArray();
+        }
+        else{
+            $licenseBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $licenseBO->set($arr_error);
+            $arr=$licenseBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($license);
+        unset($licenseBO);  
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+        
+    //Update
+    $app->post('/manualwheelsettings/update', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $license=new License();
+        $licenseBO=new SystemLicenseBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $licenseBO->set($form_data);
+            $licenseBO->setStaffNumber($_SESSION["staffNumber"]);
+            $licenseBO->setTransactionStatus($license->updateLicense($licenseBO));
+            $arr=$licenseBO->getArray();
+        }
+        else{
+            $licenseBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $licenseBO->set($arr_error);
+            $arr=$licenseBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($license);
+        unset($licenseBO);  
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+?>

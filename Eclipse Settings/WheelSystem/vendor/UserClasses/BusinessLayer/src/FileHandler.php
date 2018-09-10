@@ -14,6 +14,14 @@ abstract class FileHandler
     private $fileTypeSecondary="";    
 
     /**
+     * @return Ambigous <string, \UserClasses\BusinessLayer\string>
+     */
+    public function getDirPath()
+    {
+        return $this->dirPath;
+    }
+
+    /**
      */
     public function __construct(string $dirpath,string $filetype1,string $filetype2=null)
     {

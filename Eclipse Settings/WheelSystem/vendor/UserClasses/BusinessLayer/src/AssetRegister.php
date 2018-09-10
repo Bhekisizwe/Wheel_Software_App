@@ -145,7 +145,10 @@ class AssetRegister extends FileHandler
                                 }
                                 $headers_skip=fgetcsv($file,null,$delimiter);   //skip headers
                                 while(($row_arr=fgetcsv($file,null,$delimiter))!== FALSE){
-                                    $arr[]=$row_arr; //append row of data to the end of the 2D Array    
+                                    $arr_data["coachDetails2DArray"][0]["coachType"]=$row_arr[1];
+                                    $arr_data["coachDetails2DArray"][0]["coachCategory"]=$row_arr[2];
+                                    $arr_data["coachNumber"]=$row_arr[0];
+                                    $arr[]=$arr_data; //append row of data to the end of the 2D Array    
                                 }  
                                 fclose($file);  //close the file
                                 /********END OF PROCESSING******************/

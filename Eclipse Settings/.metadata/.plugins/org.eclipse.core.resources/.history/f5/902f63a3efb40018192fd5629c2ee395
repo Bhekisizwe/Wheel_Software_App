@@ -1,0 +1,162 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\AxlesPerCoachType;
+use UserClasses\BusinessObjects\AxlesPerCoachTypeBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+        
+    //View Coach Type axle numbers
+    $app->get('/axlespercoach/{coachid}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $axles=new AxlesPerCoachType();
+        $axlesBO=new AxlesPerCoachTypeBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $coachID=$args["coachid"];
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Number of Axles per Coach Type";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $alarm["coachID"]=$coachID;
+                $axlesBO->set($alarm);
+                $axles_arr=$axles->showAxleNumberSetting($axlesBO);
+                $axlesBO->set($axles_arr);
+                $axlesBO->setTransactionStatus(true);
+                //$manualSettingsBO->setDataExistsStatus(true);
+                $arr=$axlesBO->getArray();
+            }
+            else {
+                $axlesBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $axlesBO->set($arr_error);
+                $arr=$axlesBO->getArray();
+            }
+        }
+        else{
+            $autoSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $autoSettingsBO->set($arr_error);
+            $arr=$autoSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($autoSettings);
+        unset($autoSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Add
+    $app->post('/axlespercoach/add', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $manualSettings=new ManualWheelSettings();
+        $manualSettingsBO=new ManualWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="C";
+            $activityName="Manual Wheel Warning Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $manualSettingsBO->set($form_data);
+                $manualSettingsBO->setStaffNumber($_SESSION["staffNumber"]);
+                $manualSettingsBO->setTransactionStatus($manualSettings->addGlobalWheelSettings($manualSettingsBO));
+                $arr=$manualSettingsBO->getArray();
+            }
+            else{
+                $manualSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $manualSettingsBO->set($arr_error);
+                $arr=$manualSettingsBO->getArray();
+            }
+        }
+        else{
+            $manualSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $manualSettingsBO->set($arr_error);
+            $arr=$manualSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manualSettings);
+        unset($manualSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+        
+    //Update
+    $app->post('/axlespercoach/update', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $manualSettings=new ManualWheelSettings();
+        $manualSettingsBO=new ManualWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="U";
+            $activityName="Manual Wheel Warning Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $manualSettingsBO->set($form_data);
+                $manualSettingsBO->setStaffNumber($_SESSION["staffNumber"]);
+                $manualSettingsBO->setTransactionStatus($manualSettings->updateGlobalWheelSettings($manualSettingsBO));
+                $arr=$manualSettingsBO->getArray();
+            }
+            else{
+                $manualSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $manualSettingsBO->set($arr_error);
+                $arr=$manualSettingsBO->getArray();
+            }
+        }
+        else{
+            $manualSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $manualSettingsBO->set($arr_error);
+            $arr=$manualSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manualSettings);
+        unset($manualSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+?>

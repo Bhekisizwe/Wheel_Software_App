@@ -1,112 +1,34 @@
-1.) Oops, error in Class License within method updateLicense has occured at 2018-09-06 11:38:01 .Exception message is Undefined offset: 0
+1.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:57:52 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-2.) Oops, error in Class Email within method sendEmail has occured at 2018-09-06 11:38:02 .Exception message is Successfully Sent Email!!!
+2.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:57:53 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-3.) Oops, error in Class Email within method sendEmail has occured at 2018-09-06 11:38:05 .Exception message is Successfully Sent Email!!!
+3.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:57:54 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-4.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-06 11:38:07 .Exception message is MiniProf TextFile MissingFields.whl has missing fields SetNo,WheelID,qR,Hollowing
+4.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-10 16:57:56 .Exception message is MiniProf TextFile MissingFields.whl has missing fields SetNo,WheelID,qR,Hollowing
  ####End of Line#### 
-5.) Oops, error in Class TermsAndConditions within method updateTerms has occured at 2018-09-06 11:38:07 .Exception message is Undefined offset: 0
+5.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:57:57 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-6.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-09-06 11:38:07 .Exception message is The system license data is missing within the database. Please complete that first!
+6.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-09-10 16:57:57 .Exception message is The system license data is missing within the database. Please complete that first!
  ####End of Line#### 
-7.) Oops, error in Class UserAccounts within method checkIfActiveAccLimitReached has occured at 2018-09-06 11:38:07 .Exception message is Undefined index: licenseLimit
+7.) Oops, error in Class UserAccounts within method checkIfActiveAccLimitReached has occured at 2018-09-10 16:57:57 .Exception message is Undefined index: licenseLimit
  ####End of Line#### 
-8.) Oops, error in Class Email within method sendEmail has occured at 2018-09-06 11:38:09 .Exception message is Successfully Sent Email!!!
+8.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:57:58 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-9.) Oops, error in Class ActivityLog within method addActivityData has occured at 2018-09-06 11:38:09 .Exception message is Undefined index: accountID
+9.) Oops, error in Class ActivityLog within method addActivityData has occured at 2018-09-10 16:57:58 .Exception message is Undefined index: accountID
  ####End of Line#### 
-10.) Oops, error in Class Email within method sendEmail has occured at 2018-09-06 11:38:11 .Exception message is Successfully Sent Email!!!
+10.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:57:59 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-11.) Oops, error in Class Email within method sendEmail has occured at 2018-09-06 11:38:13 .Exception message is Successfully Sent Email!!!
+11.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:58:01 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-12.) Oops, error in Class Email within method sendEmail has occured at 2018-09-06 11:38:15 .Exception message is Successfully Sent Email!!!
+12.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:58:02 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-13.) Oops, error in Class Email within method sendEmail has occured at 2018-09-06 11:38:17 .Exception message is Successfully Sent Email!!!
+13.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:58:03 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-14.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-06 11:38:17 .Exception message is License Limit Reached
+14.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-10 16:58:03 .Exception message is License Limit Reached
  ####End of Line#### 
-15.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-06 11:38:17 .Exception message is License Limit Reached
+15.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-10 16:58:03 .Exception message is License Limit Reached
  ####End of Line#### 
-16.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-06 11:38:17 .Exception message is License Limit Reached
+16.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-10 16:58:03 .Exception message is License Limit Reached
  ####End of Line#### 
-17.) Oops, error in Class Email within method sendEmail has occured at 2018-09-06 11:38:19 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-18.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 13:44:37 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-19.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 13:50:04 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-20.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 13:52:34 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-21.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 13:54:57 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-22.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 14:27:54 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-23.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 14:29:02 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-24.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 14:35:53 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-25.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 14:36:45 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-26.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 14:37:52 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-27.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 14:38:34 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-28.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 14:56:13 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-29.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 14:56:34 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-30.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 14:58:52 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-31.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-08 15:37:15 .Exception message is Failed to Add user account!
- ####End of Line#### 
-32.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 15:42:42 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-33.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-08 15:51:26 .Exception message is License Limit Reached
- ####End of Line#### 
-34.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 15:53:07 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-35.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-08 15:53:32 .Exception message is License Limit Reached
- ####End of Line#### 
-36.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-08 16:05:52 .Exception message is License Limit Reached
- ####End of Line#### 
-37.) Oops, error in Class UserAccounts within method updateUserAccount has occured at 2018-09-08 16:06:56 .Exception message is Failed to update user account!
- ####End of Line#### 
-38.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 16:07:47 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-39.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-08 16:11:08 .Exception message is Failed to Add user account!
- ####End of Line#### 
-40.) Oops, error in Class Email within method sendEmail has occured at 2018-09-08 16:11:53 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-41.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-09 10:38:13 .Exception message is License Limit Reached
- ####End of Line#### 
-42.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-09 10:39:23 .Exception message is Failed to Add user account!
- ####End of Line#### 
-43.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 10:40:34 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-44.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 10:47:32 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-45.) Oops, error in Class ActivityLog within method generatePDFActivityReport has occured at 2018-09-09 13:38:04 .Exception message is Invalid address:  (to): 
- ####End of Line#### 
-46.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 13:39:23 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-47.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 13:41:55 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-48.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 13:42:46 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-49.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 13:43:57 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-50.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 14:18:07 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-51.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 14:22:25 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-52.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 14:25:03 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-53.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 14:26:37 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-54.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 14:28:57 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-55.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 15:37:33 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-56.) Oops, error in Class Email within method sendEmail has occured at 2018-09-09 15:48:31 .Exception message is Successfully Sent Email!!!
+17.) Oops, error in Class Email within method sendEmail has occured at 2018-09-10 16:58:04 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
