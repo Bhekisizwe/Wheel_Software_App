@@ -154,10 +154,15 @@ use Slim\Http\UploadedFile;
                                 $csv_data=$asset->readCSVFileAssetsData($assetBO);
                                 foreach($csv_data as $row){
                                     //add data to database
-                                    $assetBO->set($row);
-                                    if(!$asset->checkAssetExists($assetBO)) $asset->addAsset($assetBO);
-                                }
-                                $assetBO->setTransactionStatus(true);
+                                    if(array_key_exists("coachNumber", $row)){
+                                        $assetBO->set($row);
+                                        $assetBO->setTransactionStatus(true);
+                                        if(!$asset->checkAssetExists($assetBO)) $asset->addAsset($assetBO);
+                                    }
+                                    else{
+                                        $assetBO->set($csv_data);
+                                    }                                    
+                                }                                
                                 $arr=$assetBO->getArray();
                             }
                             else {
@@ -189,10 +194,15 @@ use Slim\Http\UploadedFile;
                                     $csv_data=$asset->readCSVFileAssetsData($assetBO);
                                     foreach($csv_data as $row){
                                         //add data to database
-                                        $assetBO->set($row);
-                                        if(!$asset->checkAssetExists($assetBO)) $asset->addAsset($assetBO);
-                                    }
-                                    $assetBO->setTransactionStatus(true);
+                                        if(array_key_exists("coachNumber", $row)){
+                                            $assetBO->set($row);
+                                            $assetBO->setTransactionStatus(true);
+                                            if(!$asset->checkAssetExists($assetBO)) $asset->addAsset($assetBO);
+                                        }
+                                        else{
+                                            $assetBO->set($csv_data);
+                                        } 
+                                    }                                    
                                     $arr=$assetBO->getArray();
                                 }
                                 else {
@@ -220,10 +230,15 @@ use Slim\Http\UploadedFile;
                                 $csv_data=$asset->readCSVFileAssetsData($assetBO);
                                 foreach($csv_data as $row){
                                     //add data to database
-                                    $assetBO->set($row);
-                                    if(!$asset->checkAssetExists($assetBO)) $asset->addAsset($assetBO);
-                                }
-                                $assetBO->setTransactionStatus(true);
+                                    if(array_key_exists("coachNumber", $row)){
+                                        $assetBO->set($row);
+                                        $assetBO->setTransactionStatus(true);
+                                        if(!$asset->checkAssetExists($assetBO)) $asset->addAsset($assetBO);
+                                    }
+                                    else{
+                                        $assetBO->set($csv_data);
+                                    } 
+                                }                                
                                 $arr=$assetBO->getArray();
                             }
                             else {

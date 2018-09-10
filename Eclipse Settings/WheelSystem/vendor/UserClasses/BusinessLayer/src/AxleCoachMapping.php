@@ -143,7 +143,11 @@ class AxleCoachMapping extends FileHandler
                                 }
                                 $headers_skip=fgetcsv($file,null,$delimiter);   //skip headers
                                 while(($row_arr=fgetcsv($file,null,$delimiter))!== FALSE){
-                                    $arr[]=$row_arr; //append row of data to the end of the 2D Array
+                                    $arr_data["axleSerialNumber"]=$row_arr[0];
+                                    $arr_data["axleNumber"]=$row_arr[1];
+                                    $arr_data["setNumber"]=$row_arr[2];
+                                    $arr_data["coachNumber"]=$row_arr[3];
+                                    $arr[]=$arr_data; //append row of data to the end of the 2D Array
                                 }
                                 fclose($file);  //close the file
                                 /********END OF PROCESSING******************/
@@ -152,23 +156,23 @@ class AxleCoachMapping extends FileHandler
                                 //There are empty fields in the file
                                 $str="Axle to Coach Mapping CSV Textfile has missing data.";
                                 $str.="Please consult the HELP documentation to correctly setup the CSV file for import.";
-                                $arr["errorAssocArray"]["errorDescription"]=$str;
-                                $arr["errorAssocArray"]["errorCode"]="0x03";
-                                throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                                $arr["errorAssocArray"][3]["errorDescription"]=$str;
+                                $arr["errorAssocArray"][3]["errorCode"]="0x03";
+                                throw new \Exception($arr["errorAssocArray"][3]["errorDescription"]);
                             }
                         }
                         else {
                             //headings in wrong order
-                            $arr["errorAssocArray"]["errorDescription"]="Axle to Coach Mapping CSV TextFile Headings In Wrong Order";
-                            $arr["errorAssocArray"]["errorCode"]="0x11";
-                            throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                            $arr["errorAssocArray"][11]["errorDescription"]="Axle to Coach Mapping CSV TextFile Headings In Wrong Order";
+                            $arr["errorAssocArray"][11]["errorCode"]="0x11";
+                            throw new \Exception($arr["errorAssocArray"][11]["errorDescription"]);
                         }
                     }
                     else{
                         //some headers missing
-                        $arr["errorAssocArray"]["errorDescription"]="Axle to Coach Mapping CSV TextFile, some Headings Missing.";
-                        $arr["errorAssocArray"]["errorCode"]="0x09";
-                        throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
+                        $arr["errorAssocArray"][9]["errorDescription"]="Axle to Coach Mapping CSV TextFile, some Headings Missing.";
+                        $arr["errorAssocArray"][9]["errorCode"]="0x09";
+                        throw new \Exception($arr["errorAssocArray"][9]["errorDescription"]);
                     }
                 } catch (\Exception $e) {
                     $class_name="AxleCoachMapping";
