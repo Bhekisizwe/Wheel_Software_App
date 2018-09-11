@@ -1,0 +1,140 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\ManualWheelMeasurements;
+use UserClasses\BusinessObjects\ManualWheelMeasurementsBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\MiniProfDBUploader;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+    //View Specific MiniProf Wheel Data
+    $app->get('/manualmeasurements/miniprof/{coachnumber_wheelid_date}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $miniWheel=new MiniProfDBUploader();
+        $miniWheelBO=new MiniProfMeasurementsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $mini_meas_str=$args["coachnumber_wheelid_date"];
+        $mini_meas_arr=explode("_",$mini_meas_str);
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Wheel Measurements Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $mini["measurementDate"]=$mini_meas_arr[2];
+                $mini["wheelID"]=$mini_meas_arr[1];
+                $mini["coachNumber"]=$mini_meas_arr[0];
+                $miniWheelBO->set($mini);
+                $mini_arr=$manualWheel->showManualWheelData($autoSettingsBO);
+                $manualWheelBO->set($manual_arr);
+                $manualWheelBO->setTransactionStatus(true);
+                //$manualSettingsBO->setDataExistsStatus(true);
+                $arr=$manualWheelBO->getArray();
+            }
+            else {
+                $manualWheelBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $manualWheelBO->set($arr_error);
+                $arr=$manualWheelBO->getArray();
+            }
+        }
+        else{
+            $autoSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $autoSettingsBO->set($arr_error);
+            $arr=$autoSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($autoSettings);
+        unset($autoSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //View Manual Wheel Data
+    $app->get('/manualmeasurements/{measurementid}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $autoSettings=new AutoWheelSettings();
+        $autoSettingsBO=new AutoWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $coachID=$args["coachid"];
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="MiniProf Wheel Alarm Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $alarm["alarms2DArray"][0]["coachID"]=$coachID;
+                $autoSettingsBO->set($alarm);
+                $auto_settings_arr=$autoSettings->showCoachWheelSettings($autoSettingsBO);
+                $autoSettingsBO->set($auto_settings_arr);
+                $autoSettingsBO->setTransactionStatus(true);
+                //$manualSettingsBO->setDataExistsStatus(true);
+                $arr=$autoSettingsBO->getArray();
+            }
+            else {
+                $autoSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $autoSettingsBO->set($arr_error);
+                $arr=$autoSettingsBO->getArray();
+            }
+        }
+        else{
+            $autoSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $autoSettingsBO->set($arr_error);
+            $arr=$autoSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($autoSettings);
+        unset($autoSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });            
+    
+    //Add
+    $app->post('/manualmeasurements/add', function (Request $request, Response $response, array $args) {
+        //Return Associative Array
+        $arr=json_decode($request->getBody()->getContents(),TRUE);
+        
+        
+        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+        
+    //Update
+    $app->post('/manualmeasurements/update', function (Request $request, Response $response, array $args) {
+        //Return Associative Array
+        $arr=json_decode($request->getBody()->getContents(),TRUE);
+        
+        
+        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+?>

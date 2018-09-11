@@ -8,13 +8,14 @@ use UserClasses\BusinessObjects\UserAccountBO;
         //Create Objects
         $admin=new AdminAccounts();
         $adminBO=new UserAccountBO();
-        $arr=array();        
-        if(isset($_SESSION["staffNumber"])){           
+        $arr=$adminBO->getArray();      
+        if(isset($_SESSION["staffNumber"])){  
+            $arr=array(); 
             $admin_arr=$admin->listAllAdminAccounts();
             for($i=0;$i<count($admin_arr);$i++){
                 $adminBO->set($admin_arr[$i]);
                 $adminBO->setTransactionStatus(true);
-                $arr[$i]=$adminBO->getArray();
+                $arr[]=$adminBO->getArray();
             }            
         }
         else{

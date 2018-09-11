@@ -17,13 +17,14 @@ use UserClasses\BusinessObjects\UserRoleBO;
         for($i=0;$i<(count($date_arr)-2);$i++){
             $taskid_arr["taskArray2D"][$i]["taskID"]=(int) $date_arr[$i];
         }
-        $arr=array();
+        $arr=$activityBO->getArray();
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
             $accessRight="R";
             $activityName="Activity Logs";
             if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $arr=array();
                 $activityBO->setStartDate($date_arr[count($date_arr)-2]);
                 $activityBO->setEndDate($date_arr[count($date_arr)-1]);
                 $activityBO->set($taskid_arr);

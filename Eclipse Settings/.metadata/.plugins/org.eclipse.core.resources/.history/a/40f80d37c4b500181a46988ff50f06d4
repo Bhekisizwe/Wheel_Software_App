@@ -1,0 +1,231 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\MiniProfDBUploader;
+use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+    //View MiniProf Measurements for a specific Set Number and Date of measurement
+    $app->get('/miniprofmeasurements/{setnumber_date}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $miniProf=new MiniProfDBUploader();
+        $miniProfBO=new MiniProfMeasurementsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $search_str=$args["setnumber_date"];
+        $search_arr=explode("_",$search_str);
+        $arr=$miniProfBO->getArray();
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Wheel Measurements Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $arr=array();
+                $mini["setNumber"]=$search_arr[0];
+                $mini["measurementDate"]=$search_arr[1];
+                $miniProfBO->set($mini);
+                $mini_arr=$miniProf->showWheelData($miniProfBO);
+                for($j=0;$j<count($mini_arr);$j++){
+                    $miniProfBO->set($mini_arr[$j]);
+                    $miniProfBO->setTransactionStatus(true);
+                    $arr[]=$miniProfBO->getArray();
+                }                
+            }
+            else {
+                $miniProfBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $miniProfBO->set($arr_error);
+                $arr=$miniProfBO->getArray();
+            }
+        }
+        else{
+            $miniProfBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $miniProfBO->set($arr_error);
+            $arr=$miniProfBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($miniProf);
+        unset($miniProfBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //send emails to people to enter the Manual Wheel Measurements    
+    $app->post('/miniprofmeasurements/sendemail', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $miniProf=new MiniProfDBUploader();
+        $miniProfBO=new MiniProfMeasurementsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            if(count($form_data)>0){
+                $miniProfBO->set($form_data);
+                $miniProf->getEmailRecepients($miniProfBO);
+                $miniProfBO->setTransactionStatus(true);
+            }
+            else $miniProfBO->setTransactionStatus(false);
+            $arr=$miniProfBO->getArray();            
+        }
+        else{
+            $miniProfBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $miniProfBO->set($arr_error);
+            $arr=$miniProfBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($miniProf);
+        unset($miniProfBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Import
+    $app->post('/miniprofmeasurements/import/', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $miniProf=new MiniProfDBUploader();
+        $miniProfBO=new MiniProfMeasurementsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $arr_files=$request->getUploadedFiles();
+        $form_data=$request->getParsedBody();
+        //$form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(count($arr_files)>0){
+            if(isset($_SESSION["staffNumber"])){
+                $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+                $userroleBO->set($userrole_arr);
+                $accessRight="C";
+                $activityName="Wheel Measurements Management";
+                if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                    $miniProfBO->setStaffNumber($_SESSION["staffNumber"]);
+                    $miniProfBO->set($form_data);
+                    foreach($arr_files["miniprof"] as $upLoadedFiles){
+                        $uploaded_file=$upLoadedFiles->getClientFilename();
+                        //check if directory exists first
+                        $dirPath=__DIR__."\\MiniProf\\".$miniProfBO->getMeasurementDate()."\\".$miniProfBO->getSetNumber();
+                        if(file_exists($dirPath)){
+                            //move uploaded files here
+                            //check if the file exists already
+                            $filename=$miniProfBO->getMeasurementDate()."\\".$miniProfBO->getSetNumber()."\\".$uploaded_file;
+                            if($miniProf->checkFileExists($filename)){
+                                //a duplicate file exists, delete it
+                                if($miniProf->deleteFile($filename)){
+                                    //move files here, its safe to do so.
+                                    $upLoadedFiles->moveTo($dirPath."\\".$uploaded_file);
+                                    if($miniProf->confirmFileType($filename)){                                        
+                                        $miniProfBO->setTransactionStatus($miniProf->readMiniProfTextFileData($miniProfBO));                                        
+                                        $arr=$miniProfBO->getArray();
+                                    }
+                                    else {
+                                        $miniProf->deleteFile($filename);
+                                        $miniProfBO->setTransactionStatus(false);
+                                        //write Error Code and Description
+                                        $arr_err=array();
+                                        $arr_err["errorCode"]="0x04";
+                                        $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a MiniProf Textfile";
+                                        $arr_error["errorAssocArray"][4]=$arr_err;
+                                        $miniProfBO->set($arr_error);
+                                        $arr=$miniProfBO->getArray();
+                                    }
+                                }
+                            }
+                            else{
+                                //move files here.its safe to do so
+                                $upLoadedFiles->moveTo($dirPath."\\".$uploaded_file);
+                                if($miniProf->confirmFileType($filename)){
+                                    $miniProfBO->setTransactionStatus($miniProf->readMiniProfTextFileData($miniProfBO));
+                                    $arr=$miniProfBO->getArray();
+                                }
+                                else {
+                                    $miniProf->deleteFile($filename);
+                                    $miniProfBO->setTransactionStatus(false);
+                                    //write Error Code and Description
+                                    $arr_err=array();
+                                    $arr_err["errorCode"]="0x04";
+                                    $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a MiniProf Textfile";
+                                    $arr_error["errorAssocArray"][4]=$arr_err;
+                                    $miniProfBO->set($arr_error);
+                                    $arr=$miniProfBO->getArray();
+                                }
+                            }
+                        }
+                        else{
+                            //create the directory
+                            if(mkdir($dirPath)){
+                                //move files here.its safe to do so
+                                $upLoadedFiles->moveTo($dirPath."\\".$uploaded_file);
+                                if($miniProf->confirmFileType($filename)){
+                                    $miniProfBO->setTransactionStatus($miniProf->readMiniProfTextFileData($miniProfBO));
+                                    $arr=$miniProfBO->getArray();
+                                }
+                                else {
+                                    $miniProf->deleteFile($filename);
+                                    $miniProfBO->setTransactionStatus(false);
+                                    //write Error Code and Description
+                                    $arr_err=array();
+                                    $arr_err["errorCode"]="0x04";
+                                    $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a MiniProf Textfile";
+                                    $arr_error["errorAssocArray"][4]=$arr_err;
+                                    $miniProfBO->set($arr_error);
+                                    $arr=$miniProfBO->getArray();
+                                }
+                            }
+                        }
+                    }                       
+                }
+                else{
+                    $miniProfBO->setTransactionStatus(false);
+                    $arr_err=array();
+                    $arr_err["errorCode"]="0x18";
+                    $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                    $arr_error["errorAssocArray"][18]=$arr_err;
+                    $miniProfBO->set($arr_error);
+                    $arr=$miniProfBO->getArray();
+                }
+            }
+            else{
+                $miniProfBO->setTransactionStatus(false);
+                //write Error Code and Description
+                $arr_err=array();
+                $arr_err["errorCode"]="0x19";
+                $arr_err["errorDescription"]="Session has expired";
+                $arr_error["errorAssocArray"][19]=$arr_err;
+                $miniProfBO->set($arr_error);
+                $arr=$miniProfBO->getArray();
+            } 
+            $miniProfBO->set($form_data);
+            $arr=$miniProfBO->getArray();
+        }
+        else{
+            $arr=$miniProfBO->getArray();
+        }        
+        $arr_json=json_encode($arr);    //Return JSON Data Object
+        unset($miniProf);
+        unset($miniProfBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });       
+      
+?>

@@ -1,0 +1,177 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\WearRatesSetting;
+use UserClasses\BusinessObjects\WearRatesBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+    //View All Wear Rate Settings
+    $app->get('/wearratessettings', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $wearSettings=new WearRatesSetting();
+        $wearSettingsBO=new WearRatesBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Average Wear Rates Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $wear_settings_arr=$wearSettings->showWearRateSettings($wearSettingsBO);
+                $wearSettingsBO->set($wear_settings_arr);
+                $wearSettingsBO->setTransactionStatus(true);
+                //$manualSettingsBO->setDataExistsStatus(true);
+                $arr=$wearSettingsBO->getArray();
+            }
+            else {
+                $wearSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $wearSettingsBO->set($arr_error);
+                $arr=$wearSettingsBO->getArray();
+            }
+        }
+        else{
+            $wearSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $wearSettingsBO->set($arr_error);
+            $arr=$wearSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($wearSettings);
+        unset($wearSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //View All Wear Rate Parameters
+    $app->get('/wearratessettings/parameters', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $parameter_mapping=array("Sh"=>"Flange Height",
+            "qR"=>"Toe Creep",
+            "FW"=>"Flange Width",
+            "H"=>"Hollowing"            
+        );
+        $wearSettings=new WearRatesSetting();
+        $wearSettingsBO=new WearRatesBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Average Wear Rates Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $wear_settings_arr=$wearSettings->listWearRateParameters();
+                if(count($wear_settings_arr)>0){
+                    foreach($wear_settings_arr["wearRate2DArray"] as $key => $value){
+                        $wear_settings_arr["wearRate2DArray"][$key]["paramName"]=$parameter_mapping[$value["paramName"]];
+                    }
+                    $wearSettingsBO->set($wear_settings_arr);
+                    $wearSettingsBO->setTransactionStatus(true);
+                    $arr=$wearSettingsBO->getArray();
+                }
+                else $arr=$wearSettingsBO->getArray();
+            }
+            else {
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $wearSettingsBO->set($arr_error);
+                $arr=$wearSettingsBO->getArray();
+            }
+        }
+        else{
+            $wearSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $wearSettingsBO->set($arr_error);
+            $arr=$wearSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($wearSettings);
+        unset($wearSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Add
+    $app->post('/wearratessettings/add', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $wearSettings=new WearRatesSetting();
+        $wearSettingsBO=new WearRatesBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="C";
+            $activityName="Manual Wheel Warning Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $manualSettingsBO->set($form_data);
+                $manualSettingsBO->setStaffNumber($_SESSION["staffNumber"]);
+                $manualSettingsBO->setTransactionStatus($manualSettings->addGlobalWheelSettings($manualSettingsBO));
+                $arr=$manualSettingsBO->getArray();
+            }
+            else{
+                $manualSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $manualSettingsBO->set($arr_error);
+                $arr=$manualSettingsBO->getArray();
+            }
+        }
+        else{
+            $manualSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $manualSettingsBO->set($arr_error);
+            $arr=$manualSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($wearSettings);
+        unset($wearSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+        
+    //Update
+    $app->post('/wearratessettings/update', function (Request $request, Response $response, array $args) {
+        //Return Associative Array
+        $arr=json_decode($request->getBody()->getContents(),TRUE);
+        
+        
+        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+?>

@@ -14,13 +14,14 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $userroleBO=new UserRoleBO();
         $searchdatesstr=$args["daterange"];
         $date_arr=explode("_",$searchdatesstr);     
-        $arr=array();
+        $arr=$alarmBO->getArray();
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
             $accessRight="R";
             $activityName="Wheel Measurements Management";          
             if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $arr=array();
                 $alarmBO->setAlarmSearchStartDate($date_arr[0]);
                 $alarmBO->setAlarmSearchEndDate($date_arr[1]);
                 $alarm_arr=$alarm->searchAlarmEvents($alarmBO);

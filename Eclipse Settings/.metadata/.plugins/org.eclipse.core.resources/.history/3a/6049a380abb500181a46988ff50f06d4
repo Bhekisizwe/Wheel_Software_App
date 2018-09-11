@@ -1,0 +1,159 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\WheelReprofilingData;
+use UserClasses\BusinessObjects\WheelReprofilingDataBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+    //View Specific Wheel reprofiling data
+    $app->get('/wheelreprofiling/{axleserialnumber_daterange}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $wheelReprof=new WheelReprofilingData();
+        $wheelReprofBO=new WheelReprofilingDataBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $reprofiling_str=$args["axleserialnumber_daterange"];
+        $reprofiling_arr=explode("_",$reprofiling_str);
+        $arr=$wheelReprof->getArray();
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Wheel Measurements Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $arr=array();
+                $reprofiling["axleSerialNumber"]=$reprofiling_arr[0];
+                $reprofiling["startDate"]=$reprofiling_arr[1];
+                $reprofiling["endDate"]=$reprofiling_arr[2];
+                $miniWheelBO->set($mini);
+                $mini_arr=$miniWheel->showSpecificWheelData($miniWheelBO);
+                for($i=0;$i<count($mini_arr);$i++){
+                    $miniWheelBO->set($mini_arr[$i]);
+                    $miniWheelBO->setTransactionStatus(true);
+                    $arr[]=$miniWheelBO->getArray();
+                }
+            }
+            else {
+                $miniWheelBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $miniWheelBO->set($arr_error);
+                $arr=$miniWheelBO->getArray();
+            }
+        }
+        else{
+            $miniWheelBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $miniWheelBO->set($arr_error);
+            $arr=$miniWheelBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($miniWheel);
+        unset($miniWheelBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Does specific Wheel Reprofiling Data already exist in System
+    $app->get('/wheelreprofiling/checkexistence/{axleserialnumber_serviceprovider_date}', function (Request $request, Response $response, array $args) {
+        $role=new UserRole();
+        $roleBO=new UserRoleBO();
+        $userRoleName=$args["userrolename"];
+        $role_arr["userRole2DArray"][0]["userRoleName"]=$userRoleName;
+        $arr=array();
+        if(isset($_SESSION["staffNumber"])){
+            $roleBO->set($role_arr);
+            $roleBO->setDataExistsStatus($role->checkUserRoleExists($roleBO));
+            $roleBO->setTransactionStatus(true);
+            $arr=$roleBO->getArray();
+        }
+        else{
+            $roleBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $roleBO->set($arr_error);
+            $arr=$roleBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($role);
+        unset($roleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Add
+    $app->post('/wheelreprofiling/add', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $manualWheel=new ManualWheelMeasurements();
+        $manualWheelBO=new ManualWheelMeasurementsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="C";
+            $activityName="Wheel Measurements Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $manualWheelBO->set($form_data);
+                $manualWheelBO->setStaffNumber($_SESSION["staffNumber"]);
+                $manualWheelBO->setTransactionStatus($manualWheel->addManualWheelMeasurements($manualWheelBO));
+                $arr=$manualWheelBO->getArray();
+            }
+            else{
+                $manualWheelBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $manualWheelBO->set($arr_error);
+                $arr=$manualWheelBO->getArray();
+            }
+        }
+        else{
+            $manualWheelBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $manualWheelBO->set($arr_error);
+            $arr=$manualWheelBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manualWheel);
+        unset($manualWheelBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+        
+    //Update
+    $app->post('/wheelreprofiling/update', function (Request $request, Response $response, array $args) {
+        //Return Associative Array
+        $arr=json_decode($request->getBody()->getContents(),TRUE);
+        
+        
+        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+?>

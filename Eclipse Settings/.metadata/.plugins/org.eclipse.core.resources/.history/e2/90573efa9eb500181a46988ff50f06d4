@@ -1,0 +1,119 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\DailyDistanceSetting;
+use UserClasses\BusinessObjects\DailyDistanceSettingBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+    //View Distance Setting
+    $app->get('/dailydistancesetting', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $distanceSettings=new DailyDistanceSetting();
+        $distanceSettingsBO=new DailyDistanceSettingBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Average Distance Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $distance_settings_arr=$distanceSettings->showDistanceSetting($distanceSettingsBO);
+                $distanceSettingsBO->set($distance_settings_arr);
+                $distanceSettingsBO->setTransactionStatus(true);
+                //$manualSettingsBO->setDataExistsStatus(true);
+                $arr=$distanceSettingsBO->getArray();
+            }
+            else {
+                $distanceSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $distanceSettingsBO->set($arr_error);
+                $arr=$distanceSettingsBO->getArray();
+            }
+        }
+        else{
+            $distanceSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $distanceSettingsBO->set($arr_error);
+            $arr=$distanceSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($distanceSettings);
+        unset($distanceSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Add
+    $app->post('/dailydistancesetting/add', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $wearSettings=new WearRatesSetting();
+        $wearSettingsBO=new WearRatesBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="C";
+            $activityName="Average Wear Rates Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $wearSettingsBO->set($form_data);
+                $wearSettingsBO->setStaffNumber($_SESSION["staffNumber"]);
+                $wearSettingsBO->setTransactionStatus($wearSettings->addWearRateSettings($wearSettingsBO));
+                $arr=$wearSettingsBO->getArray();
+            }
+            else{
+                $wearSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $wearSettingsBO->set($arr_error);
+                $arr=$wearSettingsBO->getArray();
+            }
+        }
+        else{
+            $wearSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $wearSettingsBO->set($arr_error);
+            $arr=$wearSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($wearSettings);
+        unset($wearSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+        
+    //Update
+    $app->post('/dailydistancesetting/update', function (Request $request, Response $response, array $args) {
+        //Return Associative Array
+        $arr=json_decode($request->getBody()->getContents(),TRUE);
+        
+        
+        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+?>

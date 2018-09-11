@@ -1,0 +1,75 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+    //View MiniProf Measurements for a specific Set Number and Date of measurement
+    $app->get('/miniprofmeasurements/{setnumber_date}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $asset=new AssetRegister();
+        $assetBO=new AssetRegisterBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $coachNumber=$args["coachnumber"];
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Coach Asset Register Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $alarm["coachNumber"]=$coachNumber;
+                $assetBO->set($alarm);
+                $asset_arr=$asset->searchAssetRegister($assetBO);
+                $assetBO->set($asset_arr);
+                $assetBO->setTransactionStatus(true);
+                //$manualSettingsBO->setDataExistsStatus(true);
+                $arr=$assetBO->getArray();
+            }
+            else {
+                $assetBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $assetBO->set($arr_error);
+                $arr=$assetBO->getArray();
+            }
+        }
+        else{
+            $assetBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $assetBO->set($arr_error);
+            $arr=$assetBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($asset);
+        unset($assetBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //send emails to people to enter the Manual Wheel Measurements    
+    $app->post('/miniprofmeasurements/sendemail', function (Request $request, Response $response, array $args) {
+        
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Import
+    $app->post('/miniprofmeasurements/import', function (Request $request, Response $response, array $args) {
+        //Return Associative Array
+        $arr=json_decode($request->getBody()->getContents(),TRUE);
+        
+        
+        $arr_json=json_encode($arr);    //Return JSON Data Object
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });       
+      
+?>

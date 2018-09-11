@@ -14,12 +14,14 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $userroleBO=new UserRoleBO();
         $axle_date_str=$args["axleserialnumber_daterange"];
         $axle_date_arr=explode("_",$axle_date_str);
+        $arr=$axleserialBO->getArray();
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
             $accessRight="R";
             $activityName="Coach-Axle Serial Number Mapping";
             if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $arr=array();
                 $axle_mapping["axleSerialNumber"]=$axle_date_arr[0];
                 $axle_mapping["startDate"]=$axle_date_arr[1];
                 $axle_mapping["endDate"]=$axle_date_arr[2];

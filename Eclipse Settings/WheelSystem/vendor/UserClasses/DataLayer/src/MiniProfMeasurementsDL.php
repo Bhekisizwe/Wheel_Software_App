@@ -186,6 +186,7 @@ class MiniProfMeasurementsDL extends DatabaseManager implements DatabaseFunction
                     $arr["wheelID"]=$wheelID;
                     $arr["operatorName"]=$operatorName;
                     $arr["measurementDate"]=$measDate;
+                    $arr["measurementTime"]=$measTime;
                     $arr["measurementID"]=$measurementID;   
                     $arr_2D[]=$arr;
                 }
