@@ -1,0 +1,220 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\ManualWheelSettings;
+use UserClasses\BusinessObjects\ManualWheelSettingsBO;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\ManageSession;
+    //View All Manual Wheel Parameter Names
+    $app->get('/manualwheelsettings/parameters', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $parameter_mapping=array("CTD"=>"Cut Tyre Depth",
+            "CTW"=>"Cut Tyre Width",
+            "CTDFF"=>"Cut Tyre Distance From Flange",
+            "SR"=>"Spread Rim",
+            "WS"=>"Wheel Skid"
+        );
+        $manualSettings=new ManualWheelSettings();
+        $manualSettingsBO=new ManualWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){ 
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Manual Wheel Warning Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $manual_settings_arr=$manualSettings->listManualWheelParameters(); 
+                if(count($manual_settings_arr)>0){
+                    foreach($manual_settings_arr["warning2DArray"] as $key => $value){
+                        $manual_settings_arr["warning2DArray"][$key]["paramName"]=$parameter_mapping[$value["paramName"]];
+                    }
+                    $manualSettingsBO->set($manual_settings_arr);
+                    $manualSettingsBO->setTransactionStatus(true);
+                    $arr=$manualSettingsBO->getArray();
+                }
+                else $arr=$manualSettingsBO->getArray();
+            }
+            else {
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $manualSettingsBO->set($arr_error);
+                $arr=$manualSettingsBO->getArray();
+            }           
+        }
+        else{
+            $manualSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $manualSettingsBO->set($arr_error);
+            $arr=$manualSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manualSettings);
+        unset($manualSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //View All Manual Wheel Settings
+    $app->get('/manualwheelsettings', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $manualSettings=new ManualWheelSettings();
+        $manualSettingsBO=new ManualWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Manual Wheel Warning Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $manual_settings_arr=$manualSettings->showGlobalWheelSettings($manualSettingsBO);
+                $manualSettingsBO->set($manual_settings_arr);
+                $manualSettingsBO->setTransactionStatus(true);
+                //$manualSettingsBO->setDataExistsStatus(true);
+                $arr=$manualSettingsBO->getArray();
+            }
+            else {
+                $manualSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $manualSettingsBO->set($arr_error);
+                $arr=$manualSettingsBO->getArray();
+            }
+        }
+        else{
+            $manualSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $manualSettingsBO->set($arr_error);
+            $arr=$manualSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manualSettings);
+        unset($manualSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Add
+    $app->post('/manualwheelsettings/add', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $manualSettings=new ManualWheelSettings();
+        $manualSettingsBO=new ManualWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="C";
+            $activityName="Manual Wheel Warning Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $manualSettingsBO->set($form_data);
+                $manualSettingsBO->setStaffNumber($_SESSION["staffNumber"]);
+                $manualSettingsBO->setTransactionStatus($manualSettings->addGlobalWheelSettings($manualSettingsBO));
+                $arr=$manualSettingsBO->getArray();
+            }
+            else{
+                $manualSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $manualSettingsBO->set($arr_error);
+                $arr=$manualSettingsBO->getArray();
+            }
+        }
+        else{
+            $manualSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $manualSettingsBO->set($arr_error);
+            $arr=$manualSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manualSettings);
+        unset($manualSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+        
+    //Update
+    $app->post('/manualwheelsettings/update', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $manualSettings=new ManualWheelSettings();
+        $manualSettingsBO=new ManualWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="U";
+            $activityName="Manual Wheel Warning Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $manualSettingsBO->set($form_data);
+                $manualSettingsBO->setStaffNumber($_SESSION["staffNumber"]);
+                $manualSettingsBO->setTransactionStatus($manualSettings->updateGlobalWheelSettings($manualSettingsBO));
+                $arr=$manualSettingsBO->getArray();
+            }
+            else{
+                $manualSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $manualSettingsBO->set($arr_error);
+                $arr=$manualSettingsBO->getArray();
+            }
+        }
+        else{
+            $manualSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $manualSettingsBO->set($arr_error);
+            $arr=$manualSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manualSettings);
+        unset($manualSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+?>

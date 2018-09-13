@@ -7,6 +7,7 @@ use UserClasses\BusinessLayer\UserRole;
 use UserClasses\BusinessObjects\UserRoleBO;
 use UserClasses\BusinessLayer\MiniProfDBUploader;
 use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
+use UserClasses\BusinessLayer\ManageSession;
     //View Specific MiniProf Wheel Data
     $app->get('/manualmeasurements/miniprof/{coachnumber_wheelid_date}', function (Request $request, Response $response, array $args) {
         //Create Objects
@@ -17,6 +18,8 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
         $mini_meas_str=$args["coachnumber_wheelid_date"];
         $mini_meas_arr=explode("_",$mini_meas_str);
         $arr=$miniWheelBO->getArray();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -44,6 +47,7 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
                 $miniWheelBO->set($arr_error);
                 $arr=$miniWheelBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $miniWheelBO->setTransactionStatus(false);
@@ -57,6 +61,7 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($miniWheel);
         unset($miniWheelBO);
         unset($userrole);
@@ -74,6 +79,8 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
         $userroleBO=new UserRoleBO();
         $measurementID=$args["measurementid"];
         $arr=$manualWheelBO->getArray();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -101,6 +108,7 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
                 $manualWheelBO->set($arr_error);
                 $arr=$manualWheelBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $manualWheelBO->setTransactionStatus(false);
@@ -114,6 +122,7 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($manualWheel);
         unset($manualWheelBO);
         unset($userrole);
@@ -131,6 +140,8 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -151,6 +162,7 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
                 $manualWheelBO->set($arr_error);
                 $arr=$manualWheelBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $manualWheelBO->setTransactionStatus(false);
@@ -164,6 +176,7 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($manualWheel);
         unset($manualWheelBO);
         unset($userrole);
@@ -182,6 +195,8 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -202,6 +217,7 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
                 $manualWheelBO->set($arr_error);
                 $arr=$manualWheelBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $manualWheelBO->setTransactionStatus(false);
@@ -215,6 +231,7 @@ use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($manualWheel);
         unset($manualWheelBO);
         unset($userrole);

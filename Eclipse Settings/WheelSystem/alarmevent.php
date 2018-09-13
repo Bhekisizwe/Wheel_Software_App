@@ -5,6 +5,7 @@ use UserClasses\BusinessLayer\AlarmEventLogger;
 use UserClasses\BusinessObjects\WheelMeasurementsComparisonBO;
 use UserClasses\BusinessLayer\UserRole;
 use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\ManageSession;
     //View Alarms for Specific Date Range
     $app->get('/alarmevent/{daterange}', function (Request $request, Response $response, array $args) {
         //Create Objects
@@ -15,6 +16,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $searchdatesstr=$args["daterange"];
         $date_arr=explode("_",$searchdatesstr);     
         $arr=$alarmBO->getArray();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -38,7 +41,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $arr_error["errorAssocArray"][18]=$arr_err;
                 $alarmBO->set($arr_error);
                 $arr=$alarmBO->getArray();
-            }            
+            }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $alarmBO->setTransactionStatus(false);
@@ -52,6 +56,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($alarm);
         unset($alarmBO);
         unset($userrole);

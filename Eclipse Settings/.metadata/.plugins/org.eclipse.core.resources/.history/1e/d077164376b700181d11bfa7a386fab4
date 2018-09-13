@@ -1,0 +1,418 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\AssetRegister;
+use UserClasses\BusinessObjects\AssetRegisterBO;
+use Slim\Http\UploadedFile;
+use UserClasses\BusinessLayer\ManageSession;
+    //View All Coach Types
+    $app->get('/assetregisterservice', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $asset=new AssetRegister();
+        $assetBO=new AssetRegisterBO();  
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){           
+            $asset_arr=$asset->listCoachTypes();            
+            $assetBO->set($asset_arr);
+            $assetBO->setTransactionStatus(true);
+            //$manualSettingsBO->setDataExistsStatus(true);
+            $arr=$assetBO->getArray(); 
+            $_SESSION["lastActive"]=time();
+        }
+        else{
+            $assetBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $assetBO->set($arr_error);
+            $arr=$assetBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manageSession);
+        unset($asset);
+        unset($assetBO);      
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //View Asset Register for specific Coach Number
+    $app->get('/assetregisterservice/{coachnumber}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $asset=new AssetRegister();
+        $assetBO=new AssetRegisterBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $coachNumber=$args["coachnumber"];
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="Coach Asset Register Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $alarm["coachNumber"]=$coachNumber;
+                $assetBO->set($alarm);
+                $asset_arr=$asset->searchAssetRegister($assetBO);
+                $assetBO->set($asset_arr);
+                $assetBO->setTransactionStatus(true);
+                //$manualSettingsBO->setDataExistsStatus(true);
+                $arr=$assetBO->getArray();
+            }
+            else {
+                $assetBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $assetBO->set($arr_error);
+                $arr=$assetBO->getArray();
+            }
+            $_SESSION["lastActive"]=time();
+        }
+        else{
+            $assetBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $assetBO->set($arr_error);
+            $arr=$assetBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manageSession);
+        unset($asset);
+        unset($assetBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Check if asset with specific Coach Number already exists in the system
+    $app->get('/assetregisterservice/checkexistence/{coachnumber}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $asset=new AssetRegister();
+        $assetBO=new AssetRegisterBO();       
+        $coachNumber=$args["coachnumber"];
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){            
+            $alarm["coachNumber"]=$coachNumber;
+            $assetBO->set($alarm);
+            $assetBO->setDataExistsStatus($asset->checkAssetExists($assetBO));            
+            $assetBO->setTransactionStatus(true);
+            //$manualSettingsBO->setDataExistsStatus(true);
+            $arr=$assetBO->getArray();   
+            $_SESSION["lastActive"]=time();
+        }
+        else{
+            $assetBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $assetBO->set($arr_error);
+            $arr=$assetBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manageSession);
+        unset($asset);
+        unset($assetBO);        
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+    });
+    
+    //Import
+    $app->post('/assetregisterservice/import/', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $asset=new AssetRegister();
+        $assetBO=new AssetRegisterBO(); 
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $arr_files=$request->getUploadedFiles();
+        if(count($arr_files)>0){
+            $manageSession=new ManageSession();
+            if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+            if(isset($_SESSION["staffNumber"])){
+                $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+                $userroleBO->set($userrole_arr);
+                $accessRight="C";
+                $activityName="Coach Asset Register Management";
+                if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                    $uploaded_file=$arr_files["assetregister"]->getClientFilename();
+                    $filename=$_SESSION["staffNumber"].".csv";
+                    $assetBO->setStaffNumber($_SESSION["staffNumber"]);
+                    //check if directory exists. If not, create it
+                    if(!$asset->checkDirectoryExists()){
+                        //create the directory
+                        if($asset->createDirectory()){
+                            //directory successfully created. Move Uploaded File here
+                            //check if File is a CSV file
+                            $arr_files["assetregister"]->moveTo($asset->getDirPath()."\\".$uploaded_file);
+                            if($asset->confirmFileType($uploaded_file)){
+                                //File type is indeed CSV. Then process the upload
+                                //rename the uploaded file to use the Staff Number
+                                $oldname=$asset->getDirPath()."\\".$uploaded_file;
+                                $newname=$asset->getDirPath()."\\".$filename;
+                                rename($oldname,$newname);
+                                $csv_data=$asset->readCSVFileAssetsData($assetBO);
+                                foreach($csv_data as $row){
+                                    //add data to database
+                                    if(array_key_exists("coachNumber", $row)){
+                                        $assetBO->set($row);
+                                        $assetBO->setTransactionStatus(true);
+                                        if(!$asset->checkAssetExists($assetBO)) $asset->addAsset($assetBO);
+                                    }
+                                    else{
+                                        $assetBO->set($csv_data);
+                                    }                                    
+                                }                                
+                                $arr=$assetBO->getArray();
+                            }
+                            else {
+                                $asset->deleteFile($uploaded_file);
+                                $assetBO->setTransactionStatus(false);
+                                //write Error Code and Description
+                                $arr_err=array();
+                                $arr_err["errorCode"]="0x05";
+                                $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a CSV Textfile";
+                                $arr_error["errorAssocArray"][5]=$arr_err;
+                                $assetBO->set($arr_error);
+                                $arr=$assetBO->getArray();
+                            }
+                        }
+                    }
+                    else {
+                        //directory exists. Check if file exists. If it does, delete it
+                        if($asset->checkFileExists($uploaded_file)){
+                            //delete file
+                            if($asset->deleteFile($uploaded_file)){
+                                //file successfully deleted. Move Uploaded File here
+                                //check if File is a CSV file
+                                $arr_files["assetregister"]->moveTo($asset->getDirPath()."\\".$uploaded_file);
+                                if($asset->confirmFileType($uploaded_file)){
+                                    //File type is indeed CSV. Then process the upload
+                                    $oldname=$asset->getDirPath()."\\".$uploaded_file;
+                                    $newname=$asset->getDirPath()."\\".$filename;
+                                    rename($oldname,$newname);
+                                    $csv_data=$asset->readCSVFileAssetsData($assetBO);
+                                    foreach($csv_data as $row){
+                                        //add data to database
+                                        if(array_key_exists("coachNumber", $row)){
+                                            $assetBO->set($row);
+                                            $assetBO->setTransactionStatus(true);
+                                            if(!$asset->checkAssetExists($assetBO)) $asset->addAsset($assetBO);
+                                        }
+                                        else{
+                                            $assetBO->set($csv_data);
+                                        } 
+                                    }                                    
+                                    $arr=$assetBO->getArray();
+                                }
+                                else {
+                                    $asset->deleteFile($uploaded_file);
+                                    $assetBO->setTransactionStatus(false);
+                                    //write Error Code and Description
+                                    $arr_err=array();
+                                    $arr_err["errorCode"]="0x05";
+                                    $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a CSV Textfile";
+                                    $arr_error["errorAssocArray"][5]=$arr_err;
+                                    $assetBO->set($arr_error);
+                                    $arr=$assetBO->getArray();
+                                }
+                            }
+                        }
+                        else{
+                            //move Uploaded File into the Directory
+                            //check if File is a CSV file
+                            $arr_files["assetregister"]->moveTo($asset->getDirPath()."\\".$uploaded_file);
+                            if($asset->confirmFileType($uploaded_file)){
+                                //File type is indeed CSV. Then process the upload
+                                $oldname=$asset->getDirPath()."\\".$uploaded_file;
+                                $newname=$asset->getDirPath()."\\".$filename;
+                                rename($oldname,$newname);
+                                $csv_data=$asset->readCSVFileAssetsData($assetBO);
+                                foreach($csv_data as $row){
+                                    //add data to database
+                                    if(array_key_exists("coachNumber", $row)){
+                                        $assetBO->set($row);
+                                        $assetBO->setTransactionStatus(true);
+                                        if(!$asset->checkAssetExists($assetBO)) $asset->addAsset($assetBO);
+                                    }
+                                    else{
+                                        $assetBO->set($csv_data);
+                                    } 
+                                }                                
+                                $arr=$assetBO->getArray();
+                            }
+                            else {
+                                $asset->deleteFile($uploaded_file);
+                                $assetBO->setTransactionStatus(false);
+                                //write Error Code and Description
+                                $arr_err=array();
+                                $arr_err["errorCode"]="0x05";
+                                $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a CSV Textfile";
+                                $arr_error["errorAssocArray"][5]=$arr_err;
+                                $assetBO->set($arr_error);
+                                $arr=$assetBO->getArray();
+                            }
+                        }
+                    }
+                }
+                else{
+                    $assetBO->setTransactionStatus(false);
+                    $arr_err=array();
+                    $arr_err["errorCode"]="0x18";
+                    $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                    $arr_error["errorAssocArray"][18]=$arr_err;
+                    $assetBO->set($arr_error);
+                    $arr=$assetBO->getArray();
+                }
+                $_SESSION["lastActive"]=time();
+            }
+            else{
+                $assetBO->setTransactionStatus(false);
+                //write Error Code and Description
+                $arr_err=array();
+                $arr_err["errorCode"]="0x19";
+                $arr_err["errorDescription"]="Session has expired";
+                $arr_error["errorAssocArray"][19]=$arr_err;
+                $assetBO->set($arr_error);
+                $arr=$assetBO->getArray();
+            }
+        }
+        else{
+            $arr=$assetBO->getArray();
+        }
+        
+        $arr_json=json_encode($arr);    //Return JSON Data Object
+        unset($manageSession);
+        unset($asset);
+        unset($assetBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+    
+    //Add
+    $app->post('/assetregisterservice/add', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $asset=new AssetRegister();
+        $assetBO=new AssetRegisterBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="C";
+            $activityName="Coach Asset Register Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $assetBO->set($form_data);
+                $assetBO->setStaffNumber($_SESSION["staffNumber"]);
+                $assetBO->setTransactionStatus($asset->addAsset($assetBO));
+                $arr=$assetBO->getArray();
+            }
+            else{
+                $assetBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $assetBO->set($arr_error);
+                $arr=$assetBO->getArray();
+            }
+            $_SESSION["lastActive"]=time();
+        }
+        else{
+            $assetBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $assetBO->set($arr_error);
+            $arr=$assetBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manageSession);
+        unset($asset);
+        unset($assetBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+        
+    //Update
+    $app->post('/assetregisterservice/update', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $asset=new AssetRegister();
+        $assetBO=new AssetRegisterBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="U";
+            $activityName="Coach Asset Register Management";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $assetBO->set($form_data);
+                $assetBO->setStaffNumber($_SESSION["staffNumber"]);
+                $assetBO->setTransactionStatus($asset->updateAsset($assetBO));
+                $arr=$assetBO->getArray();
+            }
+            else{
+                $assetBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $assetBO->set($arr_error);
+                $arr=$assetBO->getArray();
+            }
+            $_SESSION["lastActive"]=time();
+        }
+        else{
+            $assetBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $assetBO->set($arr_error);
+            $arr=$assetBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($asset);
+        unset($assetBO);
+        unset($userrole);
+        unset($userroleBO);
+        $res=$response->withHeader("Content-Type", "application/json");
+        return $res->getBody()->write($arr_json);
+        
+    });
+?>

@@ -1,0 +1,22 @@
+<?php
+declare(strict_types=1);
+namespace UserClasses\BusinessLayer;
+session_start();
+
+/**
+ *
+ * @author Bheki Mthethwa
+ *        
+ */
+class ManageSession
+{
+    public function determineSessionValidity(int $currentTime){
+        
+    }
+    
+    private function destroySession() {
+        session_unset();
+        session_destroy();
+    }
+}
+

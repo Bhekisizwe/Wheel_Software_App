@@ -7,6 +7,7 @@ use UserClasses\BusinessLayer\WheelMeasurementsComparison;
 use UserClasses\BusinessObjects\ManualWheelSettingsBO;
 use UserClasses\BusinessLayer\UserRole;
 use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\ManageSession;
            
     //Generate MS Excel Planning Report and email it.
     $app->get('/planningreportservice/{daterange}', function (Request $request, Response $response, array $args) {
@@ -20,6 +21,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $searchdatesstr=$args["daterange"];
         $date_arr=explode("_",$searchdatesstr);        
         $arr=array();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -76,7 +79,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $arr_error["errorAssocArray"][18]=$arr_err;
                 $planningBO->set($arr_error);
                 $arr=$planningBO->getArray();
-            }            
+            } 
+            $_SESSION["lastActive"]=time();
         }
         else{
             $planningBO->setTransactionStatus(false);
@@ -90,6 +94,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($planning);
         unset($planningBO);
         unset($manualSettingsBO);

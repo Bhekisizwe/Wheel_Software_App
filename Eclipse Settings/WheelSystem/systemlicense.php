@@ -3,11 +3,14 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use UserClasses\BusinessLayer\License;
 use UserClasses\BusinessObjects\SystemLicenseBO;
+use UserClasses\BusinessLayer\ManageSession;
     //View
     $app->get('/systemlicense', function (Request $request, Response $response, array $args) {
         //Create Objects
         $license=new License();
         $licenseBO=new SystemLicenseBO();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             if($license->checkLicenseExists($licenseBO)){
                 $licenseBO->setDataExistsStatus(true);
@@ -19,6 +22,7 @@ use UserClasses\BusinessObjects\SystemLicenseBO;
             }
             $licenseBO->setTransactionStatus(true);
             $arr=$licenseBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $licenseBO->setTransactionStatus(false);
@@ -32,6 +36,7 @@ use UserClasses\BusinessObjects\SystemLicenseBO;
         }        
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($license);
         unset($licenseBO);
         $res=$response->withHeader("Content-Type", "application/json");
@@ -45,11 +50,14 @@ use UserClasses\BusinessObjects\SystemLicenseBO;
         $licenseBO=new SystemLicenseBO();
         //Return Associative Array        
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $licenseBO->set($form_data);
             $licenseBO->setStaffNumber($_SESSION["staffNumber"]);
             $licenseBO->setTransactionStatus($license->addLicense($licenseBO));            
             $arr=$licenseBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $licenseBO->setTransactionStatus(false);
@@ -63,6 +71,7 @@ use UserClasses\BusinessObjects\SystemLicenseBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($license);
         unset($licenseBO);         
         $res=$response->withHeader("Content-Type", "application/json");
@@ -77,11 +86,14 @@ use UserClasses\BusinessObjects\SystemLicenseBO;
         $licenseBO=new SystemLicenseBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $licenseBO->set($form_data);
             $licenseBO->setStaffNumber($_SESSION["staffNumber"]);
             $licenseBO->setTransactionStatus($license->updateLicense($licenseBO));
             $arr=$licenseBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $licenseBO->setTransactionStatus(false);
@@ -95,6 +107,7 @@ use UserClasses\BusinessObjects\SystemLicenseBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($license);
         unset($licenseBO);        
         $res=$response->withHeader("Content-Type", "application/json");

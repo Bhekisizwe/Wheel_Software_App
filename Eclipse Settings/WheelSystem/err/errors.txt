@@ -32,3 +32,5 @@
  ####End of Line#### 
 17.) Oops, error in Class Email within method sendEmail has occured at 2018-09-11 16:04:55 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
+18.) Oops, error in Class Email within method sendEmail has occured at 2018-09-13 19:40:47 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 

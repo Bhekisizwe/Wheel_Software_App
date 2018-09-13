@@ -6,17 +6,21 @@ use UserClasses\BusinessObjects\UserRoleBO;
 use UserClasses\BusinessLayer\AssetRegister;
 use UserClasses\BusinessObjects\AssetRegisterBO;
 use Slim\Http\UploadedFile;
+use UserClasses\BusinessLayer\ManageSession;
     //View All Coach Types
     $app->get('/assetregisterservice', function (Request $request, Response $response, array $args) {
         //Create Objects
         $asset=new AssetRegister();
-        $assetBO=new AssetRegisterBO();                
+        $assetBO=new AssetRegisterBO();  
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){           
             $asset_arr=$asset->listCoachTypes();            
             $assetBO->set($asset_arr);
             $assetBO->setTransactionStatus(true);
             //$manualSettingsBO->setDataExistsStatus(true);
-            $arr=$assetBO->getArray();           
+            $arr=$assetBO->getArray(); 
+            $_SESSION["lastActive"]=time();
         }
         else{
             $assetBO->setTransactionStatus(false);
@@ -30,6 +34,7 @@ use Slim\Http\UploadedFile;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($asset);
         unset($assetBO);      
         $res=$response->withHeader("Content-Type", "application/json");
@@ -44,6 +49,8 @@ use Slim\Http\UploadedFile;
         $userrole=new UserRole();
         $userroleBO=new UserRoleBO();
         $coachNumber=$args["coachnumber"];
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -67,6 +74,7 @@ use Slim\Http\UploadedFile;
                 $assetBO->set($arr_error);
                 $arr=$assetBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $assetBO->setTransactionStatus(false);
@@ -80,6 +88,7 @@ use Slim\Http\UploadedFile;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($asset);
         unset($assetBO);
         unset($userrole);
@@ -94,13 +103,16 @@ use Slim\Http\UploadedFile;
         $asset=new AssetRegister();
         $assetBO=new AssetRegisterBO();       
         $coachNumber=$args["coachnumber"];
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){            
             $alarm["coachNumber"]=$coachNumber;
             $assetBO->set($alarm);
             $assetBO->setDataExistsStatus($asset->checkAssetExists($assetBO));            
             $assetBO->setTransactionStatus(true);
             //$manualSettingsBO->setDataExistsStatus(true);
-            $arr=$assetBO->getArray();            
+            $arr=$assetBO->getArray();   
+            $_SESSION["lastActive"]=time();
         }
         else{
             $assetBO->setTransactionStatus(false);
@@ -114,6 +126,7 @@ use Slim\Http\UploadedFile;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($asset);
         unset($assetBO);        
         $res=$response->withHeader("Content-Type", "application/json");
@@ -129,6 +142,8 @@ use Slim\Http\UploadedFile;
         $userroleBO=new UserRoleBO();
         $arr_files=$request->getUploadedFiles();
         if(count($arr_files)>0){
+            $manageSession=new ManageSession();
+            if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
             if(isset($_SESSION["staffNumber"])){
                 $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
                 $userroleBO->set($userrole_arr);
@@ -263,7 +278,8 @@ use Slim\Http\UploadedFile;
                     $arr_error["errorAssocArray"][18]=$arr_err;
                     $assetBO->set($arr_error);
                     $arr=$assetBO->getArray();
-                }                
+                }
+                $_SESSION["lastActive"]=time();
             }
             else{
                 $assetBO->setTransactionStatus(false);
@@ -281,6 +297,7 @@ use Slim\Http\UploadedFile;
         }
         
         $arr_json=json_encode($arr);    //Return JSON Data Object
+        unset($manageSession);
         unset($asset);
         unset($assetBO);
         unset($userrole);
@@ -299,6 +316,8 @@ use Slim\Http\UploadedFile;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -319,6 +338,7 @@ use Slim\Http\UploadedFile;
                 $assetBO->set($arr_error);
                 $arr=$assetBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $assetBO->setTransactionStatus(false);
@@ -332,6 +352,7 @@ use Slim\Http\UploadedFile;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($asset);
         unset($assetBO);
         unset($userrole);
@@ -350,6 +371,8 @@ use Slim\Http\UploadedFile;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -370,6 +393,7 @@ use Slim\Http\UploadedFile;
                 $assetBO->set($arr_error);
                 $arr=$assetBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $assetBO->setTransactionStatus(false);
@@ -383,6 +407,7 @@ use Slim\Http\UploadedFile;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($asset);
         unset($assetBO);
         unset($userrole);

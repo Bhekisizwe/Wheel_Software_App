@@ -5,6 +5,8 @@ use UserClasses\BusinessLayer\ActivityLog;
 use UserClasses\BusinessObjects\ActivityLogBO;
 use UserClasses\BusinessLayer\UserRole;
 use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\ManageSession;
+
     //View Specific Activity Logs
     $app->get('/activitylogservice/{taskid_daterange}', function (Request $request, Response $response, array $args) {
         //Create Objects
@@ -18,6 +20,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
             $taskid_arr["taskArray2D"][$i]["taskID"]=(int) $date_arr[$i];
         }
         $arr=$activityBO->getArray();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -43,6 +47,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $activityBO->set($arr_error);
                 $arr=$activityBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $activityBO->setTransactionStatus(false);
@@ -56,6 +61,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($activity);
         unset($activityBO);
         unset($userrole);
@@ -77,6 +83,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
             $taskid_arr["taskArray2D"][$i]["taskID"]=(int) $date_arr[$i];
         }
         $arr=array();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -98,6 +106,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $activityBO->set($arr_error);
                 $arr=$activityBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $activityBO->setTransactionStatus(false);
@@ -111,6 +120,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($activity);
         unset($activityBO);
         unset($userrole);
@@ -126,6 +136,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $activityBO=new ActivityLogBO();
         $userrole=new UserRole();
         $userroleBO=new UserRoleBO();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -144,7 +156,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $arr_error["errorAssocArray"][18]=$arr_err;
                 $activityBO->set($arr_error);
                 $arr=$activityBO->getArray();
-            }        
+            } 
+            $_SESSION["lastActive"]=time();
         }
         else{
             $activityBO->setTransactionStatus(false);
@@ -158,6 +171,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($activity);
         unset($activityBO);
         unset($userrole);

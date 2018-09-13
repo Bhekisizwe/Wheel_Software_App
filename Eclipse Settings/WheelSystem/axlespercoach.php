@@ -5,6 +5,7 @@ use UserClasses\BusinessLayer\AxlesPerCoachType;
 use UserClasses\BusinessObjects\AxlesPerCoachTypeBO;
 use UserClasses\BusinessLayer\UserRole;
 use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\ManageSession;
         
     //View Coach Type axle numbers
     $app->get('/axlespercoach/{coachid}', function (Request $request, Response $response, array $args) {
@@ -14,6 +15,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $userrole=new UserRole();
         $userroleBO=new UserRoleBO();
         $coachID=$args["coachid"];
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -37,6 +40,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $axlesBO->set($arr_error);
                 $arr=$axlesBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $axlesBO->setTransactionStatus(false);
@@ -50,6 +54,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($axles);
         unset($axlesBO);
         unset($userrole);
@@ -67,6 +72,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -87,6 +94,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $axlesBO->set($arr_error);
                 $arr=$axlesBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $axlesBO->setTransactionStatus(false);
@@ -100,6 +108,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($axles);
         unset($axlesBO);
         unset($userrole);
@@ -118,6 +127,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -138,6 +149,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $axlesBO->set($arr_error);
                 $arr=$axlesBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $axlesBO->setTransactionStatus(false);
@@ -151,6 +163,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($axles);
         unset($axlesBO);
         unset($userrole);

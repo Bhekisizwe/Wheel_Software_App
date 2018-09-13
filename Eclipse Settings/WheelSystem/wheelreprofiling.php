@@ -5,6 +5,7 @@ use UserClasses\BusinessLayer\WheelReprofilingData;
 use UserClasses\BusinessObjects\WheelReprofilingDataBO;
 use UserClasses\BusinessLayer\UserRole;
 use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\ManageSession;
     //View Specific Wheel reprofiling data
     $app->get('/wheelreprofiling/{axleserialnumber_daterange}', function (Request $request, Response $response, array $args) {
         //Create Objects
@@ -15,6 +16,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $reprofiling_str=$args["axleserialnumber_daterange"];
         $reprofiling_arr=explode("_",$reprofiling_str);
         $arr=$wheelReprofBO->getArray();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -42,6 +45,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $wheelReprofBO->set($arr_error);
                 $arr=$wheelReprofBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $wheelReprofBO->setTransactionStatus(false);
@@ -55,6 +59,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($wheelReprof);
         unset($wheelReprofBO);
         unset($userrole);
@@ -69,6 +74,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $wheelReprofBO=new WheelReprofilingDataBO();
         $reprofiling_str=$args["axleserialnumber_serviceprovider_date"];        
         $reprofiling_arr=explode("_",$reprofiling_str);
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $reprofiling["axleSerialNumber"]=$reprofiling_arr[0];
             $reprofiling["serviceProviderName"]=$reprofiling_arr[1];
@@ -77,6 +84,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
             $wheelReprofBO->setDataExistsStatus($wheelReprof->checkReprofilingDataExists($wheelReprofBO));
             $wheelReprofBO->setTransactionStatus(true);
             $arr=$wheelReprofBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $wheelReprofBO->setTransactionStatus(false);
@@ -90,6 +98,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($wheelReprof);
         unset($wheelReprofBO);
         $res=$response->withHeader("Content-Type", "application/json");
@@ -105,6 +114,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -125,6 +136,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $wheelReprofBO->set($arr_error);
                 $arr=$wheelReprofBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $wheelReprofBO->setTransactionStatus(false);
@@ -138,6 +150,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($wheelReprof);
         unset($wheelReprofBO);
         unset($userrole);
@@ -156,6 +169,8 @@ use UserClasses\BusinessObjects\UserRoleBO;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -176,6 +191,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
                 $wheelReprofBO->set($arr_error);
                 $arr=$wheelReprofBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $wheelReprofBO->setTransactionStatus(false);
@@ -189,6 +205,7 @@ use UserClasses\BusinessObjects\UserRoleBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($wheelReprof);
         unset($wheelReprofBO);
         unset($userrole);

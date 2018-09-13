@@ -3,12 +3,15 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use UserClasses\BusinessLayer\AdminAccounts;
 use UserClasses\BusinessObjects\UserAccountBO;
+use UserClasses\BusinessLayer\ManageSession;
     //View All
     $app->get('/adminaccount', function (Request $request, Response $response, array $args) {
         //Create Objects
         $admin=new AdminAccounts();
         $adminBO=new UserAccountBO();
-        $arr=$adminBO->getArray();      
+        $arr=$adminBO->getArray(); 
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){  
             $arr=array(); 
             $admin_arr=$admin->listAllAdminAccounts();
@@ -16,7 +19,8 @@ use UserClasses\BusinessObjects\UserAccountBO;
                 $adminBO->set($admin_arr[$i]);
                 $adminBO->setTransactionStatus(true);
                 $arr[]=$adminBO->getArray();
-            }            
+            }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $adminBO->setTransactionStatus(false);
@@ -30,6 +34,7 @@ use UserClasses\BusinessObjects\UserAccountBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($admin);
         unset($adminBO);
         $res=$response->withHeader("Content-Type", "application/json");
@@ -43,11 +48,14 @@ use UserClasses\BusinessObjects\UserAccountBO;
         $adminBO=new UserAccountBO();
         $staffNumber=$args["staffnumber"];
         $arr=array();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $adminBO->setStaffNumber($staffNumber);           
             $adminBO->setDataExistsStatus($admin->checkUserAccountExists($adminBO));
             $adminBO->setTransactionStatus(true);
-            $arr=$adminBO->getArray();            
+            $arr=$adminBO->getArray();  
+            $_SESSION["lastActive"]=time();
         }
         else{
             $adminBO->setTransactionStatus(false);
@@ -61,6 +69,7 @@ use UserClasses\BusinessObjects\UserAccountBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($admin);
         unset($adminBO);
         $res=$response->withHeader("Content-Type", "application/json");
@@ -73,7 +82,9 @@ use UserClasses\BusinessObjects\UserAccountBO;
         $admin=new AdminAccounts();
         $adminBO=new UserAccountBO();
         //Return Associative Array
-        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data        
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data 
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $adminBO->set($form_data);
             $adminBO->setAdminStaffNumber($_SESSION["staffNumber"]);
@@ -84,6 +95,7 @@ use UserClasses\BusinessObjects\UserAccountBO;
                 $adminBO->set($arr_error);
             }
             $arr=$adminBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $adminBO->setTransactionStatus(false);
@@ -97,6 +109,7 @@ use UserClasses\BusinessObjects\UserAccountBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($admin);
         unset($adminBO); 
         $res=$response->withHeader("Content-Type", "application/json");
@@ -111,12 +124,15 @@ use UserClasses\BusinessObjects\UserAccountBO;
         $adminBO=new UserAccountBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $adminBO->set($form_data);
             $adminBO->setActionCode("0xA100");
             $adminBO->setAdminStaffNumber($_SESSION["staffNumber"]);
             $adminBO->setTransactionStatus($admin->updateUserAccount($adminBO));
             $arr=$adminBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $adminBO->setTransactionStatus(false);
@@ -130,6 +146,7 @@ use UserClasses\BusinessObjects\UserAccountBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($admin);
         unset($adminBO); 
         $res=$response->withHeader("Content-Type", "application/json");

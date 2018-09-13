@@ -19,6 +19,8 @@ use UserClasses\BusinessObjects\UserAccountBO;
             $_SESSION["staffNumber"]=$userAccountBO->getStaffNumber();
             $user_arr=$loginObj->listUserAccount($userAccountBO);            
             $_SESSION["roleID"]=$user_arr["roleID"];
+            $_SESSION["lastActive"]=time();
+            $userAccountBO->setUserRoleName($user_arr["userRoleName"]);
             $userAccountBO->setTransactionStatus(true);
             $userAccountBO->setDataExistsStatus(true);
             $userAccountBO->setPasswordHash("");

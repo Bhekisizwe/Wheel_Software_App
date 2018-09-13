@@ -3,11 +3,14 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use UserClasses\BusinessLayer\TermsAndConditions;
 use UserClasses\BusinessObjects\TermsConditionsBO;
+use UserClasses\BusinessLayer\ManageSession;
     //View
     $app->get('/termsconditions', function (Request $request, Response $response, array $args) {
         //Create Objects
         $terms=new TermsAndConditions();
         $termsBO=new TermsConditionsBO();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             if($terms->checkTermsExist($termsBO)){
                 $termsBO->setDataExistsStatus(true);
@@ -19,6 +22,7 @@ use UserClasses\BusinessObjects\TermsConditionsBO;
             }
             $termsBO->setTransactionStatus(true);
             $arr=$termsBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $termsBO->setTransactionStatus(false);
@@ -32,6 +36,7 @@ use UserClasses\BusinessObjects\TermsConditionsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($terms);
         unset($termsBO);
         $res=$response->withHeader("Content-Type", "application/json");
@@ -45,11 +50,14 @@ use UserClasses\BusinessObjects\TermsConditionsBO;
         $termsBO=new TermsConditionsBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $termsBO->set($form_data);
             $termsBO->setStaffNumber($_SESSION["staffNumber"]);
             $termsBO->setTransactionStatus($terms->addTerms($termsBO));
             $arr=$termsBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $termsBO->setTransactionStatus(false);
@@ -63,6 +71,7 @@ use UserClasses\BusinessObjects\TermsConditionsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($terms);
         unset($termsBO); 
         $res=$response->withHeader("Content-Type", "application/json");
@@ -77,11 +86,14 @@ use UserClasses\BusinessObjects\TermsConditionsBO;
         $termsBO=new TermsConditionsBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $termsBO->set($form_data);
             $termsBO->setStaffNumber($_SESSION["staffNumber"]);
             $termsBO->setTransactionStatus($terms->updateTerms($termsBO));
             $arr=$termsBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $termsBO->setTransactionStatus(false);
@@ -95,6 +107,7 @@ use UserClasses\BusinessObjects\TermsConditionsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($terms);
         unset($termsBO); 
         $res=$response->withHeader("Content-Type", "application/json");

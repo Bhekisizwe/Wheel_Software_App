@@ -5,6 +5,7 @@ use UserClasses\BusinessLayer\UserRole;
 use UserClasses\BusinessObjects\UserRoleBO;
 use UserClasses\BusinessLayer\AutoWheelSettings;
 use UserClasses\BusinessObjects\AutoWheelSettingsBO;
+use UserClasses\BusinessLayer\ManageSession;
     //View MiniProf Alarm Settings per Coach Type
     $app->get('/wheelalarmsettings/{coachid}', function (Request $request, Response $response, array $args) {
         //Create Objects
@@ -13,6 +14,8 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
         $userrole=new UserRole();
         $userroleBO=new UserRoleBO();
         $coachID=$args["coachid"];
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -36,6 +39,7 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
                 $autoSettingsBO->set($arr_error);
                 $arr=$autoSettingsBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $autoSettingsBO->setTransactionStatus(false);
@@ -49,6 +53,7 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($autoSettings);
         unset($autoSettingsBO);
         unset($userrole);
@@ -68,7 +73,9 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
         $autoSettings=new AutoWheelSettings();
         $autoSettingsBO=new AutoWheelSettingsBO();
         $userrole=new UserRole();
-        $userroleBO=new UserRoleBO();        
+        $userroleBO=new UserRoleBO();   
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -95,6 +102,7 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
                 $autoSettingsBO->set($arr_error);
                 $arr=$autoSettingsBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $autoSettingsBO->setTransactionStatus(false);
@@ -108,6 +116,7 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($autoSettings);
         unset($autoSettingsBO);
         unset($userrole);
@@ -125,6 +134,8 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -145,6 +156,7 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
                 $autoSettingsBO->set($arr_error);
                 $arr=$autoSettingsBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $autoSettingsBO->setTransactionStatus(false);
@@ -158,6 +170,7 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($autoSettings);
         unset($autoSettingsBO);
         unset($userrole);
@@ -176,6 +189,8 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
         $userroleBO=new UserRoleBO();
         //Return Associative Array
         $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
             $userroleBO->set($userrole_arr);
@@ -196,6 +211,7 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
                 $autoSettingsBO->set($arr_error);
                 $arr=$autoSettingsBO->getArray();
             }
+            $_SESSION["lastActive"]=time();
         }
         else{
             $autoSettingsBO->setTransactionStatus(false);
@@ -209,6 +225,7 @@ use UserClasses\BusinessObjects\AutoWheelSettingsBO;
         }
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($autoSettings);
         unset($autoSettingsBO);
         unset($userrole);
