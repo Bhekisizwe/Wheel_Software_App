@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="html/css/bootstrap.min.css">
+
+    <title>Login Screen</title>
+  </head>
+  <body style="background-color:#ccccff">
+    <div align="center" class="container-fluid">
+    	<h3 class="h3">Welcome to the Login Page</h3><p>
+	    		    		
+    		<div class="form-group">
+    			<form style="border:1px solid #888888;width:30%;background-color:#eeeeee" class="rounded" id="loginForm">
+    				<input type="text" class="form-control" placeholder="Enter staff number" id="staffNumber" pattern="[a-zA-Z0-9]{4,}" title="Four or more Alpha-Numeric characters necessary for the Staff Number" autocomplete="off" required><p>
+		    		<p>		    		
+		    		<input type="password" class="form-control" placeholder="Enter password" id="passwordHash" pattern="[a-zA-Z0-9]{8,}" title="Eight or more Alpha-numeric characters necessary for the Password" autocomplete="off" required><p>
+		    		<input type="submit" id="login" class="btn btn-primary" value="LOGIN"><p>
+		    		<a href="recover.html" class="active">Forgotten Password?</a>
+		    		</p>    		
+    			</form>    
+	    	</div>
+    	
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="html/js/jquery-3.3.1.js"></script>
+    <script src="html/js/bootstrap.bundle.min.js"></script>
+    <script>   
+    $(document).ready(function(){
+    	$('#loginForm').submit(function (event){
+    		var staffNumber=$('#staffNumber').val();
+    		var password=$('#passwordHash').val();
+    		//send this data to the server API endpoint
+    		//if(staffNumber)
+    		//alert($('#loginForm')[0].checkValidity());
+    		
+    		if($("#loginForm")[0].checkValidity()){    			
+    			//alert(staffNumber+"_"+password); 
+    			
+    			url="/login/checkexistence/"+staffNumber+"_"+password;    	
+    			alert(url);
+    			var jqxhr=$.getJSON(    
+    			    url,    			    
+    			    function(data,status){    			    	
+    			    	//alert(data["staffNumber"]);    			        
+    			    }).done(function(data){
+    			    	//successfully executed transaction
+    			    	//check if active account exists
+    			    	if(data["transactionStatus"] && data["dataExistsStatus]"]){
+    			    		if(data["userRoleName"]=="Super Admin"){
+    			    			//load menu for super administrator
+    			    			window.location="html/superadminmenu.html";
+    			    		}
+    			    		elseif(data["userRoleName"]=="Admin"){
+    			    			//load menu for administrators
+    			    			window.location="html/adminmenu.html";	
+    			    		}
+    			    		else{
+    			    			//the rest of the userroles will get the same menu
+    			    			window.location="html/normalmenu.html";
+    			    		}
+    			    	}
+    			    }).fail(function(data){
+    			    	alert("Error:transaction failed");	
+    			    });
+    				 
+    		}
+    		event.preventDefault();
+    	});   
+    	
+    });
+    	
+    </script>    
+  </body>
+</html>

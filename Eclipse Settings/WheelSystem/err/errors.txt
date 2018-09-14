@@ -34,3 +34,15 @@
  ####End of Line#### 
 18.) Oops, error in Class Email within method sendEmail has occured at 2018-09-13 19:40:47 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
+19.) Oops, error in Class UserAccounts within method updateUserAccount has occured at 2018-09-13 23:46:28 .Exception message is Failed to update password!
+ ####End of Line#### 
+20.) Oops, error in Class UserAccounts within method updateUserAccount has occured at 2018-09-13 23:46:50 .Exception message is Failed to update password!
+ ####End of Line#### 
+21.) Oops, error in Class Email within method sendEmail has occured at 2018-09-13 23:47:44 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+22.) Oops, error in Class Email within method sendEmail has occured at 2018-09-13 23:48:34 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+23.) Oops, error in Class Email within method sendEmail has occured at 2018-09-13 23:50:36 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+24.) Oops, error in Class Email within method sendEmail has occured at 2018-09-13 23:51:03 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 

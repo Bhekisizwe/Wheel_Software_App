@@ -55,8 +55,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($distanceSettingsBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
     });
     
     //Add
@@ -109,8 +111,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($distanceSettingsBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
         
     });
         
@@ -164,8 +168,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($distanceSettingsBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
         
     });
 ?>

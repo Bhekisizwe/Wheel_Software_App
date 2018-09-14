@@ -66,8 +66,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($activityBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
     });
     
     //Generate PDF Report and email it.
@@ -125,8 +127,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($activityBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
     });
     
     //View All Activity Names
@@ -176,7 +180,9 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($activityBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
     });
 ?>

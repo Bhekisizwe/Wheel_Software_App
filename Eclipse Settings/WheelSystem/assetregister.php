@@ -37,8 +37,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($manageSession);
         unset($asset);
         unset($assetBO);      
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
     });
     
     //View Asset Register for specific Coach Number
@@ -93,8 +95,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($assetBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
     });
     
     //Check if asset with specific Coach Number already exists in the system
@@ -129,8 +133,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($manageSession);
         unset($asset);
         unset($assetBO);        
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
     });
     
     //Import
@@ -302,8 +308,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($assetBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
         
     });
     
@@ -357,8 +365,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($assetBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
         
     });
         
@@ -412,8 +422,10 @@ use UserClasses\BusinessLayer\ManageSession;
         unset($assetBO);
         unset($userrole);
         unset($userroleBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
         
     });
 ?>

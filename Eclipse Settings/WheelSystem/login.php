@@ -3,7 +3,8 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use UserClasses\BusinessLayer\LoginCredentials;
 use UserClasses\BusinessObjects\UserAccountBO;
-   
+use UserClasses\BusinessLayer\ManageSession;
+    
     //Check If User Exists in System
     $app->get('/login/checkexistence/{staffnumber_password}', function (Request $request, Response $response, array $args) {
         //create objects
@@ -15,7 +16,7 @@ use UserClasses\BusinessObjects\UserAccountBO;
         $userAccountBO->setPasswordHash($login_cred_arr[1]);        
         if($loginObj->findUserAccountMatch($userAccountBO)){
             //match found. Set SESSION variable and start session
-            //set Transaction Status to true
+            //set Transaction Status to true            
             $_SESSION["staffNumber"]=$userAccountBO->getStaffNumber();
             $user_arr=$loginObj->listUserAccount($userAccountBO);            
             $_SESSION["roleID"]=$user_arr["roleID"];
@@ -35,15 +36,19 @@ use UserClasses\BusinessObjects\UserAccountBO;
         //destroy objects
         unset($loginObj);
         unset($userAccountBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body);        
     }); 
     
     //View User Account Profile
     $app->get('/login/{staffnumber}', function (Request $request, Response $response, array $args) {
         //create objects
         $loginObj=new LoginCredentials();
-        $userAccountBO=new UserAccountBO();       
+        $userAccountBO=new UserAccountBO();
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){
             $staffNumber=$args["staffnumber"];
             $userAccountBO->setStaffNumber($staffNumber);
@@ -51,6 +56,7 @@ use UserClasses\BusinessObjects\UserAccountBO;
             $userAccountBO->set($user_account_arr);
             $userAccountBO->setTransactionStatus(true);
             $arr=$userAccountBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $userAccountBO->setTransactionStatus(false);
@@ -65,10 +71,13 @@ use UserClasses\BusinessObjects\UserAccountBO;
         
         $arr_json=json_encode($arr);
         //destroy objects
+        unset($manageSession);
         unset($loginObj);
         unset($userAccountBO);
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
     }); 
         
     //Update Password
@@ -77,13 +86,16 @@ use UserClasses\BusinessObjects\UserAccountBO;
         $loginObj=new LoginCredentials();
         $userAccountBO=new UserAccountBO();
         //Return Associative Array
-        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data        
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
         if(isset($_SESSION["staffNumber"])){            
             $userAccountBO->set($form_data);  
             $userAccountBO->setAdminStaffNumber($_SESSION["staffNumber"]);
             $userAccountBO->setTransactionStatus($loginObj->updateUserPassword($userAccountBO));
             $userAccountBO->setPasswordHash("");
             $arr=$userAccountBO->getArray();
+            $_SESSION["lastActive"]=time();
         }
         else{
             $userAccountBO->setTransactionStatus(false);
@@ -100,9 +112,11 @@ use UserClasses\BusinessObjects\UserAccountBO;
         //destroy objects
         unset($loginObj);
         unset($userAccountBO);    
-        
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        unset($manageSession);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
         
     });
     
@@ -112,32 +126,19 @@ use UserClasses\BusinessObjects\UserAccountBO;
         $loginObj=new LoginCredentials();
         $userAccountBO=new UserAccountBO();
         //Return Associative Array
-        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
-        if(isset($_SESSION["staffNumber"])){
-            $userAccountBO->set($form_data);
-            $userAccountBO->setAdminStaffNumber($_SESSION["staffNumber"]);
-            $userAccountBO->setTransactionStatus($loginObj->resetUserPassword($userAccountBO));
-            $userAccountBO->setPasswordHash("");
-            $arr=$userAccountBO->getArray();
-        }
-        else{
-            $userAccountBO->setTransactionStatus(false);
-            //write Error Code and Description
-            $arr_err=array();
-            $arr_err["errorCode"]="0x19";
-            $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
-            $userAccountBO->set($arr_error);
-            $userAccountBO->setPasswordHash("");
-            $arr=$userAccountBO->getArray();
-        }
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data        
+        $userAccountBO->set($form_data);        
+        $userAccountBO->setTransactionStatus($loginObj->resetUserPassword($userAccountBO));
+        $userAccountBO->setPasswordHash("");
+        $arr=$userAccountBO->getArray();      
         $arr_json=json_encode($arr);
         //destroy objects
         unset($loginObj);
-        unset($userAccountBO);
-        
-        $res=$response->withHeader("Content-Type", "application/json");
-        return $res->getBody()->write($arr_json);
+        unset($userAccountBO);        
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
         
     });
 ?>
