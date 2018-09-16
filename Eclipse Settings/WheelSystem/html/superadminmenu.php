@@ -1,0 +1,70 @@
+<?php
+    use UserClasses\BusinessLayer\ManageSession;
+
+    session_start();
+    require __DIR__."\\..\\vendor\autoload.php";
+    $manageSession=new ManageSession();
+    if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+    if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Super Admin"){
+?>
+    	<!doctype html>
+		<html lang="en">
+  		<head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+        <!-- <link rel="stylesheet" href="css/bootstrap-treeview.css">-->
+        <title>Super Administrator Menu</title>
+        </head>
+        <body style="background-color:#ccccff">
+        <div class="containter-fluid" align="center">
+        	<h3 class="h3">Super Administrator Menu</h3>
+            	<i><div style="font-family:arial;font-size:14pt">Logged in as:<b><?php echo $_SESSION["name"]." ".$_SESSION["surname"]; ?></b></div></i><p>
+            	[<a href='logout.php' class='active'><b>Logout</b></a>]<p>
+            <div style="width:20%">            	
+            	<div id="tree" align="left">
+            		<ul>
+            			<li>System License Management            				
+            			</li>
+      					<li>Contract Management      					
+      					</li>
+      					<li>Administrator Accounts Management
+      						<ul>
+            					<li>Create Administrator Account</li>
+            					<li>Edit Administrator Account</li>
+            				</ul>      					
+      					</li>
+            		</ul>
+            	</div>            	   		
+            </div>
+        </div>
+        
+         <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="dist/jstree.min.js"></script>
+        <!-- <script src="js/bootstrap-treeview.js"></script> -->       
+        <script>
+        $(document).ready(function(){                   
+        	
+			$("#tree").jstree();		
+		
+    });
+        </script>   
+        
+        </body>
+        </html>
+<?php 
+        $_SESSION["lastActive"]=time();
+    }
+    else{
+        echo "<html><head><title></title><script>alert('Session Has Expired');window.location='index.html';</script></head><body></html>";
+        session_unset();
+        session_destroy();
+    }
+?>

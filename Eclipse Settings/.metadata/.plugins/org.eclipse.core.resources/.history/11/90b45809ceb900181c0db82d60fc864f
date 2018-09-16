@@ -1,0 +1,68 @@
+<?php
+    use UserClasses\BusinessLayer\ManageSession;
+
+    session_start();
+    require __DIR__."\\..\\vendor\autoload.php";
+    $manageSession=new ManageSession();
+    if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+    if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Super Admin"){
+?>
+    	<!doctype html>
+		<html lang="en">
+  		<head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-treeview.css">
+        <title>Super Administrator Menu</title>
+        </head>
+        <body style="background-color:#ccccff">
+        <div class="containter-fluid" align="center">
+            <div style="width:40%">
+            	<h3 class="h3">Super Administrator Menu</h3>
+            	<div id="tree"></div>            	   		
+            </div>
+        </div>
+        
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/bootstrap-treeview.js"></script>        
+        <script>
+        $(document).ready(function(){                   
+        	var myMenu=[        	
+            {
+        		text:'System License Management',
+        		href:'index.html'
+            },
+            {
+        		text:'Contract Management',
+        		href:'index.html' 
+            },
+            {
+        		text:'Administrator Accounts Management',
+        		href:'index.html' 
+            }];        	
+			$("#tree").treeview({levels:3,
+				enableLinks:true,
+				showIcon:true,						
+				data:myMenu});			
+		
+    });
+        </script>   
+        
+        </body>
+        </html>
+<?php 
+        $_SESSION["lastActive"]=time();
+    }
+    else{
+        echo "<html><head><title></title><script>alert('Session Has Expired');window.location='index.html';</script></head><body></html>";
+        session_unset();
+        session_destroy();
+    }
+?>

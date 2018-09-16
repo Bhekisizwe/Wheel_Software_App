@@ -1,0 +1,40 @@
+<?php
+use UserClasses\BusinessLayer\ManageSession;
+
+session_start();
+require __DIR__."\\..\\vendor\autoload.php";
+$manageSession=new ManageSession();
+if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+if(isset($_SESSION["staffNumber"])){
+    ?>
+    	<!doctype html>
+		<html lang="en">
+  		<head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-treeview.css">
+        <title>User Menu</title>
+        </head>
+        <body style="background-color:#ccccff">
+        <div class="containter-fluid" align="center">
+            <div style="width:40%">
+            	<h3 class="h3">User Menu</h3>
+            	<div id="tree"></div>            	   		
+            </div>
+        </div>
+        
+        </body>
+        </html>
+<?php
+        $_SESSION["lastActive"]=time();
+    }
+    else{
+        echo "<html><head><title></title><script>alert('Session Has Expired');window.location='index.html';</script></head><body></html>";
+        session_unset();
+        session_destroy();
+    }
+?>

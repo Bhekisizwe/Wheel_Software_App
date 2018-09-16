@@ -1,0 +1,109 @@
+<?php
+use UserClasses\BusinessLayer\ManageSession;
+
+session_start();
+require __DIR__."\\..\\vendor\autoload.php";
+$manageSession=new ManageSession();
+if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
+    ?>
+    	<!doctype html>
+		<html lang="en">
+  		<head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-treeview.css">
+        <title>Administrator Menu</title>
+        </head>
+        <body style="background-color:#ccccff">
+        <div class="containter-fluid" align="center">
+            <div style="width:40%">
+            	<h3 class="h3">Administrator Menu</h3>
+            	<div id="tree"></div>            	   		
+            </div>
+        </div>
+        
+            <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap-treeview.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script>
+        $(document).ready(function(){                   
+        	var myMenu=[
+        	{
+                	text:"Manage User Access",
+                	nodes:[
+                		{
+                    		text:'<a href="userrolemanagement.php">User Roles Management</a>'
+                		},
+                		{
+							text:'<a href="useraccountmanagement.php">User Accounts Management</a>'
+                		}
+                    	]
+            },
+            {
+            	text:'<a href="useraccountmanagement.php">User Accounts Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Login Password Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Asset Register Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Number of Axles Per Coach Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Axle Serial Number-Coach Mapping Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">MiniProf Wheel Measurements Alarm Settings Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Manual Wheel Measurements Alarm Settings Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Wheel Wear Rate Settings Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Daily Distance Travelled Setting Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">MiniProf Wheel Measurements Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Manual Wheel Measurements Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Wheel Measurements Planning Report Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Wheel Reprofiling Data Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">System Activity Logs Management</a>'
+            },
+            {
+        		text:'<a href="adminaccountsmanagement.html">Wheel Measurements Alarm Event Management</a>'
+            }];
+			$("#tree").treeview({data:myMenu});
+			$("#tree").treeview({levels:2});
+        });
+        </script>   
+        
+        </body>
+        </html>
+<?php
+        $_SESSION["lastActive"]=time();
+    }
+    else{
+        echo "<html><head><title></title><script>alert('Session Has Expired');window.location='index.html';</script></head><body></html>";  
+        session_unset();
+        session_destroy();
+    }
+?>

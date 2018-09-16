@@ -1,0 +1,40 @@
+<?php
+    use UserClasses\BusinessLayer\ManageSession;
+
+    session_start();
+    require __DIR__."\\..\\vendor\autoload.php";
+    $manageSession=new ManageSession();
+    if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+    if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Super Admin"){
+?>
+    	<!doctype html>
+		<html lang="en">
+  		<head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-treeview.css">
+        <title>Super Administrator Menu</title>
+        </head>
+        <body style="background-color:#ccccff">
+        <div align="center">
+        <h3>Super Administrator Menu</h3>
+        	<a href="licensemanagement.php">License Management</a><p>
+        	<a href="contractmanagement.php">Contract Management</a><p>
+        	<a href="adminaccountsmanagement.php">Administrator Accounts Management</a><p>
+        </div>
+        
+        </body>
+        </html>
+<?php 
+        $_SESSION["lastActive"]=time();
+    }
+    else{
+        echo "<html><head><title></title><script>alert('Session Has Expired');window.location='index.html';</script></head><body></html>";
+        session_unset();
+        session_destroy();
+    }
+?>

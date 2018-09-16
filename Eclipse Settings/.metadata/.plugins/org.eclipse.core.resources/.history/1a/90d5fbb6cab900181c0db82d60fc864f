@@ -1,0 +1,120 @@
+<?php
+use UserClasses\BusinessLayer\ManageSession;
+
+session_start();
+require __DIR__."\\..\\vendor\autoload.php";
+$manageSession=new ManageSession();
+if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
+    ?>
+    	<!doctype html>
+		<html lang="en">
+  		<head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-treeview.css">
+        <title>Administrator Menu</title>
+        </head>
+        <body style="background-color:#ccccff">
+        <div class="containter-fluid" align="center">
+            <div style="width:40%">
+            	<h3 class="h3">Administrator Menu</h3>
+            	<div id="tree"></div>            	   		
+            </div>
+        </div>
+        
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap-treeview.js"></script>        
+        <script>
+        $(document).ready(function(){                   
+        	var myMenu=[
+        	{
+            	text:'User Roles Management',
+            	href:'index.html'               	
+            },
+            {
+            	text:'User Accounts Management',
+            	href:'index.html' 
+            },
+            {
+        		text:'Login Password Management',
+        		href:'index.html'
+            },
+            {
+        		text:'Asset Register Management',
+        		href:'index.html' 
+            },
+            {
+        		text:'Number of Axles Per Coach Management',
+        		href:'index.html' 
+            },
+            {
+        		text:'Axle Serial Number-Coach Mapping Management',
+        		href:'index.html' 
+            },
+            {
+        		text:'MiniProf Wheel Measurements Alarm Settings Management',
+        		href:'index.html' 
+            },
+            {
+        		text:'Manual Wheel Measurements Alarm Settings Management',
+        		href:'index.html'
+            },
+            {
+        		text:'Wheel Wear Rate Settings Management',
+        		href:'index.html' 
+            },
+            {
+        		text:'Daily Distance Travelled Setting Management',
+        		href:'index.html'
+            },
+            {
+        		text:'MiniProf Wheel Measurements Management',
+        		href:'index.html' 
+            },
+            {
+        		text:'Manual Wheel Measurements Management',
+        		href:'index.html'
+            },
+            {
+        		text:'Wheel Measurements Planning Report Management',
+        		href:'index.html'
+            },
+            {
+        		text:'Wheel Reprofiling Data Management',
+        		href:'index.html' 
+            },
+            {
+        		text:'System Activity Logs Management',
+        		href:'index.html' 
+            },
+            {
+        		text:'Wheel Measurements Alarm Event Management',
+        		href:'index.html' 
+            }];        	
+			$("#tree").treeview({levels:3,
+				enableLinks:true,
+				showIcon:true,						
+				data:myMenu});			
+		
+    });
+        </script>   
+        
+        </body>
+        </html>
+<?php
+        $_SESSION["lastActive"]=time();
+    }
+    else{
+        echo "<html><head><title></title><script>alert('Session Has Expired');window.location='index.html';</script></head><body></html>";  
+        session_unset();
+        session_destroy();
+    }
+?>

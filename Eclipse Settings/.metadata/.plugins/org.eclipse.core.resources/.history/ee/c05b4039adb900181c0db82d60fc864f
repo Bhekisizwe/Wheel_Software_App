@@ -1,0 +1,25 @@
+<?php
+    session_start();
+    if(isset($_SESSION["staffNumber"])){
+        
+    }
+    else{
+        header("location:index.html");
+    }
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div align="center">
+<h3>Super Administrator Menu</h3>
+	<a href="licensemanagement.html">License Management</a><p>
+	<a href="contractmanagement.html">Contract Management</a><p>
+	<a href="adminaccountsmanagement.html">Administrator Accounts Management</a><p>
+</div>
+
+</body>
+</html>
