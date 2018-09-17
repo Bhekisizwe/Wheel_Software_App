@@ -32,47 +32,46 @@ if(isset($_SESSION["staffNumber"])){
                       		<ul>
                       			<li>Asset Register Management
                       				<ul>
-                      					<li>Add Asset to System</li>
-                      					<li>Import Asset Register</li>
-                      					<li>Edit Asset in System</li>
+                      					<li id="add_asset">Add Asset to System</li>
+                      					<li id="import_asset">Import Asset Register</li>
+                      					<li id="edit_asset">Edit Asset in System</li>
                       				</ul> 
                       			</li>
-                      			<li>Number of Axles Per Coach Management</li>  
+                      			<li id="axles_number">Number of Axles Per Coach Management</li>  
                       			<li>Axle Serial Number-Coach Mapping Management
                       				<ul>
-                      					<li>Add Axle Serial Number-Coach Mapping</li>
-                      					<li>Import Axle Serial Number-Coach Mapping</li>
-                      					<li>Edit Axle Serial Number-Coach Mapping</li>
+                      					<li id="add_mapping">Add Axle Serial Number-Coach Mapping</li>
+                      					<li id="import_mapping">Import Axle Serial Number-Coach Mapping</li>
+                      					<li id="edit_mapping">Edit Axle Serial Number-Coach Mapping</li>
                       				</ul> 
                       			</li>
-                      			<li>MiniProf Wheel Measurements Alarm Settings Management</li>  
-                      			<li>Manual Wheel Measurements Alarm Settings Management</li>
-                      			<li>Wheel Wear Rate Settings Management</li>  
-                      			<li>Daily Distance Travelled Setting Management</li>                   		
+                      			<li id="miniprof_alarms">MiniProf Wheel Measurements Alarm Settings Management</li>  
+                      			<li id="manual_alarms">Manual Wheel Measurements Alarm Settings Management</li>
+                      			<li id="wear_settings">Wheel Wear Rate Settings Management</li>  
+                      			<li id="distance_setting">Daily Distance Travelled Setting Management</li>                   		
                       		</ul>                      	
                       	</li>                     
                           <li>Manage Wheel Measurements
                           	<ul>
                           		<li>MiniProf Wheel Measurements Management
                           			<ul>                      					
-                      					<li>Import MiniProf Wheel Measurements</li>
-                      					<li>View Wheel Measurements</li>
+                      					<li id="import_miniprof">Import MiniProf Wheel Measurements</li>
+                      					<li id="view_measurements">View Wheel Measurements</li>
                       				</ul>                          		
                           		</li>
-                      			<li>Manual Wheel Measurements Management</li>                    			
-                      			<li>Wheel Measurements Alarm Event Management</li>  
+                      			<li id="manual_measurements">Manual Wheel Measurements Management</li>                    			
+                      			<li id="alarm_events">Wheel Measurements Alarm Event Management</li>  
                           	</ul>                	
                           </li>                    
-                      	<li>Login Password Management</li>
-                      	<li>Wheel Measurements Planning Report Management</li>
+                      	<li id="login_password">Login Password Management</li>
+                      	<li id="planning_report">Wheel Measurements Planning Report Management</li>
                       	<li>Wheel Reprofiling Data Management
                   			<ul>
-              					<li>Add Wheel Reprofiling Data</li>              					
-              					<li>Edit Wheel Reprofiling Data</li>
+              					<li id="add_reprofiling">Add Wheel Reprofiling Data</li>              					
+              					<li id="edit_reprofiling">Edit Wheel Reprofiling Data</li>
               				</ul> 
                       	</li>
-                      	<li>System Activity Logs Management</li>
-                      	
+                      	<li id="activity_logs">System Activity Logs Management</li>                      	
                       </ul> 
             	</div>            	   		
             </div>
@@ -86,8 +85,72 @@ if(isset($_SESSION["staffNumber"])){
         <!-- <script src="js/bootstrap-treeview.js"></script> -->       
         <script>
         $(document).ready(function(){                   
-        	
-			$("#tree").jstree();		
+        	$("#tree").jstree({"plugins":["sort"]});
+        	$("#tree").on("select_node.jstree", function(e,data) {
+            	var id=data.selected[0];
+            	//alert(id);
+            	switch(id){
+            	case "add_asset":
+					window.location="addasset.php";
+                	break;
+            	case "import_asset":
+            		window.location="importasset.php";
+            		break;
+            	case "edit_asset":
+            		window.location="editasset.php";
+                	break;
+            	case "add_mapping":
+					window.location="addmapping.php";
+                	break;
+            	case "import_mapping":
+            		window.location="importmapping.php";
+            		break;
+            	case "edit_mapping":
+            		window.location="editmapping.php";
+                	break;
+            	case "miniprof_alarms":
+					window.location="miniprofalarms.php";
+                	break;
+            	case "manual_alarms":
+            		window.location="manualalarms.php";
+            		break;
+            	case "wear_settings":
+            		window.location="wearsettings.php";
+                	break;
+            	case "distance_setting":
+            		window.location="distancesetting.php";
+            		break;
+             	case "import_miniprof":
+					window.location="importminiprof.php";
+                	break;
+            	case "view_measurements":
+            		window.location="viewmeasurements.php";
+            		break;
+            	case "manual_measurements":
+            		window.location="manualmeasurements.php";
+                	break;
+            	case "alarm_events":
+            		window.location="alarmevents.php";
+            		break;
+            	case "login_password":
+					window.location="loginpassword.php";
+                	break;
+            	case "planning_report":
+            		window.location="planningreport.php";
+            		break;
+            	case "add_reprofiling":
+            		window.location="addreprofiling.php";
+                	break;
+            	case "edit_reprofiling":
+            		window.location="editreprofiling.php";
+            		break;
+            	case "axles_number":
+            		window.location="axlesnumber.php";
+            		break;
+            	case "activity_logs":
+            		window.location="activitylogs.php";
+            	}
+        	});				
 		
     });
         </script>   

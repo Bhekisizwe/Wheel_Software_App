@@ -9,7 +9,7 @@ namespace UserClasses\BusinessLayer;
  */
 class ManageSession
 {
-    private $sessionLimit=60;  //delete session if user is inactive for more than 5 minutes
+    private $sessionLimit=1800;  //delete session if user is inactive for more than 5 minutes
     
     /**
      * @param number $sessionLimit

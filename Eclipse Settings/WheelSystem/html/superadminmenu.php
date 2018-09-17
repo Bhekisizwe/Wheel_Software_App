@@ -28,14 +28,14 @@
             <div style="width:20%">            	
             	<div id="tree" align="left">
             		<ul>
-            			<li>System License Management            				
+            			<li id="license_man">System License Management            				
             			</li>
-      					<li>Contract Management      					
+      					<li id="contract_man">Contract Management      					
       					</li>
       					<li>Administrator Accounts Management
       						<ul>
-            					<li>Create Administrator Account</li>
-            					<li>Edit Administrator Account</li>
+            					<li id="create_admin_acc">Create Administrator Account</li>
+            					<li id="edit_admin_acc">Edit Administrator Account</li>
             				</ul>      					
       					</li>
             		</ul>
@@ -50,10 +50,24 @@
         <script src="dist/jstree.min.js"></script>
         <!-- <script src="js/bootstrap-treeview.js"></script> -->       
         <script>
-        $(document).ready(function(){                   
-        	
-			$("#tree").jstree();		
-		
+        $(document).ready(function(){             
+        	$("#tree").jstree({"plugins":["sort"]});
+        	$("#tree").on("select_node.jstree", function(e,data) {
+            	var id=data.selected[0];
+            	switch(id){
+            	case "create_admin_acc":
+					window.location="createadminaccount.php";
+                	break;
+            	case "edit_admin_acc":
+            		window.location="editadminaccount.php";
+            		break;
+            	case "license_man":
+            		window.location="licensemanagement.php";
+                	break;
+            	case "contract_man":
+            		window.location="contractmanagement.php";
+            	}
+        	});		
     });
         </script>   
         
