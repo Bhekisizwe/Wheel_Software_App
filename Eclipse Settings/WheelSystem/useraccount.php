@@ -27,7 +27,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $userBO->set($arr_error);
             $arr=$userBO->getArray();
         }
@@ -64,7 +64,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $userBO->set($arr_error);
             $arr=$userBO->getArray();
         }
@@ -93,7 +93,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $userBO->setAdminStaffNumber($_SESSION["staffNumber"]);            
             $userBO->setTransactionStatus($user->addUserAccount($userBO));
             if(!$userBO->getTransactionStatus()){
-                $arr_error["errorAssocArray"][10]=$user->getUserAccountBO()->getErrorAssocArray();
+                $arr_error["errorAssocArray"]=$user->getUserAccountBO()->getErrorAssocArray();
                 $userBO->set($arr_error);
             }
             $arr=$userBO->getArray();
@@ -105,7 +105,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $userBO->set($arr_error);
             $arr=$userBO->getArray();
         }
@@ -135,6 +135,10 @@ use UserClasses\BusinessLayer\ManageSession;
             $userBO->setActionCode("0xA100");
             $userBO->setAdminStaffNumber($_SESSION["staffNumber"]);
             $userBO->setTransactionStatus($user->updateUserAccount($userBO));
+            if(!$userBO->getTransactionStatus()){
+                $arr_error["errorAssocArray"]=$user->getUserAccountBO()->getErrorAssocArray();
+                $userBO->set($arr_error);
+            }
             $arr=$userBO->getArray();
             $_SESSION["lastActive"]=time();
         }
@@ -144,7 +148,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $userBO->set($arr_error);
             $arr=$userBO->getArray();
         }

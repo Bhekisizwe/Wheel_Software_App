@@ -1,0 +1,234 @@
+<?php
+use UserClasses\BusinessLayer\ManageSession;
+
+session_start();
+require __DIR__."\\..\\vendor\autoload.php";
+$manageSession=new ManageSession();
+if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Super Admin"){
+    ?>
+    	<!doctype html>
+		<html lang="en">
+  		<head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+        <!-- <link rel="stylesheet" href="css/bootstrap-treeview.css">-->
+        <title>System License Management</title>
+        </head>
+        <body style="background-color:#ccccff">
+        <div class="containter-fluid" align="center">
+        	<h3 class="h3">System License Management</h3>
+            	<i><div style="font-family:arial;font-size:14pt">Logged in as:<b><?php echo $_SESSION["name"]." ".$_SESSION["surname"]; ?></b></div></i><p>
+            	[<a href='logout.php' class='active'><b>Logout</b></a>]
+            	[<a href='superadminmenu.php' class='active'><b>Back to Super Administrator Menu</b></a>]<p>
+            
+            	<div class="form-group">
+    			<form style="border:1px solid #888888;width:30%;background-color:#eeeeee" class="rounded" id="licenseForm">
+    				<input type="hidden" id="licenseID" value="">
+    				<input type="text" class="form-control" placeholder="Enter company name" id="companyName" pattern=".{2,}" title="Two or more characters necessary for the Company Name" autocomplete="on" required><p>
+		    		<p>		    		
+		    		<input type="text" class="form-control" placeholder="Enter building number and/or street address" id="streetAddress" pattern=".{8,}" title="Eight or more characters necessary for the Street Address" autocomplete="on" required><p>
+		    		<input type="text" class="form-control" placeholder="Enter surburb" id="surburb" pattern="[0-9a-zA-Z\-\s]{2,}" title="Two or more characters {i.e Only digits,letters, hyphens and spaces allowed} necessary for the surburb" autocomplete="on" required><p>
+		    		<p>		    		
+		    		<input type="text" class="form-control" placeholder="Enter city" id="city" pattern="[a-zA-Z\-\s]{2,}" title="Two or more characters {i.e Only letters, hyphens and spaces allowed} necessary for the city" autocomplete="on" required><p>
+		    		<input type="text" class="form-control" placeholder="Enter country" id="country" pattern="[a-zA-Z\-\s]{2,}" title="Two or more characters {i.e Only letters, hyphens and spaces allowed} necessary for the country" autocomplete="on" required><p>
+		    		<p>		    		
+		    		<input type="text" class="form-control" placeholder="Enter 4 digit postal code" id="postalCode" pattern="[0-9]{4}" title="4 digits necessary for the postal code" autocomplete="on" required><p>
+		    		<label>License Type:</label><select id="licenseType" required>
+		    			<option value="" selected>--Select License User Limit--</option>
+		    			<option value="10">Maximum 10 Active Users</option>
+		    			<option value="20">Maximum 20 Active Users</option>
+		    			<option value="100">Maximum 100 Active Users</option>
+		    		</select><p>
+		    		<input type="submit" id="addLicense" class="btn btn-primary" value="ADD LICENSE"><p>	
+		    		<input type="submit" id="editLicense" class="btn btn-primary" value="EDIT LICENSE"><p>	    		
+		    		</p>    		
+    			</form>
+	    	
+            </div>
+        </div>
+         <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="dist/jstree.min.js"></script>
+        <!-- <script src="js/bootstrap-treeview.js"></script> -->       
+        <script>
+        $(document).ready(function(){ 
+            var holder_add;
+            var holder_edit;            
+            //$holder_add=$("#addLicense").detach();
+            //$holder_edit=$("#editLicense").detach();
+            //pull license data out of the database
+            url="/systemlicense";            
+        	var jqxhr=$.getJSON(    
+		    url,    			    
+		    function(data,status){    			    	
+		    	//alert(data["staffNumber"]);    			        
+		    }).done(function(data){
+		    	//successfully executed transaction
+		    	//check if active account exists
+		    	if(data["dataExistsStatus"]){
+			    	//then we know there is data returned from the server			    	
+			    	$("#editLicense").append(holder_edit);		
+			    	holder_add=$("#addLicense").detach();	    	
+			    	$("#licenseID").val(data["licenseID"]);
+			    	$("#companyName").val(data["companyName"]);
+			    	$("#streetAddress").val(data["postalAddressArray"]["addressLine1"]);  
+			    	$("#surburb").val(data["postalAddressArray"]["surburb"]);   
+			    	$("#city").val(data["postalAddressArray"]["city"]);  
+			    	$("#country").val(data["postalAddressArray"]["country"]);	
+			    	$("#postalCode").val(data["postalAddressArray"]["postalCode"]);
+			    	if(data["licenseLimit"]==10){
+    			    	//select option for 10 active users
+    			    	$("#licenseType").val(data["licenseLimit"]);
+			    	}
+			    	else if(data["licenseLimit"]==20){
+			    		//select option for 20 active users
+			    		$("#licenseType").val(data["licenseLimit"]);
+			    	}
+			    	else{
+			    		//select option for 100 active users
+			    		$("#licenseType").val(data["licenseLimit"]);
+			    	}		    	
+		    	}
+		    	else{
+			    	//no data returned, it means we must add it
+		    		$("#addLicense").append(holder_add);
+		    		holder_edit=$("#editLicense").detach();		    					    		
+		    	}    			    	    			    	
+		    }).fail(function(data){
+		    	alert("Error:transaction failed");    			    	
+		    });
+		    $("#addLicense").one("click",function(){		    	
+			    //$("#licenseForm").submit();
+			    //alert("What???");
+		    	//add license data to database if it doesn't exist
+				$("#licenseForm").one("submit",function(event){					
+					//var data_arr=new Array();
+					if($("#licenseForm")[0].checkValidity()){
+						$('#addLicense').prop('disabled', true);
+						//alert("Working");
+						//initialise object literal.
+						objData={"companyName":"",
+							"postalAddressArray":{"AddressType":1,
+								"AddressLine1":"",
+								"Surburb":"",
+								"City":"",
+								"Country":"",
+								"PostalCode":""},
+							"licenseLimit":""};
+						objData["companyName"]=$("#companyName").val();						
+						objData["postalAddressArray"]["AddressLine1"]=$("#streetAddress").val();
+						objData["postalAddressArray"]["Surburb"]=$("#surburb").val();	
+						objData["postalAddressArray"]["City"]=$("#city").val();	
+						objData["postalAddressArray"]["Country"]=$("#country").val();
+						objData["postalAddressArray"]["PostalCode"]=$("#postalCode").val();	
+						objData["licenseLimit"]=$("#licenseType").val();			
+						json_data=JSON.stringify(objData);
+						//alert(json_data);						
+						$.ajax({
+							type: "POST",
+							contentType: "application/json",
+							url: "/systemlicense/add",
+							data: json_data, // JSON string
+							dataType: 'json',
+							cache: false,							
+							success: function (data) {
+								if(data["transactionStatus"]){
+									$('#addLicense').prop('disabled', false);
+								    alert("Successfully Added License Data");
+								    location.reload();	
+							    }
+							    else{
+							    	$('#addLicense').prop('disabled', false);
+							    	alert("transaction failed to execute");    
+							    }
+							},
+							error: function (e) {
+								alert("transaction failed to execute with error"+e);
+							}
+						});						
+						
+					}				
+					event.preventDefault();
+				});	
+		    });
+		    //Update License in Database
+		    $("#editLicense").one("click",function(){			    	
+		    	//$("#licenseForm").submit();		    
+		    	//update license data in database
+				$("#licenseForm").one("submit",function(event){													
+					//var data_arr=new Array();
+					if($("#licenseForm")[0].checkValidity()){
+						$('#editLicense').prop('disabled', true);
+						//initialise object literal.
+						objData={"companyName":"",
+							"postalAddressArray":{"AddressType":1,
+								"AddressLine1":"",
+								"Surburb":"",
+								"City":"",
+								"Country":"",
+								"PostalCode":""},
+							"licenseLimit":"",
+							"licenseID":""};
+						objData["licenseID"]=$("#licenseID").val();
+						objData["companyName"]=$("#companyName").val();						
+						objData["postalAddressArray"]["AddressLine1"]=$("#streetAddress").val();
+						objData["postalAddressArray"]["Surburb"]=$("#surburb").val();	
+						objData["postalAddressArray"]["City"]=$("#city").val();	
+						objData["postalAddressArray"]["Country"]=$("#country").val();
+						objData["postalAddressArray"]["PostalCode"]=$("#postalCode").val();	
+						objData["licenseLimit"]=$("#licenseType").val();			
+						json_data=JSON.stringify(objData);
+						//alert(json_data);						
+						$.ajax({
+							type: "POST",
+							contentType: "application/json",
+							url: "/systemlicense/update",
+							data: json_data, // JSON string
+							dataType: 'json',
+							cache: false,							
+							success: function (data) {
+								if(data["transactionStatus"]){
+									$('#editLicense').prop('disabled', false);
+								    alert("Successfully Updated the License Data");								    
+							    }
+							    else{
+							    	$('#editLicense').prop('disabled', false);
+							    	if(data["errorAssocArray"][19]["errorCode"]=="0x19"){
+								    	alert(data["errorAssocArray"][19]["errorDescription"]);
+							    	}
+							    	else{
+							    		alert("transaction failed to execute"); 
+							    	}							    	   
+							    }
+							},
+							error: function (e) {
+								alert("transaction failed to execute with error"+e);
+							}
+						});						
+						
+					}			
+					event.preventDefault();
+				});	
+		    });
+			
+        });
+        </script>  
+        </body>
+        </html>
+<?php 
+        $_SESSION["lastActive"]=time();
+    }
+    else{
+        echo "<html><head><title></title><script>alert('Session Has Expired');window.location='index.html';</script></head><body></html>";
+        session_unset();
+        session_destroy();
+    }
+?>

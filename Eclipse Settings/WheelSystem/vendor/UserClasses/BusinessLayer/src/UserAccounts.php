@@ -131,22 +131,31 @@ class UserAccounts
             try {
                 if($data->getActionCode()=="0xA100"){
                     //updates User Profile Only. Passwords are copied as is.
-                    $arr=$data->getArray();
-                    $status_message=$this->userAccountDL->update($arr);
-                    if($status_message){
-                        //Email user notifying them of updated profile
-                        $arr["passwordText"]="";
-                        $arr_email=$this->generateEmailMessage($arr,"update");
-                        $this->sender->sendEmail($arr_email);
-                        $arr_data=array();
-                        $arr_data["taskArray2D"][0]["taskName"]="User Accounts";
-                        $arr_data["transactionName"]="Updating User Account in Database";
-                        $arr_data["activityAction"]=2;      //update
-                        $arr_data["staffNumber"]=$data->getAdminStaffNumber();
-                        $this->activityBO->set($arr_data);
-                        $this->activityLog->addActivityData($this->activityBO);
+                    if(($data->getDataExistsStatus() || $data->getAccountState()==0) || !$this->checkIfActiveAccLimitReached()){
+                        $arr=$data->getArray();
+                        $status_message=$this->userAccountDL->update($arr);
+                        if($status_message){
+                            //Email user notifying them of updated profile
+                            $arr["passwordText"]="";
+                            $arr_email=$this->generateEmailMessage($arr,"update");
+                            $this->sender->sendEmail($arr_email);
+                            $arr_data=array();
+                            $arr_data["taskArray2D"][0]["taskName"]="User Accounts";
+                            $arr_data["transactionName"]="Updating User Account in Database";
+                            $arr_data["activityAction"]=2;      //update
+                            $arr_data["staffNumber"]=$data->getAdminStaffNumber();
+                            $this->activityBO->set($arr_data);
+                            $this->activityLog->addActivityData($this->activityBO);
+                        }
+                        else throw new \Exception("Failed to update user account!");
                     }
-                    else throw new \Exception("Failed to update user account!");
+                    else{
+                        $err_arr=array();
+                        $err_arr["errorDescription"]="License Limit Reached. Cannot add more active users than the license limit allows.";
+                        $err_arr["errorCode"]="0x10";
+                        $this->userAccountBO->setErrorAssocArray($err_arr);
+                        throw new \Exception("License Limit Reached");
+                    }
                 } 
                 if($data->getActionCode()=="0xA101"){
                     //updates passwords only. Passwords are digested using MD5 Hash Algorithm
@@ -176,7 +185,8 @@ class UserAccounts
                     }
                     else throw new \Exception("Failed to reset password!");
                 }
-            } catch (\Exception $e) {                
+            } catch (\Exception $e) { 
+                $status_message=false;
                 $class_name="UserAccounts";
                 $method_name="updateUserAccount";
                 $this->err->logErrors($e,null,$class_name, $method_name);

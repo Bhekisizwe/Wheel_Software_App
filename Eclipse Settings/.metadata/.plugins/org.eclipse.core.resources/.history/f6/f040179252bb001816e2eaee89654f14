@@ -1,0 +1,182 @@
+<?php
+use UserClasses\BusinessLayer\ManageSession;
+
+session_start();
+require __DIR__."\\..\\vendor\autoload.php";
+$manageSession=new ManageSession();
+if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Super Admin"){
+    ?>
+    	<!doctype html>
+		<html lang="en">
+  		<head>
+        <!-- Required meta tags -->
+    	<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+        <!-- <link rel="stylesheet" href="css/bootstrap-treeview.css">-->
+        <title>Contract Management</title>
+        </head>
+        <body style="background-color:#ccccff">
+        <div class="containter-fluid" align="center">
+        	<h3 class="h3">Contract Management</h3>
+            	<i><div style="font-family:arial;font-size:14pt">Logged in as:<b><?php echo $_SESSION["name"]." ".$_SESSION["surname"]; ?></b></div></i><p>
+            	[<a href='logout.php' class='active'><b>Logout</b></a>]
+            	[<a href='superadminmenu.php' class='active'><b>Back to Super Administrator Menu</b></a>]<p>
+            
+            	<div class="form-group">
+    			<form style="border:1px solid #888888;width:50%;background-color:#eeeeee" class="rounded" id="termsForm">
+    				<input type="hidden" id="termsID" value="">
+    				<label>Terms and Conditions on the Date:</label><label id="dateModified"></label><p>
+    				<label id="wordsLeft" style="font-family:arial"><i></i></label>
+    				<textarea rows="20" cols="100" class="form-control" id="terms" title="The terms and conditions cannot exceed 10 000 characters" autocomplete="off" required>
+    				</textarea><p>
+		    		<p>		    		
+		    		<input type="submit" id="addTerms" class="btn btn-primary" value="ADD TERMS & CONDITIONS"><p>	
+		    		<input type="submit" id="editTerms" class="btn btn-primary" value="EDIT TERMS & CONDITIONS"><p>	    		
+		    		</p>    		
+    			</form>
+	    	
+            </div>
+        </div>
+         <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="dist/jstree.min.js"></script>
+        <!-- <script src="js/bootstrap-treeview.js"></script> -->       
+        <script>
+        $(document).ready(function(){ 
+            var holder_add;
+            var holder_edit;  
+            $("#terms").prop("required", true);          
+            //$holder_add=$("#addLicense").detach();
+            //$holder_edit=$("#editLicense").detach();
+            //pull terms and conditions data out of the database
+            url="/termsconditions";            
+        	var jqxhr=$.getJSON(    
+		    url,    			    
+		    function(data,status){    			    	
+		    	//alert(data["staffNumber"]);    			        
+		    }).done(function(data){
+		    	//successfully executed transaction
+		    	//check if active account exists
+		    	if(data["dataExistsStatus"]){
+			    	//then we know there is data returned from the server			    	
+			    	$("#editTerms").append(holder_edit);		
+			    	holder_add=$("#addTerms").detach();	    	
+			    	$("#termsID").val(data["termsID"]);
+			    	$("#terms").val(data["terms"]);
+			    	$("#dateModified").val(data["dateModified"]);		    	    	
+		    	}
+		    	else{
+			    	//no data returned, it means we must add it
+		    		$("#addTerms").append(holder_add);
+		    		holder_edit=$("#editTerms").detach();		    					    		
+		    	}    			    	    			    	
+		    }).fail(function(data){
+		    	alert("Error:transaction failed");    			    	
+		    });	 
+		    
+			$("#termsForm").on("submit",function(event){													
+				//var data_arr=new Array();
+				if($("#termsForm")[0].checkValidity()){					
+					//initialise object literal.
+					objData={"terms":"","termsID":""};
+					objData["termsID"]=$("#termsID").val();
+					objData["terms"]=$("#terms").val();							
+					json_data=JSON.stringify(objData);
+					//update license data
+					if($("#editTerms").length>0){
+						$('#editTerms').val("UPDATING TERMS & CONDITIONS");
+						$('#editTerms').prop('disabled', true);
+						//we are editing
+						$.ajax({
+							type: "POST",
+							contentType: "application/json",
+							url: "/termsconditions/update",
+							data: json_data, // JSON string
+							dataType: 'json',
+							cache: false,							
+							success: function (data) {
+								$('#editTerms').val("EDIT TERMS & CONDITIONS");
+								if(data["transactionStatus"]){
+									$('#editTerms').prop('disabled', false);
+								    alert("Successfully Updated the Terms and Conditions Data");								    
+							    }
+							    else{
+							    	$('#editTerms').prop('disabled', false);							    	
+							    	if(data["errorAssocArray"][19]["errorCode"]=="0x19"){
+								    	//session has expired
+								    	alert(data["errorAssocArray"][19]["errorDescription"]);
+								    	window.location="index.html";
+							    	}
+							    	else{
+							    		alert("transaction failed to execute"); 
+							    	}							    	   
+							    }
+							},
+							error: function (e) {
+								$('#editTerms').val("EDIT TERMS & CONDITIONS");
+								alert("transaction failed to execute with error"+e);
+							}
+						});	
+					}
+					if($("#addTerms").length>0){
+						$('#addTerms').val("ADDING TERMS & CONDITIONS");
+						$('#addTerms').prop('disabled', true);
+						//we are adding
+						//add license data
+						$.ajax({
+							type: "POST",
+							contentType: "application/json",
+							url: "/termsconditions/add",
+							data: json_data, // JSON string
+							dataType: 'json',
+							cache: false,							
+							success: function (data) {
+								$('#addTerms').val("ADD TERMS & CONDITIONS");
+								if(data["transactionStatus"]){
+									$('#addTerms').prop('disabled', false);
+								    alert("Successfully Added Terms and Conditions Data");
+								    location.reload();	
+							    }
+							    else{
+							    	$('#addLicense').prop('disabled', false);
+							    	if(data["errorAssocArray"][19]["errorCode"]=="0x19"){
+								    	//session has expired
+								    	alert(data["errorAssocArray"][19]["errorDescription"]);
+								    	window.location="index.html";
+							    	}
+							    	else{
+							    		alert("transaction failed to execute"); 
+							    	}	    
+							    }
+							},
+							error: function (e) {
+								$('#addTerms').val("ADD TERMS & CONDITIONS");
+								alert("transaction failed to execute with error"+e);
+							}
+						});		
+					}				
+					
+				}			
+				event.preventDefault();
+			});	    
+			
+        });
+        </script>  
+        </body>
+        </html>
+<?php 
+        $_SESSION["lastActive"]=time();
+    }
+    else{
+        echo "<html><head><title></title><script>alert('Session Has Expired');window.location='index.html';</script></head><body></html>";
+        session_unset();
+        session_destroy();
+    }
+?>

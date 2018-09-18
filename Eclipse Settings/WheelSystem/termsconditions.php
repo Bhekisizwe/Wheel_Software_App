@@ -30,7 +30,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $termsBO->set($arr_error);
             $arr=$termsBO->getArray();
         }
@@ -58,6 +58,9 @@ use UserClasses\BusinessLayer\ManageSession;
             $termsBO->set($form_data);
             $termsBO->setStaffNumber($_SESSION["staffNumber"]);
             $termsBO->setTransactionStatus($terms->addTerms($termsBO));
+            if(!$termsBO->getTransactionStatus()){
+                $termsBO->set($terms->getTermsBO()->getArray());   
+            }
             $arr=$termsBO->getArray();
             $_SESSION["lastActive"]=time();
         }
@@ -67,7 +70,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $termsBO->set($arr_error);
             $arr=$termsBO->getArray();
         }
@@ -105,7 +108,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $termsBO->set($arr_error);
             $arr=$termsBO->getArray();
         }
