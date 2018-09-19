@@ -157,23 +157,23 @@ class AssetRegister extends FileHandler
                                 //There are empty fields in the file
                                 $str="Asset register CSV Textfile has missing data.";
                                 $str.="Please consult the HELP documentation to correctly setup the CSV file for import.";
-                                $arr["errorAssocArray"][2]["errorDescription"]=$str;
-                                $arr["errorAssocArray"][2]["errorCode"]="0x02";
-                                throw new \Exception($arr["errorAssocArray"][2]["errorDescription"]);
+                                $arr["errorAssocArray"]["errorDescription"]=$str;
+                                $arr["errorAssocArray"]["errorCode"]="0x02";
+                                throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
                             }
                         }
                         else {
                             //headings in wrong order
-                            $arr["errorAssocArray"][6]["errorDescription"]="Asset Register CSV TextFile Headings In Wrong Order";
-                            $arr["errorAssocArray"][6]["errorCode"]="0x06";
-                            throw new \Exception($arr["errorAssocArray"][6]["errorDescription"]);
+                            $arr["errorAssocArray"]["errorDescription"]="Asset Register CSV TextFile Headings In Wrong Order";
+                            $arr["errorAssocArray"]["errorCode"]="0x06";
+                            throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
                         }
                     }
                     else{
                         //some headers missing
-                        $arr["errorAssocArray"][8]["errorDescription"]="Asset Register CSV TextFile, some Headings Missing";
-                        $arr["errorAssocArray"][8]["errorCode"]="0x08";
-                        throw new \Exception($arr["errorAssocArray"][8]["errorDescription"]);
+                        $arr["errorAssocArray"]["errorDescription"]="Asset Register CSV TextFile, some Headings Missing";
+                        $arr["errorAssocArray"]["errorCode"]="0x08";
+                        throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
                     }
                 } catch (\Exception $e) {
                     $class_name="AssetRegister";

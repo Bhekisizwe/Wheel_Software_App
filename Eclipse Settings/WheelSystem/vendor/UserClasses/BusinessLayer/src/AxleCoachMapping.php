@@ -156,23 +156,23 @@ class AxleCoachMapping extends FileHandler
                                 //There are empty fields in the file
                                 $str="Axle to Coach Mapping CSV Textfile has missing data.";
                                 $str.="Please consult the HELP documentation to correctly setup the CSV file for import.";
-                                $arr["errorAssocArray"][3]["errorDescription"]=$str;
-                                $arr["errorAssocArray"][3]["errorCode"]="0x03";
-                                throw new \Exception($arr["errorAssocArray"][3]["errorDescription"]);
+                                $arr["errorAssocArray"]["errorDescription"]=$str;
+                                $arr["errorAssocArray"]["errorCode"]="0x03";
+                                throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
                             }
                         }
                         else {
                             //headings in wrong order
-                            $arr["errorAssocArray"][11]["errorDescription"]="Axle to Coach Mapping CSV TextFile Headings In Wrong Order";
-                            $arr["errorAssocArray"][11]["errorCode"]="0x11";
-                            throw new \Exception($arr["errorAssocArray"][11]["errorDescription"]);
+                            $arr["errorAssocArray"]["errorDescription"]="Axle to Coach Mapping CSV TextFile Headings In Wrong Order";
+                            $arr["errorAssocArray"]["errorCode"]="0x11";
+                            throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
                         }
                     }
                     else{
                         //some headers missing
-                        $arr["errorAssocArray"][9]["errorDescription"]="Axle to Coach Mapping CSV TextFile, some Headings Missing.";
-                        $arr["errorAssocArray"][9]["errorCode"]="0x09";
-                        throw new \Exception($arr["errorAssocArray"][9]["errorDescription"]);
+                        $arr["errorAssocArray"]["errorDescription"]="Axle to Coach Mapping CSV TextFile, some Headings Missing.";
+                        $arr["errorAssocArray"]["errorCode"]="0x09";
+                        throw new \Exception($arr["errorAssocArray"]["errorDescription"]);
                     }
                 } catch (\Exception $e) {
                     $class_name="AxleCoachMapping";

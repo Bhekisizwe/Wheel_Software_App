@@ -64,7 +64,7 @@ class AxleCoachMappingTest extends TestCase
         $arr["staffNumber"]="305941";
         $this->axleBO->set($arr);
         $arr_result=$this->axleCoachMapping->readCSVFileMapping($this->axleBO);
-        $this->assertEquals("0x09",$arr_result["errorAssocArray"][9]["errorCode"]);
+        $this->assertEquals("0x09",$arr_result["errorAssocArray"]["errorCode"]);
     }
     
     public function testReadCSVFileMappingFileWithHeadingsOrderWrong()
@@ -75,7 +75,7 @@ class AxleCoachMappingTest extends TestCase
         $arr["staffNumber"]="305942";
         $this->axleBO->set($arr);
         $arr_result=$this->axleCoachMapping->readCSVFileMapping($this->axleBO);
-        $this->assertEquals("0x11",$arr_result["errorAssocArray"][11]["errorCode"]);
+        $this->assertEquals("0x11",$arr_result["errorAssocArray"]["errorCode"]);
     }
     
     public function testReadCSVFileMappingFileWithMissingData()
@@ -86,7 +86,7 @@ class AxleCoachMappingTest extends TestCase
         $arr["staffNumber"]="305943";
         $this->axleBO->set($arr);
         $arr_result=$this->axleCoachMapping->readCSVFileMapping($this->axleBO);
-        $this->assertEquals("0x03",$arr_result["errorAssocArray"][3]["errorCode"]);
+        $this->assertEquals("0x03",$arr_result["errorAssocArray"]["errorCode"]);
     }
     
     public function testReadCSVFileMappingFileWithEverythingOK()

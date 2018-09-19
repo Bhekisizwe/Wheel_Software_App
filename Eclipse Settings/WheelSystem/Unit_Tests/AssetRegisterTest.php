@@ -179,7 +179,7 @@ class AssetRegisterTest extends TestCase
         $arr["staffNumber"]="305941";
         $this->assetRegisterBO->set($arr);
         $arr=$this->assetRegister->readCSVFileAssetsData($this->assetRegisterBO);
-        $this->assertEquals("0x08",$arr["errorAssocArray"][8]["errorCode"]);
+        $this->assertEquals("0x08",$arr["errorAssocArray"]["errorCode"]);
     }
     
     public function testReadCSVFileAssetsDataWhenHeadersOrderWrong()
@@ -191,7 +191,7 @@ class AssetRegisterTest extends TestCase
         $arr["staffNumber"]="305942";
         $this->assetRegisterBO->set($arr);
         $arr=$this->assetRegister->readCSVFileAssetsData($this->assetRegisterBO);
-        $this->assertEquals("0x06",$arr["errorAssocArray"][6]["errorCode"]);
+        $this->assertEquals("0x06",$arr["errorAssocArray"]["errorCode"]);
     }
     
     public function testReadCSVFileAssetsDataWhenDataMissing()
@@ -203,7 +203,7 @@ class AssetRegisterTest extends TestCase
         $arr["staffNumber"]="305943";
         $this->assetRegisterBO->set($arr);
         $arr=$this->assetRegister->readCSVFileAssetsData($this->assetRegisterBO);
-        $this->assertEquals("0x02",$arr["errorAssocArray"][2]["errorCode"]);
+        $this->assertEquals("0x02",$arr["errorAssocArray"]["errorCode"]);
     }
     
     public function testReadCSVFileAssetsDataWhenEverythingIsOK()
