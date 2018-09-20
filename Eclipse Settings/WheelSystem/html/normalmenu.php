@@ -133,7 +133,7 @@ if(isset($_SESSION["staffNumber"])){
             		window.location="alarmevents.php";
             		break;
             	case "login_password":
-					window.location="loginpassword.php";
+					window.location="userloginpassword.php";
                 	break;
             	case "planning_report":
             		window.location="planningreport.php";

@@ -91,11 +91,11 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Super Admin"){
 							dataType: 'json',
 							cache: false,							
 							success: function (data) {								
-								if(data["transactionStatus"]){
-									$('#addAccount').prop('disabled', false);
+								if(data["transactionStatus"]){									
 									if(data["dataExistsStatus"]){
 										//then we know that there is a duplicate Staff Number
 										$('#addAccount').val("CREATE ADMIN ACCOUNT");
+										$('#addAccount').prop('disabled', false);
 										alert("The staff number entered already exists in the system,\n please try another one.");
 									}
 									else{
@@ -109,6 +109,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Super Admin"){
                 						cache: false,							
                 						success: function (data) {
                 							$('#addAccount').val("CREATE ADMIN ACCOUNT");
+            								$('#addAccount').prop('disabled', false);
 											if(data["transactionStatus"]){
 												alert("Administrator Account Successfully Created!");													
 											}
@@ -127,6 +128,8 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Super Admin"){
 											}
                 						},
                 						error: function (e) {
+                							$('#addAccount').val("CREATE ADMIN ACCOUNT");
+            								$('#addAccount').prop('disabled', false);
                 							alert("transaction failed to execute with error"+e);
                 						}
 									  });

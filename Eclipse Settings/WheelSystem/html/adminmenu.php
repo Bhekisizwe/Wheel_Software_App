@@ -162,7 +162,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
             		window.location="alarmevents.php";
             		break;
             	case "login_password":
-					window.location="loginpassword.php";
+					window.location="adminloginpassword.php";
                 	break;
             	case "planning_report":
             		window.location="planningreport.php";

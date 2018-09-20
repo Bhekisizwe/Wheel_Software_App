@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <title>Password Recovery Screen</title>
+  </head>
+  <body style="background-color:#ccccff">
+    <div align="center" class="container-fluid">
+    	<h3 class="h3">Password Recovery Screen</h3><p>	    	  		
+    		<div class="form-group">
+    			<form style="border:1px solid #888888;width:30%;background-color:#eeeeee" class="rounded" id="loginForm">
+    				<input type="text" class="form-control" placeholder="Enter staff number" id="staffNumber" pattern="[a-zA-Z0-9]{4,}" title="Four or more Alpha-Numeric (i.e Letters and Digits only) characters necessary for the Staff Number" autocomplete="off" required><p>
+		    		<p>	    		
+		    		<input type="submit" id="passwordReset" class="btn btn-primary" value="RESET PASSWORD"><p>
+		    		<a href="recover.html" class="active">Forgotten Password?</a>
+		    		</p>    		
+    			</form>    
+	    	</div>
+    	
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>   
+    $(document).ready(function(){
+    	
+    	    	$('#loginForm').submit(function (event){
+    	    		var staffNumber=$('#staffNumber').val();    	    		
+    	    		//send this data to the server API endpoint
+    	    		//if(staffNumber)
+    	    		//alert($('#loginForm')[0].checkValidity());
+    	    		
+    	    		if($("#loginForm")[0].checkValidity()){    			
+    	    			//alert(staffNumber+"_"+password);   	    			    	
+    	    			//alert(url);
+    	    			$.ajax({
+    						type: "POST",
+    						contentType: "application/json",
+    						url: "/login/reset",	
+    						data:json_data,						
+    						dataType: 'json',
+    						cache: false,							
+    						success: function (data) {
+    							$('#editRole').val("EDIT USER ROLE ACCESS RIGHTS");
+    							$('#editRole').prop('disabled', false);
+								if(data["transactionStatus"]){
+									alert("User Role Access Rights Successfully Updated!");													
+								}
+								else{												
+									if(data["errorAssocArray"]["errorCode"]=="0x19"){
+								    	//session has expired
+								    	alert(data["errorAssocArray"]["errorDescription"]);
+								    	window.location="index.html";
+							    	}													
+							    	else{								    	
+							    		alert("transaction failed to execute"); 
+							    	}	
+								}
+    						},
+    						error: function (e) {
+    							$('#editRole').val("EDIT USER ROLE ACCESS RIGHTS");
+    							$('#editRole').prop('disabled', false);
+    							alert("transaction failed to execute with error "+e);
+    						}
+						  });			
+    	    				 
+    	    		}
+    	    		event.preventDefault();
+    	    	});   	
+    	    }
+    	    //alert("Browser is:"+browserName+" and version is:"+browserVersion);
+    		
+    	
+    	
+    });
+    	
+    </script>    
+  </body>
+</html>
