@@ -214,6 +214,8 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
 												}
 	                						},
 	                						error: function (e) {
+	                					    	$('#addRole').val("CREATE USER ROLE");
+	    										$('#addRole').prop('disabled', false);
 	                							alert("transaction failed to execute with error "+e);
 	                						}
 										  });

@@ -28,7 +28,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $assetBO->set($arr_error);
             $arr=$assetBO->getArray();
         }
@@ -72,7 +72,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $assetBO->set($arr_error);
                 $arr=$assetBO->getArray();
             }
@@ -84,7 +84,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $assetBO->set($arr_error);
             $arr=$assetBO->getArray();
         }
@@ -124,7 +124,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $assetBO->set($arr_error);
             $arr=$assetBO->getArray();
         }
@@ -193,7 +193,7 @@ use UserClasses\BusinessLayer\ManageSession;
                                 $arr_err=array();
                                 $arr_err["errorCode"]="0x05";
                                 $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a CSV Textfile";
-                                $arr_error["errorAssocArray"][5]=$arr_err;
+                                $arr_error["errorAssocArray"]=$arr_err;
                                 $assetBO->set($arr_error);
                                 $arr=$assetBO->getArray();
                             }
@@ -233,7 +233,7 @@ use UserClasses\BusinessLayer\ManageSession;
                                     $arr_err=array();
                                     $arr_err["errorCode"]="0x05";
                                     $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a CSV Textfile";
-                                    $arr_error["errorAssocArray"][5]=$arr_err;
+                                    $arr_error["errorAssocArray"]=$arr_err;
                                     $assetBO->set($arr_error);
                                     $arr=$assetBO->getArray();
                                 }
@@ -269,7 +269,7 @@ use UserClasses\BusinessLayer\ManageSession;
                                 $arr_err=array();
                                 $arr_err["errorCode"]="0x05";
                                 $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a CSV Textfile";
-                                $arr_error["errorAssocArray"][5]=$arr_err;
+                                $arr_error["errorAssocArray"]=$arr_err;
                                 $assetBO->set($arr_error);
                                 $arr=$assetBO->getArray();
                             }
@@ -281,7 +281,7 @@ use UserClasses\BusinessLayer\ManageSession;
                     $arr_err=array();
                     $arr_err["errorCode"]="0x18";
                     $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                    $arr_error["errorAssocArray"][18]=$arr_err;
+                    $arr_error["errorAssocArray"]=$arr_err;
                     $assetBO->set($arr_error);
                     $arr=$assetBO->getArray();
                 }
@@ -293,7 +293,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x19";
                 $arr_err["errorDescription"]="Session has expired";
-                $arr_error["errorAssocArray"][19]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $assetBO->set($arr_error);
                 $arr=$assetBO->getArray();
             }
@@ -342,7 +342,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $assetBO->set($arr_error);
                 $arr=$assetBO->getArray();
             }
@@ -354,7 +354,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $assetBO->set($arr_error);
             $arr=$assetBO->getArray();
         }
@@ -399,7 +399,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $assetBO->set($arr_error);
                 $arr=$assetBO->getArray();
             }
@@ -411,7 +411,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $assetBO->set($arr_error);
             $arr=$assetBO->getArray();
         }

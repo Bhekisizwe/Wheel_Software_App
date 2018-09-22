@@ -124,3 +124,39 @@
  ####End of Line#### 
 63.) Oops, error in Class Email within method sendEmail has occured at 2018-09-20 14:17:11 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
+64.) Oops, error in Class UserAccounts within method updateUserAccount has occured at 2018-09-21 10:47:54 .Exception message is Invalid address:  (to): 
+ ####End of Line#### 
+65.) Oops, error in Class Email within method sendEmail has occured at 2018-09-22 11:05:33 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+66.) Oops, error in Class Email within method sendEmail has occured at 2018-09-22 11:13:03 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+67.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 11:47:47 .Exception message is Asset Register CSV TextFile, some Headings Missing
+ ####End of Line#### 
+68.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 11:49:24 .Exception message is Asset Register CSV TextFile, some Headings Missing
+ ####End of Line#### 
+69.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 11:49:34 .Exception message is Asset Register CSV TextFile Headings In Wrong Order
+ ####End of Line#### 
+70.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 11:49:38 .Exception message is Asset Register CSV TextFile Headings In Wrong Order
+ ####End of Line#### 
+71.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 11:49:45 .Exception message is Asset register CSV Textfile has missing data.Please consult the HELP documentation to correctly setup the CSV file for import.
+ ####End of Line#### 
+72.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 11:52:12 .Exception message is Asset Register CSV TextFile Headings In Wrong Order
+ ####End of Line#### 
+73.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 11:53:02 .Exception message is Asset register CSV Textfile has missing data.Please consult the HELP documentation to correctly setup the CSV file for import.
+ ####End of Line#### 
+74.) Oops, error in Class Email within method sendEmail has occured at 2018-09-22 11:57:47 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+75.) Oops, error in Class Email within method sendEmail has occured at 2018-09-22 13:15:04 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+76.) Oops, error in Class Email within method sendEmail has occured at 2018-09-22 13:20:16 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+77.) Oops, error in Class Email within method sendEmail has occured at 2018-09-22 13:20:44 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+78.) Oops, error in Class Email within method sendEmail has occured at 2018-09-22 13:21:38 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+79.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 13:23:55 .Exception message is Asset Register CSV TextFile, some Headings Missing
+ ####End of Line#### 
+80.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 13:24:08 .Exception message is Asset Register CSV TextFile Headings In Wrong Order
+ ####End of Line#### 
+81.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-09-22 13:24:21 .Exception message is Asset register CSV Textfile has missing data.Please consult the HELP documentation to correctly setup the CSV file for import.
+ ####End of Line#### 
