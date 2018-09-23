@@ -34,6 +34,13 @@ use UserClasses\BusinessLayer\ManageSession;
                     $axleserialBO->set($axle_mapping_arr[$i]);
                     $axleserialBO->setTransactionStatus(true);
                     $arr[]=$axleserialBO->getArray();
+                } 
+                if(count($axle_mapping_arr)==0){
+                    $arr[0]["transactionStatus"]=true;
+                    $arr[0]["setNumber"]="";
+                    $arr[0]["axleNumber"]=0;
+                    $arr[0]["coachNumber"]="";
+                    $arr[0]["axleSerialNumber"]="";
                 }                
             }
             else {
@@ -41,7 +48,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $axleserialBO->set($arr_error);
                 $arr=$axleserialBO->getArray();
             }
@@ -53,7 +60,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $axleserialBO->set($arr_error);
             $arr=$axleserialBO->getArray();
         }
@@ -123,7 +130,7 @@ use UserClasses\BusinessLayer\ManageSession;
                             $arr_err=array();
                             $arr_err["errorCode"]="0x05";
                             $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a CSV Textfile";
-                            $arr_error["errorAssocArray"][5]=$arr_err;
+                            $arr_error["errorAssocArray"]=$arr_err;
                             $axleserialBO->set($arr_error);
                             $arr=$axleserialBO->getArray();
                         }
@@ -163,7 +170,7 @@ use UserClasses\BusinessLayer\ManageSession;
                                 $arr_err=array();
                                 $arr_err["errorCode"]="0x05";
                                 $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a CSV Textfile";
-                                $arr_error["errorAssocArray"][5]=$arr_err;
+                                $arr_error["errorAssocArray"]=$arr_err;
                                 $axleserialBO->set($arr_error);
                                 $arr=$axleserialBO->getArray();
                             }
@@ -199,7 +206,7 @@ use UserClasses\BusinessLayer\ManageSession;
                             $arr_err=array();
                             $arr_err["errorCode"]="0x05";
                             $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a CSV Textfile";
-                            $arr_error["errorAssocArray"][5]=$arr_err;
+                            $arr_error["errorAssocArray"]=$arr_err;
                             $axleserialBO->set($arr_error);
                             $arr=$axleserialBO->getArray();
                         }
@@ -211,7 +218,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $axleserialBO->set($arr_error);
                 $arr=$axleserialBO->getArray();
             }
@@ -223,7 +230,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $axleserialBO->set($arr_error);
             $arr=$axleserialBO->getArray();
         }
@@ -268,7 +275,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $axleserialBO->set($arr_error);
                 $arr=$axleserialBO->getArray();
             }
@@ -280,7 +287,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $axleserialBO->set($arr_error);
             $arr=$axleserialBO->getArray();
         }

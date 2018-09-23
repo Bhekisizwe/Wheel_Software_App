@@ -42,7 +42,7 @@ if(isset($_SESSION["staffNumber"])){
                       				<ul>
                       					<li id="add_mapping">Add Axle Serial Number-Coach Mapping</li>
                       					<li id="import_mapping">Import Axle Serial Number-Coach Mapping</li>
-                      					<li id="edit_mapping">Edit Axle Serial Number-Coach Mapping</li>
+                      					<li id="view_mapping">View Axle Serial Number-Coach Mapping</li>
                       				</ul> 
                       			</li>
                       			<li id="miniprof_alarms">MiniProf Wheel Measurements Alarm Settings Management</li>  
@@ -105,8 +105,8 @@ if(isset($_SESSION["staffNumber"])){
             	case "import_mapping":
             		window.location="importmapping.php";
             		break;
-            	case "edit_mapping":
-            		window.location="editmapping.php";
+            	case "view_mapping":
+            		window.location="viewmapping.php";
                 	break;
             	case "miniprof_alarms":
 					window.location="miniprofalarms.php";
