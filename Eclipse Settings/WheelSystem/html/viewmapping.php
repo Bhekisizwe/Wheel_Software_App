@@ -100,13 +100,13 @@ if(isset($_SESSION["staffNumber"])){
 								else $("#tableContents").hide();								
 							}
 							else{																			
-								if(data["errorAssocArray"]["errorCode"]=="0x19"){
+								if(data[0]["errorAssocArray"]["errorCode"]=="0x19"){
 							    	//session has expired
-							    	alert(data["errorAssocArray"]["errorDescription"]);
+							    	alert(data[0]["errorAssocArray"]["errorDescription"]);
 							    	window.location="index.html";
 						    	}
-								else if(data["errorAssocArray"]["errorCode"]=="0x18"){
-									alert(data["errorAssocArray"]["errorDescription"]);
+								else if(data[0]["errorAssocArray"]["errorCode"]=="0x18"){
+									alert(data[0]["errorAssocArray"]["errorDescription"]);
 								}
 						    	else{								    	
 						    		alert("Transaction execution failed");	
