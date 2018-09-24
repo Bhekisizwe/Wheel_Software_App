@@ -90,7 +90,8 @@ class WheelAlarmSettingsDL extends DatabaseManager implements DatabaseFunctionsI
             //bind parameters
             for($i=0;$i<count($data["warning2DArray"]);$i++){
                 //loop through array contents
-                $paramID=$this->getParamID($data["warning2DArray"][$i]);
+                //$paramID=$this->getParamID($data["warning2DArray"][$i]);
+                $paramID=$data["warning2DArray"][$i]["paramID"];
                 $warningLevel=$data["warning2DArray"][$i]["warningLevel"];
                 $stmt->bind_param("di",$warningLevel,$paramID);
                 $status_message=$stmt->execute();
@@ -106,7 +107,7 @@ class WheelAlarmSettingsDL extends DatabaseManager implements DatabaseFunctionsI
                 //bind parameters
                 for($i=0;$i<count($data["alarms2DArray"]);$i++){
                     //loop through array contents
-                    $paramID=$this->getParamID($data["warning2DArray"][$i]);
+                    $paramID=$data["warning2DArray"][$i]["paramID"];
                     $data["warning2DArray"][0]["paramID"]=$paramID;
                     $settingsID=$this->getPrimaryKey($data);
                     $alarmLevel=$data["alarms2DArray"][$i]["alarmLevel"];

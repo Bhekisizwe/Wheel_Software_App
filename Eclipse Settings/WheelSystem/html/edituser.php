@@ -67,6 +67,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
             //$holder_add=$("#addLicense").detach();
             //$holder_edit=$("#editLicense").detach();
             //populate user roles
+            $.ajaxSetup({cache: false});  
             url="/userrole";            
         	var jqxhr=$.getJSON(    
 		    url,    			    

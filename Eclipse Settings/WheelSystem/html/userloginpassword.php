@@ -60,7 +60,8 @@ if(isset($_SESSION["staffNumber"])){
             var surname;
             var emailAddress;
             var staffNumber;            
-            var roleID;                                                                          
+            var roleID; 
+            $.ajaxSetup({cache: false});                                                                           
             //$holder_add=$("#addLicense").detach();
             //$holder_edit=$("#editLicense").detach();
              

@@ -32,7 +32,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $wearSettingsBO->set($arr_error);
                 $arr=$wearSettingsBO->getArray();
             }
@@ -44,7 +44,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $wearSettingsBO->set($arr_error);
             $arr=$wearSettingsBO->getArray();
         }
@@ -75,31 +75,17 @@ use UserClasses\BusinessLayer\ManageSession;
         $userroleBO=new UserRoleBO();
         $manageSession=new ManageSession();
         if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
-        if(isset($_SESSION["staffNumber"])){
-            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
-            $userroleBO->set($userrole_arr);
-            $accessRight="R";
-            $activityName="Average Wear Rates Management";
-            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
-                $wear_settings_arr=$wearSettings->listWearRateParameters();
-                if(count($wear_settings_arr)>0){
-                    foreach($wear_settings_arr["wearRate2DArray"] as $key => $value){
-                        $wear_settings_arr["wearRate2DArray"][$key]["paramName"]=$parameter_mapping[$value["paramName"]];
-                    }
-                    $wearSettingsBO->set($wear_settings_arr);
-                    $wearSettingsBO->setTransactionStatus(true);
-                    $arr=$wearSettingsBO->getArray();
+        if(isset($_SESSION["staffNumber"])){            
+            $wear_settings_arr=$wearSettings->listWearRateParameters();
+            if(count($wear_settings_arr)>0){
+                foreach($wear_settings_arr["wearRate2DArray"] as $key => $value){
+                    $wear_settings_arr["wearRate2DArray"][$key]["paramName"]=$parameter_mapping[$value["paramName"]];
                 }
-                else $arr=$wearSettingsBO->getArray();
-            }
-            else {
-                $arr_err=array();
-                $arr_err["errorCode"]="0x18";
-                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
-                $wearSettingsBO->set($arr_error);
+                $wearSettingsBO->set($wear_settings_arr);
+                $wearSettingsBO->setTransactionStatus(true);
                 $arr=$wearSettingsBO->getArray();
             }
+            else $arr=$wearSettingsBO->getArray();           
             $_SESSION["lastActive"]=time();
         }
         else{
@@ -108,7 +94,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $wearSettingsBO->set($arr_error);
             $arr=$wearSettingsBO->getArray();
         }
@@ -152,7 +138,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $wearSettingsBO->set($arr_error);
                 $arr=$wearSettingsBO->getArray();
             }
@@ -164,7 +150,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $wearSettingsBO->set($arr_error);
             $arr=$wearSettingsBO->getArray();
         }
@@ -209,7 +195,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $wearSettingsBO->set($arr_error);
                 $arr=$wearSettingsBO->getArray();
             }
@@ -221,7 +207,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $wearSettingsBO->set($arr_error);
             $arr=$wearSettingsBO->getArray();
         }

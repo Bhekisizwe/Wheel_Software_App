@@ -51,7 +51,7 @@ if(isset($_SESSION["staffNumber"])){
         <!-- <script src="js/bootstrap-treeview.js"></script> -->       
         <script>
         $(document).ready(function () {
-
+        	$.ajaxSetup({cache: false});  
             $("#importForm").submit(function (event) {
 
                 //stop submit the form, we will post it manually.

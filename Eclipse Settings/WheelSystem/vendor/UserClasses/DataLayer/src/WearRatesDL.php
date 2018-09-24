@@ -60,7 +60,8 @@ class WearRatesDL extends DatabaseManager implements DatabaseFunctionsInt
             //bind parameters
             for($i=0;$i<count($data["wearRate2DArray"]);$i++){
                 //loop through array contents
-                $paramID=$this->getPrimaryKey($data["wearRate2DArray"][$i]);
+                //$paramID=$this->getPrimaryKey($data["wearRate2DArray"][$i]);
+                $paramID=$data["wearRate2DArray"][$i]["paramID"];
                 $wearRate=$data["wearRate2DArray"][$i]["wearRate"];                
                 $stmt->bind_param("id",$paramID,$wearRate);
                 $status_message=$stmt->execute();

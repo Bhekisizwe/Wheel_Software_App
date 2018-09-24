@@ -63,7 +63,7 @@ if(isset($_SESSION["staffNumber"])){
             var roleID;                                                                          
             //$holder_add=$("#addLicense").detach();
             //$holder_edit=$("#editLicense").detach();
-             
+            $.ajaxSetup({cache: false});   
             //Search for user profile            				
 		    <?php echo "var staffNumber=".$_SESSION["staffNumber"];?>;			    
 		    //alert(staffNumber);

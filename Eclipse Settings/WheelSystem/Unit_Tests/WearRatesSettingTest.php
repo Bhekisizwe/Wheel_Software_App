@@ -36,13 +36,13 @@ class WearRatesSettingTest extends TestCase
         $this->wearRatesDL=new WearRatesDL();
         $arr_add=array();
         $arr_add["staffNumber"]="305941";
-        $arr_add["wearRate2DArray"][0]["paramName"]="Sh";
+        $arr_add["wearRate2DArray"][0]["paramID"]=1;
         $arr_add["wearRate2DArray"][0]["wearRate"]="0.012";
-        $arr_add["wearRate2DArray"][1]["paramName"]="qR";
+        $arr_add["wearRate2DArray"][1]["paramID"]=2;
         $arr_add["wearRate2DArray"][1]["wearRate"]="0.010";
-        $arr_add["wearRate2DArray"][2]["paramName"]="FW";
+        $arr_add["wearRate2DArray"][2]["paramID"]=3;
         $arr_add["wearRate2DArray"][2]["wearRate"]="0.002";
-        $arr_add["wearRate2DArray"][3]["paramName"]="H";
+        $arr_add["wearRate2DArray"][3]["paramID"]=4;
         $arr_add["wearRate2DArray"][3]["wearRate"]="0.03";
         $this->arr_add=$arr_add;
         $arr_update=array();

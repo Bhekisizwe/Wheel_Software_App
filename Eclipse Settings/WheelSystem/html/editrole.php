@@ -54,7 +54,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
             var rightsArray; 
             var html_str_global;
             var visibility_global;
-                                                                       
+            $.ajaxSetup({cache: false});                                                           
             //$holder_add=$("#addLicense").detach();
             //$holder_edit=$("#editLicense").detach();
             //populate all user roles dropdown menu

@@ -62,7 +62,8 @@ class ManualWheelSettingsDL extends DatabaseManager implements DatabaseFunctions
             //bind parameters
             for($i=0;$i<count($data["warning2DArray"]);$i++){
                 //loop through array contents
-                $paramID=$this->getPrimaryKey($data["warning2DArray"][$i]);
+                //$paramID=$this->getPrimaryKey($data["warning2DArray"][$i]);
+                $paramID=$data["warning2DArray"][$i]["paramID"];
                 $warningLevel=$data["warning2DArray"][$i]["warningLevel"];
                 $stmt->bind_param("di",$warningLevel,$paramID);
                 $status_message=$stmt->execute();

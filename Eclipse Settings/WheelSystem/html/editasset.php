@@ -68,7 +68,7 @@ if(isset($_SESSION["staffNumber"])){
         <!-- <script src="js/bootstrap-treeview.js"></script> -->       
         <script>
         $(document).ready(function(){
-                                                                        
+        	$.ajaxSetup({cache: false});                                                            
             //$holder_add=$("#addLicense").detach();
             //$holder_edit=$("#editLicense").detach();            
 		    

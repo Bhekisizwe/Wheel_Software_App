@@ -1,0 +1,230 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use UserClasses\BusinessLayer\UserRole;
+use UserClasses\BusinessObjects\UserRoleBO;
+use UserClasses\BusinessLayer\AutoWheelSettings;
+use UserClasses\BusinessObjects\AutoWheelSettingsBO;
+use UserClasses\BusinessLayer\ManageSession;
+    //View MiniProf Alarm Settings per Coach Type
+    $app->get('/wheelalarmsettings/{coachid}', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $autoSettings=new AutoWheelSettings();
+        $autoSettingsBO=new AutoWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        $coachID=$args["coachid"];
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="R";
+            $activityName="MiniProf Wheel Alarm Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $alarm["alarms2DArray"][0]["coachID"]=$coachID;
+                $autoSettingsBO->set($alarm);
+                $auto_settings_arr=$autoSettings->showCoachWheelSettings($autoSettingsBO);
+                $autoSettingsBO->set($auto_settings_arr);
+                $autoSettingsBO->setTransactionStatus(true);
+                //$manualSettingsBO->setDataExistsStatus(true);
+                $arr=$autoSettingsBO->getArray();
+            }
+            else {
+                $autoSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $autoSettingsBO->set($arr_error);
+                $arr=$autoSettingsBO->getArray();
+            }
+            $_SESSION["lastActive"]=time();
+        }
+        else{
+            $autoSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $autoSettingsBO->set($arr_error);
+            $arr=$autoSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manageSession);
+        unset($autoSettings);
+        unset($autoSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
+    });
+    
+    //View MiniProf Measured Parameters
+    $app->get('/wheelalarmsettings/parameters/', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $parameter_mapping=array("Sh"=>"Flange Height",
+            "qR"=>"Toe Creep",
+            "FW"=>"Flange Width",
+            "H"=>"Hollowing"            
+        );
+        $autoSettings=new AutoWheelSettings();
+        $autoSettingsBO=new AutoWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();   
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){                   
+            $auto_settings_arr=$autoSettings->listAutoWheelParameters();
+            if(count($auto_settings_arr)>0){
+                foreach($auto_settings_arr["warning2DArray"] as $key => $value){
+                    $auto_settings_arr["warning2DArray"][$key]["paramName"]=$parameter_mapping[$value["paramName"]];
+                }
+                $autoSettingsBO->set($auto_settings_arr);
+                $autoSettingsBO->setTransactionStatus(true);
+                $arr=$autoSettingsBO->getArray();
+            }
+            else $arr=$autoSettingsBO->getArray();            
+            $_SESSION["lastActive"]=time();
+        }
+        else{
+            $autoSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $autoSettingsBO->set($arr_error);
+            $arr=$autoSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manageSession);
+        unset($autoSettings);
+        unset($autoSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
+    });
+    
+    //Add
+    $app->post('/wheelalarmsettings/add', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $autoSettings=new AutoWheelSettings();
+        $autoSettingsBO=new AutoWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="C";
+            $activityName="MiniProf Wheel Alarm Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $autoSettingsBO->set($form_data);
+                $autoSettingsBO->setStaffNumber($_SESSION["staffNumber"]);
+                $autoSettingsBO->setTransactionStatus($autoSettings->addCoachWheelSettings($autoSettingsBO));
+                $arr=$autoSettingsBO->getArray();
+            }
+            else{
+                $autoSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $autoSettingsBO->set($arr_error);
+                $arr=$autoSettingsBO->getArray();
+            }
+            $_SESSION["lastActive"]=time();
+        }
+        else{
+            $autoSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $autoSettingsBO->set($arr_error);
+            $arr=$autoSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manageSession);
+        unset($autoSettings);
+        unset($autoSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
+        
+    });
+        
+    //Update
+    $app->post('/wheelalarmsettings/update', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $autoSettings=new AutoWheelSettings();
+        $autoSettingsBO=new AutoWheelSettingsBO();
+        $userrole=new UserRole();
+        $userroleBO=new UserRoleBO();
+        //Return Associative Array
+        $form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
+        $manageSession=new ManageSession();
+        if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
+        if(isset($_SESSION["staffNumber"])){
+            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
+            $userroleBO->set($userrole_arr);
+            $accessRight="U";
+            $activityName="MiniProf Wheel Alarm Settings";
+            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
+                $autoSettingsBO->set($form_data);
+                $autoSettingsBO->setStaffNumber($_SESSION["staffNumber"]);
+                $autoSettingsBO->setTransactionStatus($autoSettings->updateCoachWheelSettings($autoSettingsBO));
+                $arr=$autoSettingsBO->getArray();
+            }
+            else{
+                $autoSettingsBO->setTransactionStatus(false);
+                $arr_err=array();
+                $arr_err["errorCode"]="0x18";
+                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
+                $arr_error["errorAssocArray"][18]=$arr_err;
+                $autoSettingsBO->set($arr_error);
+                $arr=$autoSettingsBO->getArray();
+            }
+            $_SESSION["lastActive"]=time();
+        }
+        else{
+            $autoSettingsBO->setTransactionStatus(false);
+            //write Error Code and Description
+            $arr_err=array();
+            $arr_err["errorCode"]="0x19";
+            $arr_err["errorDescription"]="Session has expired";
+            $arr_error["errorAssocArray"][19]=$arr_err;
+            $autoSettingsBO->set($arr_error);
+            $arr=$autoSettingsBO->getArray();
+        }
+        $arr_json=json_encode($arr);
+        //destroy objects
+        unset($manageSession);
+        unset($autoSettings);
+        unset($autoSettingsBO);
+        unset($userrole);
+        unset($userroleBO);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body); 
+        
+    });
+?>
