@@ -152,7 +152,23 @@ if(isset($_SESSION["staffNumber"])){
 							html_str+="<label>Cut Tyre Depth Measurement (mm):</label><br><input type='number' id='CTD' class='form-control' min='0' max='10000' value='"+data['cutTyreDepth']+"' step='0.01' required><p>";
 							html_str+="<label>Cut Tyre Distance From Flange Measurement (mm):</label><br><input type='number' id='CTDFF' class='form-control' min='0' max='10000' value='"+data['cutTyreDistanceFromFlange']+"' step='0.01' required><p>";
 							html_str+="<label>Wheel Skid Measurement (mm):</label><br><input type='number' id='WS' class='form-control' min='0' max='10000' value='"+data['wheelSkid']+"' step='0.01' required><p>";
-							html_str+="<label>Gibson Ring Inspection:</label><br><textarea cols='100' rows='5' id='gibson' class='form-control' required>"+data['gibsonDescription']+"</textarea><p>";
+							html_str+="<label>Gibson Ring Inspection:</label><br><select id='gibson' required>";
+							if(data['gibsonDescription']=="pass"){
+								html_str+="<option value=''>--Select Gibson Ring Inspection Result--</option>";
+								html_str+="<option value='pass' selected>Pass</option>";
+								html_str+="<option value='fail'>Fail</option></select><p>";
+							}
+							else if(data['gibsonDescription']=="fail"){
+								html_str+="<option value=''>--Select Gibson Ring Inspection Result--</option>";
+								html_str+="<option value='pass'>Pass</option>";
+								html_str+="<option value='fail' selected>Fail</option></select><p>";
+							}
+							else{
+								html_str+="<option value='' selected>--Select Gibson Ring Inspection Result--</option>";
+								html_str+="<option value='pass'>Pass</option>";
+								html_str+="<option value='fail'>Fail</option></select><p>";
+
+							}
 							html_str+="<input type='hidden' id='measurementID' value='"+measurementID+"'>";
 							$("#populateForm").html(html_str);
 							$("#populateForm").show();

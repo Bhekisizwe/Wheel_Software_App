@@ -228,9 +228,17 @@ class WheelMeasurementsComparison
                         if($data["wheelSkid"]>=$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
                             $data["wheelSkidStatus"]=2;
                             $data["addToExceptionList"]=true;
-                        }
+                        }                        
                 }
             }
+            $this->manualMeasBO->setMeasurementID($data["measurementID"]);
+            $manual_arr=$this->manualWheelMeas->showManualWheelData($this->manualMeasBO);
+            if(count($manual_arr)>0){
+                if($manual_arr[0]["gibsonDescription"]=="fail"){
+                    $data["gibsonStatus"]=2;
+                    $data["addToExceptionList"]=true;
+                }
+            }                       
             if($data["addToExceptionList"]==true){
                 //calculate failure dates for only those that have violated the alarm and warning settings
                 $arr_result=$this->predictFailureDate($data, $arr_auto_settings);
@@ -435,6 +443,17 @@ class WheelMeasurementsComparison
                         else{
                             //do nothing
                         } 
+                        break;
+                    case "gibsonStatus":
+                        if($value==2){
+                            //Gibson Ring Inspection Failed
+                            $arr_predicted_dates["Gibson"]=$data["measurementDate"];
+                            $arr["Gibson"]["defectSize"]="Not Applicable";
+                            $arr["Gibson"]["daysBeforeFailure"]=0;
+                        }
+                        else{
+                            //do nothing
+                        } 
                         
                 }
             }
@@ -443,7 +462,10 @@ class WheelMeasurementsComparison
             $data["referenceDate"]=$data["measurementDate"];
             $data["daysBeforeFailure"]=$arr[array_search(min($arr_predicted_dates), $arr_predicted_dates)]["daysBeforeFailure"];
             $data["predictedWheelFailureDate"]=min($arr_predicted_dates); 
-            $data["alarmCause"]="The ".array_search(min($arr_predicted_dates), $arr_predicted_dates)." has violated the wheel alarm settings thresholds";
+            if(array_search(min($arr_predicted_dates), $arr_predicted_dates)=="Gibson"){
+                $data["alarmCause"]="The Gibson Ring has Failed it's inspection";
+            }
+            else $data["alarmCause"]="The ".array_search(min($arr_predicted_dates), $arr_predicted_dates)." has violated the wheel alarm settings thresholds";
             return $data;
         }
         else return NULL;
