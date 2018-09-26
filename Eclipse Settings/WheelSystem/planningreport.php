@@ -50,7 +50,7 @@ use UserClasses\BusinessLayer\ManageSession;
                             $arr_err=array();
                             $arr_err["errorCode"]="0x12";
                             $arr_err["errorDescription"]="Please setup the wheel wear rates first, they are missing.";
-                            $arr_error["errorAssocArray"][12]=$arr_err;
+                            $arr_error["errorAssocArray"]=$arr_err;
                             $planningBO->set($arr_error);
                         }
                     }
@@ -58,7 +58,7 @@ use UserClasses\BusinessLayer\ManageSession;
                         $arr_err=array();
                         $arr_err["errorCode"]="0x13";
                         $arr_err["errorDescription"]="Please setup the average daily distance travelled, it is missing.";
-                        $arr_error["errorAssocArray"][13]=$arr_err;
+                        $arr_error["errorAssocArray"]=$arr_err;
                         $planningBO->set($arr_error);
                     }
                 }
@@ -67,7 +67,7 @@ use UserClasses\BusinessLayer\ManageSession;
                     $arr_err=array();
                     $arr_err["errorCode"]="0x14";
                     $arr_err["errorDescription"]="Please setup the manual wheel measurements alarm settings, they are missing.";
-                    $arr_error["errorAssocArray"][14]=$arr_err;
+                    $arr_error["errorAssocArray"]=$arr_err;
                     $planningBO->set($arr_error);
                 }
                 $arr=$planningBO->getArray();
@@ -76,7 +76,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $planningBO->set($arr_error);
                 $arr=$planningBO->getArray();
             } 
@@ -88,7 +88,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $planningBO->set($arr_error);
             $arr=$planningBO->getArray();
         }

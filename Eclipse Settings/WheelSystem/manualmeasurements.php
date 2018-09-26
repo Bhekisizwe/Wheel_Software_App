@@ -36,28 +36,41 @@ use UserClasses\BusinessLayer\ManageSession;
                     $miniWheelBO->set($mini_arr[$i]);
                     $miniWheelBO->setTransactionStatus(true);
                     $arr[]=$miniWheelBO->getArray();
-                }                
+                }
+                if(count($mini_arr)==0){
+                    $arr[0]["transactionStatus"]=true;
+                    $arr[0]["setNumber"]="";
+                    $arr[0]["axleNumber"]=0;
+                    $arr[0]["coachNumber"]="";
+                    $arr[0]["wheelID"]=0;
+                    $arr[0]["operatorName"]="";
+                    $arr[0]["measurementDate"]="";
+                    $arr[0]["measurementTime"]="";
+                    $arr[0]["measurementID"]=0;
+                } 
             }
             else {
                 $miniWheelBO->setTransactionStatus(false);
+                $arr=array();
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $miniWheelBO->set($arr_error);
-                $arr=$miniWheelBO->getArray();
+                $arr[]=$miniWheelBO->getArray();
             }
             $_SESSION["lastActive"]=time();
         }
         else{
             $miniWheelBO->setTransactionStatus(false);
             //write Error Code and Description
+            $arr=array();
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $miniWheelBO->set($arr_error);
-            $arr=$miniWheelBO->getArray();
+            $arr[]=$miniWheelBO->getArray();
         }
         $arr_json=json_encode($arr);
         //destroy objects
@@ -94,10 +107,10 @@ use UserClasses\BusinessLayer\ManageSession;
                 $manualWheelBO->set($manual);
                 $manual_arr=$manualWheel->showManualWheelData($manualWheelBO);
                 for($i=0;$i<count($manual_arr);$i++){
-                    $manualWheelBO->set($manual_arr[$i]);
-                    $manualWheelBO->setTransactionStatus(true);
+                    $manualWheelBO->set($manual_arr[$i]);                    
                     $arr[]=$manualWheelBO->getArray();
-                }                
+                }  
+                $manualWheelBO->setTransactionStatus(true);
                 //$manualSettingsBO->setDataExistsStatus(true);
                 $arr=$manualWheelBO->getArray();
             }
@@ -106,7 +119,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $manualWheelBO->set($arr_error);
                 $arr=$manualWheelBO->getArray();
             }
@@ -118,7 +131,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $manualWheelBO->set($arr_error);
             $arr=$manualWheelBO->getArray();
         }
@@ -162,7 +175,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $manualWheelBO->set($arr_error);
                 $arr=$manualWheelBO->getArray();
             }
@@ -174,7 +187,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $manualWheelBO->set($arr_error);
             $arr=$manualWheelBO->getArray();
         }
@@ -219,7 +232,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $manualWheelBO->set($arr_error);
                 $arr=$manualWheelBO->getArray();
             }
@@ -231,7 +244,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $manualWheelBO->set($arr_error);
             $arr=$manualWheelBO->getArray();
         }

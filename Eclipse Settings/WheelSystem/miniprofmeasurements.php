@@ -33,14 +33,29 @@ use UserClasses\BusinessLayer\ManageSession;
                     $miniProfBO->set($mini_arr[$j]);
                     $miniProfBO->setTransactionStatus(true);
                     $arr[]=$miniProfBO->getArray();
-                }                
+                }  
+                if(count($mini_arr)==0){
+                    $arr[0]["transactionStatus"]=true;
+                    $arr[0]["setNumber"]="";
+                    $arr[0]["axleNumber"]=0;
+                    $arr[0]["coachNumber"]="";
+                    $arr[0]["wheelID"]=0;
+                    $arr[0]["operatorName"]="";
+                    $arr[0]["measurementDate"]="";
+                    $arr[0]["measurementTime"]="";
+                    $arr[0]["measurementID"]=0;
+                    $arr[0]["flangeHeight"]=0;
+                    $arr[0]["toeCreep"]=0;
+                    $arr[0]["flangeWidth"]=0;
+                    $arr[0]["hollowing"]=0;
+                } 
             }
             else {
                 $miniProfBO->setTransactionStatus(false);
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $miniProfBO->set($arr_error);
                 $arr=$miniProfBO->getArray();
             }
@@ -52,7 +67,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $miniProfBO->set($arr_error);
             $arr=$miniProfBO->getArray();
         }
@@ -95,7 +110,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $miniProfBO->set($arr_error);
             $arr=$miniProfBO->getArray();
         }
@@ -157,7 +172,7 @@ use UserClasses\BusinessLayer\ManageSession;
                                         $arr_err=array();
                                         $arr_err["errorCode"]="0x04";
                                         $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a MiniProf Textfile";
-                                        $arr_error["errorAssocArray"][4]=$arr_err;
+                                        $arr_error["errorAssocArray"]=$arr_err;
                                         $miniProfBO->set($arr_error);
                                         $arr=$miniProfBO->getArray();
                                     }
@@ -177,7 +192,7 @@ use UserClasses\BusinessLayer\ManageSession;
                                     $arr_err=array();
                                     $arr_err["errorCode"]="0x04";
                                     $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a MiniProf Textfile";
-                                    $arr_error["errorAssocArray"][4]=$arr_err;
+                                    $arr_error["errorAssocArray"]=$arr_err;
                                     $miniProfBO->set($arr_error);
                                     $arr=$miniProfBO->getArray();
                                 }
@@ -199,7 +214,7 @@ use UserClasses\BusinessLayer\ManageSession;
                                     $arr_err=array();
                                     $arr_err["errorCode"]="0x04";
                                     $arr_err["errorDescription"]="Failed to Upload file. The file imported is not a MiniProf Textfile";
-                                    $arr_error["errorAssocArray"][4]=$arr_err;
+                                    $arr_error["errorAssocArray"]=$arr_err;
                                     $miniProfBO->set($arr_error);
                                     $arr=$miniProfBO->getArray();
                                 }
@@ -212,7 +227,7 @@ use UserClasses\BusinessLayer\ManageSession;
                     $arr_err=array();
                     $arr_err["errorCode"]="0x18";
                     $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                    $arr_error["errorAssocArray"][18]=$arr_err;
+                    $arr_error["errorAssocArray"]=$arr_err;
                     $miniProfBO->set($arr_error);
                     $arr=$miniProfBO->getArray();
                 }
@@ -224,7 +239,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $arr_err=array();
                 $arr_err["errorCode"]="0x19";
                 $arr_err["errorDescription"]="Session has expired";
-                $arr_error["errorAssocArray"][19]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $miniProfBO->set($arr_error);
                 $arr=$miniProfBO->getArray();
             }            
