@@ -89,14 +89,14 @@ if(isset($_SESSION["staffNumber"])){
 							if(data[0]["transactionStatus"]){	
 								var html_str="";
 								html_str+="<table class='table table-striped table-light' style='width:100%'>";
-								html_str+="<th>Set Number</th><th>Coach Number</th><th>Wheel ID</th><th>Measurement Date</th><th>Measurement Time</th><th>Select Wheel Profile</th>";							
+								html_str+="<th>Set Number</th><th>Coach Number</th><th>Wheel ID</th><th>Measurement Date</th><th>Measurement Time</th><th>Select Profile To Manage</th>";							
 								for(var i=0;i<data.length;i++){
-									html_str+="<tr><td align='center'>"+data[i]["setNumber"]+"</td>";
-									html_str+="<td align='center'>"+data[i]["coachNumber"]+"</td>";
-									html_str+="<td align='center'>"+data[i]["wheelID"]+"</td>";
-									html_str+="<td align='center'>"+data[i]["measurementDate"]+"</td>";
-									html_str+="<td align='center'>"+data[i]["measurementTime"]+"</td>";
-									html_str+="<td align='center'><input type='radio' name='measurementID' value='"+data[i]["measurementID"]+"'></td></tr>";
+									html_str+="<tr><td>"+data[i]["setNumber"]+"</td>";
+									html_str+="<td>"+data[i]["coachNumber"]+"</td>";
+									html_str+="<td>"+data[i]["wheelID"]+"</td>";
+									html_str+="<td>"+data[i]["measurementDate"]+"</td>";
+									html_str+="<td>"+data[i]["measurementTime"]+"</td>";
+									html_str+="<td><input type='radio' name='measurementID' value='"+data[i]["measurementID"]+"'></td></tr>";
 								}
 								html_str+="</table><p>";
 								//alert(html_str);

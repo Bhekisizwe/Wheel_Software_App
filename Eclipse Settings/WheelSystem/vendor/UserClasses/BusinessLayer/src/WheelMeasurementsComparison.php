@@ -448,7 +448,7 @@ class WheelMeasurementsComparison
                         if($value==2){
                             //Gibson Ring Inspection Failed
                             $arr_predicted_dates["Gibson"]=$data["measurementDate"];
-                            $arr["Gibson"]["defectSize"]="Not Applicable";
+                            $arr["Gibson"]["defectSize"]=0;
                             $arr["Gibson"]["daysBeforeFailure"]=0;
                         }
                         else{

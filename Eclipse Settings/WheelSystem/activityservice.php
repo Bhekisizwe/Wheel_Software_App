@@ -142,25 +142,11 @@ use UserClasses\BusinessLayer\ManageSession;
         $userroleBO=new UserRoleBO();
         $manageSession=new ManageSession();
         if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
-        if(isset($_SESSION["staffNumber"])){
-            $userrole_arr["userRole2DArray"][0]["roleID"]=$_SESSION["roleID"];
-            $userroleBO->set($userrole_arr);
-            $accessRight="R";
-            $activityName="Activity Logs";
-            if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
-                $list_activitynames_arr=$activity->listAllActivityNames();
-                $activityBO->set($list_activitynames_arr);
-                $activityBO->setTransactionStatus(true);
-                $arr=$activityBO->getArray();
-            }
-            else {
-                $arr_err=array();
-                $arr_err["errorCode"]="0x18";
-                $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"]=$arr_err;
-                $activityBO->set($arr_error);
-                $arr=$activityBO->getArray();
-            } 
+        if(isset($_SESSION["staffNumber"])){           
+            $list_activitynames_arr=$activity->listAllActivityNames();
+            $activityBO->set($list_activitynames_arr);
+            $activityBO->setTransactionStatus(true);
+            $arr=$activityBO->getArray();        
             $_SESSION["lastActive"]=time();
         }
         else{

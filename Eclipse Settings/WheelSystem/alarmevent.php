@@ -33,26 +33,32 @@ use UserClasses\BusinessLayer\ManageSession;
                     $alarmBO->set($alarm_arr[$j]);            ;
                     $arr[]=$alarmBO->getArray();
                 }
+                if(count($alarm_arr)==0){
+                    $alarmBO->setTransactionStatus(true);
+                    $arr[0]=$alarmBO->getArray();                 
+                } 
             }
             else{
+                $arr=array();
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
-                $arr_error["errorAssocArray"][18]=$arr_err;
+                $arr_error["errorAssocArray"]=$arr_err;
                 $alarmBO->set($arr_error);
-                $arr=$alarmBO->getArray();
+                $arr[]=$alarmBO->getArray();
             }
             $_SESSION["lastActive"]=time();
         }
         else{
             $alarmBO->setTransactionStatus(false);
+            $arr=array();
             //write Error Code and Description
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $alarmBO->set($arr_error);
-            $arr=$alarmBO->getArray();
+            $arr[]=$alarmBO->getArray();
         }
         $arr_json=json_encode($arr);
         //destroy objects

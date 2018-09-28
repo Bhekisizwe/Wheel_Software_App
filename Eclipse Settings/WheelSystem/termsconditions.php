@@ -45,6 +45,30 @@ use UserClasses\BusinessLayer\ManageSession;
         ->withBody($body); 
     });
     
+    $app->get('/termsconditions/unauthorised', function (Request $request, Response $response, array $args) {
+        //Create Objects
+        $terms=new TermsAndConditions();
+        $termsBO=new TermsConditionsBO();        
+        if($terms->checkTermsExist($termsBO)){
+            $termsBO->setDataExistsStatus(true);
+            $terms_arr=$terms->listTermsData($termsBO);
+            $termsBO->set($terms_arr);
+        }
+        else {
+            $termsBO->setDataExistsStatus(false);
+        }
+        $termsBO->setTransactionStatus(true);
+        $arr=$termsBO->getArray();
+        $arr_json=json_encode($arr);
+        //destroy objects        
+        unset($terms);
+        unset($termsBO);
+        $body=$response->getBody();
+        $body->write($arr_json);
+        return $response->withHeader("Content-Type", "application/json;charset=UTF-8")
+        ->withBody($body);
+    });
+    
     //Add
     $app->post('/termsconditions/add', function (Request $request, Response $response, array $args) {
         //Create Objects

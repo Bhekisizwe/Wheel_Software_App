@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <title>Terms and Conditions of Use</title>
+  </head>
+  <body style="background-color:#ccccff">
+    <div align="center" class="container-fluid">
+    	<h3 class="h3">Terms and Conditions of Use</h3><p>	    	  		
+    		<div id="populateTerms">  
+	    	</div>
+    	
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>   
+    $(document).ready(function(){    	
+	    	
+		$.ajax({
+		type: "GET", 						
+		url: "/termsconditions/unauthorised", 											
+		dataType: 'json',
+		cache: false,							
+		success: function (data) {					
+		if(data["transactionStatus"]){
+			html_str="<h3 class='h3'></h3>"
+			html_str="<font style='font-family:arial;font-size:14pt'>This system license is valid for the business named "+data['companyName']+".<p>";
+			html_str+="This system license only allows a maximum of "+data['licenseLimit']+" active users registered in the system at a time<p>";													
+			html_str+="";
+			$("#populateTerms").html(html_str);
+		}
+		else{														    	
+    		
+		}
+		},
+		error: function (e) {
+			$("#passwordReset").val("EDIT PASSWORD");
+    			$("#passwordReset").prop("disabled",false);
+			alert("transaction failed to execute with error "+e);
+		}
+ 		});			
+ 	    				 
+    		  	
+    	
+    });
+    	
+    </script>    
+  </body>
+</html>
