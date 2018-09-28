@@ -1,194 +1,38 @@
-1.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:16 .Exception message is Successfully Sent Email!!!
+1.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:48 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-2.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:18 .Exception message is Successfully Sent Email!!!
+2.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:50 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-3.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:19 .Exception message is Successfully Sent Email!!!
+3.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:52 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-4.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-24 18:26:21 .Exception message is MiniProf TextFile MissingFields.whl has missing fields SetNo,WheelID,qR,Hollowing
+4.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-28 16:29:53 .Exception message is MiniProf TextFile MissingFields.whl has missing fields SetNo,WheelID,qR,Hollowing
  ####End of Line#### 
-5.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:23 .Exception message is Successfully Sent Email!!!
+5.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:56 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-6.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-09-24 18:26:23 .Exception message is The system license data is missing within the database. Please complete that first!
+6.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-09-28 16:29:56 .Exception message is The system license data is missing within the database. Please complete that first!
  ####End of Line#### 
-7.) Oops, error in Class UserAccounts within method checkIfActiveAccLimitReached has occured at 2018-09-24 18:26:23 .Exception message is Undefined index: licenseLimit
+7.) Oops, error in Class UserAccounts within method checkIfActiveAccLimitReached has occured at 2018-09-28 16:29:57 .Exception message is Undefined index: licenseLimit
  ####End of Line#### 
-8.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:25 .Exception message is Successfully Sent Email!!!
+8.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:59 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-9.) Oops, error in Class ActivityLog within method addActivityData has occured at 2018-09-24 18:26:25 .Exception message is Undefined index: accountID
+9.) Oops, error in Class ActivityLog within method addActivityData has occured at 2018-09-28 16:30:00 .Exception message is Undefined index: accountID
  ####End of Line#### 
-10.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:27 .Exception message is Successfully Sent Email!!!
+10.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:02 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-11.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:28 .Exception message is Successfully Sent Email!!!
+11.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:04 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-12.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:30 .Exception message is Successfully Sent Email!!!
+12.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:06 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-13.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:32 .Exception message is Successfully Sent Email!!!
+13.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:08 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-14.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-24 18:26:32 .Exception message is License Limit Reached
+14.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-28 16:30:08 .Exception message is License Limit Reached
  ####End of Line#### 
-15.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-24 18:26:32 .Exception message is License Limit Reached
+15.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-28 16:30:08 .Exception message is License Limit Reached
  ####End of Line#### 
-16.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-24 18:26:32 .Exception message is License Limit Reached
+16.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-28 16:30:08 .Exception message is License Limit Reached
  ####End of Line#### 
-17.) Oops, error in Class Email within method sendEmail has occured at 2018-09-24 18:26:33 .Exception message is Successfully Sent Email!!!
+17.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:10 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-18.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-26 11:57:55 .Exception message is License Limit Reached
+18.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 18:53:52 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-19.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 11:58:35 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-20.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 11:59:16 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-21.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 12:18:01 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-22.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 12:18:02 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-23.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 12:18:04 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-24.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 12:20:55 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-25.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 12:20:57 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-26.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 12:20:58 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-27.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 12:23:19 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-28.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 12:25:19 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-29.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 12:25:20 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-30.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 13:05:27 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-31.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 13:05:28 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-32.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:13:02 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-33.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:13:04 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-34.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:18:05 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-35.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:20:56 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-36.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:20:58 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-37.) Oops, error in Class PlanningReport within method writeReportToMSExcel has occured at 2018-09-26 14:27:26 .Exception message is Could not close zip file C:\xampp\htdocs\Eclipse Settings\WheelSystem\vendor\UserClasses\BusinessLayer\src\..\..\..\..\PlanningReport\report_305941_2.xlsx.
- ####End of Line#### 
-38.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:28:51 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-39.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:28:52 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-40.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:39:32 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-41.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:39:33 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-42.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:52:26 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-43.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:52:28 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-44.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:56:18 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-45.) Oops, error in Class Email within method sendEmail has occured at 2018-09-26 14:56:20 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-46.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-26 16:32:45 .Exception message is MiniProf TextFile 20170407-000601.whl has missing fields SetNo,CoachNo,AxleNo,WheelID,OperatorName,Sh,qR,Hollowing,FlangeWidth
- ####End of Line#### 
-47.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:24:20 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-48.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:24:22 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-49.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:25:24 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-50.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:25:25 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-51.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:30:52 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-52.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:30:53 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-53.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:34:32 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-54.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:34:34 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-55.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:35:32 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-56.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:35:34 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-57.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:38:50 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-58.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:38:52 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-59.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:41:10 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-60.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:41:12 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-61.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-27 00:44:24 .Exception message is MiniProf TextFile 20170407-000601.whl has missing fields SetNo,CoachNo,AxleNo,WheelID,OperatorName,Sh,qR,Hollowing,FlangeWidth
- ####End of Line#### 
-62.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-27 00:44:24 .Exception message is MiniProf TextFile 20170407-000601.whl has missing fields SetNo,CoachNo,AxleNo,WheelID,OperatorName,Sh,qR,Hollowing,FlangeWidth
- ####End of Line#### 
-63.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-27 00:44:24 .Exception message is MiniProf TextFile 20170407-000601.whl has missing fields SetNo,CoachNo,AxleNo,WheelID,OperatorName,Sh,qR,Hollowing,FlangeWidth
- ####End of Line#### 
-64.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-27 00:44:24 .Exception message is MiniProf TextFile 20170407-000601.whl has missing fields SetNo,CoachNo,AxleNo,WheelID,OperatorName,Sh,qR,Hollowing,FlangeWidth
- ####End of Line#### 
-65.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:53:45 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-66.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 00:53:47 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-67.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 01:15:25 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-68.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 01:15:28 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-69.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 01:16:55 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-70.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 01:16:57 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-71.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 08:07:42 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-72.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 08:07:44 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-73.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 08:09:48 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-74.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 08:09:50 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-75.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 08:11:57 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-76.) Oops, error in Class Email within method sendEmail has occured at 2018-09-27 08:11:58 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-77.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 00:54:13 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-78.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 00:54:15 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-79.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 00:56:02 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-80.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 00:56:05 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-81.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 00:59:04 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-82.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 00:59:06 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-83.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 11:45:06 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-84.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 11:46:25 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-85.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 11:50:19 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-86.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 12:13:42 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-87.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 12:14:37 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-88.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 12:33:36 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-89.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 13:51:21 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-90.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 13:51:24 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-91.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 14:09:14 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-92.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 14:09:16 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-93.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 14:13:11 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-94.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 14:13:13 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-95.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 14:19:22 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-96.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 14:24:48 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-97.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 14:51:03 .Exception message is Successfully Sent Email!!!
+19.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 18:58:10 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 

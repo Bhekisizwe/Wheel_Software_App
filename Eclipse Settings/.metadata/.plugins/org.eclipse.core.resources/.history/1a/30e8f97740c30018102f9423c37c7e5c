@@ -37,7 +37,7 @@ if(isset($_SESSION["staffNumber"])){
             	}
             	?>            
             	<div class="form-group">
-    			<form style="border:1px solid #888888;width:65%;background-color:#eeeeee" class="rounded" id="alarmForm">    				
+    			<form style="border:1px solid #888888;width:60%;background-color:#eeeeee" class="rounded" id="alarmForm">    				
     				<div id="populateDropDown"></div>
     				<div id="populateForm"></div>
 		    		<div id="buttonID"></div>	    		
