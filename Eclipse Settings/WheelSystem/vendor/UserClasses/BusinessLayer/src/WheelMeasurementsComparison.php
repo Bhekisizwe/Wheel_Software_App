@@ -549,7 +549,7 @@ class WheelMeasurementsComparison
         $arr_email["to"]=$arr["emailAddress"];
         $arr_email["subject"]="Missing Settings";
         $body="Dear ".$arr["name"]." ".$arr["surname"]."<p>";
-        $body.="Please login into the website and make sure that the wheel measurement alarm settings for the coach(s) ".implode(",",$coachList)."<br>";
+        $body.="Please login into the website at <a href='https://rmssoft.co.za/html' target='_new'>Rail Maintenance System</a> and make sure that the wheel measurement alarm settings for the coach(s) ".implode(",",$coachList)."<br>";
         $body.="are actually setup. Also make sure that these listed coach(s) are included in the system Asset Register.<p>";    
         $body.=" By Order (Gqunsu Engineering Pty Ltd)";
         $arr_email["body"]=$body; 

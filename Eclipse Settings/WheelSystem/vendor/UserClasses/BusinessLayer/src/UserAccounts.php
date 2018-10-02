@@ -234,7 +234,7 @@ class UserAccounts
                     $arr_email["subject"]="Your System Login Credentials";                    
                     $body="Dear ".$arr["name"]." ".$arr["surname"]."<p>";
                     $body.="Your user account has been successfully created by the Administrator.<br>";
-                    $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";  
+                    $body.="Please access the maintenance system website at <a href='https://rmssoft.co.za/html' target='_new'>Rail Maintenance System</a>.<br>";  
                     $body.="Your login credentials for this website are as follows:<p>";
                     $body.="Username (Staff Number): <b>".$arr["staffNumber"]."</b><br>";
                     $body.="Password: <b>".$arr["passwordHash"]."</b><p>";
@@ -249,20 +249,20 @@ class UserAccounts
                         case "0xA100":
                             $arr_email["subject"]="Your Profile Details Have Been Updated";
                             $body.="Your user account details have been successfully updated by the Administrator.<br>";
-                            $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";
+                            $body.="Please access the maintenance system website at <a href='https://rmssoft.co.za/html' target='_new'>Rail Maintenance System</a>.<br>";
                             $body.="Please login into the website and view the changes to your profile.<p>";
                             break;
                         case "0xA101":
                             $arr_email["subject"]="Your Password Has Been Updated";
                             $body.="Your password has been successfully updated in the system.<br>";
-                            $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";
+                            $body.="Please access the maintenance system website at <a href='https://rmssoft.co.za/html' target='_new'>Rail Maintenance System</a>.<br>";
                             $body.="Login into the website to test your new password which is stated below:<p>";
                             $body.="New Password: <b>".$arr["passwordText"]."</b><p>";
                             break;
                         case "0xA102":
                             $arr_email["subject"]="Your Password Has Been Reset";
                             $body.="Your password has been successfully reset in the system.<br>";
-                            $body.="Please access the maintenance system website at <a href='http://localhost/' target='_new'>Website Link</a>.<br>";
+                            $body.="Please access the maintenance system website at <a href='https://rmssoft.co.za/html' target='_new'>Rail Maintenance System</a>.<br>";
                             $body.="Login into the website to update your password which is stated below:<p>";
                             $body.="New Password: <b>".$arr["passwordText"]."</b><p>";
                     }                    

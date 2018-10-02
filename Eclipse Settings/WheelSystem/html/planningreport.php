@@ -91,12 +91,15 @@ if(isset($_SESSION["staffNumber"])){
 								}
 								else if(data["errorAssocArray"]["errorCode"]=="0x14"){
 									alert(data["errorAssocArray"]["errorDescription"]);
+                                    window.location="manualalarms.php";
 								}
 								else if(data["errorAssocArray"]["errorCode"]=="0x13"){
 									alert(data["errorAssocArray"]["errorDescription"]);
+                                    window.location="distancesetting.php";
 								}
 								else if(data["errorAssocArray"]["errorCode"]=="0x12"){
 									alert(data["errorAssocArray"]["errorDescription"]);
+                                    window.location="wearsettings.php";
 								}
 						    	else{								    	
 						    		alert("Transaction execution failed");	

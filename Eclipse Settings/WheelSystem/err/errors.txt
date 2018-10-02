@@ -1,38 +1,34 @@
-1.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:48 .Exception message is Successfully Sent Email!!!
+1.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:28:56 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-2.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:50 .Exception message is Successfully Sent Email!!!
+2.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:00 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-3.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:52 .Exception message is Successfully Sent Email!!!
+3.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:03 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-4.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-09-28 16:29:53 .Exception message is MiniProf TextFile MissingFields.whl has missing fields SetNo,WheelID,qR,Hollowing
+4.) Oops, error in Class MiniProfDBUploader within method readMiniProfTextFileData has occured at 2018-10-01 17:29:05 .Exception message is MiniProf TextFile MissingFields.whl has missing fields SetNo,WheelID,qR,Hollowing
  ####End of Line#### 
-5.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:56 .Exception message is Successfully Sent Email!!!
+5.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:11 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-6.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-09-28 16:29:56 .Exception message is The system license data is missing within the database. Please complete that first!
+6.) Oops, error in Class TermsAndConditions within method addTerms has occured at 2018-10-01 17:29:12 .Exception message is The system license data is missing within the database. Please complete that first!
  ####End of Line#### 
-7.) Oops, error in Class UserAccounts within method checkIfActiveAccLimitReached has occured at 2018-09-28 16:29:57 .Exception message is Undefined index: licenseLimit
+7.) Oops, error in Class UserAccounts within method checkIfActiveAccLimitReached has occured at 2018-10-01 17:29:12 .Exception message is Undefined index: licenseLimit
  ####End of Line#### 
-8.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:29:59 .Exception message is Successfully Sent Email!!!
+8.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:23 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-9.) Oops, error in Class ActivityLog within method addActivityData has occured at 2018-09-28 16:30:00 .Exception message is Undefined index: accountID
+9.) Oops, error in Class ActivityLog within method addActivityData has occured at 2018-10-01 17:29:23 .Exception message is Undefined index: accountID
  ####End of Line#### 
-10.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:02 .Exception message is Successfully Sent Email!!!
+10.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:27 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-11.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:04 .Exception message is Successfully Sent Email!!!
+11.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:30 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-12.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:06 .Exception message is Successfully Sent Email!!!
+12.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:34 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-13.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:08 .Exception message is Successfully Sent Email!!!
+13.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:38 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
-14.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-28 16:30:08 .Exception message is License Limit Reached
+14.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-10-01 17:29:38 .Exception message is License Limit Reached
  ####End of Line#### 
-15.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-28 16:30:08 .Exception message is License Limit Reached
+15.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-10-01 17:29:38 .Exception message is License Limit Reached
  ####End of Line#### 
-16.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-09-28 16:30:08 .Exception message is License Limit Reached
+16.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-10-01 17:29:38 .Exception message is License Limit Reached
  ####End of Line#### 
-17.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 16:30:10 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-18.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 18:53:52 .Exception message is Successfully Sent Email!!!
- ####End of Line#### 
-19.) Oops, error in Class Email within method sendEmail has occured at 2018-09-28 18:58:10 .Exception message is Successfully Sent Email!!!
+17.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:44 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
