@@ -6,7 +6,7 @@ require __DIR__."\\..\\vendor\autoload.php";
 $manageSession=new ManageSession();
 if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
 if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
-    ?>
+?>
     	<!doctype html>
 		<html lang="en">
   		<head>
@@ -24,7 +24,8 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
         <div class="containter-fluid" align="center">
         <h3 class="h3">Administrator Menu</h3>
             	<i><div style="font-family:arial;font-size:14pt">Logged in as:<b><?php echo $_SESSION["name"]." ".$_SESSION["surname"]; ?></b></div></i><p>
-            	[<a href='logout.php' class='active'><b>Logout</b></a>]<p>
+            	[<a href='logout.php' class='active'><b>Logout</b></a>]            	
+            	
             <div style="width:20%">            	
             	<div id="tree" align="left">
             		 <ul>
@@ -41,7 +42,8 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
                       					<li id="create_user">Create User Account</li>
                       					<li id="edit_user">Edit User Account</li>
                       				</ul> 
-                      			</li>                      		
+                      			</li>
+                      			<li id="reset_password">Reset User Password</li>                      		
                       		</ul>                      	
                       	</li>                        
                       	<li>Manage System Settings
@@ -107,6 +109,9 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
             	var id=data.selected[0];
             	//alert(id);
             	switch(id){
+            	case "reset_password":
+            		window.location="recover.php";
+                	break;
             	case "create_role":
 					window.location="createrole.php";
                 	break;
