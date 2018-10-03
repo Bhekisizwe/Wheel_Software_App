@@ -96,15 +96,15 @@
     	    			    	if(data["transactionStatus"] && data["dataExistsStatus"]){
     	    			    		if(data["userRoleName"]=="Super Admin"){
     	    			    			//load menu for super administrator    			    			
-    	    			    			window.location="superadminmenu.php";
+    	    			    			window.location="/html/superadminmenu.php";
     	    			    		}
     	    			    		else if(data["userRoleName"]=="Admin"){
     	    			    			//load menu for administrators
-    	    			    			window.location="adminmenu.php";	
+    	    			    			window.location="/html/adminmenu.php";	
     	    			    		}
     	    			    		else{
     	    			    			//the rest of the userroles will get the same menu
-    	    			    			window.location="normalmenu.php";
+    	    			    			window.location="/html/normalmenu.php";
     	    			    		}
     	    			    	}
     	    			    	else {

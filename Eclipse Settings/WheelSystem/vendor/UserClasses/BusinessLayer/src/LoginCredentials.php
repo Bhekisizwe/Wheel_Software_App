@@ -70,7 +70,7 @@ class LoginCredentials extends UserAccounts
             if($status_message){
                 $arr_data=array();
                 $arr_data["taskArray2D"][0]["taskName"]="User Accounts";
-                $arr_data["transactionName"]="Updating User Password for Staff Number:".$data->getStaffNumber();
+                $arr_data["transactionName"]="Updating User Password for Staff Number:".$data->getAdminStaffNumber();
                 $arr_data["activityAction"]=2;      //update
                 $arr_data["staffNumber"]=$data->getAdminStaffNumber();
                 $this->activityBO->set($arr_data);
