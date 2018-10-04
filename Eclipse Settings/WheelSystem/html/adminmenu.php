@@ -24,7 +24,8 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
         <div class="containter-fluid" align="center">
         <h3 class="h3">Administrator Menu</h3>
             	<i><div style="font-family:arial;font-size:14pt">Logged in as:<b><?php echo $_SESSION["name"]." ".$_SESSION["surname"]; ?></b></div></i><p>
-            	[<a href='logout.php' class='active'><b>Logout</b></a>]            	
+            	[<a href='logout.php' class='active'><b>Logout</b></a>]
+		[<a href='Help Documentation.pdf' target='_new' class='active'><b>Help Documentation</b></a>]<p>          	
             	
             <div style="width:20%">            	
             	<div id="tree" align="left">
@@ -94,6 +95,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
                       </ul>         	
             	</div>            	   		
             </div>
+	    <div style='position:fixed;bottom:0px;text-align:center;width:100%'>&copy Gqunsu Engineering Pty Ltd 2018-</div>
         </div>
         
         <!-- Optional JavaScript -->
@@ -186,7 +188,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
             	}
         	});		
     });
-        </script>   
+        </script>  
         
         </body>
         </html>

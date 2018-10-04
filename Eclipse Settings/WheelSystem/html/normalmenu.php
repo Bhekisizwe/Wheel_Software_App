@@ -24,7 +24,9 @@ if(isset($_SESSION["staffNumber"])){
         <div class="containter-fluid" align="center">
         	<h3 class="h3">User Menu</h3><p>
             	<i><div style="font-family:arial;font-size:14pt">Logged in as:<b><?php echo $_SESSION["name"]." ".$_SESSION["surname"]; ?></b></div></i><p>
-            	[<a href='logout.php' class='active'><b>Logout</b></a>]<p>
+            	[<a href='logout.php' class='active'><b>Logout</b></a>]
+		[<a href='Help Documentation.pdf' target='_new' class='active'><b>Help Documentation</b></a>]
+		<p>
             <div style="width:20%">            	
             	<div id="tree" align="left">
     		  		 <ul>                      	                    
@@ -75,6 +77,7 @@ if(isset($_SESSION["staffNumber"])){
                       </ul> 
             	</div>            	   		
             </div>
+	    <div style='position:fixed;bottom:0px;text-align:center;width:100%'>&copy Gqunsu Engineering Pty Ltd 2018-</div>
         </div>
         
          <!-- Optional JavaScript -->

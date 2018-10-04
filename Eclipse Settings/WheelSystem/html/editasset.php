@@ -52,6 +52,7 @@ if(isset($_SESSION["staffNumber"])){
 		    			<option value='T'>Trailer Coach</option>
 		    			<option value='M'>Motor Coach</option>
 		    			<option value='L'>Locomotive</option>
+					<option value='W'>Wagon</option>
 		    		</select><p>		    			
 		    		<input type="text" class="form-control" placeholder="Enter Coach Number {e.g 10M2800T,10118, e.t.c}" id="coachNumber" pattern="[0-9a-zA-Z\-\s]{2,}" title="Two or more {i.e Only Digits, Letters, Space and Hyphens allowed} characters necessary for the Coach Number" autocomplete="on" required><p>    		
 		    		<input type="submit" id="editAsset" class="btn btn-primary" value="EDIT ASSET"><p>	
@@ -89,7 +90,7 @@ if(isset($_SESSION["staffNumber"])){
 								$("#assetID").val(data["assetID"]);
 								$("#coachNumber").val(data["coachNumber"]);
 								$("#coachType").val(data["coachDetails2DArray"][0]["coachType"]);
-								$("#coachCategory").val(data["coachDetails2DArray"][0]["coachCategory"]);																														
+								$("#coachCategory").val(data["coachDetails2DArray"][0]["coachCategory"].toUpperCase());																														
 							}
 							else{																			
 								if(data["errorAssocArray"]["errorCode"]=="0x19"){

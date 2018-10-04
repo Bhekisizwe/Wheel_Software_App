@@ -32,3 +32,9 @@
  ####End of Line#### 
 17.) Oops, error in Class Email within method sendEmail has occured at 2018-10-01 17:29:44 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
+18.) Oops, error in Class UserAccounts within method updateUserAccount has occured at 2018-10-02 16:27:56 .Exception message is Invalid address:  (to): 
+ ####End of Line#### 
+19.) Oops, error in Class Email within method sendEmail has occured at 2018-10-02 16:28:17 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+20.) Oops, error in Class Email within method sendEmail has occured at 2018-10-02 16:30:00 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
