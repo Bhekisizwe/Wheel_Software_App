@@ -82,7 +82,8 @@
     	    		//if(staffNumber)
     	    		//alert($('#loginForm')[0].checkValidity());
     	    		
-    	    		if($("#loginForm")[0].checkValidity()){    			
+    	    		if($("#loginForm")[0].checkValidity()){  
+				$("#login").val("ENTERING APP...");  			
     	    			//alert(staffNumber+"_"+password);    			
     	    			url="/login/checkexistence/"+staffNumber+"_"+password;    	
     	    			//alert(url);
@@ -109,11 +110,13 @@
     	    			    	}
     	    			    	else {
     	    			    		alert("Invalid Login Credentials!");
+						$("#login").val("LOGIN");
     	    			    		$("#staffNumber").val("");	//reset fields
     	        			    	$("#passwordHash").val("");
     	   			    		}
     	    			    }).fail(function(data){
-    	    			    	alert("Error:transaction failed");    			    	
+    	    			    	alert("Error:transaction failed"); 
+					$("#login").val("LOGIN");   			    	
     	    			    });
     	    				 
     	    		}
