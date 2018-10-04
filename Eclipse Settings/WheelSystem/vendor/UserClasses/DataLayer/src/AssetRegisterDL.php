@@ -165,6 +165,13 @@ class AssetRegisterDL extends DatabaseManager implements DatabaseFunctionsInt
                 $assetID=$data["assetID"];
                 $stmt->bind_param("sii",$coachNumber,$coachID,$assetID);
                 $status_message=$stmt->execute();
+		$query="UPDATE CoachDetails SET CoachCategory=? WHERE CoachID=?";
+		//prepare SQL script for execution
+                $stmt=$connector->prepare($query);
+                //bind parameters                
+                $coachCategory=$data["coachDetails2DArray"][0]["coachCategory"];
+                $stmt->bind_param("si",$coachCategory,$coachID);
+                $status_message=$stmt->execute();
                 $this->dbClose($connector); //Close Database Connection
                 return $status_message;
             }
