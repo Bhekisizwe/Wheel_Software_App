@@ -51,17 +51,19 @@ use UserClasses\BusinessLayer\ManageSession;
                 } 
             }
             else {
+		$arr=array();
                 $miniProfBO->setTransactionStatus(false);
                 $arr_err=array();
                 $arr_err["errorCode"]="0x18";
                 $arr_err["errorDescription"]="You have no access rights to carry out the action you attempted. Please contact the administrator to resolve this.";
                 $arr_error["errorAssocArray"]=$arr_err;
                 $miniProfBO->set($arr_error);
-                $arr=$miniProfBO->getArray();
+                $arr[]=$miniProfBO->getArray();
             }
             $_SESSION["lastActive"]=time();
         }
         else{
+	    $arr=array();
             $miniProfBO->setTransactionStatus(false);
             //write Error Code and Description
             $arr_err=array();
@@ -69,7 +71,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err["errorDescription"]="Session has expired";
             $arr_error["errorAssocArray"]=$arr_err;
             $miniProfBO->set($arr_error);
-            $arr=$miniProfBO->getArray();
+            $arr[]=$miniProfBO->getArray();
         }
         $arr_json=json_encode($arr);
         //destroy objects
