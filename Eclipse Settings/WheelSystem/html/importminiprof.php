@@ -38,7 +38,7 @@ if(isset($_SESSION["staffNumber"])){
             	?>
             	<div class="form-group">
             	<form style="border:1px solid #888888;width:50%;background-color:#eeeeee" class="rounded" id="importForm">
-            		<label>Upload Multiple MiniProf Wheel Measurement Files (Maximum 1000 MiniProf Files):</label>
+            		<label>Upload Multiple MiniProf Wheel Measurement Files (Maximum 100 MiniProf Files):</label>
             		<input type="file" id="miniprof" name="miniprof[]" multiple class="form-control" required><p><p>
             		<label>Train Set Number:</label>
             		<input type="text" id="setNumber" name="setNumber" placeholder="Enter set number, {e.g S3, U2, e.t.c}" pattern="[a-zA-Z0-9\-\s]{2,}" title="Two or more characters {i.e Only Spaces, Hyphens, Digits and Letters allowed} to be entered for the Set Number" class="form-control" required><p> 
@@ -122,7 +122,10 @@ if(isset($_SESSION["staffNumber"])){
 										    	}
 												else if(data["errorAssocArray"]["errorCode"]=="0x18"){											    	
 											    	alert(data["errorAssocArray"]["errorDescription"]);											    	
-										    	}													
+										    	}
+												else if(data["errorAssocArray"]["errorCode"]=="0x21"){											    	
+											    	alert(data["errorAssocArray"]["errorDescription"]);											    	
+										    	}									
 										    	else{								    	
 										    		alert("transaction failed to execute"); 
 										    	}	
@@ -148,6 +151,9 @@ if(isset($_SESSION["staffNumber"])){
 								}
 								else if(data["errorAssocArray"]["errorCode"]=="0x04"){
 									alert(data["errorAssocArray"]["errorDescription"]);
+								}
+								else if(data["errorAssocArray"]["errorCode"]=="0x21"){						    	
+								alert(data["errorAssocArray"]["errorDescription"]);						    	
 								}								
 						    	else{								    	
 						    		alert("Transaction execution failed");	

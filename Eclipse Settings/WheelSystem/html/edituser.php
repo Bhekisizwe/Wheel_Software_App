@@ -90,7 +90,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
             //Search for user profile
             
             $("#searchBox").on("keyup",function(){				
-			    var staffNumber=$("#searchBox").val();			    
+			    var staffNumber=$("#searchBox").val().trim();			    
 			    //alert(staffNumber);
 			    if(staffNumber!=""){
 			    	$.ajax({

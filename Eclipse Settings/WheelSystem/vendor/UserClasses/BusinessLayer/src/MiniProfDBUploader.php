@@ -310,7 +310,7 @@ class MiniProfDBUploader extends FileHandler
         $arr_email["to"]=$arr["emailAddress"];
         $arr_email["subject"]="Add Manual Wheel Measurements";
         $body="Dear ".$arr["name"]." ".$arr["surname"]."<p>";        
-        $body.="Please access the maintenance system website at <a href='https://rmssoft.co.za/html' target='_new'>Rail Maintenance System</a>";               
+        $body.="Please access the maintenance system website at <a href='http://rmssoft.co.za/html' target='_new'>Rail Maintenance System</a>";               
         $body.=" and login into the website to manually add the manual wheel measurements for the ";
         $body.="Train Set Number:<b>".$setNumber."</b> with wheels measured on:<b>".$meas_date."</b><p>";
         $body.=" By Order (Gqunsu Engineering Pty Ltd)";

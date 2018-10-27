@@ -38,3 +38,15 @@
  ####End of Line#### 
 20.) Oops, error in Class Email within method sendEmail has occured at 2018-10-02 16:30:00 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
+21.) Oops, error in Class UserAccounts within method addUserAccount has occured at 2018-10-27 14:44:52 .Exception message is License Limit Reached
+ ####End of Line#### 
+22.) Oops, error in Class Email within method sendEmail has occured at 2018-10-27 14:45:45 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+23.) Oops, error in Class Email within method sendEmail has occured at 2018-10-27 14:47:24 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+24.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-10-27 15:06:51 .Exception message is Asset register CSV Textfile has missing data.Please consult the HELP documentation to correctly setup the CSV file for import.
+ ####End of Line#### 
+25.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-10-27 15:07:28 .Exception message is Asset register CSV Textfile has missing data.Please consult the HELP documentation to correctly setup the CSV file for import.
+ ####End of Line#### 
+26.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-10-27 15:10:05 .Exception message is Asset register CSV Textfile has missing data.Please consult the HELP documentation to correctly setup the CSV file for import.
+ ####End of Line#### 

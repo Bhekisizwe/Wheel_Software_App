@@ -33,7 +33,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
     				<input type="text" class="form-control" placeholder="Enter name" id="name" pattern="[a-zA-Z\-\s]{2,}" title="Two or more {i.e Only Letters, Space and Hyphens allowed} characters necessary for the Name" autocomplete="on" required><p>
 		    		<p>		    		
 		    		<input type="text" class="form-control" placeholder="Enter surname" id="surname" pattern="[a-zA-Z\-\s]{2,}" title="Two or more {i.e Only Letters, Space and Hyphens allowed} characters necessary for the Surname" autocomplete="on" required><p>
-		    		<input type="text" class="form-control" placeholder="Enter staff number" id="staffNumber" pattern="[0-9a-zA-Z]{4,}" title="Four or more Alpha-Numeric characters {i.e Only digits and letters allowed} necessary for the surburb" autocomplete="on" required><p>
+		    		<input type="text" class="form-control" placeholder="Enter staff number" id="staffNumber" pattern="[0-9a-zA-Z]{4,}" title="Four or more Alpha-Numeric characters {i.e Only digits and letters allowed} necessary for the Staff Number" autocomplete="on" required><p>
 		    		<p>		    		
 		    		<input type="email" class="form-control" placeholder="Enter email address" id="emailAddress" title="please enter a valid email address" autocomplete="on" required><p>
 		    		<p>		    		
@@ -95,7 +95,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
 					objData["accountID"]=$("#accountID").val();
 					objData["name"]=$("#name").val();	
 					objData["surname"]=$("#surname").val();
-					objData["staffNumber"]=$("#staffNumber").val();	
+					objData["staffNumber"]=$("#staffNumber").val().trim();	
 					objData["emailAddress"]=$("#emailAddress").val();
 					objData["accountState"]=$("#accountState").val();
 					objData["roleID"]=$("#userroles").val();							

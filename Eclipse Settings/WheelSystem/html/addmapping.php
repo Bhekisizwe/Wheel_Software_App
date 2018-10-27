@@ -75,10 +75,10 @@ if(isset($_SESSION["staffNumber"])){
 				if($("#axleForm")[0].checkValidity()){						
 					//initialise object literal.
 					objData={};				
-					objData["setNumber"]=$("#setNumber").val();					
-					objData["coachNumber"]=$("#coachNumber").val();	
+					objData["setNumber"]=$("#setNumber").val().trim();					
+					objData["coachNumber"]=$("#coachNumber").val().trim();	
 					objData["axleNumber"]=$("#axleNumber").val();	
-					objData["axleSerialNumber"]=$("#axleSerialNumber").val();																
+					objData["axleSerialNumber"]=$("#axleSerialNumber").val().trim();																
 					json_data=JSON.stringify(objData);	
 					//alert(json_data);					
 					if($("#addMapping").length>0){

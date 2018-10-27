@@ -62,6 +62,7 @@ use UserClasses\BusinessLayer\ManageSession;
                 $alarm["coachNumber"]=$coachNumber;
                 $assetBO->set($alarm);
                 $asset_arr=$asset->searchAssetRegister($assetBO);
+                $assetBO->setCoachNumber("");                
                 $assetBO->set($asset_arr);
                 $assetBO->setTransactionStatus(true);
                 //$manualSettingsBO->setDataExistsStatus(true);

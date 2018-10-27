@@ -73,7 +73,7 @@ class AxleCoachMapping extends FileHandler
             $arr_header=fgetcsv($file,null,';');
         }
         $counter=0;
-        for($i=0;$i<count($arr_header);$i++){
+        for($i=0;$i<count($headers);$i++){
             if(array_keys($arr_header,$headers[$i])[0]==$i) {
                 $counter++;
             }
@@ -98,12 +98,14 @@ class AxleCoachMapping extends FileHandler
         }
         $status_message=false;
         while(($row_arr=fgetcsv($file,null,$delimiter))!== FALSE){
+            $counter=0;
             foreach($row_arr as $value){
-                if(empty($value)){
+                if(empty($value) && $counter<4){
                     //detected empty field
                     $status_message=true;   //empty space found. Exit Loop no need to continue
                     break;
                 }
+                $counter++;
             }
             if($status_message) break;
         }
@@ -143,10 +145,10 @@ class AxleCoachMapping extends FileHandler
                                 }
                                 $headers_skip=fgetcsv($file,null,$delimiter);   //skip headers
                                 while(($row_arr=fgetcsv($file,null,$delimiter))!== FALSE){
-                                    $arr_data["axleSerialNumber"]=$row_arr[0];
-                                    $arr_data["axleNumber"]=$row_arr[1];
-                                    $arr_data["setNumber"]=$row_arr[2];
-                                    $arr_data["coachNumber"]=$row_arr[3];
+                                    $arr_data["axleSerialNumber"]=trim($row_arr[0]);
+                                    $arr_data["axleNumber"]=trim($row_arr[1]);
+                                    $arr_data["setNumber"]=trim($row_arr[2]);
+                                    $arr_data["coachNumber"]=trim($row_arr[3]);
                                     $arr[]=$arr_data; //append row of data to the end of the 2D Array
                                 }
                                 fclose($file);  //close the file

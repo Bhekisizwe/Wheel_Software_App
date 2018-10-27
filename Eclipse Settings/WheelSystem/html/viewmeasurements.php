@@ -38,13 +38,10 @@ if(isset($_SESSION["staffNumber"])){
             	?>            
             	<div class="form-group">
             	<form style="border:1px solid #888888;width:35%;background-color:#eeeeee" class="rounded" id="searchForm">
-            		<label>Train Set Number:</label>
-            		<input type="text" id="setNumber" class="form-control" placeholder="Enter Set Number" autocomplete="on" required><p>   		
-            		
-    				<label>Wheel Measurement Date:</label>
-    				<input type="date" id="measurementDate" class="form-control" value="" min="2010-01-01" max="2110-01-01" required><p>
-    				<p>
-    				<input type="submit" id="viewButton" class="btn btn-primary" value="SEARCH FOR MINIPROF WHEEL MEASUREMENTS">
+            		<label>Coach Number:</label>
+            		<input type="text" id="coachNumber" class="form-control" placeholder="Enter Coach Number" autocomplete="on" required><p>
+    			<p>	
+    			<input type="submit" id="viewButton" class="btn btn-primary" value="SEARCH FOR MINIPROF WHEEL MEASUREMENTS">
             	</form></div><p> 
             	<caption><b>Search Results:</b></caption><p>            	         	
     			<div id="tableContents" style="width:90%"></div> 
@@ -65,8 +62,8 @@ if(isset($_SESSION["staffNumber"])){
             //Search for asset
             
             $("#searchForm").on("submit",function(event){				
-			    var setNumber=$("#setNumber").val();		    
-			    var measurementDate=$("#measurementDate").val();
+			    var coachNumber=$("#coachNumber").val();		    
+			    //var measurementDate=$("#measurementDate").val();
 			    		    
 			    //alert("/axlecoachmappingservice/"+axleSerialNumber+"_"+startDate+"_"+endDate);
 			    if($("#searchForm")[0].checkValidity()){
@@ -74,14 +71,14 @@ if(isset($_SESSION["staffNumber"])){
 			    	$.ajax({
 						type: "GET",
 						contentType: "application/json",
-						url: "/miniprofmeasurements/"+setNumber+"_"+measurementDate,							
+						url: "/miniprofmeasurements/"+coachNumber,							
 						dataType: 'json',
 						cache: false,							
 						success: function (data) {
 							$("#viewButton").val("SEARCH FOR MINIPROF WHEEL MEASUREMENTS");							
 							if(data[0]["transactionStatus"]){	
 								var html_str="";
-								html_str="<div align='center'>There are <b>"+data.length+"</b> measured wheels in Train Set Number <b>"+data[0]["setNumber"]+"</b></div><p>";
+								html_str="<div align='center'>There are <b>"+data.length+"</b> measured wheels in Coach Number <b>"+data[0]["coachNumber"]+"</b></div><p>";
 								html_str+="<table class='table table-striped table-light' style='width:100%'>";
 								html_str+="<th>Row Number</th><th>Set Number</th><th>Coach Number</th><th>Wheel ID</th><th>Measurement Date</th><th>Measurement Time</th><th>Operator Name</th>";	
 								html_str+="<th>Flange Height (mm)</th><th>Flange Width (mm)</th><th>Toe Creep (mm)</th><th>Hollowing (mm)</th>";						
@@ -117,7 +114,7 @@ if(isset($_SESSION["staffNumber"])){
 						    	}
 								else if(data[0]["errorAssocArray"]["errorCode"]=="0x18"){
 									alert(data[0]["errorAssocArray"]["errorDescription"]);
-								}
+								}								
 						    	else{								    	
 						    		alert("Transaction execution failed");	
 						    	}	

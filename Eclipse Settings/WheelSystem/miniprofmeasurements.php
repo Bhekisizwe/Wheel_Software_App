@@ -6,15 +6,15 @@ use UserClasses\BusinessObjects\UserRoleBO;
 use UserClasses\BusinessLayer\MiniProfDBUploader;
 use UserClasses\BusinessObjects\MiniProfMeasurementsBO;
 use UserClasses\BusinessLayer\ManageSession;
-    //View MiniProf Measurements for a specific Set Number and Date of measurement
-    $app->get('/miniprofmeasurements/{setnumber_date}', function (Request $request, Response $response, array $args) {
+    //View MiniProf Measurements for a specific Coach Number
+    $app->get('/miniprofmeasurements/{coachNumber}', function (Request $request, Response $response, array $args) {
         //Create Objects
         $miniProf=new MiniProfDBUploader();
         $miniProfBO=new MiniProfMeasurementsBO();
         $userrole=new UserRole();
         $userroleBO=new UserRoleBO();
-        $search_str=$args["setnumber_date"];
-        $search_arr=explode("_",$search_str);
+        $search_str=$args["coachNumber"];
+        //$search_arr=explode("_",$search_str);
         $arr=$miniProfBO->getArray();
         $manageSession=new ManageSession();
         if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
@@ -25,8 +25,9 @@ use UserClasses\BusinessLayer\ManageSession;
             $activityName="Wheel Measurements Management";
             if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
                 $arr=array();
-                $mini["setNumber"]=$search_arr[0];
-                $mini["measurementDate"]=$search_arr[1];
+		$mini["coachNumber"]=$search_str;
+                //$mini["setNumber"]=$search_arr[0];
+                //$mini["measurementDate"]=$search_arr[1];
                 $miniProfBO->set($mini);
                 $mini_arr=$miniProf->showWheelData($miniProfBO);
                 for($j=0;$j<count($mini_arr);$j++){
@@ -139,7 +140,7 @@ use UserClasses\BusinessLayer\ManageSession;
         $arr_files=$request->getUploadedFiles();
         $form_data=$request->getParsedBody();
         //$form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
-        if(count($arr_files)>0){
+        if(count($arr_files)>0 && count($arr_files["miniprof"])<=100){
             $manageSession=new ManageSession();
             if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
             if(isset($_SESSION["staffNumber"])){
@@ -150,11 +151,22 @@ use UserClasses\BusinessLayer\ManageSession;
                 if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
                     $miniProfBO->setStaffNumber($_SESSION["staffNumber"]);
                     $miniProfBO->set($form_data);
+		    /****delete directory and its contents when found******/
+                    if($miniProfBO->getMeasurementDate()!="" && $miniProfBO->getSetNumber()!=""){ 
+		    	$dirPath=$miniProf->getDirPath()."\\".$miniProfBO->getMeasurementDate()."\\".$miniProfBO->getSetNumber();
+		    	foreach (glob($dirPath."/*.*") as $filename) {
+    				if (is_file($filename)) {
+        				unlink($filename);
+    				}
+		    	}
+		    	//rmdir($dirPath);
+		    }
                     foreach($arr_files["miniprof"] as $upLoadedFiles){
                         $uploaded_file=$upLoadedFiles->getClientFilename();
                         //check if directory exists first
                         $dirPath=$miniProf->getDirPath()."\\".$miniProfBO->getMeasurementDate()."\\".$miniProfBO->getSetNumber();
                         $filename=$miniProfBO->getMeasurementDate()."\\".$miniProfBO->getSetNumber()."\\".$uploaded_file;
+			
                         if(file_exists($dirPath)){
                             //move uploaded files here
                             //check if the file exists already                            
@@ -247,6 +259,11 @@ use UserClasses\BusinessLayer\ManageSession;
             }            
         }
         else{
+            $arr_err=array();
+            $arr_err["errorCode"]="0x21";
+            $arr_err["errorDescription"]="Please Upload between 1 and 100 files at a time";
+            $arr_error["errorAssocArray"]=$arr_err;
+            $miniProfBO->set($arr_error);
             $arr=$miniProfBO->getArray();
         }        
         $arr_json=json_encode($arr);    //Return JSON Data Object

@@ -128,11 +128,10 @@ class MiniProfMeasurementsDL extends DatabaseManager implements DatabaseFunction
         if(isset($connector)){
             /*********RETRIEVE Wheel Measurements Data from Database*************/
             $query="SELECT * FROM WheelMeasurements";            
-            $query.=" WHERE SetNumber=? AND Meas_Date=? ORDER BY Meas_Time Desc";
+            $query.=" WHERE CoachNumber=? ORDER BY Meas_Date Desc";
             $stmt=$connector->prepare($query);
-            $setNumber=$data["setNumber"];
-            $meas_date=$data["measurementDate"];
-            $stmt->bind_param("ss",$setNumber,$meas_date);
+            $coachNumber=$data["coachNumber"];            
+            $stmt->bind_param("s",$coachNumber);
             $status=$stmt->execute();
             $stmt->store_result();
             $stmt->bind_result($measurementID,$coachNumber,$setnumber,$axleNumber,$wheelID,$operatorName,$measDate,$measTime,$Sh,$qR,$FW,$H);

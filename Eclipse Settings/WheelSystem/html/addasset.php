@@ -72,9 +72,11 @@ if(isset($_SESSION["staffNumber"])){
 				
 				if($("#assetForm")[0].checkValidity()){						
 					//initialise object literal.
+					var coachType=$("#coachType").val();
+					var coachNumber=$("#coachNumber").val();
 					objData={"coachDetails2DArray":{}};				
-					objData["coachDetails2DArray"]["0"]={"coachType":$("#coachType").val(),"coachCategory":$("#coachCategory").val()};					
-					objData["coachNumber"]=$("#coachNumber").val();																
+					objData["coachDetails2DArray"]["0"]={"coachType":coachType.trim(),"coachCategory":$("#coachCategory").val()};					
+					objData["coachNumber"]=coachNumber.trim();																
 					json_data=JSON.stringify(objData);	
 					//alert(json_data);					
 					if($("#addAsset").length>0){

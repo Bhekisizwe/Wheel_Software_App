@@ -67,7 +67,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $userAccountBO->set($arr_error);
             $arr=$userAccountBO->getArray();
         }       
@@ -106,7 +106,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $arr_err=array();
             $arr_err["errorCode"]="0x19";
             $arr_err["errorDescription"]="Session has expired";
-            $arr_error["errorAssocArray"][19]=$arr_err;
+            $arr_error["errorAssocArray"]=$arr_err;
             $userAccountBO->set($arr_error);
             $userAccountBO->setPasswordHash("");
             $arr=$userAccountBO->getArray();

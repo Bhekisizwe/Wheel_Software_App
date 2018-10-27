@@ -76,7 +76,7 @@ if(isset($_SESSION["staffNumber"])){
             //Search for asset
             
             $("#searchBox").on("keyup",function(){				
-			    var coachNumber=$("#searchBox").val();			    
+			    var coachNumber=$("#searchBox").val().trim();			    
 			    //alert(staffNumber);
 			    if(coachNumber!=""){
 			    	$.ajax({
@@ -127,8 +127,8 @@ if(isset($_SESSION["staffNumber"])){
 							"coachDetails2DArray":{}
 							};
 					objData["assetID"]=$("#assetID").val();
-					objData["coachNumber"]=$("#coachNumber").val();	
-					objData["coachDetails2DArray"]["0"]={"coachCategory":$("#coachCategory").val(),"coachType":$("#coachType").val()};						
+					objData["coachNumber"]=$("#coachNumber").val().trim();	
+					objData["coachDetails2DArray"]["0"]={"coachCategory":$("#coachCategory").val(),"coachType":$("#coachType").val().trim()};						
 					
 					json_data=JSON.stringify(objData);
 					

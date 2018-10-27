@@ -116,7 +116,7 @@ if(isset($_SESSION["staffNumber"])){
 						},
 						error: function (e) {
 							$("#viewButton").val("GENERATE ACTIVITY LOG REPORT");	
-							alert("Error:transaction failed to execute with error "+e);
+							alert("Error:transaction failed to execute with error "+e.responseText);
 						}
 			    	});	
 			    }
