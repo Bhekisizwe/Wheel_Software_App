@@ -140,7 +140,7 @@ use UserClasses\BusinessLayer\ManageSession;
         $arr_files=$request->getUploadedFiles();
         $form_data=$request->getParsedBody();
         //$form_data=json_decode($request->getBody()->getContents(),TRUE);  //get client form data
-        if(count($arr_files)>0 && count($arr_files["miniprof"])<=100){
+        if(count($arr_files)>0 && count($arr_files["miniprof"])<=200){
             $manageSession=new ManageSession();
             if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
             if(isset($_SESSION["staffNumber"])){
@@ -261,7 +261,7 @@ use UserClasses\BusinessLayer\ManageSession;
         else{
             $arr_err=array();
             $arr_err["errorCode"]="0x21";
-            $arr_err["errorDescription"]="Please Upload between 1 and 100 files at a time";
+            $arr_err["errorDescription"]="Please Upload between 1 and 200 MiniProf files at a time";
             $arr_error["errorAssocArray"]=$arr_err;
             $miniProfBO->set($arr_error);
             $arr=$miniProfBO->getArray();

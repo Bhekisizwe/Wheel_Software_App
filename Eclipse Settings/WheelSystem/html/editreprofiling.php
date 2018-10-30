@@ -40,10 +40,10 @@ if(isset($_SESSION["staffNumber"])){
             	<form style="border:1px solid #888888;width:35%;background-color:#eeeeee" class="rounded" id="searchForm">
             		<label>Axle Serial Number:</label>
             		<input type="text" id="axleSerialNumber" class="form-control" placeholder="Enter Axle Serial Number" autocomplete="on" required>            		
-            		<label>Search Start Date of when Wheel Reprofiling Service happened:</label>
+            		<label>Date of Wheel Reprofiling Search Start Date:</label>
     				<input type="date" id="startDate" class="form-control" value="" min="2010-01-01" max="2110-01-01" required><p>
     				<p>
-    				<label>Search End Date of when Wheel Reprofiling Service happened:</label>
+    				<label>Date of Wheel Reprofiling Search End Date:</label>
     				<input type="date" id="endDate" class="form-control" value="" min="2010-01-01" max="2110-01-01" required><p>
     				<p>
     				<input type="submit" id="viewButton" class="btn btn-primary" value="SEARCH FOR WHEEL REPROFILING DATA">

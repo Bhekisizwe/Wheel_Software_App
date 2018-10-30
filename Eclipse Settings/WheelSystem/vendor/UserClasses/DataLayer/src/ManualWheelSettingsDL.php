@@ -136,17 +136,17 @@ class ManualWheelSettingsDL extends DatabaseManager implements DatabaseFunctions
         $connector=$this->dbConnect();  //connect to MariaDB database
         if(isset($connector)){
             /*********RETRIEVE Manual Wheel Measurements Settings from Database*************/
-            $query="SELECT * FROM WarningSettings,WheelParameters WHERE WarningSettings.ParamID=WheelParameters.ParamID";
+            $query="SELECT * FROM WarningSettings,WheelParameters WHERE WarningSettings.ParamID=WheelParameters.ParamID AND WheelParameters.ParamID>=5";
             $result=$connector->query($query);
             if($result){
                 $arr_2D=array();   //array to store result set
                 $i=0;   //row counter
-                while($rows=$result->fetch_assoc()){
-                    $arr["settingsID"]=$rows["SettingsID"];
-                    $arr["paramID"]=$rows["ParamID"];
-                    $arr["warningLevel"]=$rows["WarningLevel"];
-                    $arr["paramName"]=$rows["ParamName"];
-                    $arr_2D["warning2DArray"][$i++]=$arr; //fetch each row
+                while($rows=$result->fetch_assoc()){		    
+			$arr["settingsID"]=$rows["SettingsID"];
+                        $arr["paramID"]=$rows["ParamID"];
+                        $arr["warningLevel"]=$rows["WarningLevel"];
+                        $arr["paramName"]=$rows["ParamName"];
+                        $arr_2D["warning2DArray"][$i++]=$arr; //fetch each row		                      
                 }
                 $this->dbClose($connector);
                 return $arr_2D;
