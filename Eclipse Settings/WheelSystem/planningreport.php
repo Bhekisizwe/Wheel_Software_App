@@ -18,8 +18,7 @@ use UserClasses\BusinessLayer\ManageSession;
         $planningBO=new ManualWheelMeasurementsBO();
         $userrole=new UserRole();
         $userroleBO=new UserRoleBO();
-        $searchdatesstr=$args["daterange"];
-        $date_arr=explode("_",$searchdatesstr);        
+        $searchdatesstr=$args["daterange"];             
         $arr=array();
         $manageSession=new ManageSession();
         if(isset($_SESSION["lastActive"])) $manageSession->determineSessionValidity(time());
@@ -30,8 +29,7 @@ use UserClasses\BusinessLayer\ManageSession;
             $activityName="Planning Report Management";
             if($userrole->checkUserAuthorization($userroleBO, $accessRight, $activityName)){
                 $planningBO->setStaffNumber($_SESSION["staffNumber"]);
-                $planningBO->setReportStartDate($date_arr[0]);
-                $planningBO->setReportEndDate($date_arr[1]);
+                $planningBO->setReportStartDate($searchdatesstr);                
                 if($wheelcompare->checkManualSettingsExist($manualSettingsBO)){
                     if($wheelcompare->checkDailyDistanceSettingExists()){
                         if($wheelcompare->checkWearRatesSettingsExist()){

@@ -152,12 +152,12 @@ class ManualWheelMeasurementsDL extends DatabaseManager implements DatabaseFunct
         if(isset($connector)){
             /*********RETRIEVE MiniProf and/or Manual Wheel Measurements Data from Database*************/
             $query="SELECT * FROM WheelMeasurements,ManualMeasurements ";
-            $query.="WHERE (Meas_Date>=? AND Meas_Date<=? ";
+            $query.="WHERE (Meas_Date=? ";
             $query.="AND WheelMeasurements.MeasurementID=ManualMeasurements.MeasurementID)"; 
             $stmt=$connector->prepare($query);
             $reportStart=$data["reportStartDate"];
-            $reportEnd=$data["reportEndDate"];
-            $stmt->bind_param("ss",$reportStart,$reportEnd);
+            //$reportEnd=$data["reportEndDate"];
+            $stmt->bind_param("s",$reportStart);
             $status=$stmt->execute();
             $stmt->store_result();
             $stmt->bind_result($measurementID,$coachNumber,$setNumber,$axleNumber,$wheelID,$operatorName,$measDate,$measTime,$Sh,$qR,$FW,$H,$manualID,$measurementid,$SR,$CTW,$CTD,$CTDFF,$WS,$gibsonDescr);
@@ -195,12 +195,12 @@ class ManualWheelMeasurementsDL extends DatabaseManager implements DatabaseFunct
                     $IN_STRING="(0)";
                 }
                 $query="SELECT * FROM WheelMeasurements ";
-                $query.="WHERE (Meas_Date>=? AND Meas_Date<=?) ";
+                $query.="WHERE (Meas_Date=?) ";
                 $query.="AND MeasurementID NOT IN ".$IN_STRING;
                 $stmt=$connector->prepare($query);
                 $reportStart=$data["reportStartDate"];
-                $reportEnd=$data["reportEndDate"];
-                $stmt->bind_param("ss",$reportStart,$reportEnd);
+                //$reportEnd=$data["reportEndDate"];
+                $stmt->bind_param("s",$reportStart);
                 $status=$stmt->execute();
                 $stmt->store_result();
                 $stmt->bind_result($measurementID,$coachNumber,$setNumber,$axleNumber,$wheelID,$operatorName,$measDate,$measTime,$Sh,$qR,$FW,$H);

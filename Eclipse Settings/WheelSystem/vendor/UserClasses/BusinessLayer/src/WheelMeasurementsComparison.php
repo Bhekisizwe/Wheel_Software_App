@@ -201,31 +201,31 @@ class WheelMeasurementsComparison
             for($i=0;$i<count($arr_manual_settings["warning2DArray"]);$i++){
                 switch($arr_manual_settings["warning2DArray"][$i]["paramName"]){
                     case "CTD":  //Cut Tyre Depth comparison                       
-                        if($data["cutTyreDepth"]>=$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
+                        if($data["cutTyreDepth"]>$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
                             $data["cutTyreDepthStatus"]=2;
                             $data["addToExceptionList"]=true;
                         }
                         break;
                     case "CTW":  //Cut Tyre Width comparison                      
-                        if($data["cutTyreWidth"]>=$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
+                        if($data["cutTyreWidth"]>$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
                             $data["cutTyreWidthStatus"]=2;
                             $data["addToExceptionList"]=true;
                         }
                         break;
                     case "CTDFF":  //Cut Tyre Distance From Flange Comparison                      
-                        if($data["cutTyreDistanceFromFlange"]>=$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
+                        if($data["cutTyreDistanceFromFlange"]>$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
                             $data["cutTyreDistanceFromFlangeStatus"]=2;
                             $data["addToExceptionList"]=true;
                         }
                         break;
                     case "SR":   //Spread Rim Comparison                        
-                        if($data["spreadRim"]>=$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
+                        if($data["spreadRim"]>$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
                             $data["spreadRimStatus"]=2;
                             $data["addToExceptionList"]=true;
                         }
                         break;
                     case "WS":   //Wheel Skid Comparison                       
-                        if($data["wheelSkid"]>=$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
+                        if($data["wheelSkid"]>$arr_manual_settings["warning2DArray"][$i]["warningLevel"]){
                             $data["wheelSkidStatus"]=2;
                             $data["addToExceptionList"]=true;
                         }                        

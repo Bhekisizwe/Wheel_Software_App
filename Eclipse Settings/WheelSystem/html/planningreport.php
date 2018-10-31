@@ -39,10 +39,8 @@ if(isset($_SESSION["staffNumber"])){
             	<div class="form-group">
             	<form style="border:1px solid #888888;width:35%;background-color:#eeeeee" class="rounded" id="searchForm">
             		           		
-            		<label>Planning Report Start Date:</label>
-    				<input type="date" id="startDate" class="form-control" value="" min="2010-01-01" max="2040-01-01" required>    				
-    				<label>Planning Report End Date:</label>
-    				<input type="date" id="endDate" class="form-control" value="" min="2010-01-01" max="2110-01-01" required><p>
+            		<label>Wheel Measurement Date:</label>
+    				<input type="date" id="startDate" class="form-control" value="" min="2010-01-01" max="2040-01-01" required>   				
     				<input type="submit" id="viewButton" class="btn btn-primary" value="GENERATE PLANNING REPORT">
             	</form></div><p>
             	
@@ -62,8 +60,7 @@ if(isset($_SESSION["staffNumber"])){
             //Search for asset
             
             $("#searchForm").on("submit",function(event){		
-			    var startDate=$("#startDate").val();
-			    var endDate=$("#endDate").val();		    
+			    var startDate=$("#startDate").val();			  		    
 			    //alert("/axlecoachmappingservice/"+axleSerialNumber+"_"+startDate+"_"+endDate);
 			    if($("#searchForm")[0].checkValidity()){
 				    $("#viewButton").val("GENERATING MS-EXCEL REPORT...");
@@ -71,7 +68,7 @@ if(isset($_SESSION["staffNumber"])){
 			    	$.ajax({
 						type: "GET",
 						contentType: "application/json",
-						url: "/planningreportservice/"+startDate+"_"+endDate,							
+						url: "/planningreportservice/"+startDate,							
 						dataType: 'json',
 						cache: false,							
 						success: function (data) {
