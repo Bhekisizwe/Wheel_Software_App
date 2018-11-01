@@ -89,6 +89,7 @@ if(isset($_SESSION["staffNumber"])){
 			    //alert("/axlecoachmappingservice/"+axleSerialNumber+"_"+startDate+"_"+endDate);
 			    if($("#searchForm")[0].checkValidity()){
 				    $("#viewButton").val("GENERATING PDF REPORT...");
+				    $("#viewButton").prop("disabled",true);
 			    	$.ajax({
 						type: "GET",
 						contentType: "application/json",
@@ -96,7 +97,8 @@ if(isset($_SESSION["staffNumber"])){
 						dataType: 'json',
 						cache: false,							
 						success: function (data) {
-							$("#viewButton").val("GENERATE ACTIVITY LOG REPORT");							
+							$("#viewButton").val("GENERATE ACTIVITY LOG REPORT");
+							$("#viewButton").prop("disabled",false);							
 							if(data["transactionStatus"]){	
 								alert("Activity Log PDF report successfully generated and emailed to you");								
 							}
@@ -115,7 +117,8 @@ if(isset($_SESSION["staffNumber"])){
 							}
 						},
 						error: function (e) {
-							$("#viewButton").val("GENERATE ACTIVITY LOG REPORT");	
+							$("#viewButton").val("GENERATE ACTIVITY LOG REPORT");
+							$("#viewButton").prop("disabled",false);	
 							alert("Error:transaction failed to execute with error "+e.responseText);
 						}
 			    	});	
