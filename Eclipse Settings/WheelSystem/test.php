@@ -38,10 +38,20 @@ use UserClasses\BusinessLayer\PlanningReport;
 
 require __DIR__.'/vendor/autoload.php';
 
-$planningReport=new PlanningReport();
+$manual=new ManualWheelMeasurements();
 $manualMeasBO=new ManualWheelMeasurementsBO();
-$manualMeasBO->setReportStartDate("2017-03-25");
-$manualMeasBO->setReportEndDate("2017-04-07");
+$arr=array();
+$arr["measurementID"]=3;
+$arr["cutTyreWidth"]=10;
+$arr["cutTyreDepth"]=20;
+$arr["cutTyreDistanceFromFlange"]=30;
+$arr["wheelSkid"]=40;
+$arr["spreadRim"]=50;
+$arr["wheelSize"]=1025.75;
+$arr["unit"]="mm";
+$manualMeasBO->set($arr);
+$manual->addManualWheelMeasurements($manualMeasBO);
+/*$manualMeasBO->setReportEndDate("2017-04-07");
 $manualMeasBO->setStaffNumber("305941");
 $reportData=$planningReport->generateReportData($manualMeasBO);
 $userRoles=$planningReport->getUserRolesWithReadAccess();
@@ -50,7 +60,7 @@ foreach($visibilityArr as $roleID => $value){
     $report=$planningReport->produceReportPerUserRole($value, $reportData);
     $staffNumber="305941";
     $planningReport->writeReportToMSExcel($report, $staffNumber, $roleID);    
-}
+}*/
 
 echo "";
 echo "";

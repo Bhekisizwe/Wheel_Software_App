@@ -32,7 +32,7 @@ class WheelMeasurementsComparisonBO extends ManualWheelMeasurementsBO
     public function __construct()
     {
         parent::__construct();
-        $this->setObjectNumOfFields(43);
+        $this->setObjectNumOfFields(45);
     }
     
     /**
@@ -363,6 +363,12 @@ class WheelMeasurementsComparisonBO extends ManualWheelMeasurementsBO
                     break;               
                 case "manualid":
                     $this->manualID=$value;
+                    break;
+                case "wheelsize":
+                    $this->wheelSize=$value;
+                    break;
+                case "unit":
+                    $this->unit=$value;
                     break;
                 case "gibsondescription":
                     $this->gibsonDescription=$value;

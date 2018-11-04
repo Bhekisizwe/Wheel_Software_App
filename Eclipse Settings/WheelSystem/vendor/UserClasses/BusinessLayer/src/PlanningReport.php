@@ -165,13 +165,20 @@ class PlanningReport extends FileHandler
                                 $field_values[]=$value;
                             }                           
                             break;
+                        case "wheelSize":
+                            $columnName="Wheel Size";
+                            $header[]=$columnName;
+                            $field_values[]=$reportData[$i]["wheelSize"]." ".$reportData[$i]["unit"];
+                            break;
                         case "alarmCause":                            
                             $columnName="Comment";
                             if($this->determineColumnVisibility($columnName, $columnVisibility)){
                                 //add column header to header array and add value to field values array
                                 $header[]=$columnName;
                                 $field_values[]=$value;
-                            }                                                     
+                            }
+                        
+                            
                     }                    
                 }
                 if($i==0){

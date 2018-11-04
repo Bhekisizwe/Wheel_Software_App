@@ -152,6 +152,24 @@ if(isset($_SESSION["staffNumber"])){
 							html_str+="<label>Cut Tyre Depth Measurement (mm):</label><br><input type='number' id='CTD' class='form-control' min='0' max='10000' value='"+data['cutTyreDepth']+"' step='0.01' required><p>";
 							html_str+="<label>Cut Tyre Distance From Flange Measurement (mm):</label><br><input type='number' id='CTDFF' class='form-control' min='0' max='10000' value='"+data['cutTyreDistanceFromFlange']+"' step='0.01' required><p>";
 							html_str+="<label>Wheel Skid Measurement (mm):</label><br><input type='number' id='WS' class='form-control' min='0' max='10000' value='"+data['wheelSkid']+"' step='0.01' required><p>";
+							html_str+="<label>Wheel Size:</label><br><input type='number' id='wheelSize' class='form-control' min='0' max='10000' value='"+data['wheelSize']+"' step='0.01' required><p>";
+							html_str+="<label>Wheel Size Unit:</label><br><select id='unit' required>";
+							if(data['unit']=="mm"){
+								html_str+="<option value=''>--Select Wheel Size Unit--</option>";
+								html_str+="<option value='mm' selected>mm</option>";
+								html_str+="<option value='in'>in</option></select><p>";
+							}
+							else if(data['unit']=="in"){
+								html_str+="<option value=''>--Select Wheel Size Unit--</option>";
+								html_str+="<option value='mm'>mm</option>";
+								html_str+="<option value='in' selected>in</option></select><p>";
+							}
+							else{
+								html_str+="<option value='' selected>--Select Wheel Size Unit--</option>";
+								html_str+="<option value='mm'>mm</option>";
+								html_str+="<option value='in'>in</option></select><p>";
+
+							}
 							html_str+="<label>Gibson Ring Inspection:</label><br><select id='gibson' required>";
 							if(data['gibsonDescription']=="pass"){
 								html_str+="<option value=''>--Select Gibson Ring Inspection Result--</option>";
@@ -213,7 +231,9 @@ if(isset($_SESSION["staffNumber"])){
 					objData["cutTyreWidth"]=$("#CTW").val();
 					objData["cutTyreDistanceFromFlange"]=$("#CTDFF").val();	
 					objData["wheelSkid"]=$("#WS").val();
-					objData["gibsonDescription"]=$("#gibson").val();	
+					objData["gibsonDescription"]=$("#gibson").val();
+					objData["wheelSize"]=$("#wheelSize").val();
+					objData["unit"]=$("#unit").val();	
 					objData["measurementID"]=$("#measurementID").val();															
 					json_data=JSON.stringify(objData);	
 					//alert(json_data);					

@@ -18,13 +18,47 @@ class ManualWheelMeasurementsBO extends MiniProfMeasurementsBO
     protected $reportStartDate="";
     protected $reportEndDate="";
     protected $gibsonDescription="";
+    protected $wheelSize=0;
+    protected $unit="mm";
     
+    /**
+     * @return number
+     */
+    public function getWheelSize()
+    {
+        return $this->wheelSize;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnit()
+    {
+        return $this->unit;
+    }
+
+    /**
+     * @param number $wheelSize
+     */
+    public function setWheelSize($wheelSize)
+    {
+        $this->wheelSize = $wheelSize;
+    }
+
+    /**
+     * @param string $unit
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+    }
+
     /**
      */
     public function __construct()
     {
         parent::__construct();
-        $this->setObjectNumOfFields(26);
+        $this->setObjectNumOfFields(28);
     }
     
     /**
@@ -179,6 +213,12 @@ class ManualWheelMeasurementsBO extends MiniProfMeasurementsBO
             switch($key_lower){
                 case "manualid":
                     $this->manualID=$value;
+                    break;
+                case "wheelsize":
+                    $this->wheelSize=$value;
+                    break;
+                case "unit":
+                    $this->unit=$value;
                     break;
                 case "gibsondescription":
                     $this->gibsonDescription=$value;

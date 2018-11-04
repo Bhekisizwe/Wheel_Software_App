@@ -50,3 +50,21 @@
  ####End of Line#### 
 26.) Oops, error in Class AssetRegister within method readCSVFileAssetsData has occured at 2018-10-27 15:10:05 .Exception message is Asset register CSV Textfile has missing data.Please consult the HELP documentation to correctly setup the CSV file for import.
  ####End of Line#### 
+27.) Oops, error in Class ActivityLog within method addActivityData has occured at 2018-11-04 11:05:11 .Exception message is Failed to add an Activity event to the database
+ ####End of Line#### 
+28.) Oops, error in Class Email within method sendEmail has occured at 2018-11-04 11:25:52 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+29.) Oops, error in Class Email within method sendEmail has occured at 2018-11-04 11:25:53 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+30.) Oops, error in Class Email within method sendEmail has occured at 2018-11-04 11:31:48 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+31.) Oops, error in Class Email within method sendEmail has occured at 2018-11-04 11:31:50 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+32.) Oops, error in Class Email within method sendEmail has occured at 2018-11-04 11:34:58 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+33.) Oops, error in Class Email within method sendEmail has occured at 2018-11-04 11:35:00 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+34.) Oops, error in Class Email within method sendEmail has occured at 2018-11-04 11:36:33 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+35.) Oops, error in Class Email within method sendEmail has occured at 2018-11-04 11:36:35 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
