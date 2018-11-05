@@ -144,7 +144,7 @@ class AlarmEventLoggerDL extends DatabaseManager implements DatabaseFunctionsInt
             $stmt->bind_param("ss",$alarmStartDate,$alarmEndDate);
             $status=$stmt->execute();
             $stmt->store_result();
-            $stmt->bind_result($measurementID,$coachNumber,$setNumber,$axleNumber,$wheelID,$operatorName,$measDate,$measTime,$Sh,$qR,$FW,$H,$manualID,$measurementid,$SR,$CTW,$CTD,$CTDFF,$WS,$gibsonDescr,$refID,$measID,$alarmCause,$defectSize,$refDate,$predictedDate);
+            $stmt->bind_result($measurementID,$coachNumber,$setNumber,$axleNumber,$wheelID,$operatorName,$measDate,$measTime,$Sh,$qR,$FW,$H,$manualID,$measurementid,$SR,$CTW,$CTD,$CTDFF,$WS,$gibsonDescr,$wheelsize,$unit,$refID,$measID,$alarmCause,$defectSize,$refDate,$predictedDate);
             if($status){
                 $store_keys=array();
                 $arr_2D=array();   //array to store result set
