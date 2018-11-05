@@ -62,7 +62,9 @@ if(isset($_SESSION["staffNumber"])){
             $("#searchForm").on("submit",function(event){		
 			    var startDate=$("#startDate").val();			  		    
 			    //alert("/axlecoachmappingservice/"+axleSerialNumber+"_"+startDate+"_"+endDate);
-			    if($("#searchForm")[0].checkValidity()){
+			    status_confirm=confirm("Have you completed the following manual data if necessary? \n 1. Wheel Sizes of wheels violating the alarm thresholds, \n 2. Manual Wheel Measurements, \n 3. Gibson Ring inspection results.");
+			    if(!status_confirm) window.location="/html/manualmeasurements.php";
+			    if($("#searchForm")[0].checkValidity() && status_confirm){
 				    $("#viewButton").val("GENERATING MS-EXCEL REPORT...");
 				    $("#viewButton").prop("disabled",true);
 			    	$.ajax({
