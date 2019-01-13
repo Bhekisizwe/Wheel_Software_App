@@ -68,3 +68,43 @@
  ####End of Line#### 
 35.) Oops, error in Class Email within method sendEmail has occured at 2018-11-04 11:36:35 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
+36.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 13:43:34 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+37.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 13:57:18 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+38.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 14:00:09 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+39.) Oops, error in Class AlarmEventLogger within method writeReportToMSExcel has occured at 2019-01-13 14:01:27 .Exception message is Could not close zip file C:\xampp\htdocs\Eclipse Settings\WheelSystem\vendor\UserClasses\BusinessLayer\src\..\..\..\..\FaultReport\report_305941.xlsx.
+ ####End of Line#### 
+40.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 14:02:00 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+41.) Oops, error in Class AlarmEventLogger within method writeReportToMSExcel has occured at 2019-01-13 14:04:11 .Exception message is Could not close zip file C:\xampp\htdocs\Eclipse Settings\WheelSystem\vendor\UserClasses\BusinessLayer\src\..\..\..\..\FaultReport\report_305941.xlsx.
+ ####End of Line#### 
+42.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 14:04:33 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+43.) Oops, error in Class AlarmEventLogger within method writeReportToMSExcel has occured at 2019-01-13 14:08:27 .Exception message is Could not close zip file C:\xampp\htdocs\Eclipse Settings\WheelSystem\vendor\UserClasses\BusinessLayer\src\..\..\..\..\FaultReport\report_305941.xlsx.
+ ####End of Line#### 
+44.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 14:08:53 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+45.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 14:09:56 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+46.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 14:11:11 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+47.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 14:12:49 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+48.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 14:13:56 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+49.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 14:17:49 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+50.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 15:27:57 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+51.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 15:30:13 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+52.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 15:31:41 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+53.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 15:34:25 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+54.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 15:34:56 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+55.) Oops, error in Class Email within method sendEmail has occured at 2019-01-13 15:40:26 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
