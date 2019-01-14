@@ -79,7 +79,12 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
                       				</ul>                          		
                           		</li>
                       			<li id="manual_measurements">Manual Wheel Measurements Management</li>                    			
-                      			<li id="alarm_events">Wheel Measurements Alarm Event Management</li>  
+                      			<li>Wheel Measurements Alarm Event Management
+                      				<ul>
+                      					<li id="alarm_events">View Alarm Events</li>
+                      					<li id="fault_report">Generate Stoppage Statistical Reports</li>
+                      				</ul>                      			
+                      			</li>  
                           	</ul>                	
                           </li>                    
                       	<li id="login_password">Login Password Management</li>
@@ -168,6 +173,9 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
             	case "alarm_events":
             		window.location="alarmevents.php";
             		break;
+            	case "fault_report":
+            		window.location="faultstats.php";
+                	break;
             	case "login_password":
 					window.location="adminloginpassword.php";
                 	break;
