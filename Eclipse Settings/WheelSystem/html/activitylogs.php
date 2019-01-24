@@ -47,7 +47,7 @@ if(isset($_SESSION["staffNumber"])){
     				<input type="submit" id="viewButton" class="btn btn-primary" value="GENERATE ACTIVITY LOG REPORT">
             	</form></div><p>
             		    	
-            
+        <div style='position:fixed;bottom:0px;text-align:center;width:100%'>&copy Gqunsu Engineering Pty Ltd 2018-</div>    
         </div>
          <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -43,7 +43,7 @@ if(isset($_SESSION["staffNumber"])){
     				<input type="date" id="startDate" class="form-control" value="" min="2010-01-01" max="2040-01-01" required>   				
     				<input type="submit" id="viewButton" class="btn btn-primary" value="GENERATE PLANNING REPORT">
             	</form></div><p>
-            	
+       		<div style='position:fixed;bottom:0px;text-align:center;width:100%'>&copy Gqunsu Engineering Pty Ltd 2018-</div>     	
         </div>
          <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -132,3 +132,7 @@
  ####End of Line#### 
 67.) Oops, error in Class Email within method sendEmail has occured at 2019-01-14 10:24:42 .Exception message is Successfully Sent Email!!!
  ####End of Line#### 
+68.) Oops, error in Class Email within method sendEmail has occured at 2019-01-24 17:28:03 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 
+69.) Oops, error in Class Email within method sendEmail has occured at 2019-01-24 17:29:22 .Exception message is Successfully Sent Email!!!
+ ####End of Line#### 

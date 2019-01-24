@@ -40,7 +40,8 @@ if(isset($_SESSION["staffNumber"])){
             	<form style="border:1px solid #888888;width:30%;background-color:#eeeeee" class="rounded" id="importForm">
             		<input type="file" id="axleMapping" name="axlemapping" class="form-control" required>
     				<input type="submit" id="uploadButton" class="btn btn-primary" value="UPLOAD AXLE-COACH MAPPING"><p>
-            	</form></div><p>            	
+            	</form></div><p>  
+            	<div style='position:fixed;bottom:0px;text-align:center;width:100%'>&copy Gqunsu Engineering Pty Ltd 2018-</div>          	
             </div>
        
          <!-- Optional JavaScript -->

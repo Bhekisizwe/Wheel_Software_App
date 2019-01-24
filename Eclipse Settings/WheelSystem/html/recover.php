@@ -34,7 +34,7 @@ if(isset($_SESSION["staffNumber"]) && $_SESSION["userRoleName"]=="Admin"){
 		    		<p></p>    		
     			</form>    
 	    	</div>
-    	
+    	<div style='position:fixed;bottom:0px;text-align:center;width:100%'>&copy Gqunsu Engineering Pty Ltd 2018-</div>
     </div>
 
     <!-- Optional JavaScript -->

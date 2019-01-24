@@ -46,7 +46,8 @@ if(isset($_SESSION["staffNumber"])){
             		<input type="date" id="measurementDate" name="measurementDate" min="2010-01-01" max="2110-01-01" class="form-control" required><p>
     				<input type="submit" id="uploadButton" class="btn btn-primary" value="UPLOAD MINIPROF WHEEL MEASUREMENTS"><p>
         			
-        		</form></div><p>            	
+        		</form></div><p> 
+        		<div style='position:fixed;bottom:0px;text-align:center;width:100%'>&copy Gqunsu Engineering Pty Ltd 2018-</div>           	
             </div>
        
          <!-- Optional JavaScript -->

@@ -43,6 +43,7 @@ if(isset($_SESSION["staffNumber"])){
     			</form>
 	    	
             </div>
+            <div style='position:fixed;bottom:0px;text-align:center;width:100%'>&copy Gqunsu Engineering Pty Ltd 2018-</div>
         </div>
          <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
